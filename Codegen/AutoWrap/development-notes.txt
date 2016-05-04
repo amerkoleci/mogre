@@ -1,0 +1,80 @@
+﻿Notes for developing AutoWrap
+=============================
+This file contains some notes on how to understand and how to extend
+AutoWrap's code. It also contains some warnings and design issues.
+
+Terminology
+-----------
+Some terms as they're used in the documentation:
+ * native code: Means C++ code (opposed to CLR code). This is the code from which the CLR
+     code will be generated.
+ * CLR code: Means C++/CLR (.NET) code (opposed to native code). This is the code that will
+     be generated.
+ * Producing: A synonym for "generating"; i.e. we have "code producers" (and not "code generators).
+
+
+Lazy-evaluating of properties
+-----------------------------
+Many properties of the definition classes (like "ClassDefinition" or "MemberMehodDefinition")
+are evaluated first when needed. Here's an example:
+
+  private AbstractTypeDefinition _memberType;
+  public AbstractTypeDefinition MemberType {
+    get {
+      if (_memberType == null) {
+        // Initialization code here
+        ...
+      }
+
+      return _memberType;
+    }
+  }
+
+So, the value of "_memberType" is NOT set within the constructor which would seem to be
+a viable (and better) alternative. 
+
+The reason why it's done in the properties access and not in the constructor is that the
+initialization code examines some type definition that hasn't been loaded yet (which then
+leads to a KeyNotFoundException). Such problems arise for example when a Class A is being
+loaded and one of A's fields is of type B which hasn't been loaded yet. To make things more
+complicate one of B's fields could be of type A and this circular reference could not be
+resolved in a constructor of either class definitions.
+
+So to prevent such problems from occuring, lazy property evaluation (as seen in the code
+above) is used.
+
+
+Customizing the output
+----------------------
+There are (besides the "Attribute.xml" file) a few classes that allow tweaking the output:
+
+ * MetaConstructFactory : allows to create custom subclasses of the definition classes
+ * CodeStyleDefinition : allows to tweak some settings regarding the generated code (like
+                         naming or whitespacing).
+
+Attributes
+----------
+Each attribute has its own class. The name of the class is the attribute name with the
+word "Attribute" appended (like "IgnoreAttribute" for "Ignore"). Moreover the following
+requirements must be met:
+
+ * The file must (should) be place in the folder "Meta\Attributes"
+ * The class must inherit from "AutoWrapAttribute"
+ * The class must be defined in the same namespace as "AutoWrapAttribute"
+
+The code for finding the type of a certain attribute is located in "AutoWrapAttribute.FindAttribute()".
+
+
+File writing
+------------
+For every one of OGRE's .h files a MOGRE .h file and (in most cases) a MOGRE .cpp file will
+be generated (called "produced" here). The entry method for the generation process is
+"Wrapper.GenerateCodeFiles()".
+
+The class used to write the actual code is "SourceCodeStringBuilder". This class is used
+by all code producer classes to produce their code.
+
+What code will be produced for each single type is determined by the code producer class
+used for this type. All code producing classes can be found in "Meta\CodeProducers". Classes
+whose name ends with "InclProducer" will produce ".h" files, classes whose name ends with
+"CppProducer" will produce ".cpp" files.

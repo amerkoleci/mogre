@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{22E11F06-1C1E-41D1-B2E9-5D6B2372DE35}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutoWrap</RootNamespace>
+    <AssemblyName>AutoWrap</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <StartupObject>
+    </StartupObject>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoWrap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoWrap.Designer.cs">
+      <DependentUpon>AutoWrap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Meta\AttributeSet.cs" />
+    <Compile Include="Meta\Attributes\ArrayTypeAttribute.cs" />
+    <Compile Include="Meta\Attributes\BaseClassAttribute.cs" />
+    <Compile Include="Meta\Attributes\CachedGetAccessorAttribute.cs" />
+    <Compile Include="Meta\Attributes\CLRObjectAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomClassAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomClassCppDefinitionAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomCppDeclarationAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomDisposingAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomClassInclCodeAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomIncDeclarationAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomIncPreDeclarationAttribute.cs" />
+    <Compile Include="Meta\Attributes\CustomNativeProxyDeclarationAttribute.cs" />
+    <Compile Include="Meta\Attributes\DefaultReturnValueAttribute.cs" />
+    <Compile Include="Meta\Attributes\DefinitionIndexAttribute.cs" />
+    <Compile Include="Meta\Attributes\DoCleanupInFinalizerAttribute.cs" />
+    <Compile Include="Meta\Attributes\ExplicitCastingForParamsAttribute.cs" />
+    <Compile Include="Meta\Attributes\FlagsEnumAttribute.cs" />
+    <Compile Include="Meta\Attributes\GlobalScopeAttribute.cs" />
+    <Compile Include="Meta\Attributes\HideParamsWithDefaultValuesAttribute.cs" />
+    <Compile Include="Meta\Attributes\IgnoreAttribute.cs" />
+    <Compile Include="Meta\Attributes\IncludePredefinedMethodAttribute.cs" />
+    <Compile Include="Meta\Attributes\InterfacesForOverridablesAttribute.cs" />
+    <Compile Include="Meta\Attributes\MethodAttribute.cs" />
+    <Compile Include="Meta\Attributes\NativeValueContainerAttribute.cs" />
+    <Compile Include="Meta\Attributes\NoDefaultParamOverloadsAttribute.cs" />
+    <Compile Include="Meta\Attributes\NoFinalizerAttribute.cs" />
+    <Compile Include="Meta\Attributes\PropertyAttribute.cs" />
+    <Compile Include="Meta\Attributes\PureManagedClassAttribute.cs" />
+    <Compile Include="Meta\Attributes\RawPointerParamAttribute.cs" />
+    <Compile Include="Meta\Attributes\ReadOnlyAttribute.cs" />
+    <Compile Include="Meta\Attributes\ReadOnlyForFieldsAttribute.cs" />
+    <Compile Include="Meta\Attributes\RenameAttribute.cs" />
+    <Compile Include="Meta\Attributes\ReplaceByAttribute.cs" />
+    <Compile Include="Meta\Attributes\ReturnOnlyByMethodAttribute.cs" />
+    <Compile Include="Meta\Attributes\SequentialLayoutAttribute.cs" />
+    <Compile Include="Meta\Attributes\STLListNoRemoveAndUniqueAttribute.cs" />
+    <Compile Include="Meta\Attributes\StopDelegationForReturnAttribute.cs" />
+    <Compile Include="Meta\Attributes\ValueTypeAttribute.cs" />
+    <Compile Include="Meta\Attributes\WrapTypeAttribute.cs" />
+    <Compile Include="Meta\CodeProducers\ClassCodeProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativeProxyClassCppProducer.cs" />
+    <Compile Include="Meta\CodeStyleDefinition.cs" />
+    <Compile Include="Meta\CodeProducers\PlainWrapperClassCppProducer.cs" />
+    <Compile Include="Meta\Definitions\ClassDefinition.cs" />
+    <Compile Include="Meta\Definitions\EnumDefinition.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\StandardTypesFactory.cs" />
+    <Compile Include="Meta\Definitions\IRenamable.cs" />
+    <Compile Include="Meta\Definitions\MemberFieldDefinition.cs" />
+    <Compile Include="Meta\Definitions\MemberMethodDefinition.cs" />
+    <Compile Include="Meta\Definitions\MethodSignature.cs" />
+    <Compile Include="Meta\Definitions\ParamDefinition.cs" />
+    <Compile Include="Meta\Definitions\MemberPropertyDefinition.cs" />
+    <Compile Include="Meta\Definitions\StructDefinition.cs" />
+    <Compile Include="Meta\Definitions\TypedefDefinition.cs" />
+    <Compile Include="Meta\Definitions\TypeParamDefinition.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefHashedVector.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefInternal.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefIterator.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefSharedPtr.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdDeque.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdHashMap.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdList.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdMap.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdMultiMap.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdPair.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdSet.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStdVector.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefString.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefStringTypeDef.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefTemplateOneType.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefTemplateTwoTypes.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefTRect.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\DefUtfString.cs" />
+    <Compile Include="Meta\Definitions\StandardTypes\IDefString.cs" />
+    <Compile Include="Meta\Definitions\ITypeMember.cs" />
+    <Compile Include="Meta\Definitions\PassedByType.cs" />
+    <Compile Include="Meta\Definitions\ProtectionLevel.cs" />
+    <Compile Include="Meta\Definitions\VirtualLevel.cs" />
+    <Compile Include="Meta\CodeProducers\PlainWrapperClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\CLRHandleClassCppProducer.cs" />
+    <Compile Include="Meta\CodeProducers\CLRHandleClassInclProducer.cs" />
+    <Compile Include="Meta\MetaConstructFactory.cs" />
+    <Compile Include="Meta\MetaDefBasedClass.cs" />
+    <Compile Include="Meta\SourceCodeStringBuilder.cs" />
+    <Compile Include="Meta\WrappedFile.cs" />
+    <Compile Include="Mogre\Mogre17.cs" />
+    <Compile Include="Meta\CodeProducers\NativeProtectedTypesProxy.cs" />
+    <Compile Include="Meta\CodeProducers\OverridableClassCppProducer.cs" />
+    <Compile Include="Meta\CodeProducers\OverridableClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativePtrValueClassCppProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativePtrValueClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\ValueClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativeDirectorClassCppProducer.cs" />
+    <Compile Include="Meta\CodeProducers\SingletonClassCppProducer.cs" />
+    <Compile Include="Meta\CodeProducers\ReadOnlyStructClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\SingletonClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\ClassCppProducer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Meta\CodeProducers\NonOverridableClassCppProducer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Meta\Definitions\MemberDefinitionBase.cs" />
+    <Compile Include="Meta\Definitions\NamespaceDefinition.cs" />
+    <Compile Include="Meta\Definitions\AbstractTypeDefinition.cs" />
+    <Compile Include="Meta\CodeProducers\ClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\InterfaceClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativeDirectorClassInclProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NonOverridableClassInclProducer.cs" />
+    <Compile Include="Meta\MetaDefinition.cs" />
+    <Compile Include="Meta\CodeProducers\AbstractCodeProducer.cs" />
+    <Compile Include="Meta\CodeProducers\NativeProxyClassProducer.cs" />
+    <Compile Include="Meta\Wrapper.cs" />
+    <Compile Include="Meta\Attributes\AutoWrapAttribute.cs" />
+    <Compile Include="Mogre\MogreCodeStyleDef.cs" />
+    <Compile Include="Mogre\MogreConstructFactory.cs" />
+    <Compile Include="Mogre\MogreNamespaceDefinition.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AutoWrap.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AutoWrap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="c++cli-cheat-sheet.txt" />
+    <Content Include="development-notes.txt" />
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

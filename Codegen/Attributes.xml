@@ -1,0 +1,946 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Tweaks the generation of MOGRE's source code. See "AutoWrap/readme.txt" for
+     more information. -->
+<meta>
+  <namespace name="Ogre">
+
+    <!--
+    <class name="ShadowCaster" Overridable=""/>
+    <class name="SceneManager" Overridable=""/>
+    <class name="Node" Overridable=""/>
+    -->
+
+    <!-- Ignore the new type allocator classes -->
+    <class name="CategorisedAllocPolicy" Ignore="" />
+    <typedef name="GeneralAllocPolicy" Ignore="" />
+    <typedef name="GeometryAllocPolicy" Ignore="" />
+    <typedef name="AnimationAllocPolicy" Ignore="" />
+    <typedef name="SceneCtlAllocPolicy" Ignore="" />
+    <typedef name="SceneObjAllocPolicy" Ignore="" />
+    <typedef name="ResourceAllocPolicy" Ignore="" />
+    <typedef name="ScriptingAllocPolicy" Ignore="" />
+    <typedef name="RenderSysAllocPolicy" Ignore="" />
+    <!--ignore list of mogre 1.7 -->
+    <typedef name="STLAllocator" Ignore="" />
+
+    <!-- Ignore the script compiler classes for now -->
+    <class name="ScriptToken" Ignore="" />
+    <class name="ScriptTokenPtr" Ignore="" />
+    <class name="ScriptCompiler" Ignore="" />
+    <class name="ScriptCompilerManager" Ignore="" />
+    <class name="ScriptCompilerListener" Ignore="" />
+    <class name="ScriptLexer" Ignore="" />
+    <class name="ConcreteNode" Ignore="" />
+    <class name="AbstractNode" Ignore="" />
+
+    <class name="MeshSerializerListener" WrapType="Interface" />
+    <class name="PSSMShadowCameraSetup">
+      <function name="getOptimalAdjustFactor" Ignore="" />
+      <function name="setOptimalAdjustFactor" Ignore="" />
+      <_CustomIncDeclaration>
+public: property Mogre::Real OptimalAdjustFactor
+{
+    public: Mogre::Real get()
+    {
+        return static_cast&lt;Ogre::PSSMShadowCameraSetup*&gt;(_native)->getOptimalAdjustFactor();
+    }
+}
+void SetOptimalAdjustFactor(int idx, Mogre::Real factor)
+{
+    static_cast&lt;Ogre::PSSMShadowCameraSetup*&gt;(_native)->setOptimalAdjustFactor(idx, factor);
+}
+      </_CustomIncDeclaration>
+    </class>
+
+    <class name="MaterialManager">
+      <class name="Listener" WrapType="Interface" />
+      <!-- Mogre 1.7 for an unknow reason, OGRE_THREAD_POINTER make it in meta.xml while it was missing in the previous version  -->
+      <!--<function name="OGRE_THREAD_POINTER" Ignore="" />-->
+    </class>
+
+    <class name="BackgroundProcessResult" WrapType="CLRHandle">
+      <variable name="error" Rename="Error" />
+      <variable name="message" Rename="Message" />
+    </class>
+
+    <class name="Pass">
+      <!-- Must handle "operator()" function first -->
+      <!-- For some reason, this is no longer in the meta for 1.6? It still exists, but I believe it was made private -->
+      <!--<class name="HashFunc" Ignore=""/>-->
+    </class>
+    <class name="UnifiedHighLevelGpuProgram">
+      <!-- There are conflicts with addListener/removeListener from the base Resource class -->
+      <function name="addListener" Ignore=""/>
+      <function name="removeListener" Ignore=""/>
+    </class>
+
+    <!-- Arggh! I hate Microsoft's defines. Texture's LoadImage was becoming in some object File
+        LoadImageA, and there were stupid linker errors everywhere. -->
+    <class name="Texture">
+      <_CustomIncDeclaration>
+#ifdef LoadImage
+#undef LoadImage
+#endif
+      </_CustomIncDeclaration>
+    </class>
+
+    <class name="AnimationTrack">
+      <class name="Listener" WrapType="Interface">
+        <!--<function name="getInterpolatedKeyFrame" DefaultReturnValue="false" />-->
+      </class>
+      <!-- They are internal methods, and std::vector<Real> as parameter isn't getting wrapped properly at the moment -->
+      <function name="_collectKeyFrameTimes" Ignore=""/>
+      <function name="_buildKeyFrameIndexMap" Ignore=""/>
+    </class>
+    <class name="ParticleSystemRenderer">
+      <!-- They are internal methods, and std::list<Particle*> as parameter isn't getting wrapped properly at the moment -->
+      <function name="_notifyParticleMoved" Ignore=""/>
+      <function name="_notifyParticleCleared" Ignore=""/>
+    </class>
+    <class name="Mesh">
+      <!-- parameter 'const Matrix4* const* blendMatrices' is not handled properly at the moment -->
+      <function name="softwareVertexBlend" Ignore=""/>
+      <function name="softwareVertexPoseBlend">
+        <_CustomCppDeclaration>
+void Mesh::SoftwareVertexPoseBlend( Mogre::Real weight, Collections::Generic::SortedList&lt;size_t, Mogre::Vector3>^ vertexOffsetMap, Collections::Generic::SortedList&lt;size_t, Mogre::Vector3>^ normalsMap, Mogre::VertexData^ targetVertexData )
+{
+    Ogre::map&lt;size_t,Ogre::Vector3>::type o_vertexOffsetMap;
+    FillMapFromSortedList&lt;Ogre::map&lt;size_t,Ogre::Vector3>::type, size_t, Mogre::Vector3>(o_vertexOffsetMap, vertexOffsetMap);
+
+    Ogre::map&lt;size_t,Ogre::Vector3>::type o_normalsMap;
+    FillMapFromSortedList&lt;Ogre::map&lt;size_t,Ogre::Vector3>::type, size_t, Mogre::Vector3>(o_normalsMap, normalsMap);
+
+    Ogre::Mesh::softwareVertexPoseBlend( weight, o_vertexOffsetMap, o_normalsMap, targetVertexData );
+}
+        </_CustomCppDeclaration>
+      </function>
+    </class>
+
+    <class name="DriverVersion" WrapType="ValueType" SequentialLayout="">
+      <!-- Currently, functions of ValueTypes do not get a cpp definition. -->
+      <function name="fromString" Ignore="" />
+      <!-- Replaced by the custom declaration below. -->
+      <function name="toString" Ignore="" />
+      <_CustomIncDeclaration>
+public: virtual System::String^ ToString() override
+{
+    return System::String::Format("{0}.{1}.{2}.{3}", major, minor, release, build);
+}
+      </_CustomIncDeclaration>
+    </class>
+    <class name="TimeIndex" WrapType="CLRHandle"/>
+    <class name="VisibleObjectsBoundsInfo" WrapType="NativePtrValueType"/>
+    <class name="ShadowTextureConfig" WrapType="ValueType"/>
+    <class name="Plugin" WrapType="Interface"/>
+    <class name="InstancedGeometry">
+      <class name="GeometryBucket" Ignore=""/>
+      <class name="LODBucket" Ignore=""/>
+      <class name="MaterialBucket" Ignore=""/>
+      <class name="OptimisedSubMeshGeometry" Ignore=""/>
+      <class name="QueuedGeometry" Ignore=""/>
+      <class name="QueuedSubMesh" Ignore=""/>
+      <class name="SubMeshLodGeometryLink" Ignore=""/>
+      <class name="InstancedObject" WrapType="CLRHandle"/>
+      <class name="BatchInstance">
+        <variable name="mLodValues" Ignore=""/>
+      </class>
+    </class>
+    <class name="EdgeData">
+      <!-- for some wierd reason the wrapping of its type doesn't work -->
+      <variable name="triangleFaceNormals" Ignore=""/>
+    </class>
+    <!-- the "typedef std::map<size_t, GpuLogicalIndexUse> GpuLogicalIndexUseMap;" cannot currently be wrapped
+        because GpuLogicalIndexUse doesn't have a default constructor -->
+    <struct name="GpuLogicalIndexUse" Ignore=""/>
+
+    <class name="Mesh">
+      <function name="prepareMatricesForVertexBlend" Ignore=""/>
+    </class>
+    <class name="ArchiveFactory" Ignore=""/>
+    <struct name="FileInfo" WrapType="NativePtrValueType"/>
+    <class name="ParameterDef" WrapType="NativePtrValueType"/>
+    <class name="ParamCommand" CustomClass=""/>
+    <class name="ParamDictionary" WrapType="NativePtrValueType" ReadOnly=""/>
+    <class name="StringInterface" WrapType="Interface"/>
+    <class name="StringConverter" WrapType="PlainWrapper"/>
+    <class name="Any" Ignore=""/>
+    <class name="AnyNumeric" Ignore=""/>
+    <class name="LayerBlendModeEx" WrapType="NativePtrValueType"/>
+    <class name="DynLibManager" Ignore=""/>
+    <class name="TempBlendedBufferInfo" Ignore=""/>
+    <class name="HardwareBufferLicensee" Ignore=""/>
+    <class name="HardwareVertexBuffer">
+      <variable name="mMgr" Ignore="" />
+    </class>
+    <class name="FreeImageCodec" Ignore=""/>
+    <class name="Font">
+      <struct name="GlyphInfo" WrapType="ValueType"/>
+    </class>
+    <class name="WindowEventListener" WrapType="Interface"/>
+    <class name="WindowEventUtilities" WrapType="PlainWrapper">
+      <!-- These are Ogre internals -->
+      <variable name="_msListeners" Ignore=""/>
+      <variable name="_msWindows" Ignore=""/>
+    </class>
+
+    <class name="BillboardSet">
+      <variable name="mRadixSorter" Ignore=""/>
+      <function name="setTextureCoords">
+        <_CustomIncDeclaration>
+          void SetTextureCoords( array&lt;Mogre::FloatRect>^ coords );
+        </_CustomIncDeclaration>
+        <_CustomCppDeclaration>
+          void BillboardSet::SetTextureCoords( array&lt;Mogre::FloatRect>^ coords )
+          {
+            pin_ptr&lt;Mogre::FloatRect> pin = &amp;coords[0];
+            static_cast&lt;Ogre::BillboardSet*>(_native)->setTextureCoords( (Ogre::FloatRect*) pin, coords->Length );
+          }
+        </_CustomCppDeclaration>
+      </function>
+    </class>
+    <class name="ParticleSystem">
+      <variable name="mRadixSorter" Ignore=""/>
+    </class>
+
+    <class name="DefaultSceneManager" Ignore=""/>
+    <class name="ResourceGroupManager">
+
+      <!-- These functions are leftovers, without implementation. Should be removed eventually... -->
+      <function name="_notifyWorldGeometryStageStarted" Ignore=""/>
+      <function name="_notifyWorldGeometryStageEnded" Ignore=""/>
+
+      <struct name="ResourceDeclaration" WrapType="NativePtrValueType"/>
+      <typedef name="ResourceDeclarationList" STLListNoRemoveAndUnique=""/>
+      <!--= It's protected -->
+      <struct name="ResourceGroup" Ignore=""/>
+
+      <function name="getResourceLocationList" Ignore=""/>
+    </class>
+    <class name="ScriptLoader" Ignore=""/>
+    <class name="DefaultHardwareVertexBuffer" Ignore=""/>
+    <class name="DefaultHardwareIndexBuffer" Ignore=""/>
+    <!--class name="DefaultHardwareBufferManager" Ignore=""/-->
+    <!--class name="HardwareBufferManagerBase" Ignore="" /-->
+    <!--class name="DefaultHardwareBufferManagerBase" Ignore="" /-->
+    <class name="ControllerManager" Ignore=""/>
+    <class name="ControllerValueRealPtr" Ignore=""/>
+    <class name="ControllerFunctionRealPtr" Ignore=""/>
+    <class name="ManualResourceLoader" WrapType="Interface"/>
+    <class name="MaterialSerializer" WrapType="PlainWrapper"/>
+    <class name="ResourceBackgroundQueue" Ignore=""/>
+
+    <!-- to avoid name clash with System.Exception -->
+    <class name="Exception" WrapType="PlainWrapper" ReadOnly="" Rename="OgreException">
+      <_CustomIncDeclaration>
+property bool IsThrown
+{
+    public: static bool get() { return LastException != nullptr; }
+}
+      </_CustomIncDeclaration>
+    </class>
+    <class name="EdgeData" WrapType="CLRHandle">
+      <struct name="Triangle" WrapType="NativePtrValueType"/>
+      <struct name="Edge" WrapType="NativePtrValueType"/>
+      <struct name="EdgeGroup" WrapType="NativePtrValueType"/>
+    </class>
+    <class name="HighLevelGpuProgramFactory" Ignore=""/>
+    <struct name="GpuConstantDefinition" WrapType="NativePtrValueType"/>
+
+    <class name="GpuNamedConstants" WrapType="PlainWrapper"/>
+    <class name="GpuLogicalBufferStruct" WrapType="PlainWrapper"/>
+
+    <class name="GpuProgramParameters" WrapType="CLRHandle">
+      <struct name="AutoConstantDefinition" WrapType="NativePtrValueType"/>
+      <struct name="AutoConstantEntry" WrapType="NativePtrValueType"/>
+    </class>
+    <class name="GpuSharedParameters" WrapType="CLRHandle">
+    </class>
+    <class name="GpuSharedParametersUsage" WrapType="CLRHandle">
+      <struct name="CopyDataEntry" WrapType="NativePtrValueType" />
+    </class>
+
+    <class name="RenderSystem">
+      <class name="Listener" WrapType="NativeDirector"/>
+      <function name="_createRenderWindows" Ignore=""/>
+      <function name="_pauseFrame" Ignore=""/>
+      <function name="_resumeFrame" Ignore=""/>
+    </class>
+    <class name="CompositorManager">
+      <function name="createImpl" Ignore=""/>
+      <function name="registerCompositorLogic" Ignore=""/>
+      <function name="getCompositorLogic" Ignore=""/>
+    </class>
+    <class name="CustomCompositionPass" WrapType="Interface" />
+    <class name="Image" WrapType="CLRHandle">
+      <function name="loadDynamicImage">
+        <param name="data" RawPointerParam=""/>
+      </function>
+    </class>
+    <class name="VertexBoneAssignment_s" WrapType="ValueType" Rename="VertexBoneAssignment"/>
+    <class name="MeshLodUsage" WrapType="PlainWrapper"/>
+    <!-- It's empty, meant for subclassing -->
+    <class name="ParticleVisualData" Ignore=""/>
+    <class name="ParticleSystemRenderer">
+      <function name="_updateRenderQueue" Ignore=""/>
+    </class>
+    <class name="ParticleSystemRendererFactory" Ignore=""/>
+    <class name="Particle" WrapType="CLRHandle"/>
+    <class name="ParticleIterator" WrapType="PlainWrapper"/>
+    <class name="ParticleSystemManager">
+      <function name="getRendererFactoryIterator" Ignore=""/>
+    </class>
+    <!-- class name="Profiler" Ignore=""/ -->
+    <class name="AutoParamDataSource" Ignore=""/>
+    <class name="Renderable" WrapType="Interface">
+      <class name="Visitor" WrapType="Interface" Ignore="" />
+      <class name="RenderSystemData" Ignore="" />
+      <function name="getRenderSystemData" Ignore="" />
+      <function name="setRenderSystemData" Ignore="" />
+      <function name="getUserAny" Ignore="" />
+      <function name="setUserAny" Ignore="" />
+    </class>
+    <class name="RenderQueue">
+      <class name="RenderableListener" WrapType="Interface"/>
+    </class>
+    <struct name="RenderablePass" WrapType="NativePtrValueType" ReadOnly=""/>
+    <class name="QueuedRenderableVisitor" WrapType="Interface"/>
+    <class name="QueuedRenderableCollection" WrapType="PlainWrapper"/>
+    <class name="RenderTarget">
+      <class name="Impl" Ignore=""/>
+    </class>
+    <class name="Resource">
+      <class name="Listener" WrapType="NativeDirector"/>
+    </class>
+    <class name="ResourceBackgroundQueue">
+      <class name="Listener" WrapType="Interface"/>
+    </class>
+    <class name="SceneManager">
+      <class name="SkyBoxGenParameters" WrapType="ReadOnlyStruct"/>
+      <class name="SkyDomeGenParameters" WrapType="ReadOnlyStruct"/>
+      <class name="SkyPlaneGenParameters" WrapType="ReadOnlyStruct"/>
+      <!-- protected classes -->
+      <class name="ShadowCasterSceneQueryListener" Ignore=""/>
+      <class name="SceneMgrQueuedRenderableVisitor" Ignore=""/>
+    </class>
+    <class name="ViewPoint" WrapType="ReadOnlyStruct"/>
+    <class name="Timer" WrapType="PlainWrapper"/>
+    <class name="Root">
+      <!-- Root's MovableObjectFactoryMap is private -->
+      <class name="MovableObjectFactoryIterator" Ignore=""/>
+      <function name="createRenderWindows" Ignore=""/>
+      <function name="getWorkQueue" Property="" Ignore="" />
+      <function name="setWorkQueue" Property="" Ignore="" />
+    </class>
+    <struct name="LinkedSkeletonAnimationSource" WrapType="NativePtrValueType" ReadOnly=""/>
+    <class name="StaticGeometry">
+      <class name="SubMeshLodGeometryLink" WrapType="NativePtrValueType" DefinitionIndex="0"/>
+      <class name="QueuedGeometry" WrapType="NativePtrValueType"/>
+      <class name="GeometryBucket" Ignore=""/>
+      <class name="LODBucket" WrapType="CLRHandle"/>
+      <class name="MaterialBucket" WrapType="CLRHandle"/>
+      <class name="QueuedSubMesh" Ignore=""/>
+      <class name="Region">
+        <function name="dump" Ignore=""/>
+      </class>
+    </class>
+    <class name="VertexBoneAssignment" WrapType="ValueType"/>
+    <class name="SubMesh">
+      <variable name="mLodFaceList" Ignore=""/>
+    </class>
+    <class name="IlluminationPass" WrapType="NativePtrValueType"/>
+    <class name="BillboardChain">
+      <class name="Element" WrapType="NativePtrValueType"/>
+    </class>
+    <class name="HardwareBuffer">
+      <_CustomIncDeclaration>
+public:
+generic&lt;typename T> where T : value class
+void WriteData(int offset, int length, array&lt;T>^ source, bool discardWholeBuffer);
+      </_CustomIncDeclaration>
+      <_CustomCppDeclaration>
+generic&lt;typename T> where T : value class
+void HardwareBuffer::WriteData(int offset, int length, array&lt;T>^ source, bool discardWholeBuffer)
+{
+  pin_ptr&lt;T> pin = &amp;source[0];
+  static_cast&lt;Ogre::HardwareBuffer*>(_native)->writeData( offset * sizeof(T), length * sizeof(T), pin, discardWholeBuffer );
+}
+      </_CustomCppDeclaration>
+    </class>
+    <class name="HardwareBufferManager">
+      <function name="_forceReleaseBufferCopies" Ignore=""/>
+      <function name="HardwareBufferManager" Ignore=""/>
+      <_CustomIncDeclaration>
+private protected: static HardwareBufferManager^ _singleton;
+
+public: static property HardwareBufferManager^ Singleton
+{
+    HardwareBufferManager^ get()
+    {
+        Ogre::HardwareBufferManager* ptr = Ogre::HardwareBufferManager::getSingletonPtr();
+        if (_singleton == CLR_NULL || _singleton->_native != ptr)
+        {
+            if (_singleton != CLR_NULL)
+            {
+                _singleton->_native = 0;
+                _singleton = nullptr;
+            }
+            if ( ptr )
+                _singleton = gcnew HardwareBufferManager(ptr);
+        }
+        return _singleton;
+    }
+}
+      </_CustomIncDeclaration>
+    </class>
+    <class name="CompositorInstance">
+      <class name="RenderSystemOperation" WrapType="Interface"/>
+      <class name="TargetOperation" Ignore=""/>
+    </class>
+
+    <!-- they are _OgrePrivate -->
+    <class name="MeshSerializerImpl" Ignore=""/>
+    <class name="MeshSerializerImpl_v1_2" Ignore=""/>
+    <class name="MeshSerializerImpl_v1_1" Ignore=""/>
+
+    <class name="VertexDeclaration">
+      <typedef name="VertexElementList" ReadOnly=""/>
+    </class>
+
+    <class name="Node">
+      <class name="Listener" WrapType="Interface"/>
+      <function name="getDebugRenderable" ignore="" />
+    </class>
+
+    <class name="AxisAlignedBox" PureManagedClass=""/>
+    <class name="Matrix3" PureManagedClass="m00" NativeValueContainer=""/>
+    <class name="Matrix4" PureManagedClass="m00" NativeValueContainer=""/>
+
+    <struct name="_ConfigOption" WrapType="NativePtrValueType" Rename="ConfigOption"/>
+    <typedef name="ConfigOption" Rename="ConfigOption_NativePtr"/>
+
+    <class name="VertexData">
+      <struct name="HardwareAnimationData" WrapType="NativePtrValueType"/>
+    </class>
+    <class name="CompositionTechnique">
+      <class name="TextureDefinition" WrapType="NativePtrValueType"/>
+    </class>
+
+    <struct name="RenderTargetEvent" WrapType="NativePtrValueType" ReadOnly=""/>
+    <struct name="RenderTargetViewportEvent" WrapType="NativePtrValueType" ReadOnly=""/>
+
+    <struct name="MovableObjectLodChangedEvent" WrapType="NativePtrValueType" ReadOnly=""/>
+    <struct name="EntityMeshLodChangedEvent" WrapType="NativePtrValueType" ReadOnly=""/>
+    <struct name="EntityMaterialLodChangedEvent" WrapType="NativePtrValueType" ReadOnly=""/>
+
+    <class name="RenderTarget">
+      <struct name="FrameStats" WrapType="ReadOnlyStruct" ReturnOnlyByMethod=""/>
+    </class>
+    <struct name="SceneManagerMetaData" WrapType="NativePtrValueType" ReadOnly=""/>
+    <class name="VertexPoseKeyFrame">
+      <struct name="PoseRef" WrapType="ValueType" ReadOnly=""/>
+      <typedef name="PoseRefList" ReadOnly=""/>
+    </class>
+    <struct name="FrameEvent" WrapType="ValueType"/>
+
+    <class name="FrameListener">
+      <function name="frameStarted" DefaultReturnValue="true"/>
+      <function name="frameEnded" DefaultReturnValue="true"/>
+      <function name="frameRenderingQueued" DefaultReturnValue="true" />
+    </class>
+
+    <typedef name="SceneTypeMask" ReplaceBy="SceneType"/>
+    <enumeration name="SceneType" FlagsEnum=""/>
+
+    <class name="ConfigFile" WrapType="PlainWrapper">
+      <function name="load" NoDefaultParamOverloads=""/>
+    </class>
+    <class name="DataStream" WrapType="PlainWrapper" NoFinalizer=""/>
+    <class name="MemoryDataStream" WrapType="PlainWrapper" NoFinalizer="">
+      <function name="MemoryDataStream" HideParamsWithDefaultValues="">
+        <param name="freeOnClose" Ignore=""/>
+      </function>
+    </class>
+
+    <class name="ResourceManager" WrapType="PlainWrapper">
+      <function name="getResourcePool" Ignore=""/>
+      <function name="destroyResourcePool" Ignore=""/>
+    </class>
+
+    <class name="SceneQueryResult" WrapType="PlainWrapper"/>
+    <class name="RaySceneQueryResultEntry" WrapType="PlainWrapper"/>
+    <class name="IntersectionSceneQueryResult" WrapType="PlainWrapper"/>
+    <class name="SceneQuery">
+      <struct name="WorldFragment" WrapType="PlainWrapper"/>
+      <function name="getSupportedWorldFragmentTypes" Ignore=""/>
+    </class>
+    <class name="SceneQueryListener" WrapType="Interface"/>
+    <class name="RaySceneQueryListener" WrapType="Interface"/>
+    <class name="IntersectionSceneQueryListener" WrapType="Interface"/>
+
+    <class name="RenderOperation" WrapType="CLRHandle">
+      <enumeration name="OperationType" Rename="OperationTypes"/>
+    </class>
+    <class name="VertexData" WrapType="CLRHandle">
+      <function name="VertexData" HideParamsWithDefaultValues="">
+        <param name="mgr" Ignore=""/>
+      </function>
+    </class>
+    <class name="TextureUnitState" WrapType="CLRHandle"/>
+    <class name="Technique" WrapType="CLRHandle">
+      <function name="checkGPURules" Ignore="" />
+      <function name="checkHardwareSupport" Ignore="" />
+      <class name="GPUVendorRule" WrapType="CLRHandle">
+        <variable name="vendor" Rename="Vendor" />
+        <variable name="includeOrExclude" Rename="IncludeOrExclude" />
+      </class>
+      <class name="GPUDeviceNameRule" WrapType="CLRHandle">
+        <variable name="devicePattern" Ignore="" />
+        <variable name="includeOrExclude" Rename="IncludeOrExclude" />
+        <variable name="caseSensitive" Rename="CaseSensitive" />
+        <_CustomIncDeclaration>
+public: property String^ DevicePattern
+{
+    public: String^ get()
+    {
+        return TO_CLR_STRING(_native->devicePattern);
+    }
+    public: void set(String^ dp)
+    {
+        DECLARE_NATIVE_STRING(odp, dp);
+        _native->devicePattern = odp;
+    }
+}
+        </_CustomIncDeclaration>
+      </class>
+    </class>
+    <class name="SubMesh" WrapType="CLRHandle"/>
+    <class name="SimpleSpline" WrapType="CLRHandle"/>
+    <class name="RotationalSpline" WrapType="CLRHandle"/>
+    <class name="RenderSystemCapabilities" WrapType="CLRHandle"/>
+    <class name="RenderQueueGroup" WrapType="CLRHandle"/>
+    <class name="RenderPriorityGroup" WrapType="CLRHandle"/>
+    <class name="PatchSurface" WrapType="CLRHandle"/>
+    <class name="Pass" WrapType="CLRHandle">
+      <function name="setHashFunction" Ignore="" />
+      <function name="getHashFunction" Ignore="" />
+      <function name="getBuiltinHashFunction" Ignore="" />
+    </class>
+    <class name="CompositionTargetPass" WrapType="CLRHandle"/>
+    <class name="CompositionPass" WrapType="CLRHandle">
+      <class name="InputTex" WrapType="CLRHandle" />
+    </class>
+    <class name="Billboard" WrapType="CLRHandle"/>
+    <class name="AnimationStateSet" WrapType="CLRHandle"/>
+    <class name="IndexData" WrapType="CLRHandle"/>
+    <class name="PlaneBoundedVolume" WrapType="CLRHandle" DoCleanupInFinalizer=""/>
+    <class name="Log" WrapType="CLRHandle">
+      <class name="Stream" WrapType="CLRHandle">
+      </class>
+      <function name="stream" Rename="GetStream" />
+    </class>
+
+    <class name="ColourValue" ValueType=""/>
+    <class name="Plane" ValueType=""/>
+    <class name="Quaternion" ValueType=""/>
+    <class name="Degree" ValueType=""/>
+    <class name="Radian" ValueType=""/>
+    <class name="Ray" ValueType=""/>
+    <class name="Rectangle" ValueType=""/>
+    <class name="Sphere" ValueType=""/>
+    <class name="Vector2" ValueType=""/>
+    <class name="Vector3" ValueType=""/>
+    <class name="Vector4" ValueType=""/>
+    <class name="FloatRect" ValueType=""/>
+    <class name="Rect" ValueType=""/>
+    <class name="Box" ValueType=""/>
+    <class name="PixelBox" ValueType=""/>
+    <class name="VertexElement" ReadOnlyForFields="" PureManagedClass="data">
+      <_CustomClassInclCode>
+// Can't use a value class inside an array unless it's fully defined.
+// Include the ported VertexElement definition.
+// Update: I changed it to ref class but keep it this way in case it goes back to being value
+#include "Custom\MogreVertexElement.i"
+      </_CustomClassInclCode>
+    </class>
+
+    <class name="SceneNode">
+      <function name="showBoundingBox" Rename="setShowBoundingBox"/>
+      <function name="getDebugRenderable" property="" ignore="" />
+    </class>
+    <class name="RenderQueueInvocationSequence">
+      <function name="iterator" Rename="getIterator"/>
+    </class>
+
+    <class name="MovablePlane" BaseClass="MovableObject"/>
+
+    <!-- To include all the enums from OgreCommon.h -->
+    <class name="TextureFilterOptions" WrapType="NonOverridable"/>
+    <!-- To include all the enums from OgrePixelFormat.h -->
+    <class name="PixelFormat" WrapType="NonOverridable"/>
+    <!-- To include all the enums from OgreBlendMode.h -->
+    <class name="LayerBlendType" WrapType="NonOverridable"/>
+    <!-- To include all the enums from OgreLog.h -->
+    <class name="LoggingLevel" WrapType="NonOverridable"/>
+
+    <class name="TextureUnitState">
+      <struct name="TextureEffect" WrapType="NativePtrValueType"/>
+      <struct name="UVWAddressingMode" WrapType="ValueType" />
+      <function name="_getAnimController" Ignore=""/>
+    </class>
+
+    <class name="MovableObject">
+      <class name="Listener" WrapType="Interface"/>
+      <!-- If isVisible is property it gets hidden by the Frustum::isVisible method -->
+      <function name="isVisible" Method=""/>
+      <function name="setUserAny" Ignore="" />
+      <function name="getUserAny" Ignore="" />
+      <_CustomIncDeclaration>
+protected: Object^ _userObject;
+
+public: property Object^ UserObject
+{
+    Object^ get() { return _userObject; }
+    void set(Object^ obj) { _userObject = obj; }
+}
+      </_CustomIncDeclaration>
+    </class>
+
+    <class name="Frustum">
+      <!-- Resolves ambiguity for proxy class (MovablePlane/Plane) -->
+      <function name="enableReflection" ExplicitCastingForParams=""/>
+      <function name="enableCustomNearClipPlane" ExplicitCastingForParams=""/>
+    </class>
+
+    <class name="Root">
+      <_CustomDisposing>
+// Collect all SharedPtr objects that are waiting for finalization
+System::GC::Collect();
+System::GC::WaitForPendingFinalizers();
+System::GC::Collect();
+      </_CustomDisposing>
+    </class>
+
+    <class name="AnimableObject" WrapType="Interface"/>
+
+    <class name="RenderTarget">
+      <function name="setActive" property="" Rename="setIsActive"/>
+      <function name="setAutoUpdated" property="" Rename="setIsAutoUpdated"/>
+    </class>
+
+    <class name="RenderWindow">
+      <function name="setDeactivateOnFocusChange" property="" Rename="setIsDeactivatedOnFocusChange"/>
+    </class>
+
+    <class name="Overlay">
+      <function name="_getWorldTransforms" Ignore=""/>
+    </class>
+
+    <class name="AnimationState" WrapType="NonOverridable">
+      <function name="getAnimationName" CachedGetAccessor=""/>
+    </class>
+
+    <class name="SceneManager" WrapType="NonOverridable">
+      <function name="getName" CachedGetAccessor=""/>
+      <function name="getRenderQueue" CachedGetAccessor=""/>
+      <function name="showBoundingBoxes" Rename="setShowBoundingBoxes"/>
+      <function name="_pauseRendering" Ignore=""/>
+      <function name="_resumeRendering" Ignore=""/>
+
+      <!-- Can't find Const_*List -->
+      <function name="getCameras" Ignore=""/>
+      <function name="getAnimations" Ignore=""/>
+
+      <class name="Listener" WrapType="Interface" />
+    </class>
+
+    <class name="LogListener" WrapType="NativeDirector"/>
+    <!--<class name="ShadowListener" WrapType="NativeDirector">
+      <function name="sortLightsAffectingFrustum" DefaultReturnValue="false"/>
+    </class>-->
+    <class name="RenderQueueListener" WrapType="NativeDirector"/>
+    <class name="ResourceGroupListener" WrapType="NativeDirector"/>
+    <class name="ResourceLoadingListener" WrapType="Interface" />
+    <class name="FrameListener" WrapType="NativeDirector" StopDelegationForReturn="false"/>
+    <class name="RenderTargetListener" WrapType="NativeDirector"/>
+    <class name="RenderObjectListener" WrapType="NativeDirector"/>
+    <class name="CompositorInstance">
+      <class name="Listener" WrapType="NativeDirector"/>
+    </class>
+    <class name="MaterialSerializer">
+      <function name="addListener" Ignore="" />
+      <function name="removeListener" Ignore="" />
+    </class>
+    <class name="Camera">
+      <function name="forwardIntersect">
+        <_CustomIncDeclaration>
+void ForwardIntersect(Mogre::Plane worldPlane, [Out] array&lt;Mogre::Vector4>^% intersect3d);
+        </_CustomIncDeclaration>
+        <_CustomCppDeclaration>
+void Camera::ForwardIntersect(Mogre::Plane worldPlane, array&lt;Mogre::Vector4>^% intersect3d)
+{
+    Ogre::vector&lt;Ogre::Vector4>::type vec;
+    static_cast&lt;Ogre::Camera*>(_native)->forwardIntersect(worldPlane, &amp;vec);
+    intersect3d = GetArrayFromVector&lt;Mogre::Vector4, Ogre::vector&lt;Ogre::Vector4>::type >(vec);
+}
+        </_CustomCppDeclaration>
+      </function>
+      <function name="getWorldSpaceCorners" ArrayType="8" />
+      <function name="addListener" Ignore="" />
+      <function name="removeListener" Ignore="" />
+    </class>
+
+    <class name="PixelUtil" WrapType="PlainWrapper">
+      <function name="getBitDepths">
+        <_CustomIncDeclaration>
+static void GetBitDepths(Mogre::PixelFormat format, [Out] array&lt;int>^% rgba);
+        </_CustomIncDeclaration>
+        <_CustomCppDeclaration>
+void PixelUtil::GetBitDepths(Mogre::PixelFormat format, array&lt;int>^% rgba)
+{
+    rgba = gcnew array&lt;int>(4);
+    pin_ptr&lt;int> ptr = &amp;rgba[0];
+    Ogre::PixelUtil::getBitDepths((Ogre::PixelFormat)format, ptr);
+}
+        </_CustomCppDeclaration>
+      </function>
+      <function name="getBitMasks">
+        <_CustomIncDeclaration>
+static void GetBitMasks(Mogre::PixelFormat format, [Out] array&lt;uint32>^% rgba);
+        </_CustomIncDeclaration>
+        <_CustomCppDeclaration>
+void PixelUtil::GetBitMasks(Mogre::PixelFormat format, array&lt;uint32>^% rgba)
+{
+    rgba = gcnew array&lt;uint32>(4);
+    pin_ptr&lt;uint32> ptr = &amp;rgba[0];
+    Ogre::PixelUtil::getBitMasks((Ogre::PixelFormat)format, ptr);
+}
+        </_CustomCppDeclaration>
+      </function>
+      <function name="getBitShifts">
+        <_CustomIncDeclaration>
+static void GetBitShifts(Mogre::PixelFormat format, [Out] array&lt;unsigned char>^% rgba);
+        </_CustomIncDeclaration>
+        <_CustomCppDeclaration>
+void PixelUtil::GetBitShifts(Mogre::PixelFormat format, array&lt;unsigned char>^% rgba)
+{
+    rgba = gcnew array&lt;unsigned char>(4);
+    pin_ptr&lt;unsigned char> ptr = &amp;rgba[0];
+    Ogre::PixelUtil::getBitShifts((Ogre::PixelFormat)format, ptr);
+}
+        </_CustomCppDeclaration>
+      </function>
+    </class>
+
+    <class name="MeshManager">
+      <_CustomIncDeclaration>
+public: generic&lt;typename T> where T : value class
+Mogre::PatchMeshPtr^ CreateBezierPatch(String^ name, String^ groupName, array&lt;T>^ controlPointArray, Mogre::VertexDeclaration^ declaration, size_t width, size_t height, size_t uMaxSubdivisionLevel, size_t vMaxSubdivisionLevel, Mogre::PatchSurface::VisibleSide visibleSide, Mogre::HardwareBuffer::Usage vbUsage, Mogre::HardwareBuffer::Usage ibUsage, bool vbUseShadow, bool ibUseShadow);
+      </_CustomIncDeclaration>
+      <_CustomCppDeclaration>
+generic&lt;typename T> where T : value class
+Mogre::PatchMeshPtr^ MeshManager::CreateBezierPatch(String^ name, String^ groupName, array&lt;T>^ controlPointArray, Mogre::VertexDeclaration^ declaration, size_t width, size_t height, size_t uMaxSubdivisionLevel, size_t vMaxSubdivisionLevel, Mogre::PatchSurface::VisibleSide visibleSide, Mogre::HardwareBuffer::Usage vbUsage, Mogre::HardwareBuffer::Usage ibUsage, bool vbUseShadow, bool ibUseShadow)
+{
+    DECLARE_NATIVE_STRING(o_name, name)
+    DECLARE_NATIVE_STRING(o_groupName, groupName)
+    pin_ptr&lt;T> buf = &amp;controlPointArray[0];
+
+    return static_cast&lt;Ogre::MeshManager*>(_native)->createBezierPatch(o_name, o_groupName, buf, declaration, width, height, uMaxSubdivisionLevel, vMaxSubdivisionLevel, (Ogre::PatchSurface::VisibleSide)visibleSide, (Ogre::HardwareBuffer::Usage)vbUsage, (Ogre::HardwareBuffer::Usage)ibUsage, vbUseShadow, ibUseShadow);
+}
+      </_CustomCppDeclaration>
+    </class>
+
+    <class name="LodStrategyManager">
+      <function name="getIterator" Property="" Ignore="" />
+    </class>
+
+    <class name="SceneManager">
+      <_CustomIncDeclaration>
+public:
+// Custom overloads for setting/getting SceneManager options
+
+bool SetOption(String^ strKey, bool value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] bool% value)
+{
+    pin_ptr&lt;bool> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+bool SetOption(String^ strKey, int value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] int% value)
+{
+    pin_ptr&lt;int> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+bool SetOption(String^ strKey, Real value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] Real% value)
+{
+    pin_ptr&lt;Real> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+bool SetOption(String^ strKey, String^ value)
+{
+    DECLARE_NATIVE_STRING(o_str, value)
+    return SetOption(strKey, &amp;o_str);
+}
+bool GetOption(String^ strKey, [Out] String^% value)
+{
+    Ogre::String o_str;
+    bool ret = GetOption(strKey, &amp;o_str);
+    if (ret)
+    {
+        value = TO_CLR_STRING(o_str);
+    }
+
+    return ret;
+}
+
+bool SetOption(String^ strKey, Mogre::Vector3 value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] Mogre::Vector3% value)
+{
+    pin_ptr&lt;Mogre::Vector3> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+bool SetOption(String^ strKey, Mogre::Vector2 value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] Mogre::Vector2% value)
+{
+    pin_ptr&lt;Mogre::Vector2> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+bool SetOption(String^ strKey, Mogre::Quaternion value)
+{
+    return SetOption(strKey, &amp;value);
+}
+bool GetOption(String^ strKey, [Out] Mogre::Quaternion% value)
+{
+    pin_ptr&lt;Mogre::Quaternion> p = &amp;value;
+    return GetOption(strKey, p);
+}
+
+IntPtr _pauseRendering( )
+{
+    return IntPtr(static_cast&lt;Ogre::SceneManager*>(_native)->_pauseRendering( ));
+}
+
+void _resumeRendering( IntPtr context )
+{
+    static_cast&lt;Ogre::SceneManager*>(_native)->_resumeRendering( reinterpret_cast&lt;Ogre::SceneManager::RenderContext*>(context.ToPointer()) );
+}
+      </_CustomIncDeclaration>
+    </class>
+
+    <class name="RenderTarget">
+      <_CustomIncDeclaration>
+public:
+// Custom overloads for getting custom attributes
+
+void GetCustomAttribute(String^ name, [Out] bool% value)
+{
+    pin_ptr&lt;bool> p = &amp;value;
+    GetCustomAttribute(name, p);
+}
+
+void GetCustomAttribute(String^ name, [Out] int% value)
+{
+    pin_ptr&lt;int> p = &amp;value;
+    GetCustomAttribute(name, p);
+}
+
+void GetCustomAttribute(String^ name, [Out] IntPtr% value)
+{
+    pin_ptr&lt;IntPtr> p = &amp;value;
+    GetCustomAttribute(name, p);
+}
+      </_CustomIncDeclaration>
+    </class>
+
+    <class name="StreamSerialiser">
+      <function name="read" Ignore=""/>
+      <function name="write" Ignore=""/>
+      <class name="Chunk" WrapType="PlainWrapper"/>
+    </class>
+
+    <class name="WorkQueue">
+      <_CustomIncPreDeclaration>
+public: typedef Ogre::WorkQueue::RequestID RequestID;
+      </_CustomIncPreDeclaration>
+      <typedef name="RequestID" Ignore="" />
+      <function name="addRequest" Ignore="" />
+      <class name="Request" WrapType="PlainWrapper">
+        <function name="Request" Ignore="" />
+      </class>
+      <class name="Response" WrapType="PlainWrapper">
+        <function name="Response" Ignore="" />
+      </class>
+      <class name="RequestHandler" WrapType="Interface">
+      </class>
+      <class name="ResponseHandler" WrapType="Interface">
+      </class>
+    </class>
+    <class name="DefaultWorkQueueBase" Ignore="" />
+
+    <class name="AnimationContainer" WrapType="Interface" />
+    <class name="SkeletonInstance">
+      <function name="getAnimation" Ignore="" />
+    </class>
+    <class name="AnimableValue">
+      <variable name="mBaseValueInt" Ignore="" />
+      <variable name="mBaseValueReal" Ignore="" />
+    </class>
+    <typedef name="DepthBufferMap" Ignore="" />
+    <typedef name="DepthBufferVec" Ignore="" />
+    <struct name="HardwareBufferLockGuard" Ignore="" />
+    <typedef name="VertexBufferLockGuard" Ignore="" />
+    <typedef name="IndexBufferLockGuard" Ignore="" />
+    <class name="GpuProgramManager">
+      <typedef name="Microcode" Ignore="" />
+    </class>
+    <class name="InstanceManager">
+      <typedef name="InstanceBatchMapIterator" Ignore="" />
+      <typedef name="InstanceBatchIterator" Ignore="" />
+    </class>
+    <class name="BaseInstanceBatchVTF" Ignore="" />
+    <class name="InstanceBatchHW" Ignore="" />
+    <class name="InstanceBatchShader" Ignore="" />
+    <class name="Viewport">
+      <class name="Listener" WrapType="NativeDirector" />
+    </class>
+    <class name="RenderSystemCapabilitiesManager">
+      <function name="getCapabilities" Ignore="" />
+    </class>
+    <class name="Entity">
+      <typedef name="SchemeHardwareAnimMap" Ignore="" />
+    </class>
+    <class name="SubMesh">
+      <typedef name="LODFaceList" Ignore="" />
+    </class>
+    <class name="FileSystemArchive">
+      <variable name="msIgnoreHidden" Ignore="" />
+    </class>
+    <class name="ZipArchive">
+      <function name="ZipArchive" HideParamsWithDefaultValues="" />
+    </class>
+    <typedef name="BinaryOptionList" Ignore="" />
+    <typedef name="UnaryOptionList" Ignore="" />
+    <typedef name="RenderWindowList" Ignore="" />
+
+  </namespace>
+</meta>
