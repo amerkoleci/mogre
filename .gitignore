@@ -1,28 +1,50 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+svn-archive
+svn-fast-export
+*.pyc
+.dotest
+syntax: glob
 *.obj
-
-# Precompiled Headers
-*.gch
+*.pdb
+*.user
+*.aps
 *.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
+*.sbr
+*.scc
+*.sdf
+*.opensdf
+*.dll
+*.ipch
+*.nupkg
+*.nuspec
+[Bb]in
+[Cc]MakeBin
+[Dd]ebug
+build
+sdks
+.build
+obj/
+[Rr]elease*/
+[Ll]ib*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+[Bb]uild[Ll]og.*
+*.[Pp]ublish.xml
+BuildProcessTemplates/*
+Published/*
+[Tt]humbs.db
+[Uu]pgradeLog*.[Xx][Mm][Ll]
+_[Uu]pgradeReport_Files*/
+*.build.csdef
+[Pp]ackage/*
