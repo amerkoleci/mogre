@@ -42,21 +42,33 @@ project "MogreNative"
 		}
 		
 	configuration { "x32", "windows", "debug" }
+			targetdir (MOGRE_BIN_DIR .. "Debug/x86")
+			debugdir (MOGRE_BIN_DIR .. "Debug/x86")
+			
 			links { 
 				path.join(OGRE_HOME, "lib", "Debug", "OgreMain_d.lib")
 			}
 
 	configuration { "x32", "windows", "release" }
+			targetdir (MOGRE_BIN_DIR .. "Release/x86")
+			debugdir (MOGRE_BIN_DIR .. "Release/x86")
+			
 			links { 
 				path.join(MOGRE_HOME, "ogre", "lib", "Release", "OgreMain.lib")
 			}
 
 	configuration { "x64", "windows", "debug" }
+			targetdir (MOGRE_BIN_DIR .. "Debug/x64")
+			debugdir (MOGRE_BIN_DIR .. "Debug/x64")
+			
 			links { 
 				path.join(MOGRE_HOME, "ogre", "lib", "Debug", "OgreMain_d.lib")
 			}
 
 	configuration { "x64", "windows", "release" }
+			targetdir (MOGRE_BIN_DIR .. "Release/x64")
+			debugdir (MOGRE_BIN_DIR .. "Debug/x64")
+			
 			links { 
 				path.join(MOGRE_HOME, "ogre", "lib", "Release", "OgreMain.lib")
 			}
