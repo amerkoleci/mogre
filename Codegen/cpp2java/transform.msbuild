@@ -1,6 +1,0 @@
-﻿<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Transform">
-	<Target Name="Transform">
-		<XslTransformation XmlInputPaths="$(MsBuildProjectDirectory)\build\doxyxml\index.xml" XslInputPath="$(MsBuildProjectDirectory)\build\doxyxml\combine.xslt" OutputPaths="$(MsBuildProjectDirectory)\build\all.xml" />
-		<XslTransformation XmlInputPaths="$(MsBuildProjectDirectory)\build\all.xml" XslInputPath="$(MsBuildProjectDirectory)\input.xslt" OutputPaths="$(MsBuildProjectDirectory)\build\meta.xml" />
-	</Target>
-</Project>
