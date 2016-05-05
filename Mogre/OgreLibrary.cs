@@ -9,7 +9,7 @@ namespace Mogre
 {
 	public static class OgreLibrary
 	{
-		public const string LibraryName = "MogreNative.dll";
+		public const string LibraryName = "MogreNative";
 	}
 
 	internal class WrapperString : IDisposable
