@@ -84,6 +84,7 @@
     <Reference Include="System" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml">

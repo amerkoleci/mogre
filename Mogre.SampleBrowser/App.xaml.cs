@@ -17,6 +17,24 @@ namespace Mogre.SampleBrowser
 		{
 			base.OnStartup(e);
 
+			MainWindow = new MainWindow();
+			MainWindow.Loaded += MainWindow_Loaded;
+
+			var host = new System.Windows.Forms.Integration.WindowsFormsHost
+			{
+				Width = 400,
+				Height = 400
+			};
+			MainWindow.Content = host;
+			MainWindow.Show();
+		}
+
+		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			var window = (Window)sender;
+			var handle = ((System.Windows.Forms.Integration.WindowsFormsHost)window.Content).Handle;
+			//var handle = new WindowInteropHelper(MainWindow).Handle;
+
 
 #if DEBUG
 			var pluginFileName = "plugins_d.cfg";
@@ -24,14 +42,9 @@ namespace Mogre.SampleBrowser
 			var pluginFileName = "plugins.cfg";
 #endif
 
-			MainWindow = new MainWindow();
-			MainWindow.Show();
-
 			_root = new Root(pluginFileName);
 			InitResources();
 			SetupRenderSystem();
-
-			var handle = new WindowInteropHelper(MainWindow).Handle;
 			CreateRenderWindow(handle);
 			InitializeResources();
 

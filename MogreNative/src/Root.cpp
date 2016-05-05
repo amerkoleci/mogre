@@ -81,6 +81,7 @@ extern "C"
 
 	MOGRE_EXPORTS_API bool Root_renderOneFrame(Ogre::Root* _this)
 	{
+		Ogre::WindowEventUtilities::messagePump();
 		return _this->renderOneFrame();
 	}
 
