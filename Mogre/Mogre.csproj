@@ -43,8 +43,14 @@
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="HashCodeHelper.cs" />
+    <Compile Include="RenderSystem.cs" />
+    <Compile Include="RenderTarget.cs" />
+    <Compile Include="RenderWindow.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="Runtime.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="ResourceGroupManager.cs" />
+    <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
