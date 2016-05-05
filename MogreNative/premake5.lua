@@ -11,7 +11,7 @@ project "MogreNative"
 
 	includedirs  { 
 		"src",
-		path.join(MOGRE_HOME, "ogre", "include", "OGRE"),
+		path.join(OGRE_HOME, "include/OGRE"),
 	}
 	
 	defines { "MOGRE_EXPORTS" }
@@ -19,7 +19,6 @@ project "MogreNative"
 	configuration { "Debug"}
 		defines { 
 			"_DEBUG",
-			"ALIMER_LOGGING",
 		}
 		flags { "Symbols", "FloatFast" }
 
@@ -44,7 +43,7 @@ project "MogreNative"
 		
 	configuration { "x32", "windows", "debug" }
 			links { 
-				path.join(MOGRE_HOME, "ogre", "lib", "Debug", "OgreMain_d.lib")
+				path.join(OGRE_HOME, "lib", "Debug", "OgreMain_d.lib")
 			}
 
 	configuration { "x32", "windows", "release" }

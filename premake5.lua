@@ -5,6 +5,7 @@
 MOGRE_HOME		= path.getabsolute(os.getcwd())
 MOGRE_BUILD_DIR   	= MOGRE_HOME .. "/.build/" .. _ACTION .. "/"
 MOGRE_BIN_DIR   	= MOGRE_HOME .. "/bin"
+OGRE_HOME   		= MOGRE_HOME .. "/ogre"
 
 printf("Premake home " .. MOGRE_HOME)
 printf("Build directory " .. MOGRE_BUILD_DIR)
