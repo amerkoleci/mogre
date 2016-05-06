@@ -89,4 +89,19 @@ extern "C"
 	{
 		return _this->renderOneFrame(timeSinceLastFrame);
 	}
+
+	MOGRE_EXPORTS_API Ogre::SceneManager* Root_createSceneManager(Ogre::Root* _this, const char* typeName, uint32_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, const char* instanceName)
+	{
+		return _this->createSceneManager(typeName, numWorkerThreads, threadedCullingMethod, instanceName);
+	}
+
+	MOGRE_EXPORTS_API Ogre::SceneManager* Root_createSceneManager2(Ogre::Root* _this, SceneTypeMask typeMask, uint32_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, const char* instanceName)
+	{
+		return _this->createSceneManager(typeMask, numWorkerThreads, threadedCullingMethod, instanceName);
+	}
+
+	MOGRE_EXPORTS_API Ogre::CompositorManager2* Root_getCompositorManager2(Ogre::Root* _this)
+	{
+		return _this->getCompositorManager2();
+	}
 }
