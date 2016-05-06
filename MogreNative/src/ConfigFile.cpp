@@ -7,7 +7,7 @@ extern "C"
 		return new Ogre::ConfigFile();
 	}
 
-	MOGRE_EXPORTS_API void Root_delete(Ogre::ConfigFile* _this)
+	MOGRE_EXPORTS_API void ConfigFile_delete(Ogre::ConfigFile* _this)
 	{
 		SafeDelete(_this);
 	}

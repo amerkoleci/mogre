@@ -12,6 +12,8 @@ namespace Mogre.SampleBrowser
 	{
 		Root _root;
 		RenderWindow _window;
+		SceneManager _sceneManager;
+		private Camera _camera;
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -19,21 +21,14 @@ namespace Mogre.SampleBrowser
 
 			MainWindow = new MainWindow();
 			MainWindow.Loaded += MainWindow_Loaded;
-
-			var host = new System.Windows.Forms.Integration.WindowsFormsHost
-			{
-				Width = 400,
-				Height = 400
-			};
-			MainWindow.Content = host;
 			MainWindow.Show();
 		}
 
 		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
-			var window = (Window)sender;
-			var handle = ((System.Windows.Forms.Integration.WindowsFormsHost)window.Content).Handle;
-			//var handle = new WindowInteropHelper(MainWindow).Handle;
+			var window = (MainWindow)sender;
+			var handle = window.panel.Handle;
+			//var handle = new WindowInteropHelper(window).Handle;
 
 
 #if DEBUG
@@ -46,13 +41,35 @@ namespace Mogre.SampleBrowser
 			InitResources();
 			SetupRenderSystem();
 			CreateRenderWindow(handle);
+			CreateSceneManager();
 			InitializeResources();
+			SetupCompositor();
 
 			CompositionTarget.Rendering += OnCompositionTargetRendering;
 		}
 
 		protected override void OnExit(ExitEventArgs e)
 		{
+			CompositionTarget.Rendering -= OnCompositionTargetRendering;
+
+			if (_camera != null)
+			{
+				_camera.Dispose();
+				_camera = null;
+			}
+
+			if (_sceneManager != null)
+			{
+				_sceneManager.Dispose();
+				_sceneManager = null;
+			}
+
+			if (_window != null)
+			{
+				_window.Dispose();
+				_window = null;
+			}
+
 			if (_root != null)
 			{
 				_root.Dispose();
@@ -107,8 +124,54 @@ namespace Mogre.SampleBrowser
 			ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
 		}
 
+		protected virtual void CreateSceneManager()
+		{
+#if DEBUG
+			//Debugging multithreaded code is a PITA, disable it.
+			const int numThreads = 1;
+			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
+#else
+            //getNumLogicalCores() may return 0 if couldn't detect
+            var numThreads = Math.Max( 1, PlatformInformation.NumLogicalCores );
+
+			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
+
+            //See doxygen documentation regarding culling methods.
+            //In some cases you may still want to use single thread.
+            if( numThreads > 1 )
+                threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
+#endif
+
+			_sceneManager = _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
+#if RTSHADER_SYSTEM
+			mShaderGenerator->addSceneManager(_sceneManager);
+#endif
+			//if (mOverlaySystem)
+			//	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+
+			// setup default viewport layout and camera
+			_camera = _sceneManager.CreateCamera("MainCamera");
+			//_camera->setAutoAspectRatio(true);
+			//_camera->setNearClipDistance(5);
+		}
+
+		CompositorWorkspace SetupCompositor()
+		{
+			CompositorManager2 compositorManager = _root.CompositorManager2;
+			const string workspaceName = "TestWorkspace";
+			if (!compositorManager.HasWorkspaceDefinition(workspaceName))
+			{
+				var backgroundColor = Color4.Red;
+				compositorManager.CreateBasicWorkspaceDef(workspaceName, backgroundColor);
+			}
+			return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName, true);
+		}
+
 		private void OnCompositionTargetRendering(object sender, EventArgs e)
 		{
+			if (_root == null)
+				return;
+
 			_root.RenderOneFrame();
 		}
 	}

@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mogre.SampleBrowser"
         mc:Ignorable="d"
-        Title="Mogre.SampleBrowser" Height="480" Width="640" WindowStartupLocation="CenterScreen">
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Title="Mogre.SampleBrowser" Height="480" Width="640" WindowStartupLocation="CenterScreen" >
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit" Click="ExitMenuItem_Click" />
+            </MenuItem>
+        </Menu>
+        <WindowsFormsHost Grid.Row="1" >
+            <wf:Panel x:Name="panel" />
+        </WindowsFormsHost>
     </Grid>
 </Window>

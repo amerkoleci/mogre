@@ -41,6 +41,14 @@ namespace Mogre
 			}
 		}
 
+		public CompositorManager2 CompositorManager2
+		{
+			get
+			{
+				return Runtime.LookupObject(Root_getCompositorManager2(_handle), (ptr) => new CompositorManager2(ptr));
+			}
+		}
+
 		protected override void NativeDelete()
 		{
 			Root_delete(_handle);
@@ -95,6 +103,39 @@ namespace Mogre
 				(ptr) => new RenderWindow(ptr));
 		}
 
+		public SceneManager CreateSceneManager(SceneType type, int numWorkerThreads = -1, InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread, string instanceName = "")
+		{
+			if (numWorkerThreads < 0)
+			{
+				numWorkerThreads = PlatformInformation.NumLogicalCores;
+				if (numWorkerThreads > 1)
+				{
+					threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
+				}
+			}
+
+			return Runtime.LookupObject(
+				Root_createSceneManager2(_handle, (ushort)type, (uint)numWorkerThreads, threadedCullingMethod, instanceName),
+				(ptr) => new SceneManager(ptr));
+		}
+
+		public SceneManager CreateSceneManager(string typeName, int numWorkerThreads = -1, InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread, string instanceName = "")
+		{
+			if (numWorkerThreads < 0)
+			{
+				numWorkerThreads = PlatformInformation.NumLogicalCores;
+				if (numWorkerThreads > 1)
+				{
+					threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
+				}
+			}
+
+			return Runtime.LookupObject(
+				Root_createSceneManager(_handle, typeName, (uint)numWorkerThreads, threadedCullingMethod, instanceName),
+				(ptr) => new SceneManager(ptr));
+		}
+
+
 		#region PInvoke
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -138,6 +179,21 @@ namespace Mogre
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern bool Root_renderOneFrame2(IntPtr handle, float timeSinceLastFrame);
 
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr Root_createSceneManager(IntPtr _this, string typeName, uint numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, string instanceName);
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr Root_createSceneManager2(IntPtr _this, ushort typeMask, uint numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, string instanceName);
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr Root_getCompositorManager2(IntPtr handle);
+
 		#endregion PInvoke
+	}
+
+	public enum InstancingThreadedCullingMethod
+	{
+		SingleThread,
+		Threaded,
 	}
 }
