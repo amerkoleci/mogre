@@ -81,20 +81,22 @@ namespace Mogre.SampleBrowser
 
 		protected virtual void InitResources()
 		{
-			//ConfigFile configFile = new ConfigFile();
-			//configFile.Load("resources.cfg", "\t:=", true);
-			//ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
-			//while (sectionIterator.MoveNext())
-			//{
-			//	string currentKey = sectionIterator.CurrentKey;
-			//	ConfigFile.SettingsMultiMap current = sectionIterator.Current;
-			//	foreach (KeyValuePair<string, string> current2 in current)
-			//	{
-			//		string key = current2.Key;
-			//		string value = current2.Value;
-			//		ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
-			//	}
-			//}
+			using (var configFile = new ConfigFile())
+			{
+				//configFile.Load("resources.cfg", "\t:=", true);
+				//ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
+				//while (sectionIterator.MoveNext())
+				//{
+				//	string currentKey = sectionIterator.CurrentKey;
+				//	ConfigFile.SettingsMultiMap current = sectionIterator.Current;
+				//	foreach (KeyValuePair<string, string> current2 in current)
+				//	{
+				//		string key = current2.Key;
+				//		string value = current2.Value;
+				//		ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
+				//	}
+				//}
+			}
 		}
 
 		private void SetupRenderSystem()
@@ -152,7 +154,7 @@ namespace Mogre.SampleBrowser
 			// setup default viewport layout and camera
 			_camera = _sceneManager.CreateCamera("MainCamera");
 			//_camera->setAutoAspectRatio(true);
-			//_camera->setNearClipDistance(5);
+			_camera.NearClipDistance = 5.0f;
 		}
 
 		CompositorWorkspace SetupCompositor()

@@ -37,6 +37,8 @@
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FileSystemLayer.cs" />
+    <Compile Include="ConfigFile.cs" />
     <Compile Include="CompositorWorkspace.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Frustum.cs" />
