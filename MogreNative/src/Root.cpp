@@ -1,14 +1,13 @@
 #include "stdafx.h"
 
-
-static char* CreateOutString(const string& str)
+char* CreateOutString(const string& str)
 {
 	char* result = new char[str.length() + 1];
 	strcpy(result, str.c_str());
 	return result;
 }
 
-static char* CreateOutString(const char* str)
+char* CreateOutString(const char* str)
 {
 	char* result = new char[strlen(str) + 1];
 	strcpy(result, str);

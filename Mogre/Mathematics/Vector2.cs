@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Mogre.Mathematics
+namespace Mogre
 {
 	/// <summary>
 	/// Represents a two dimensional mathematical vector.

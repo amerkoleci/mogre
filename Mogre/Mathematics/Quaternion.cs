@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Mogre.Mathematics
+namespace Mogre
 {
 	/// <summary>
 	/// Represents a four dimensional mathematical quaternion in Ogre3D format (w, x, y, z).
@@ -25,9 +25,9 @@ namespace Mogre.Mathematics
 		public static readonly Quaternion Zero = new Quaternion();
 
 		/// <summary>
-		/// The identity <see cref="Quaternion"/> (0, 0, 0, 1).
+		/// The identity <see cref="Quaternion"/> (1, 0, 0, 0).
 		/// </summary>
-		public static readonly Quaternion Identity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+		public static readonly Quaternion Identity = new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 
 		/// <summary>
 		/// The W component of the quaternion.

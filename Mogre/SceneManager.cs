@@ -25,11 +25,31 @@ namespace Mogre
 				(ptr) => new Camera(ptr));
 		}
 
+		public Entity CreateEntity(string meshName, string groupName, SceneMemoryManagerTypes sceneType = SceneMemoryManagerTypes.Dynamic)
+		{
+			Contract.ArgumentNotNull(meshName, nameof(meshName));
+
+			return Runtime.LookupObject(
+				SceneManager_createEntity(_handle, meshName, groupName ?? ResourceGroupManager.AutoDetectResourceGroupName, sceneType),
+				(ptr) => new Entity(ptr));
+		}
+
+		public Entity CreateEntity(string meshName)
+		{
+			Contract.ArgumentNotNull(meshName, nameof(meshName));
+
+			return Runtime.LookupObject(
+				SceneManager_createEntity(_handle, meshName, ResourceGroupManager.AutoDetectResourceGroupName, SceneMemoryManagerTypes.Dynamic),
+				(ptr) => new Entity(ptr));
+		}
+
 		#region PInvoke
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr SceneManager_getRootSceneNode(IntPtr handle);
 
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr SceneManager_createEntity(IntPtr handle, string meshName, string groupName, SceneMemoryManagerTypes sceneType);
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr SceneManager_createCamera(IntPtr handle, string name, bool notShadowCaster, bool forCubemapping);

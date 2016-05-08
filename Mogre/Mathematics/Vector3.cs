@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace Mogre.Mathematics
+namespace Mogre
 {
 	/// <summary>
 	/// Represents a three dimensional mathematical vector.

@@ -25,7 +25,40 @@ namespace Mogre
 				return _singleton;
 			}
 		}
-		
+
+		public static string DefaultResourceGroupName
+		{
+			get
+			{
+				using(var str = new WrapperString(ResourceGroupManager_DEFAULT_RESOURCE_GROUP_NAME()))
+				{
+					return str.StringValue;
+				}
+			}
+		}
+
+		public static string InternalResourceGroupName
+		{
+			get
+			{
+				using (var str = new WrapperString(ResourceGroupManager_INTERNAL_RESOURCE_GROUP_NAME()))
+				{
+					return str.StringValue;
+				}
+			}
+		}
+
+		public static string AutoDetectResourceGroupName
+		{
+			get
+			{
+				using (var str = new WrapperString(ResourceGroupManager_AUTODETECT_RESOURCE_GROUP_NAME()))
+				{
+					return str.StringValue;
+				}
+			}
+		}
+
 		public void InitialiseAllResourceGroups()
 		{
 			ResourceGroupManager_initialiseAllResourceGroups(_handle);
@@ -38,6 +71,15 @@ namespace Mogre
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern void ResourceGroupManager_initialiseAllResourceGroups(IntPtr handle);
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr ResourceGroupManager_DEFAULT_RESOURCE_GROUP_NAME();
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr ResourceGroupManager_INTERNAL_RESOURCE_GROUP_NAME();
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr ResourceGroupManager_AUTODETECT_RESOURCE_GROUP_NAME();
 
 		#endregion PInvoke
 	}

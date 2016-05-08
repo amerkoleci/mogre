@@ -82,3 +82,6 @@ void SafeDeleteArray(T*& resource)
 	delete[] resource;
 	resource = nullptr;
 }
+
+char* CreateOutString(const string& str);
+char* CreateOutString(const char* str);
