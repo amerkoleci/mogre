@@ -190,6 +190,24 @@ namespace Mogre
 		}
 
 		/// <summary>
+		/// Returns a hash code for this instance.
+		/// </summary>
+		/// <returns>
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+		/// </returns>
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = R.GetHashCode();
+				hashCode = (hashCode * 397) ^ G.GetHashCode();
+				hashCode = (hashCode * 397) ^ B.GetHashCode();
+				hashCode = (hashCode * 397) ^ A.GetHashCode();
+				return hashCode;
+			}
+		}
+
+		/// <summary>
 		/// Determines whether the specified <see cref="Color4"/> is equal to this instance.
 		/// </summary>
 		/// <param name="other">The <see cref="Color4"/> to compare with this instance.</param>

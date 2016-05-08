@@ -10,6 +10,14 @@ namespace Mogre
 
 		}
 
+		public SceneNode RootSceneNode
+		{
+			get
+			{
+				return Runtime.LookupObject(SceneManager_getRootSceneNode(_handle), (ptr) => new SceneNode(ptr));
+			}
+		}
+
 		public Camera CreateCamera(string name, bool notShadowCaster = true, bool forCubemapping = false)
 		{
 			return Runtime.LookupObject(
@@ -18,6 +26,10 @@ namespace Mogre
 		}
 
 		#region PInvoke
+
+		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+		static extern IntPtr SceneManager_getRootSceneNode(IntPtr handle);
+
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr SceneManager_createCamera(IntPtr handle, string name, bool notShadowCaster, bool forCubemapping);
