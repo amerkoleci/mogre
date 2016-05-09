@@ -83,11 +83,11 @@ namespace Mogre.SampleBrowser
 		{
 			using (var configFile = new ConfigFile())
 			{
-				//configFile.Load("resources.cfg", "\t:=", true);
-				//ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
-				//while (sectionIterator.MoveNext())
-				//{
-				//	string currentKey = sectionIterator.CurrentKey;
+				configFile.Load("resources.cfg");
+				ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
+				while (sectionIterator.MoveNext())
+				{
+					string currentKey = sectionIterator.CurrentKey;
 				//	ConfigFile.SettingsMultiMap current = sectionIterator.Current;
 				//	foreach (KeyValuePair<string, string> current2 in current)
 				//	{
@@ -95,7 +95,7 @@ namespace Mogre.SampleBrowser
 				//		string value = current2.Value;
 				//		ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
 				//	}
-				//}
+				}
 			}
 		}
 

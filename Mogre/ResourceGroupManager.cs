@@ -64,9 +64,23 @@ namespace Mogre
 			ResourceGroupManager_initialiseAllResourceGroups(_handle);
 		}
 
-		#region PInvoke
+        public void AddResourceLocation(string name,
+            string locType,
+            string resGroup,
+            bool recursive = false,
+            bool readOnly = true)
+        {
+            ResourceGroupManager_addResourceLocation(_handle, name, locType, resGroup, recursive, readOnly);
+        }
 
-		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+        public void AddResourceLocation(string name, string locType)
+        {
+            ResourceGroupManager_addResourceLocation(_handle, name, locType, ResourceGroupManager.DefaultResourceGroupName, false, true);
+        }
+
+        #region PInvoke
+
+        [DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr ResourceGroupManager_getSingletonPtr();
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -81,6 +95,14 @@ namespace Mogre
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr ResourceGroupManager_AUTODETECT_RESOURCE_GROUP_NAME();
 
-		#endregion PInvoke
-	}
+        [DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
+        static extern void ResourceGroupManager_addResourceLocation(IntPtr handle, 
+            string name,
+            string locType,
+            string resGroup,
+            [MarshalAs(UnmanagedType.U1)] bool recursive,
+            [MarshalAs(UnmanagedType.U1)]bool readOnly);
+
+        #endregion PInvoke
+    }
 }

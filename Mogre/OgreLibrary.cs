@@ -25,10 +25,10 @@ namespace Mogre
 
 		void IDisposable.Dispose()
 		{
-			Fbx_DeleteString(_handle);
+            Mogre_DeleteString(_handle);
 		}
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		static extern void Fbx_DeleteString(IntPtr chrArray);
+		static extern void Mogre_DeleteString(IntPtr chrArray);
 	}
 }

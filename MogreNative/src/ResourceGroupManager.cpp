@@ -26,4 +26,14 @@ extern "C"
 	{
 		return CreateOutString(ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 	}
+
+	MOGRE_EXPORTS_API void ResourceGroupManager_addResourceLocation(ResourceGroupManager* _this,
+		const char* name, 
+		const char* locType,
+		const char* resGroup, 
+		bool recursive, 
+		bool readOnly)
+	{
+		_this->addResourceLocation(name, locType, resGroup, recursive, readOnly);
+	}
 }
