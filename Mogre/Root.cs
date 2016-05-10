@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if OBSOLETE
+				using System;
 using System.Runtime.InteropServices;
 
 namespace Mogre
@@ -136,7 +137,7 @@ namespace Mogre
 		}
 
 
-		#region PInvoke
+#region PInvoke
 
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr Root_new(string pluginFileName, string configFileName, string logFileName);
@@ -188,7 +189,7 @@ namespace Mogre
 		[DllImport(OgreLibrary.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		static extern IntPtr Root_getCompositorManager2(IntPtr handle);
 
-		#endregion PInvoke
+#endregion PInvoke
 	}
 
 	public enum InstancingThreadedCullingMethod
@@ -197,3 +198,5 @@ namespace Mogre
 		Threaded,
 	}
 }
+
+#endif // OBSOLETE

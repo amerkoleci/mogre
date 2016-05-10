@@ -1,6 +1,10 @@
 #pragma once
 
 // C++ includes
+#include <Windows.h>
+#include <vcclr.h>
+#include <memory.h>
+#include <assert.h>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -47,7 +51,49 @@ using std::string;
 #endif
 
 #include <Ogre.h>
-using namespace Ogre;
+
+// .NET namespaces
+using namespace System;
+using namespace System::Collections::Generic;
+using namespace System::Diagnostics;
+using namespace System::Runtime::InteropServices;
+
+
+
+#define ThrowIfNull(var, varName)\
+{\
+	if (var == nullptr)\
+	throw gcnew ArgumentNullException(varName);\
+}
+#define ThrowIfNullOrDisposed(var, varName)\
+{\
+	if (var == nullptr)\
+	throw gcnew ArgumentNullException(varName);\
+	if (var->Disposed)\
+	throw gcnew ArgumentException("Argument is disposed", varName);\
+}
+#define ThrowIfDisposed(var, varName)\
+{\
+	if (var != nullptr && var->IsDisposed)\
+	throw gcnew ArgumentException("Argument is disposed", varName);\
+}
+#define ThrowIfDescriptionIsNullOrInvalid(var, varName)\
+{\
+	ThrowIfNull(var, varName);\
+	\
+	if(!var->IsValid())\
+	throw gcnew ArgumentException("Description is invalid", varName);\
+}
+#define ThrowIfThisDisposed() { if (this->Disposed) throw gcnew InvalidOperationException("The instance has been disposed of, no further operations should be performed."); }
+
+template <class T, class U>
+bool IsInstanceOf(U u)
+{
+	return dynamic_cast<T>(u) != nullptr;
+}
+
+
+
 
 #if defined(__CYGWIN32__)
 #	define MOGRE_INTERFACE_EXPORT __declspec(dllexport)

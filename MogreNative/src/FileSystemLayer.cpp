@@ -1,15 +1,42 @@
 #include "stdafx.h"
-#include "OgreFileSystemLayer.h"
+#include "FileSystemLayer.h"
+#include "Util.h"
+using namespace Mogre;
 
-extern "C"
+FileSystemLayer::FileSystemLayer()
 {
-	MOGRE_EXPORTS_API Ogre::FileSystemLayer* FileSystemLayer_new()
-	{
-		return OGRE_NEW_T(Ogre::FileSystemLayer, Ogre::MEMCATEGORY_GENERAL)(OGRE_VERSION_NAME);
-	}
+	_native = OGRE_NEW_T(Ogre::FileSystemLayer, Ogre::MEMCATEGORY_GENERAL)(OGRE_VERSION_NAME);
+}
 
-	MOGRE_EXPORTS_API void FileSystemLayer_delete(Ogre::FileSystemLayer* _this)
-	{
-		OGRE_DELETE_T(_this, FileSystemLayer, Ogre::MEMCATEGORY_GENERAL);
-	}
+FileSystemLayer::~FileSystemLayer()
+{
+	this->!FileSystemLayer();
+}
+
+FileSystemLayer::!FileSystemLayer()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	OGRE_DELETE_T(_native, FileSystemLayer, Ogre::MEMCATEGORY_GENERAL);
+	_native = nullptr;
+
+	OnDisposed(this, nullptr);
+}
+
+bool FileSystemLayer::IsDisposed::get()
+{
+	return (_native == nullptr);
+}
+
+String^ FileSystemLayer::GetConfigFilePath(String^ filename)
+{
+	return Util::ToManagedString(_native->getConfigFilePath(Util::ToUnmanagedString(filename)));
+}
+
+String^ FileSystemLayer::GetWritablePath(String^ filename)
+{
+	return Util::ToManagedString(_native->getWritablePath(Util::ToUnmanagedString(filename)));
 }

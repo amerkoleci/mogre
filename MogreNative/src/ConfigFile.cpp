@@ -1,79 +1,92 @@
 #include "stdafx.h"
+#include "ConfigFile.h"
+#include "Util.h"
+using namespace Mogre;
 
-extern "C"
+
+//Nested Types
+#define STLDECL_MANAGEDKEY String^
+#define STLDECL_MANAGEDVALUE String^
+#define STLDECL_NATIVEKEY Ogre::String
+#define STLDECL_NATIVEVALUE Ogre::String
+CPP_DECLARE_STLMULTIMAP(ConfigFile::, SettingsMultiMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE)
+#undef STLDECL_MANAGEDKEY
+#undef STLDECL_MANAGEDVALUE
+#undef STLDECL_NATIVEKEY
+#undef STLDECL_NATIVEVALUE
+
+#define STLDECL_MANAGEDKEY String^
+#define STLDECL_MANAGEDVALUE Mogre::ConfigFile::SettingsMultiMap^
+#define STLDECL_NATIVEKEY Ogre::String
+#define STLDECL_NATIVEVALUE Ogre::ConfigFile::SettingsMultiMap*
+CPP_DECLARE_STLMAP(ConfigFile::, SettingsBySection, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE)
+#undef STLDECL_MANAGEDKEY
+#undef STLDECL_MANAGEDVALUE
+#undef STLDECL_NATIVEKEY
+#undef STLDECL_NATIVEVALUE
+
+CPP_DECLARE_MAP_ITERATOR(ConfigFile::, SettingsIterator, Ogre::ConfigFile::SettingsIterator, Mogre::ConfigFile::SettingsMultiMap, String^, Ogre::String, String^, Ogre::String, )
+
+CPP_DECLARE_MAP_ITERATOR(ConfigFile::, SectionIterator, Ogre::ConfigFile::SectionIterator, Mogre::ConfigFile::SettingsBySection, Mogre::ConfigFile::SettingsMultiMap^, Ogre::ConfigFile::SettingsMultiMap*, String^, Ogre::String, )
+
+
+ConfigFile::ConfigFile()
 {
-	MOGRE_EXPORTS_API Ogre::ConfigFile* ConfigFile_new()
-	{
-		return new Ogre::ConfigFile();
-	}
+	_native = OGRE_NEW_T(Ogre::ConfigFile, Ogre::MEMCATEGORY_GENERAL)();
+}
 
-	MOGRE_EXPORTS_API void ConfigFile_delete(Ogre::ConfigFile* _this)
-	{
-		SafeDelete(_this);
-	}
+ConfigFile::~ConfigFile()
+{
+	this->!ConfigFile();
+}
 
-	MOGRE_EXPORTS_API void ConfigFile_clear(Ogre::ConfigFile* _this)
-	{
-		_this->clear();
-	}
+ConfigFile::!ConfigFile()
+{
+	OGRE_DELETE_T(_native, ConfigFile, Ogre::MEMCATEGORY_GENERAL);
+	_native = nullptr;
+}
 
-	MOGRE_EXPORTS_API void ConfigFile_load(Ogre::ConfigFile* _this, const char* fileName, const char* separators, bool trimWhitespace)
-	{
-		_this->load(fileName, separators, trimWhitespace);
-	}
+void ConfigFile::Clear()
+{
+	_native->clear();
+}
 
-	MOGRE_EXPORTS_API void ConfigFile_load2(Ogre::ConfigFile* _this, const char* fileName, const char* resourceGroup, const char* separators, bool trimWhitespace)
-	{
-		_this->load(fileName, resourceGroup, separators, trimWhitespace);
-	}
+void ConfigFile::Load(String^ fileName, String^ separators, bool trimWhitespace)
+{
+	_native->load(
+		Util::ToUnmanagedString(fileName),
+		Util::ToUnmanagedString(separators),
+		trimWhitespace
+	);
+}
 
-	MOGRE_EXPORTS_API void ConfigFile_loadDirect(Ogre::ConfigFile* _this, const char* fileName, const char* separators, bool trimWhitespace)
-	{
-		_this->loadDirect(fileName, separators, trimWhitespace);
-	}
+void ConfigFile::Load(String^ fileName, String^ separators)
+{
+	_native->load(
+		Util::ToUnmanagedString(fileName),
+		Util::ToUnmanagedString(separators),
+		true
+	);
+}
 
-	MOGRE_EXPORTS_API char* ConfigFile_getSetting(Ogre::ConfigFile* _this, const char* key, const char* section, const char* defaultValue)
-	{
-		return CreateOutString(_this->getSetting(key, section, defaultValue));
-	}
+void ConfigFile::Load(String^ fileName)
+{
+	_native->load(Util::ToUnmanagedString(fileName));
+}
 
-	MOGRE_EXPORTS_API Ogre::ConfigFile::SectionIterator* ConfigFile_getSectionIterator(Ogre::ConfigFile* _this)
-	{
-		return new Ogre::ConfigFile::SectionIterator(_this->getSectionIterator());
-	}
+ConfigFile::SectionIterator^ ConfigFile::GetSectionIterator()
+{
+	return static_cast<Ogre::ConfigFile*>(_native)->getSectionIterator();
+}
 
-	MOGRE_EXPORTS_API void SectionIterator_delete(Ogre::ConfigFile::SectionIterator* _this)
-	{
-		SafeDelete(_this);
-	}
+ConfigFile::SettingsIterator^ ConfigFile::GetSettingsIterator(String^ section)
+{
+	DECLARE_NATIVE_STRING(o_section, section)
 
-	MOGRE_EXPORTS_API bool SectionIterator_hasMoreElements(Ogre::ConfigFile::SectionIterator* _this)
-	{
-		return _this->hasMoreElements();
-	}
+	return static_cast<Ogre::ConfigFile*>(_native)->getSettingsIterator(o_section);
+}
 
-	MOGRE_EXPORTS_API char* SectionIterator_peekNextKey(Ogre::ConfigFile::SectionIterator* _this)
-	{
-		return CreateOutString(_this->peekNextKey());
-	}
-
-	MOGRE_EXPORTS_API Ogre::ConfigFile::SettingsMultiMap* SectionIterator_getNext(Ogre::ConfigFile::SectionIterator* _this)
-	{
-		return _this->getNext();
-	}
-
-	typedef void(*SettingsMultiMap_Iterate)(const char*, const char*);
-
-	MOGRE_EXPORTS_API void SettingsMultiMap_iterate(
-		Ogre::ConfigFile::SettingsMultiMap* _this, SettingsMultiMap_Iterate callback)
-	{
-		Ogre::String type, arch;
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = _this->begin(); i != _this->end(); i++)
-		{
-			type = i->first;
-			arch = i->second;
-			callback(type.c_str(), arch.c_str());
-		}
-	}
+ConfigFile::SettingsIterator^ ConfigFile::GetSettingsIterator()
+{
+	return static_cast<Ogre::ConfigFile*>(_native)->getSettingsIterator();
 }

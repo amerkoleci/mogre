@@ -8,16 +8,16 @@ extern "C"
 		return _this->hasWorkspaceDefinition(name);
 	}
 
-	MOGRE_EXPORTS_API void CompositorManager2_createBasicWorkspaceDef(Ogre::CompositorManager2* _this, const char* name, const ColourValue &backgroundColour)
+	MOGRE_EXPORTS_API void CompositorManager2_createBasicWorkspaceDef(Ogre::CompositorManager2* _this, const char* name, const Ogre::ColourValue &backgroundColour)
 	{
 		_this->createBasicWorkspaceDef(name, backgroundColour, Ogre::IdString());
 	}
 
-	MOGRE_EXPORTS_API CompositorWorkspace* CompositorManager2_addWorkspace(
+	MOGRE_EXPORTS_API Ogre::CompositorWorkspace* CompositorManager2_addWorkspace(
 		Ogre::CompositorManager2* _this,
 		Ogre::SceneManager* sceneManager,
-		RenderTarget* finalRenderTarget,
-		Camera* defaultCamera,
+		Ogre::RenderTarget* finalRenderTarget,
+		Ogre::Camera* defaultCamera,
 		const char* name,
 		bool enabled)
 	{

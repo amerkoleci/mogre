@@ -12,7 +12,7 @@ extern "C"
 		return Ogre::PlatformInformation::getCpuFeatures();
 	}
 
-	MOGRE_EXPORTS_API bool PlatformInformation_hasCpuFeature(PlatformInformation::CpuFeatures features)
+	MOGRE_EXPORTS_API bool PlatformInformation_hasCpuFeature(Ogre::PlatformInformation::CpuFeatures features)
 	{
 		return Ogre::PlatformInformation::hasCpuFeature(features);
 	}

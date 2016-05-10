@@ -95,6 +95,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MogreNative\MogreNative.vcxproj">
+      <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
+      <Name>MogreNative</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mogre\Mogre.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
       <Name>Mogre</Name>

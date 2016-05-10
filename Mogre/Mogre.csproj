@@ -44,8 +44,6 @@
     <Compile Include="Mathematics\Vector4.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="FileSystemLayer.cs" />
-    <Compile Include="ConfigFile.cs" />
     <Compile Include="CompositorWorkspace.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Frustum.cs" />
