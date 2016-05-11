@@ -179,6 +179,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\MogreCommon.h" />
     <ClInclude Include="include\MogreConfigFile.h" />
     <ClInclude Include="include\Custom\ManagedDataStream.h" />
     <ClInclude Include="include\Custom\MogrePair.h" />
@@ -191,6 +192,9 @@
     <ClInclude Include="include\MogreRenderSystem.h" />
     <ClInclude Include="include\MogreRenderTarget.h" />
     <ClInclude Include="include\MogreRenderWindow.h" />
+    <ClInclude Include="include\MogreResource.h" />
+    <ClInclude Include="include\MogreResourceGroupManager.h" />
+    <ClInclude Include="include\MogreStringInterface.h" />
     <ClInclude Include="include\MogreStringVector.h" />
     <ClInclude Include="include\ObjectTable.h" />
     <ClInclude Include="include\ObjectTableEventArgs.h" />
@@ -220,6 +224,8 @@
     <ClCompile Include="src\MogreFrameListener.cpp" />
     <ClCompile Include="src\MogreRenderTarget.cpp" />
     <ClCompile Include="src\MogreRenderWindow.cpp" />
+    <ClCompile Include="src\MogreResource.cpp" />
+    <ClCompile Include="src\MogreResourceGroupManager.cpp" />
     <ClCompile Include="src\MogreStringVector.cpp" />
     <ClCompile Include="src\ObjectTable.Disposal.cpp" />
     <ClCompile Include="src\ObjectTable.Get.cpp" />

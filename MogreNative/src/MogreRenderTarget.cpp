@@ -23,7 +23,7 @@ RenderTarget::!RenderTarget()
 
 	/*if (_renderTargetListener != 0)
 	{
-		if (_native != 0) static_cast<Ogre::RenderTarget*>(_native)->removeListener(_renderTargetListener);
+		if (_native != 0) _native->removeListener(_renderTargetListener);
 		delete _renderTargetListener; _renderTargetListener = 0;
 	}*/
 

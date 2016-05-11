@@ -56,7 +56,28 @@ namespace Mogre
 			{															\
 				return reinterpret_cast<const T&>(*pobj);				\
 			}
-
+	
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_NATIVEPTRVALUECLASS(MT, NT)	\
+			inline static operator NT& (MT mobj)								\
+			{																	\
+				return *mobj._native;											\
+			}																	\
+			inline static operator NT* (MT mobj)								\
+			{																	\
+				return mobj._native;											\
+			}																	\
+			inline static operator MT ( const NT& obj)							\
+			{																	\
+				MT clrobj;														\
+				clrobj._native = const_cast<NT*>(&obj);							\
+				return clrobj;													\
+			}																	\
+			inline static operator MT ( const NT* pobj)							\
+			{																	\
+				MT clrobj;														\
+				clrobj._native = const_cast<NT*>(pobj);							\
+				return clrobj;													\
+			}
 
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_PLAINWRAPPER(T)		\
 			inline static operator T^ (const Ogre::T* t) {				\
@@ -74,6 +95,27 @@ namespace Mogre
 			inline static operator Ogre::T& (T^ t) {					\
 				return *static_cast<Ogre::T*>(t->_native);				\
 			}
+
+#define RETURN_CLR_OBJECT_FOR_INTERFACE(MT, NT, n)			\
+			if (0 == n) return nullptr;							\
+			CLRObject* clr_obj = dynamic_cast<CLRObject*>(n);	\
+			if (0 == clr_obj)									\
+				throw gcnew System::Exception("The native class that implements " #NT " isn't a subclass of CLRObject. Cannot create the CLR wrapper object.");	\
+			Object^ clr = *clr_obj;								\
+			if (nullptr == clr) {								\
+				clr_obj->_Init_CLRObject();						\
+				clr = *clr_obj;									\
+			}													\
+			return static_cast<MT^>(clr);
+
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_INTERFACE(MT, NT)				\
+			static operator MT^ (const NT* t) {									\
+				RETURN_CLR_OBJECT_FOR_INTERFACE(MT, NT, (const_cast<NT*>(t)) )	\
+			}																	\
+			inline static operator NT* (MT^ t) {								\
+				return (t == CLR_NULL) ? 0 : t->_GetNativePtr();				\
+			}
+
 
 	// Most of Ogre classes that are wrapped by Mogre derive from CLRObject.
 	// It acts as the connection between the .NET objects and the Ogre objects that they wrap.

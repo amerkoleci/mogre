@@ -30,7 +30,7 @@ namespace Mogre
 			Contract.ArgumentNotNull(meshName, nameof(meshName));
 
 			return Runtime.LookupObject(
-				SceneManager_createEntity(_handle, meshName, groupName ?? ResourceGroupManager.AutoDetectResourceGroupName, sceneType),
+				SceneManager_createEntity(_handle, meshName, groupName ?? "AutoDetect", sceneType),
 				(ptr) => new Entity(ptr));
 		}
 
@@ -39,7 +39,7 @@ namespace Mogre
 			Contract.ArgumentNotNull(meshName, nameof(meshName));
 
 			return Runtime.LookupObject(
-				SceneManager_createEntity(_handle, meshName, ResourceGroupManager.AutoDetectResourceGroupName, SceneMemoryManagerTypes.Dynamic),
+				SceneManager_createEntity(_handle, meshName, "AutoDetect", SceneMemoryManagerTypes.Dynamic),
 				(ptr) => new Entity(ptr));
 		}
 

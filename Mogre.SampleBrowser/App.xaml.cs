@@ -91,9 +91,7 @@ namespace Mogre.SampleBrowser
 					string currentKey = sectionIterator.CurrentKey;
 					foreach (var pair in sectionIterator.Current)
 					{
-				//		string key = current2.Key;
-				//		string value = current2.Value;
-						//ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
+						ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
 					}
 				}
 			}
