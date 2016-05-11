@@ -42,13 +42,11 @@ namespace Mogre
 		}
 
 	public:
-		generic<typename T> where T : IDisposable
-			static void Add(intptr_t pointer, T object, IDisposable^ owner);
+		generic<typename T> where T : IDisposable static void Add(intptr_t pointer, T object, IDisposable^ owner);
 		static void EnsureUnmanagedObjectIsOnlyWrappedOnce(intptr_t unmanaged, Type^ managedType);
 
 		static void AddObjectOwner(IDisposable^ object, IDisposable^ owner);
-		generic<typename T> where T : IDisposable
-			static void AddOwnerTypeLookup(Object^ owner, T object);
+		generic<typename T> where T : IDisposable static void AddOwnerTypeLookup(Object^ owner, T object);
 
 		static bool Remove(intptr_t pointer);
 		static bool Remove(Object^ object);
@@ -56,26 +54,24 @@ namespace Mogre
 		static void Clear();
 
 		static Object^ GetObject(intptr_t pointer);
-		generic<typename T>
-			static T GetObject(intptr_t pointer);
+		generic<typename T> static T GetObject(intptr_t pointer);
 
-			static Object^ ObjectTable::TryGetObject(intptr_t pointer);
-			generic<typename T>
-				static T ObjectTable::TryGetObject(intptr_t pointer);
+		static Object^ GetOrCreateObject(intptr_t pointer);
+		generic<typename T> static T GetOrCreateObject(intptr_t pointer);
 
-				static intptr_t GetObject(Object^ object);
+		static Object^ ObjectTable::TryGetObject(intptr_t pointer);
+		generic<typename T> static T ObjectTable::TryGetObject(intptr_t pointer);
 
-				generic<typename T>
-					static array<T>^ GetObjects(intptr_t* pointers, int count);
+		static intptr_t GetObject(Object^ object);
 
-					generic<typename T> where T : ref class
-						static array<T>^ GetObjectsOfType();
+		generic<typename T> static array<T>^ GetObjects(intptr_t* pointers, int count);
 
-					generic<typename T> where T : ref class
-						static IEnumerable<T>^ GetObjectsOfOwnerAndType(Object^ owner);
+		generic<typename T> where T : ref class static array<T>^ GetObjectsOfType();
 
-					static bool Contains(intptr_t pointer);
-					static bool Contains(Object^ object);
+		generic<typename T> where T : ref class static IEnumerable<T>^ GetObjectsOfOwnerAndType(Object^ owner);
+
+		static bool Contains(intptr_t pointer);
+		static bool Contains(Object^ object);
 
 	private:
 		static void disposableObject_OnDisposing(Object^ sender, EventArgs^ e);

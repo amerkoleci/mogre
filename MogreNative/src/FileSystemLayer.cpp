@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "FileSystemLayer.h"
-#include "Util.h"
+#include "Marshalling.h"
 using namespace Mogre;
 
 FileSystemLayer::FileSystemLayer()
@@ -33,10 +33,13 @@ bool FileSystemLayer::IsDisposed::get()
 
 String^ FileSystemLayer::GetConfigFilePath(String^ filename)
 {
-	return Util::ToManagedString(_native->getConfigFilePath(Util::ToUnmanagedString(filename)));
+	DECLARE_NATIVE_STRING(o_filename, filename);
+
+	return TO_CLR_STRING(_native->getConfigFilePath(o_filename));
 }
 
 String^ FileSystemLayer::GetWritablePath(String^ filename)
 {
-	return Util::ToManagedString(_native->getWritablePath(Util::ToUnmanagedString(filename)));
+	DECLARE_NATIVE_STRING(o_filename, filename);
+	return TO_CLR_STRING(_native->getWritablePath(o_filename));
 }

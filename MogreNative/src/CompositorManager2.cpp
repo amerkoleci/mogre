@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#if TODO
 #include "Compositor/OgreCompositorManager2.h"
 
 extern "C"
@@ -24,3 +25,4 @@ extern "C"
 		return _this->addWorkspace(sceneManager, finalRenderTarget, defaultCamera, name, enabled);
 	}
 }
+#endif // TODO

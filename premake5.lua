@@ -19,17 +19,10 @@ solution "Mogre"
 		"Release",
 	}
 
-	if _ACTION == "xcode4" then
-		platforms {
-			"Universal",
-		}
-	else
-		platforms {
-			"x32",
-			"x64",
-			"Native", -- for targets where bitness is not specified
-		}
-	end
+	platforms {
+		"x32",
+		"x64"
+	}
 	
 	startproject "Mogre.SampleBrowser"
 

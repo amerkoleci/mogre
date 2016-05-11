@@ -10,9 +10,6 @@
     <ClCompile Include="src\CompositorManager2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConfigFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\FileSystemLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,25 +25,13 @@
     <ClCompile Include="src\PlatformInformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\RenderSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceGroupManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Root.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TextureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Marshalling.cpp">
@@ -55,11 +40,35 @@
     <ClCompile Include="src\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Custom\ManagedDataStream.cpp">
+      <Filter>Source Files\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreDataStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreConfigFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreStringVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreRenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreRoot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreFrameListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreRenderTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreRenderWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ConfigFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\FileSystemLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -79,9 +88,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ObjectTableOwnershipType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Root.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stdafx.h">
@@ -117,7 +123,34 @@
     <ClInclude Include="include\STLVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Util.h">
+    <ClInclude Include="include\Custom\MogrePair.h">
+      <Filter>Header Files\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Custom\ManagedDataStream.h">
+      <Filter>Header Files\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreDataStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreConfigFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreStringVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRoot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreFrameListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRenderTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRenderWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -127,6 +160,12 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{83c27716-a33a-415f-9df5-bbde7e6f70c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Custom">
+      <UniqueIdentifier>{51928ffd-a88e-464c-9231-28692d3bdc44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Custom">
+      <UniqueIdentifier>{234ecd9b-cb28-4c31-8ba7-b53a1031a0dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

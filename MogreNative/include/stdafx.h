@@ -92,29 +92,10 @@ bool IsInstanceOf(U u)
 	return dynamic_cast<T>(u) != nullptr;
 }
 
+#define GetPointerOrNull(obj) (obj == nullptr ? NULL : obj->UnmanagedPointer)
 
+#	define MOGRE_EXPORTS_API
 
-
-#if defined(__CYGWIN32__)
-#	define MOGRE_INTERFACE_EXPORT __declspec(dllexport)
-#	define MOGRE_INTERFACE_IMPORT __declspec(dllimport)
-
-#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WINAPI_FAMILY)
-#	define MOGRE_INTERFACE_EXPORT __declspec(dllexport)
-#	define MOGRE_INTERFACE_IMPORT __declspec(dllimport)
-#elif defined(__MACH__) || defined(__ANDROID__) || defined(__linux__) || defined(__QNX__)
-#	define MOGRE_INTERFACE_EXPORT
-#	define MOGRE_INTERFACE_IMPORT
-#else
-#	define MOGRE_INTERFACE_EXPORT
-#	define MOGRE_INTERFACE_IMPORT
-#endif
-
-#ifdef MOGRE_EXPORTS
-#	define MOGRE_EXPORTS_API			MOGRE_INTERFACE_EXPORT
-#else
-#	define MOGRE_EXPORTS_API			MOGRE_INTERFACE_IMPORT
-#endif
 
 template <typename T>
 void SafeDelete(T*& resource)

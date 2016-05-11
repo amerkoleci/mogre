@@ -9,14 +9,6 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug Native|Win32">
-      <Configuration>Debug Native</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug Native|x64">
-      <Configuration>Debug Native</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -25,19 +17,11 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release Native|Win32">
-      <Configuration>Release Native</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release Native|x64">
-      <Configuration>Release Native</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A6890CF8-123F-85ED-9B33-7FC407E87BF1}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>MogreNative</RootNamespace>
   </PropertyGroup>
@@ -50,13 +34,6 @@
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CLRSupport>true</CLRSupport>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Native|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CLRSupport>true</CLRSupport>
@@ -77,13 +54,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Native|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>true</CLRSupport>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -93,16 +63,10 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug Native|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release Native|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -120,13 +84,6 @@
     <TargetName>MogreNative</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Native|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Native\Debug\</IntDir>
-    <TargetName>MogreNative</TargetName>
-    <TargetExt>.dll</TargetExt>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\Release\x86\</OutDir>
@@ -141,18 +98,11 @@
     <TargetName>MogreNative</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Native|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Native\Release\</IntDir>
-    <TargetName>MogreNative</TargetName>
-    <TargetExt>.dll</TargetExt>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MOGRE_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOGRE_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -183,28 +133,11 @@
       <ImportLibrary>..\..\bin\Debug\x64\MogreNative.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Native|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MOGRE_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <FloatingPointModel>Fast</FloatingPointModel>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\..\bin\MogreNative.lib</ImportLibrary>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MOGRE_EXPORTS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOGRE_EXPORTS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -227,7 +160,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MOGRE_EXPORTS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOGRE_EXPORTS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -245,37 +178,24 @@
       <ImportLibrary>..\..\bin\Release\x64\MogreNative.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Native|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MOGRE_EXPORTS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;strdup=_strdup;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <FloatingPointModel>Fast</FloatingPointModel>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <ImportLibrary>..\..\bin\MogreNative.lib</ImportLibrary>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\ConfigFile.h" />
+    <ClInclude Include="include\MogreConfigFile.h" />
+    <ClInclude Include="include\Custom\ManagedDataStream.h" />
+    <ClInclude Include="include\Custom\MogrePair.h" />
     <ClInclude Include="include\FileSystemLayer.h" />
     <ClInclude Include="include\IDisposable.h" />
     <ClInclude Include="include\IteratorWrapper.h" />
     <ClInclude Include="include\Marshalling.h" />
+    <ClInclude Include="include\MogreDataStream.h" />
+    <ClInclude Include="include\MogreFrameListener.h" />
+    <ClInclude Include="include\MogreRenderSystem.h" />
+    <ClInclude Include="include\MogreRenderTarget.h" />
+    <ClInclude Include="include\MogreRenderWindow.h" />
+    <ClInclude Include="include\MogreStringVector.h" />
     <ClInclude Include="include\ObjectTable.h" />
     <ClInclude Include="include\ObjectTableEventArgs.h" />
     <ClInclude Include="include\ObjectTableOwnershipType.h" />
-    <ClInclude Include="include\Root.h" />
+    <ClInclude Include="include\MogreRoot.h" />
     <ClInclude Include="include\STLContainerWrappers.h" />
     <ClInclude Include="include\STLDeque.h" />
     <ClInclude Include="include\STLHashedVector.h" />
@@ -286,27 +206,30 @@
     <ClInclude Include="include\STLMultiSet.h" />
     <ClInclude Include="include\STLSet.h" />
     <ClInclude Include="include\STLVector.h" />
-    <ClInclude Include="include\Util.h" />
     <ClInclude Include="include\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CompositorManager2.cpp" />
-    <ClCompile Include="src\ConfigFile.cpp" />
+    <ClCompile Include="src\MogreConfigFile.cpp" />
+    <ClCompile Include="src\Custom\ManagedDataStream.cpp" />
     <ClCompile Include="src\FileSystemLayer.cpp" />
     <ClCompile Include="src\Marshalling.cpp" />
+    <ClCompile Include="src\MogreDataStream.cpp" />
+    <ClCompile Include="src\MogreFrameListener.cpp" />
+    <ClCompile Include="src\MogreRenderTarget.cpp" />
+    <ClCompile Include="src\MogreRenderWindow.cpp" />
+    <ClCompile Include="src\MogreStringVector.cpp" />
     <ClCompile Include="src\ObjectTable.Disposal.cpp" />
     <ClCompile Include="src\ObjectTable.Get.cpp" />
     <ClCompile Include="src\ObjectTable.cpp" />
     <ClCompile Include="src\PlatformInformation.cpp" />
-    <ClCompile Include="src\RenderSystem.cpp" />
+    <ClCompile Include="src\MogreRenderSystem.cpp" />
     <ClCompile Include="src\ResourceGroupManager.cpp" />
-    <ClCompile Include="src\Root.cpp" />
+    <ClCompile Include="src\MogreRoot.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
-    <ClCompile Include="src\SceneNode.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

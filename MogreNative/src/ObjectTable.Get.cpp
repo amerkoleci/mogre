@@ -5,12 +5,14 @@
 
 using namespace System::Threading;
 using namespace System::Linq;
+using namespace System::Reflection;
 using namespace Mogre;
 
 Object^ ObjectTable::GetObject(intptr_t pointer)
 {
 	return GetObject<Object^>(pointer);
 }
+
 generic<typename T> T ObjectTable::GetObject(intptr_t pointer)
 {
 	// Gracefully handle code requesting NULL by returning managed null
@@ -21,6 +23,37 @@ generic<typename T> T ObjectTable::GetObject(intptr_t pointer)
 
 	if (!_objectTable->ContainsKey(pointer))
 		throw gcnew ArgumentException(String::Format("Cannot find managed object with pointer address '{0}' (of type '{1}')", pointer, T::typeid->FullName));
+
+	return (T)_objectTable[pointer];
+}
+
+Object^ ObjectTable::GetOrCreateObject(intptr_t pointer)
+{
+	return GetOrCreateObject<Object^>(pointer);
+}
+
+generic<typename T> T ObjectTable::GetOrCreateObject(intptr_t pointer)
+{
+	// Gracefully handle code requesting NULL by returning managed null
+	// This saves having to null check everywhere, as you can't add inptr_t NULL as the key for an
+	// object to the ObjectTable in the first place
+	if (pointer == NULL)
+		return T();
+
+	if (!_objectTable->ContainsKey(pointer))
+	{
+		array<Object^>^ args = gcnew array<Object^>(1);
+		args[0] = pointer;
+
+		T object = (T)Activator::CreateInstance(T::typeid, 
+			BindingFlags::Public | BindingFlags::NonPublic | BindingFlags::Instance,
+			nullptr,
+			args,
+			nullptr);
+
+		_objectTable->Add(pointer, object);
+		return object;
+	}
 
 	return (T)_objectTable[pointer];
 }

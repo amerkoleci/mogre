@@ -20,7 +20,7 @@ namespace Mogre
 			CompositorManager2_createBasicWorkspaceDef(_handle, name, ref backgroundColor);
 		}
 
-		public CompositorWorkspace AddWorkspace(SceneManager scene, RenderTarget finalRenderTarget, Camera defaultCamera, string name, bool enabled)
+		/*public CompositorWorkspace AddWorkspace(SceneManager scene, RenderTarget finalRenderTarget, Camera defaultCamera, string name, bool enabled)
 		{
 			return Runtime.LookupObject(
 				CompositorManager2_addWorkspace(_handle, 
@@ -31,7 +31,7 @@ namespace Mogre
 				enabled
 				),
 				(ptr) => new CompositorWorkspace(ptr));
-		}
+		}*/
 
 		#region PInvoke
 		[return: MarshalAs(UnmanagedType.U1)]

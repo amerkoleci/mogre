@@ -55,13 +55,10 @@
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="HashCodeHelper.cs" />
-    <Compile Include="RenderSystem.cs" />
     <Compile Include="PlatformInformation.cs" />
     <Compile Include="CompositorManager2.cs" />
     <Compile Include="AnimableObject.cs" />
     <Compile Include="SceneManager.cs" />
-    <Compile Include="RenderTarget.cs" />
-    <Compile Include="RenderWindow.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="ResourceManager.cs" />

@@ -11,20 +11,14 @@ namespace Mogre
 {
 	using namespace System;
 
-	typedef System::Runtime::InteropServices::OutAttribute OutAttribute;
-	typedef System::Runtime::InteropServices::StructLayoutAttribute StructLayoutAttribute;
-	typedef System::Runtime::InteropServices::LayoutKind LayoutKind;
-	typedef System::Runtime::InteropServices::FieldOffsetAttribute FieldOffsetAttribute;
-	typedef System::Runtime::InteropServices::Marshal Marshal;
-
 	#define CLR_NULL ((Object^)nullptr)
 
-	#define DECLARE_NATIVE_STRING(nvar,mstr)								\
-		Ogre::String nvar;													\
-		InitNativeStringWithCLRString(nvar,mstr);
+	#define DECLARE_NATIVE_STRING(nvar,mstr) \
+		Ogre::String nvar; \
+		InitNativeStringWithCLRString(nvar,mstr)
 	
-	#define DECLARE_NATIVE_UTFSTRING(utfnvar,m_str)								\
-		Ogre::UTFString utfnvar;													\
+	#define DECLARE_NATIVE_UTFSTRING(utfnvar,m_str) \
+		Ogre::UTFString utfnvar; \
 		InitNativeUTFStringWithCLRString(utfnvar,m_str);
 
 	#define SET_NATIVE_STRING(nvar,mstr)		InitNativeStringWithCLRString(nvar,mstr);
@@ -34,7 +28,52 @@ namespace Mogre
 
 	void InitNativeStringWithCLRString(Ogre::String& ostr, System::String^ mstr);
 	void InitNativeUTFStringWithCLRString(Ogre::UTFString& ostr, System::String^ mstr);
+	
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
+			static operator T^ (const Ogre::T& ptr) {							\
+				if (ptr.isNull()) return nullptr;								\
+				return gcnew T(const_cast<Ogre::T&>(ptr));						\
+			}																	\
+			static operator Ogre::T& (T^ t) {									\
+				if (CLR_NULL == t) return *((gcnew T(Ogre::T()))->_sharedPtr);	\
+				return *(t->_sharedPtr);										\
+			}																	\
+			static operator Ogre::T* (T^ t) {									\
+				if (CLR_NULL == t) return (gcnew T(Ogre::T()))->_sharedPtr;		\
+				return t->_sharedPtr;											\
+			}
 
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_VALUECLASS(T)			\
+			inline static operator Ogre::T& (T& obj)					\
+			{															\
+				return reinterpret_cast<Ogre::T&>(obj);					\
+			}															\
+			inline static operator const T& ( const Ogre::T& obj)		\
+			{															\
+				return reinterpret_cast<const T&>(obj);					\
+			}															\
+			inline static operator const T& ( const Ogre::T* pobj)		\
+			{															\
+				return reinterpret_cast<const T&>(*pobj);				\
+			}
+
+
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_PLAINWRAPPER(T)		\
+			inline static operator T^ (const Ogre::T* t) {				\
+				if (t)													\
+					return gcnew T(const_cast<Ogre::T*>(t));			\
+				else													\
+					return nullptr;										\
+			}															\
+			inline static operator T^ (const Ogre::T& t) {				\
+				return gcnew T(&const_cast<Ogre::T&>(t));				\
+			}															\
+			inline static operator Ogre::T* (T^ t) {					\
+			return (t == CLR_NULL) ? 0 : static_cast<Ogre::T*>(t->_native);		\
+			}															\
+			inline static operator Ogre::T& (T^ t) {					\
+				return *static_cast<Ogre::T*>(t->_native);				\
+			}
 
 	// Most of Ogre classes that are wrapped by Mogre derive from CLRObject.
 	// It acts as the connection between the .NET objects and the Ogre objects that they wrap.
@@ -60,7 +99,7 @@ namespace Mogre
 	template <>
 	inline Ogre::String ToNative(System::String^ str)
 	{
-		DECLARE_NATIVE_STRING( o_str, str )
+		DECLARE_NATIVE_STRING(o_str, str);
 		return o_str;
 	}
 
@@ -195,7 +234,7 @@ namespace Mogre
 	template <typename MElem, typename NElem>
 	array<MElem>^ GetValueArrayFromNativeArray(const NElem* src, int len)
 	{
-		//STATIC_ASSERT( sizeof(MElem) == sizeof(NElem) )
+		static_assert( sizeof(MElem) == sizeof(NElem) )
 
 		array<MElem>^ arr = gcnew array<MElem>(len);
 		pin_ptr<MElem> p_arr = &arr[0];

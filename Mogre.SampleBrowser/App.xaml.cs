@@ -29,8 +29,8 @@ namespace Mogre.SampleBrowser
 		{
 			var window = (MainWindow)sender;
 			var handle = window.panel.Handle;
-
             //var handle = new WindowInteropHelper(window).Handle;
+
             _fileSystemLayer = new FileSystemLayer();
 
             var pluginFileName = _fileSystemLayer.GetConfigFilePath("plugins.cfg");
@@ -39,9 +39,9 @@ namespace Mogre.SampleBrowser
                 _fileSystemLayer.GetWritablePath("ogre.cfg"), 
                 _fileSystemLayer.GetWritablePath("Ogre.log"));
 
-			InitResources();
-			//SetupRenderSystem();
-			//CreateRenderWindow(handle);
+            InitResources();
+			SetupRenderSystem();
+			CreateRenderWindow(handle);
 			//CreateSceneManager();
 			//InitializeResources();
 			//SetupCompositor();
@@ -89,37 +89,37 @@ namespace Mogre.SampleBrowser
 				while (sectionIterator.MoveNext())
 				{
 					string currentKey = sectionIterator.CurrentKey;
-				//	ConfigFile.SettingsMultiMap current = sectionIterator.Current;
-				//	foreach (KeyValuePair<string, string> current2 in current)
-				//	{
+					foreach (var pair in sectionIterator.Current)
+					{
 				//		string key = current2.Key;
 				//		string value = current2.Value;
-				//		ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
-				//	}
+						//ResourceGroupManager.Singleton.AddResourceLocation(value, key, currentKey);
+					}
 				}
 			}
 		}
 
 		private void SetupRenderSystem()
 		{
-			//const string RenderSystemName = "Direct3D11 Rendering Subsystem";
-			//RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
-			//_root.RenderSystem = renderSystemByName;
-			//renderSystemByName.SetConfigOption("Full Screen", "No");
-			//renderSystemByName.SetConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
+			const string RenderSystemName = "Direct3D11 Rendering Subsystem";
+			RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
+			_root.RenderSystem = renderSystemByName;
+			renderSystemByName.SetConfigOption("Full Screen", "No");
+			renderSystemByName.SetConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
 		}
 
 		protected virtual void CreateRenderWindow(IntPtr handle)
 		{
+            _root.Initialise(true);
 			//_root.Initialise(false);
-			//if (handle != IntPtr.Zero)
-			//{
-			//	_window = _root.CreateRenderWindow("Test RenderWindow", handle, 800, 600);
-			//	return;
-			//}
+            //if (handle != IntPtr.Zero)
+            //{
+            //	_window = _root.CreateRenderWindow("Test RenderWindow", handle, 800, 600);
+            //	return;
+            //}
 
-			//_window = _root.CreateRenderWindow("Test RenderWindow", 800, 600);
-		}
+            //_window = _root.CreateRenderWindow("Test RenderWindow", 800, 600);
+        }
 
 		private static void InitializeResources()
 		{

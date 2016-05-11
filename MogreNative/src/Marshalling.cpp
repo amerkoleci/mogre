@@ -1,7 +1,7 @@
+#include "stdafx.h"
 #include "Marshalling.h"
 #include <iostream>
 #include <stdio.h>
-
 
 namespace Mogre
 {
@@ -31,8 +31,9 @@ namespace Mogre
 		int count = col->Count;
 		for (int i=0; i < count; i++)
 		{
-			DECLARE_NATIVE_STRING( o_key, col->Keys[i] )
-			DECLARE_NATIVE_STRING( o_val, col[i] )
+			DECLARE_NATIVE_STRING(o_key, col->Keys[i]);
+			DECLARE_NATIVE_STRING(o_val, col[i]);
+
 			map.insert( std::pair<Ogre::String,Ogre::String>( o_key, o_val ) );
 		}
 	}
