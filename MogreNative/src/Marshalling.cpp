@@ -37,4 +37,44 @@ namespace Mogre
 			map.insert( std::pair<Ogre::String,Ogre::String>( o_key, o_val ) );
 		}
 	}
+
+	Vector2 ToVector2(Ogre::Vector2 vector)
+	{
+		return Vector2(vector.x, vector.y);
+	}
+
+	Ogre::Vector2 FromVector2(Vector2 vector)
+	{
+		return Ogre::Vector2(vector.X, vector.Y);
+	}
+
+	Vector3 ToVector3(Ogre::Vector3 vector)
+	{
+		return Vector3(vector.x, vector.y, vector.z);
+	}
+
+	Ogre::Vector3 FromVector3(Vector3 vector)
+	{
+		return Ogre::Vector3(vector.X, vector.Y, vector.Z);
+	}
+
+	Vector4 ToVector4(Ogre::Vector4 vector)
+	{
+		return Vector4(vector.x, vector.y, vector.z, vector.w);
+	}
+
+	Ogre::Vector4 FromVector4(Vector4 vector)
+	{
+		return Ogre::Vector4(vector.X, vector.Y, vector.Z, vector.W);
+	}
+
+	Quaternion ToQuaternion(Ogre::Quaternion value)
+	{
+		return Quaternion(value.w, value.x, value.y, value.z);
+	}
+
+	Ogre::Quaternion FromQuaternion(Quaternion value)
+	{
+		return Ogre::Quaternion(value.W, value.X, value.Y, value.Z);
+	}
 }

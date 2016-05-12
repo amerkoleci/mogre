@@ -22,6 +22,30 @@ namespace Mogre
 		Distance = Ogre::SM_DISTANCE
 	};
 
+	public enum class SceneMemoryMgrTypes
+	{
+		SCENE_DYNAMIC = Ogre::SCENE_DYNAMIC,
+		SCENE_STATIC = Ogre::SCENE_STATIC,
+		Dynamic = Ogre::SCENE_DYNAMIC,
+		State = Ogre::SCENE_STATIC,
+	};
+
+	[Flags]
+	public enum class SceneType
+	{
+		ST_GENERIC = Ogre::ST_GENERIC,
+		ST_EXTERIOR_CLOSE = Ogre::ST_EXTERIOR_CLOSE,
+		ST_EXTERIOR_FAR = Ogre::ST_EXTERIOR_FAR,
+		ST_EXTERIOR_REAL_FAR = Ogre::ST_EXTERIOR_REAL_FAR,
+		ST_INTERIOR = Ogre::ST_INTERIOR,
+		Generic = Ogre::ST_GENERIC,
+		ExteriorClose = Ogre::ST_EXTERIOR_CLOSE,
+		ExteriorFar = Ogre::ST_EXTERIOR_FAR,
+		ExteriorRealFar = Ogre::ST_EXTERIOR_REAL_FAR,
+		Interior = Ogre::ST_INTERIOR
+	};
+
+
 	public enum class TrackVertexColourEnum
 	{
 		TVC_NONE = Ogre::TVC_NONE,

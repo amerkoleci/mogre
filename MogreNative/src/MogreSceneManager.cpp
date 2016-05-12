@@ -2,6 +2,8 @@
 #include "Marshalling.h"
 #include "ObjectTable.h"
 #include "MogreSceneManager.h"
+#include "MogreSceneNode.h"
+#include "MogreEntity.h"
 
 using namespace Mogre;
 
@@ -59,6 +61,34 @@ void SceneManager::DestroyCamera(Mogre::Camera^ camera)
 void SceneManager::DestroyAllCameras()
 {
 	_native->destroyAllCameras();
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(String^ meshName)
+{
+	DECLARE_NATIVE_STRING(o_meshName, meshName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_meshName, meshName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType)
+{
+	DECLARE_NATIVE_STRING(o_meshName, meshName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
+}
+
+Mogre::SceneNode^ SceneManager::RootSceneNode::get()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)_native->getRootSceneNode());
 }
 
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()

@@ -5,6 +5,7 @@
 #include "MogreRenderSystem.h"
 #include "MogreRenderWindow.h"
 #include "MogreCompositorManager2.h"
+#include "MogreSceneManager.h"
 
 using namespace Mogre;
 

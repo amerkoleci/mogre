@@ -3,7 +3,7 @@
 #include "IDisposable.h"
 #include "OgreRoot.h"
 #include "MogreFrameListener.h"
-#include "MogreSceneManager.h"
+#include "MogreCommon.h"
 
 namespace Mogre
 {

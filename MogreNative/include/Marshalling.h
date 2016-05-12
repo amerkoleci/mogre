@@ -28,6 +28,18 @@ namespace Mogre
 
 	void InitNativeStringWithCLRString(Ogre::String& ostr, System::String^ mstr);
 	void InitNativeUTFStringWithCLRString(Ogre::UTFString& ostr, System::String^ mstr);
+
+	Vector2 ToVector2(Ogre::Vector2 value);
+	Ogre::Vector2 FromVector2(Vector2 value);
+
+	Vector3 ToVector3(Ogre::Vector3 value);
+	Ogre::Vector3 FromVector3(Vector3 value);
+
+	Vector4 ToVector4(Ogre::Vector4 value);
+	Ogre::Vector4 FromVector4(Vector4 value);
+
+	Quaternion ToQuaternion(Ogre::Quaternion value);
+	Ogre::Quaternion FromQuaternion(Quaternion value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\
