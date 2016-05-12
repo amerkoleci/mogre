@@ -10,7 +10,6 @@ namespace Mogre
 	/// <summary>
 	/// Represents a two dimensional mathematical vector.
 	/// </summary>
-	[DataContract(Name = "Vector2")]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Vector2 : IEquatable<Vector2>, IFormattable
 	{

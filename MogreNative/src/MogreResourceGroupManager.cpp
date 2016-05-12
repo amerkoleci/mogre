@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogreResourceGroupManager.h"
+#include "MogreResource.h"
 
 using namespace Mogre;
 

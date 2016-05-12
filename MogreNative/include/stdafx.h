@@ -58,8 +58,6 @@ using namespace System::Collections::Generic;
 using namespace System::Diagnostics;
 using namespace System::Runtime::InteropServices;
 
-
-
 #define ThrowIfNull(var, varName)\
 {\
 	if (var == nullptr)\
@@ -93,22 +91,3 @@ bool IsInstanceOf(U u)
 }
 
 #define GetPointerOrNull(obj) (obj == nullptr ? NULL : obj->UnmanagedPointer)
-
-#	define MOGRE_EXPORTS_API
-
-
-template <typename T>
-void SafeDelete(T*& resource)
-{
-	delete resource;
-	resource = nullptr;
-}
-template <typename T>
-void SafeDeleteArray(T*& resource)
-{
-	delete[] resource;
-	resource = nullptr;
-}
-
-char* CreateOutString(const string& str);
-char* CreateOutString(const char* str);

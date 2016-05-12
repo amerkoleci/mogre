@@ -3,6 +3,7 @@
 #include "IDisposable.h"
 #include "OgreSceneManager.h"
 #include "MogreCommon.h"
+#include "MogreCamera.h"
 
 namespace Mogre
 {
@@ -40,6 +41,12 @@ namespace Mogre
 		{
 		}
 
+	public protected:
+		SceneManager(intptr_t ptr) : _native((Ogre::SceneManager*)ptr)
+		{
+
+		}
+
 	public:
 		~SceneManager();
 	protected:
@@ -49,6 +56,13 @@ namespace Mogre
 		{
 			virtual bool get();
 		}
+
+		Mogre::Camera^ CreateCamera(String^ name);
+		Mogre::Camera^ CreateCamera(String^ name, bool notShadowCaster);
+		Mogre::Camera^ CreateCamera(String^ name, bool notShadowCaster, bool forCubemapping);
+		Mogre::Camera^ FindCamera(String^ name);
+		void DestroyCamera(Mogre::Camera^ camera);
+		void DestroyAllCameras();
 
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer

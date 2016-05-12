@@ -10,7 +10,6 @@ namespace Mogre
 	/// <summary>
 	/// Represents a four dimensional mathematical quaternion in Ogre3D format (w, x, y, z).
 	/// </summary>
-	[DataContract(Name = "Quaternion")]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Quaternion : IEquatable<Quaternion>, IFormattable
 	{

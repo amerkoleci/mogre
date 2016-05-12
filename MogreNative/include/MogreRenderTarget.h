@@ -14,13 +14,18 @@ namespace Mogre
 		/// <summary>Raised once all disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposed;
 
-	private:
+	internal:
 		Ogre::RenderTarget* _native;
-		bool _createdByCLR;
 
 	private:
 		RenderTarget(Ogre::RenderTarget* obj) : _native(obj)
 		{
+		}
+
+	public protected:
+		RenderTarget(intptr_t ptr) : _native((Ogre::RenderTarget*)ptr)
+		{
+
 		}
 
 	protected:

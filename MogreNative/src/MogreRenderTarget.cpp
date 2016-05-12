@@ -27,8 +27,6 @@ RenderTarget::!RenderTarget()
 		delete _renderTargetListener; _renderTargetListener = 0;
 	}*/
 
-	if (_createdByCLR && _native) { delete _native; _native = 0; }
-
 	OnDisposed(this, nullptr);
 }
 

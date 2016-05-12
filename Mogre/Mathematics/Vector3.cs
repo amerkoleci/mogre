@@ -9,7 +9,6 @@ namespace Mogre
 	/// <summary>
 	/// Represents a three dimensional mathematical vector.
 	/// </summary>
-	[DataContract(Name = "Vector3")]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Vector3 : IEquatable<Vector3>, IFormattable
 	{

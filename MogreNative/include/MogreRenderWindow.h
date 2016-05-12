@@ -8,11 +8,8 @@ namespace Mogre
 {
 	public ref class RenderWindow : public RenderTarget
 	{
-	internal:
-		Ogre::RenderWindow* _native;
-
 	public protected:
-		RenderWindow(intptr_t ptr) : _native((Ogre::RenderWindow*)ptr)
+		RenderWindow(intptr_t ptr) : RenderTarget(ptr)
 		{
 
 		}

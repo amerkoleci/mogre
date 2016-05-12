@@ -10,7 +10,6 @@ namespace Mogre
 	/// Represents a color using Red, Green, Blue, and Alpha stored as four float
 	/// values.
 	/// </summary>
-	[DataContract]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Color4 : IEquatable<Color4>, IFormattable
 	{

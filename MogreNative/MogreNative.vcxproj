@@ -179,7 +179,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\MogreCamera.h" />
     <ClInclude Include="include\MogreCommon.h" />
+    <ClInclude Include="include\MogreCompositorManager2.h" />
     <ClInclude Include="include\MogreConfigFile.h" />
     <ClInclude Include="include\Custom\ManagedDataStream.h" />
     <ClInclude Include="include\Custom\MogrePair.h" />
@@ -189,6 +191,8 @@
     <ClInclude Include="include\Marshalling.h" />
     <ClInclude Include="include\MogreDataStream.h" />
     <ClInclude Include="include\MogreFrameListener.h" />
+    <ClInclude Include="include\MogreFrustum.h" />
+    <ClInclude Include="include\MogreMovableObject.h" />
     <ClInclude Include="include\MogrePlatformInformation.h" />
     <ClInclude Include="include\MogreRenderSystem.h" />
     <ClInclude Include="include\MogreRenderTarget.h" />
@@ -216,14 +220,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\CompositorManager2.cpp" />
+    <ClCompile Include="src\MogreCamera.cpp" />
+    <ClCompile Include="src\MogreCompositorManager2.cpp" />
     <ClCompile Include="src\MogreConfigFile.cpp" />
     <ClCompile Include="src\Custom\ManagedDataStream.cpp" />
     <ClCompile Include="src\FileSystemLayer.cpp" />
     <ClCompile Include="src\Marshalling.cpp" />
     <ClCompile Include="src\MogreDataStream.cpp" />
     <ClCompile Include="src\MogreFrameListener.cpp" />
+    <ClCompile Include="src\MogreFrustum.cpp" />
+    <ClCompile Include="src\MogreMovableObject.cpp" />
     <ClCompile Include="src\MogrePlatformInformation.cpp" />
     <ClCompile Include="src\MogreRenderTarget.cpp" />
     <ClCompile Include="src\MogreRenderWindow.cpp" />
@@ -235,9 +241,7 @@
     <ClCompile Include="src\ObjectTable.Get.cpp" />
     <ClCompile Include="src\ObjectTable.cpp" />
     <ClCompile Include="src\MogreRenderSystem.cpp" />
-    <ClCompile Include="src\ResourceGroupManager.cpp" />
     <ClCompile Include="src\MogreRoot.cpp" />
-    <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +249,11 @@
     <Reference Include="System.Core">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mogre\Mogre.csproj">
+      <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

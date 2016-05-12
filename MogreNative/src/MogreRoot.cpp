@@ -4,6 +4,7 @@
 #include "MogreRoot.h"
 #include "MogreRenderSystem.h"
 #include "MogreRenderWindow.h"
+#include "MogreCompositorManager2.h"
 
 using namespace Mogre;
 
@@ -77,9 +78,15 @@ bool Root::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+
+Mogre::CompositorManager2^ Root::CompositorManager2::get()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorManager2^>((intptr_t)_native->getCompositorManager2());
+}
+
 Mogre::RenderWindow^ Root::AutoCreatedWindow::get()
 {
-	return ObjectTable::TryGetObject<Mogre::RenderWindow^>((intptr_t)_native->getAutoCreatedWindow());
+	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->getAutoCreatedWindow());
 }
 
 unsigned int Root::DisplayMonitorCount::get()
@@ -356,18 +363,4 @@ void Root::UnloadPlugin(String^ pluginName)
 	DECLARE_NATIVE_STRING(o_pluginName, pluginName);
 
 	_native->unloadPlugin(o_pluginName);
-}
-
-char* CreateOutString(const string& str)
-{
-	char* result = new char[str.length() + 1];
-	strcpy(result, str.c_str());
-	return result;
-}
-
-char* CreateOutString(const char* str)
-{
-	char* result = new char[strlen(str) + 1];
-	strcpy(result, str);
-	return result;
 }

@@ -6,5 +6,5 @@ using namespace Mogre;
 
 Ogre::RenderWindow* RenderWindow::UnmanagedPointer::get()
 {
-	return _native;
+	return static_cast<Ogre::RenderWindow*>(_native);
 }

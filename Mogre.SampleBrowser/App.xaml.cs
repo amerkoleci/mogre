@@ -43,7 +43,7 @@ namespace Mogre.SampleBrowser
             SetupRenderSystem();
             CreateRenderWindow(handle);
             CreateSceneManager();
-            //InitializeResources();
+            InitializeResources();
             SetupCompositor();
 
             CompositionTarget.Rendering += OnCompositionTargetRendering;
@@ -55,7 +55,7 @@ namespace Mogre.SampleBrowser
 
             if (_camera != null)
             {
-                _camera.Dispose();
+                //_camera.Dispose();
                 _camera = null;
             }
 
@@ -91,7 +91,7 @@ namespace Mogre.SampleBrowser
                     string currentKey = sectionIterator.CurrentKey;
                     foreach (var pair in sectionIterator.Current)
                     {
-                        ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
+                        //ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
                     }
                 }
             }
@@ -120,8 +120,8 @@ namespace Mogre.SampleBrowser
 
         private static void InitializeResources()
         {
-            TextureManager.Singleton.DefaultNumMipmaps = 5;
-            ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
+            //TextureManager.Singleton.DefaultNumMipmaps = 5;
+            //ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
         }
 
         protected virtual void CreateSceneManager()
@@ -150,22 +150,22 @@ namespace Mogre.SampleBrowser
             //	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
             // setup default viewport layout and camera
-            //_camera = _sceneManager.CreateCamera("MainCamera");
+            _camera = _sceneManager.CreateCamera("MainCamera");
             //_camera->setAutoAspectRatio(true);
             //_camera.NearClipDistance = 5.0f;
         }
 
         CompositorWorkspace SetupCompositor()
         {
-            //CompositorManager2 compositorManager = _root.CompositorManager2;
-            //const string workspaceName = "TestWorkspace";
-            //if (!compositorManager.HasWorkspaceDefinition(workspaceName))
-            //{
-            //	var backgroundColor = Color4.Red;
-            //	compositorManager.CreateBasicWorkspaceDef(workspaceName, backgroundColor);
-            //}
-            //return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName, true);
-            return null;
+            CompositorManager2 compositorManager = _root.CompositorManager2;
+            const string workspaceName = "TestWorkspace";
+            if (!compositorManager.HasWorkspaceDefinition(workspaceName))
+            {
+                var backgroundColor = Color4.Red;
+                compositorManager.CreateBasicWorkspaceDef(workspaceName, backgroundColor);
+            }
+
+            return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName);
         }
 
         private void OnCompositionTargetRendering(object sender, EventArgs e)

@@ -13,6 +13,7 @@ namespace Mogre
 	ref class RenderTarget;
 	ref class RenderWindow;
 	ref class SceneManager;
+	ref class CompositorManager2;
 
 	public enum class InstancingThreadedCullingMethod
 	{
@@ -155,6 +156,12 @@ namespace Mogre
 					return mp_return;
 				}
 			}
+		}
+
+		property Mogre::CompositorManager2^ CompositorManager2
+		{
+		public:
+			Mogre::CompositorManager2^ get();
 		}
 
 		property Mogre::RenderWindow^ AutoCreatedWindow
