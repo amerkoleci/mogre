@@ -8,6 +8,11 @@
 
 using namespace Mogre;
 
+Ogre::CompositorWorkspace* CompositorWorkspace::UnmanagedPointer::get()
+{
+	return _native;
+}
+
 bool CompositorManager2::HasWorkspaceDefinition(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
@@ -60,6 +65,21 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		position);
 
 	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+}
+
+void CompositorManager2::RemoveWorkspace(CompositorWorkspace^ workspace)
+{
+	_native->removeWorkspace(GetPointerOrNull(workspace));
+}
+
+void CompositorManager2::RemoveAllWorkspaces()
+{
+	_native->removeAllWorkspaces();
+}
+
+void CompositorManager2::RemoveAllWorkspaceDefinitions()
+{
+	_native->removeAllWorkspaceDefinitions();
 }
 
 Ogre::CompositorManager2* CompositorManager2::UnmanagedPointer::get()

@@ -91,7 +91,7 @@ namespace Mogre.SampleBrowser
                     string currentKey = sectionIterator.CurrentKey;
                     foreach (var pair in sectionIterator.Current)
                     {
-                        //ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
+                        ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
                     }
                 }
             }
@@ -121,7 +121,7 @@ namespace Mogre.SampleBrowser
         private static void InitializeResources()
         {
             //TextureManager.Singleton.DefaultNumMipmaps = 5;
-            //ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
+            ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
         }
 
         protected virtual void CreateSceneManager()

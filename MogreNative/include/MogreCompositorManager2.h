@@ -17,6 +17,12 @@ namespace Mogre
 		{
 
 		}
+
+	internal:
+		property Ogre::CompositorWorkspace* UnmanagedPointer
+		{
+			Ogre::CompositorWorkspace* get();
+		}
 	};
 
 	ref class SceneManager;
@@ -47,6 +53,10 @@ namespace Mogre
 		CompositorWorkspace^ AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName);
 		CompositorWorkspace^ AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled);
 		CompositorWorkspace^ AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled, int position);
+
+		void RemoveWorkspace(CompositorWorkspace^ workspace);
+		void RemoveAllWorkspaces();
+		void RemoveAllWorkspaceDefinitions();
 
 	internal:
 		property Ogre::CompositorManager2* UnmanagedPointer

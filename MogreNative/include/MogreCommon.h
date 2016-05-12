@@ -27,7 +27,7 @@ namespace Mogre
 		SCENE_DYNAMIC = Ogre::SCENE_DYNAMIC,
 		SCENE_STATIC = Ogre::SCENE_STATIC,
 		Dynamic = Ogre::SCENE_DYNAMIC,
-		State = Ogre::SCENE_STATIC,
+		Static = Ogre::SCENE_STATIC,
 	};
 
 	[Flags]
