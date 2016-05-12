@@ -3,6 +3,7 @@
 #include "IDisposable.h"
 #include "OgreRoot.h"
 #include "MogreFrameListener.h"
+#include "MogreSceneManager.h"
 
 namespace Mogre
 {
@@ -11,6 +12,13 @@ namespace Mogre
 
 	ref class RenderTarget;
 	ref class RenderWindow;
+	ref class SceneManager;
+
+	public enum class InstancingThreadedCullingMethod
+	{
+		SingleThread = Ogre::INSTANCING_CULLING_SINGLETHREAD,
+		Threaded = Ogre::INSTANCING_CULLING_THREADED
+	};
 
 	public ref class Root : IDisposable, public IFrameListener_Receiver
 	{
@@ -149,6 +157,56 @@ namespace Mogre
 			}
 		}
 
+		property Mogre::RenderWindow^ AutoCreatedWindow
+		{
+		public:
+			Mogre::RenderWindow^ get();
+		}
+
+		property unsigned int DisplayMonitorCount
+		{
+		public:
+			unsigned int get();
+		}
+
+		property Ogre::Real FrameSmoothingPeriod
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real period);
+		}
+
+		property bool IsInitialised
+		{
+		public:
+			bool get();
+		}
+
+		property bool BlendIndicesGpuRedundant
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
+		property bool BlendWeightsGpuRedundant
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
+		property Ogre::Real DefaultMinPixelSize
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real value);
+		}
+
 		property Mogre::RenderSystem^ RenderSystem
 		{
 		public:
@@ -157,16 +215,54 @@ namespace Mogre
 			void set(Mogre::RenderSystem^ system);
 		}
 
+		void SaveConfig();
+		bool RestoreConfig();
+		bool ShowConfigDialog();
+
 		//Mogre::RenderSystemList^ GetAvailableRenderers();
 		Mogre::RenderSystem^ GetRenderSystemByName(String^ name);
 
 		Mogre::RenderWindow^ Initialise(bool autoCreateWindow, String^ windowTitle);
 		Mogre::RenderWindow^ Initialise(bool autoCreateWindow);
 
-		void Shutdown();
+		Mogre::SceneManager^ CreateSceneManager(String^ typeName, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, String^ instanceName);
+		Mogre::SceneManager^ CreateSceneManager(String^ typeName, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod);
+
+		Mogre::SceneManager^ CreateSceneManager(SceneType typeMask, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, String^ instanceName);
+		Mogre::SceneManager^ CreateSceneManager(SceneType typeMask, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod);
+
+		void DestroySceneManager(Mogre::SceneManager^ sceneManager);
+		Mogre::SceneManager^ GetSceneManager(String^ instanceName);
+
+		String^ GetErrorDescription(long errorNumber);
+
+		void QueueEndRendering();
 		void StartRendering();
 		bool RenderOneFrame();
 		bool RenderOneFrame(float timeSinceLastFrame);
+		void Shutdown();
+
+		void AddResourceLocation(String^ name, String^ locType, String^ groupName, bool recursive);
+		void AddResourceLocation(String^ name, String^ locType, String^ groupName);
+		void AddResourceLocation(String^ name, String^ locType);
+
+		void RemoveResourceLocation(String^ name, String^ groupName);
+		void RemoveResourceLocation(String^ name);
+
+		//Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen, Mogre::Const_NameValuePairList^ miscParams);
+		Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen);
+		Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height);
+
+		Mogre::RenderWindow^ CreateRenderWindow(String^ name, IntPtr handle, unsigned int width, unsigned int height, bool fullScreen);
+		Mogre::RenderWindow^ CreateRenderWindow(String^ name, IntPtr handle, unsigned int width, unsigned int height);
+
+		void DetachRenderTarget(Mogre::RenderTarget^ target);
+		void DetachRenderTarget(String^ name);
+
+		Mogre::RenderTarget^ GetRenderTarget(String^ name);
+
+		void LoadPlugin(String^ pluginName);
+		void UnloadPlugin(String^ pluginName);
 
 	protected public:
 		virtual bool OnFrameStarted(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameStarted
@@ -178,11 +274,5 @@ namespace Mogre
 		{
 			return FrameEnded(evt);
 		}
-	};
-
-	public enum class InstancingThreadedCullingMethod
-	{
-		SingleThread = Ogre::INSTANCING_CULLING_SINGLETHREAD,
-		Threaded = Ogre::INSTANCING_CULLING_THREADED
 	};
 }

@@ -36,5 +36,11 @@ namespace Mogre
 		{
 			virtual bool get();
 		}
+
+	internal:
+		property Ogre::RenderTarget* UnmanagedPointer
+		{
+			Ogre::RenderTarget* get();
+		}
 	};
 }

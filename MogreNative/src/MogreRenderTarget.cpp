@@ -36,3 +36,8 @@ bool RenderTarget::IsDisposed::get()
 {
 	return (_native == nullptr);
 }
+
+Ogre::RenderTarget* RenderTarget::UnmanagedPointer::get()
+{
+	return _native;
+}

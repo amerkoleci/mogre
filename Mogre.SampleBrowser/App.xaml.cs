@@ -5,134 +5,133 @@ using System.Windows.Media;
 
 namespace Mogre.SampleBrowser
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
-	{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
         FileSystemLayer _fileSystemLayer;
         Root _root;
-		RenderWindow _window;
-		SceneManager _sceneManager;
-		private Camera _camera;
+        RenderWindow _window;
+        SceneManager _sceneManager;
+        private Camera _camera;
 
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			base.OnStartup(e);
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
 
-			MainWindow = new MainWindow();
-			MainWindow.Loaded += MainWindow_Loaded;
-			MainWindow.Show();
-		}
+            MainWindow = new MainWindow();
+            MainWindow.Loaded += MainWindow_Loaded;
+            MainWindow.Show();
+        }
 
-		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-		{
-			var window = (MainWindow)sender;
-			var handle = window.panel.Handle;
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var window = (MainWindow)sender;
+            var handle = window.panel.Handle;
             //var handle = new WindowInteropHelper(window).Handle;
 
             _fileSystemLayer = new FileSystemLayer();
 
             var pluginFileName = _fileSystemLayer.GetConfigFilePath("plugins.cfg");
 
-            _root = new Root(pluginFileName, 
-                _fileSystemLayer.GetWritablePath("ogre.cfg"), 
+            _root = new Root(pluginFileName,
+                _fileSystemLayer.GetWritablePath("ogre.cfg"),
                 _fileSystemLayer.GetWritablePath("Ogre.log"));
 
             InitResources();
-			SetupRenderSystem();
-			CreateRenderWindow(handle);
-			//CreateSceneManager();
-			//InitializeResources();
-			//SetupCompositor();
+            SetupRenderSystem();
+            CreateRenderWindow(handle);
+            CreateSceneManager();
+            //InitializeResources();
+            SetupCompositor();
 
-			CompositionTarget.Rendering += OnCompositionTargetRendering;
-		}
-
-		protected override void OnExit(ExitEventArgs e)
-		{
-			CompositionTarget.Rendering -= OnCompositionTargetRendering;
-
-			if (_camera != null)
-			{
-				_camera.Dispose();
-				_camera = null;
-			}
-
-			if (_sceneManager != null)
-			{
-				_sceneManager.Dispose();
-				_sceneManager = null;
-			}
-
-			if (_window != null)
-			{
-				_window.Dispose();
-				_window = null;
-			}
-
-			if (_root != null)
-			{
-				_root.Dispose();
-				_root = null;
-			}
-
-			base.OnExit(e);
-		}
-
-		protected virtual void InitResources()
-		{
-			using (var configFile = new ConfigFile())
-			{
-				configFile.Load("resources.cfg");
-				ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
-				while (sectionIterator.MoveNext())
-				{
-					string currentKey = sectionIterator.CurrentKey;
-					foreach (var pair in sectionIterator.Current)
-					{
-						ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
-					}
-				}
-			}
-		}
-
-		private void SetupRenderSystem()
-		{
-			const string RenderSystemName = "Direct3D11 Rendering Subsystem";
-			RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
-			_root.RenderSystem = renderSystemByName;
-			renderSystemByName.SetConfigOption("Full Screen", "No");
-			renderSystemByName.SetConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
-		}
-
-		protected virtual void CreateRenderWindow(IntPtr handle)
-		{
-            _root.Initialise(true);
-			//_root.Initialise(false);
-            //if (handle != IntPtr.Zero)
-            //{
-            //	_window = _root.CreateRenderWindow("Test RenderWindow", handle, 800, 600);
-            //	return;
-            //}
-
-            //_window = _root.CreateRenderWindow("Test RenderWindow", 800, 600);
+            CompositionTarget.Rendering += OnCompositionTargetRendering;
         }
 
-		private static void InitializeResources()
-		{
-			TextureManager.Singleton.DefaultNumMipmaps = 5;
-			ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
-		}
+        protected override void OnExit(ExitEventArgs e)
+        {
+            CompositionTarget.Rendering -= OnCompositionTargetRendering;
 
-		protected virtual void CreateSceneManager()
-		{
+            if (_camera != null)
+            {
+                _camera.Dispose();
+                _camera = null;
+            }
+
+            if (_sceneManager != null)
+            {
+                _sceneManager.Dispose();
+                _sceneManager = null;
+            }
+
+            if (_window != null)
+            {
+                _window.Dispose();
+                _window = null;
+            }
+
+            if (_root != null)
+            {
+                _root.Dispose();
+                _root = null;
+            }
+
+            base.OnExit(e);
+        }
+
+        protected virtual void InitResources()
+        {
+            using (var configFile = new ConfigFile())
+            {
+                configFile.Load("resources.cfg");
+                ConfigFile.SectionIterator sectionIterator = configFile.GetSectionIterator();
+                while (sectionIterator.MoveNext())
+                {
+                    string currentKey = sectionIterator.CurrentKey;
+                    foreach (var pair in sectionIterator.Current)
+                    {
+                        ResourceGroupManager.Singleton.AddResourceLocation(pair.Value, pair.Key, currentKey);
+                    }
+                }
+            }
+        }
+
+        private void SetupRenderSystem()
+        {
+            const string RenderSystemName = "Direct3D11 Rendering Subsystem";
+            RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
+            _root.RenderSystem = renderSystemByName;
+            renderSystemByName.SetConfigOption("Full Screen", "No");
+            renderSystemByName.SetConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
+        }
+
+        protected virtual void CreateRenderWindow(IntPtr handle)
+        {
+            _root.Initialise(false);
+            if (handle != IntPtr.Zero)
+            {
+                _window = _root.CreateRenderWindow("Test RenderWindow", handle, 800, 600);
+                return;
+            }
+
+            _window = _root.CreateRenderWindow("Test RenderWindow", 800, 600);
+        }
+
+        private static void InitializeResources()
+        {
+            TextureManager.Singleton.DefaultNumMipmaps = 5;
+            ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
+        }
+
+        protected virtual void CreateSceneManager()
+        {
 #if DEBUG
-			//Debugging multithreaded code is a PITA, disable it.
-			const int numThreads = 1;
-			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
+            //Debugging multithreaded code is a PITA, disable it.
+            const int numThreads = 1;
+            InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
 #else
-            //getNumLogicalCores() may return 0 if couldn't detect
+            // GetNumLogicalCores() may return 0 if couldn't detect
             var numThreads = Math.Max( 1, PlatformInformation.NumLogicalCores );
 
 			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
@@ -143,21 +142,21 @@ namespace Mogre.SampleBrowser
                 threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
 #endif
 
-			//_sceneManager = _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
+            _sceneManager = _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
 #if RTSHADER_SYSTEM
 			mShaderGenerator->addSceneManager(_sceneManager);
 #endif
-			//if (mOverlaySystem)
-			//	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+            //if (mOverlaySystem)
+            //	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
-			// setup default viewport layout and camera
-			_camera = _sceneManager.CreateCamera("MainCamera");
-			//_camera->setAutoAspectRatio(true);
-			_camera.NearClipDistance = 5.0f;
-		}
+            // setup default viewport layout and camera
+            //_camera = _sceneManager.CreateCamera("MainCamera");
+            //_camera->setAutoAspectRatio(true);
+            //_camera.NearClipDistance = 5.0f;
+        }
 
-		CompositorWorkspace SetupCompositor()
-		{
+        CompositorWorkspace SetupCompositor()
+        {
             //CompositorManager2 compositorManager = _root.CompositorManager2;
             //const string workspaceName = "TestWorkspace";
             //if (!compositorManager.HasWorkspaceDefinition(workspaceName))
@@ -167,14 +166,14 @@ namespace Mogre.SampleBrowser
             //}
             //return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName, true);
             return null;
-		}
+        }
 
-		private void OnCompositionTargetRendering(object sender, EventArgs e)
-		{
-			if (_root == null)
-				return;
+        private void OnCompositionTargetRendering(object sender, EventArgs e)
+        {
+            if (_root == null)
+                return;
 
-			_root.RenderOneFrame();
-		}
-	}
+            _root.RenderOneFrame();
+        }
+    }
 }
