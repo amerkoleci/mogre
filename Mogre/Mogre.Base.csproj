@@ -9,7 +9,7 @@
     <ProjectGuid>{6F7DD672-BBDD-4EED-B207-1BCBEA6D68B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Mogre</RootNamespace>
-    <AssemblyName>Mogre</AssemblyName>
+    <AssemblyName>Mogre.Base</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
@@ -30,10 +30,14 @@
     <DefineConstants>TRACE;PCL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Mogre.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Mogre.Base.xml</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Mathematics\Angle.cs" />
+    <Compile Include="Mathematics\MathHelper.cs" />
+    <Compile Include="Mathematics\Degree.cs" />
+    <Compile Include="Mathematics\Radian.cs" />
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
     <Compile Include="Mathematics\Quaternion.cs" />
@@ -43,6 +47,9 @@
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="HashCodeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -257,7 +257,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mogre\Mogre.csproj">
+    <ProjectReference Include="..\Mogre\Mogre.Base.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
     </ProjectReference>
   </ItemGroup>

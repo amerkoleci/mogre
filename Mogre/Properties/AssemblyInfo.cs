@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyProduct("Mogre")]
-[assembly: AssemblyTitle("Mogre")]
-[assembly: AssemblyDescription(".NET wrapper for Ogre 2.0")]
+[assembly: AssemblyProduct("Mogre.Base")]
+[assembly: AssemblyTitle("Mogre.Base")]
+[assembly: AssemblyDescription("Mogre.Base library")]
