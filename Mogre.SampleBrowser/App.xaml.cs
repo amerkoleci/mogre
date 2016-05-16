@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mogre.RTShader;
+using System;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -39,12 +40,15 @@ namespace Mogre.SampleBrowser
                 _fileSystemLayer.GetWritablePath("ogre.cfg"),
                 _fileSystemLayer.GetWritablePath("Ogre.log"));
 
-            InitResources();
             SetupRenderSystem();
             CreateRenderWindow(handle);
+            InitResources();
             CreateSceneManager();
             InitializeResources();
             SetupCompositor();
+            InitializeRTShaderSystem(_sceneManager);
+
+            _sceneManager.SetSkyBox(true, "Examples/SpaceSkyBox", 5000);
 
             CompositionTarget.Rendering += OnCompositionTargetRendering;
         }
@@ -95,11 +99,14 @@ namespace Mogre.SampleBrowser
                     }
                 }
             }
+
+            ResourceGroupManager.Singleton.AddBuiltinLocations();
         }
 
         private void SetupRenderSystem()
         {
-            const string RenderSystemName = "Direct3D11 Rendering Subsystem";
+            //const string RenderSystemName = "Direct3D11 Rendering Subsystem";
+            const string RenderSystemName = "OpenGL Rendering Subsystem";
             RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
             _root.RenderSystem = renderSystemByName;
             renderSystemByName.SetConfigOption("Full Screen", "No");
@@ -151,8 +158,8 @@ namespace Mogre.SampleBrowser
 
             // setup default viewport layout and camera
             _camera = _sceneManager.CreateCamera("MainCamera");
-            //_camera->setAutoAspectRatio(true);
-            //_camera.NearClipDistance = 5.0f;
+            _camera.AutoAspectRatio = true;
+            _camera.NearClipDistance = 5.0f;
         }
 
         CompositorWorkspace SetupCompositor()
@@ -166,6 +173,16 @@ namespace Mogre.SampleBrowser
             }
 
             return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName);
+        }
+
+        bool InitializeRTShaderSystem(SceneManager sceneMgr)
+        {
+            if (ShaderGenerator.Initialize())
+            {
+                ShaderGenerator.Singleton.AddSceneManager(sceneMgr);
+            }
+
+            return true;
         }
 
         private void OnCompositionTargetRendering(object sender, EventArgs e)

@@ -243,3 +243,87 @@ void ResourceGroupManager::ShutdownAll()
 {
 	_native->shutdownAll();
 }
+
+Mogre::StringVector^ ResourceGroupManager::GetResourceGroups()
+{
+	return Mogre::StringVector::ByValue(_native->getResourceGroups());
+}
+
+void ResourceGroupManager::AddBuiltinLocations()
+{
+	const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList("General");
+	Ogre::String arch = genLocs.front()->archive->getName();
+
+
+	arch = Ogre::StringUtil::replaceAll(arch, "Media/../../Tests/Media", "");
+	arch = Ogre::StringUtil::replaceAll(arch, "media/../../Tests/Media", "");
+
+	Ogre::String type = "FileSystem";
+	Ogre::String sec = "Popular";
+
+#ifdef OGRE_BUILD_PLUGIN_CG
+	bool use_HLSL_Cg_shared = true;
+#else
+	bool use_HLSL_Cg_shared = Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl");
+#endif
+
+	// Add locations for supported shader languages
+	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
+	{
+		_native->addResourceLocation(arch + "/materials/programs/GLSLES", type, sec);
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
+	{
+		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl150"))
+		{
+			_native->addResourceLocation(arch + "/materials/programs/GLSL150", type, sec);
+		}
+		else
+		{
+			_native->addResourceLocation(arch + "/materials/programs/GLSL", type, sec);
+		}
+
+		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl400"))
+		{
+			_native->addResourceLocation(arch + "/materials/programs/GLSL400", type, sec);
+		}
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
+	{
+		_native->addResourceLocation(arch + "/materials/programs/HLSL", type, sec);
+	}
+
+#ifdef OGRE_BUILD_PLUGIN_CG
+	_native->addResourceLocation(arch + "/materials/programs/Cg", type, sec);
+#endif
+
+	if (use_HLSL_Cg_shared)
+	{
+		_native->addResourceLocation(arch + "/materials/programs/HLSL_Cg", type, sec);
+	}
+
+	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
+	{
+		_native->addResourceLocation(arch + "/RTShaderLib/GLSLES", type, sec);
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
+	{
+		_native->addResourceLocation(arch + "/RTShaderLib/GLSL", type, sec);
+		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl150"))
+		{
+			_native->addResourceLocation(arch + "/RTShaderLib/GLSL150", type, sec);
+		}
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
+	{
+		_native->addResourceLocation(arch + "/RTShaderLib/HLSL", type, sec);
+	}
+#ifdef OGRE_BUILD_PLUGIN_CG
+	_native->addResourceLocation(arch + "/RTShaderLib/Cg", type, sec);
+#endif
+
+	if (use_HLSL_Cg_shared)
+	{
+		_native->addResourceLocation(arch + "/RTShaderLib/HLSL_Cg", type, sec);
+	}
+}

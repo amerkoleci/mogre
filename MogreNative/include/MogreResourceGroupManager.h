@@ -240,5 +240,9 @@ namespace Mogre
 		//void UnlinkWorldGeometryFromResourceGroup(String^ group);
 
 		void ShutdownAll();
+
+		Mogre::StringVector^ GetResourceGroups();
+
+		void AddBuiltinLocations();
 	};
 }
