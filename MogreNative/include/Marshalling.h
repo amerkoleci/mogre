@@ -40,6 +40,9 @@ namespace Mogre
 
 	Quaternion ToQuaternion(Ogre::Quaternion value);
 	Ogre::Quaternion FromQuaternion(Quaternion value);
+
+	Color4 ToColor4(Ogre::ColourValue value);
+	Ogre::ColourValue FromColor4(Color4 value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\

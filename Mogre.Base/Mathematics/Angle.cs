@@ -1,9 +1,14 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿// Alimer - Copyright (C) Amer Koleci
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE.txt', which is part of this source code package.
 
 namespace Mogre
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct Angle : IEquatable<Angle>, IComparable<Angle>
     {
         readonly float _value;

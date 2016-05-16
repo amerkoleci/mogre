@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "MogreResource.h"
-#include "ObjectTable.h"
 
 using namespace Mogre;
 

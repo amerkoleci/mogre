@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Marshalling.h"
-#include "ObjectTable.h"
 #include "MogreSceneManager.h"
 #include "MogreSceneNode.h"
 #include "MogreEntity.h"
@@ -84,6 +83,141 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, S
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
 	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
+}
+
+void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	_native->setSkyBox(enable, o_materialName, distance, drawFirst, FromQuaternion(orientation), o_groupName);
+}
+void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyBox(enable, o_materialName, distance, drawFirst, FromQuaternion(orientation));
+}
+
+void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyBox(enable, o_materialName, distance, drawFirst);
+}
+
+void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyBox(enable, o_materialName, distance);
+}
+
+void SceneManager::SetSkyBox(bool enable, String^ materialName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyBox(enable, o_materialName);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, int xsegments, int ysegments, int ysegments_keep, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst, FromQuaternion(orientation), xsegments, ysegments, ysegments_keep, o_groupName);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, int xsegments, int ysegments, int ysegments_keep)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst, FromQuaternion(orientation), xsegments, ysegments, ysegments_keep);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, int xsegments, int ysegments)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst, FromQuaternion(orientation), xsegments, ysegments);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, int xsegments)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst, FromQuaternion(orientation), xsegments);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst, FromQuaternion(orientation));
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance, bool drawFirst)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance, drawFirst);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling, Ogre::Real distance)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling, distance);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature, Ogre::Real tiling)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature, tiling);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName, curvature);
+}
+
+void SceneManager::SetSkyDome(bool enable, String^ materialName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyDome(enable, o_materialName);
+}
+
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart, Ogre::Real linearEnd)
+{
+	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity, linearStart, linearEnd);
+}
+
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart)
+{
+	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity, linearStart);
+}
+
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity)
+{
+	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity);
+}
+
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour)
+{
+	_native->setFog((Ogre::FogMode)mode, FromColor4(colour));
+}
+
+void SceneManager::SetFog(Mogre::FogMode mode)
+{
+	_native->setFog((Ogre::FogMode)mode);
+}
+void SceneManager::SetFog()
+{
+	_native->setFog();
 }
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()

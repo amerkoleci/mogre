@@ -136,17 +136,17 @@ namespace Mogre
 		//void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
 		//void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
-		//void Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
-		//void Roll(Mogre::Radian angle);
+		void Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
+		void Roll(Mogre::Radian angle);
 
-		//void Pitch(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
-		//void Pitch(Mogre::Radian angle);
+		void Pitch(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
+		void Pitch(Mogre::Radian angle);
 
-		//void Yaw(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
-		//void Yaw(Mogre::Radian angle);
+		void Yaw(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
+		void Yaw(Mogre::Radian angle);
 
-		//void Rotate(Mogre::Vector3 axis, Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
-		//void Rotate(Mogre::Vector3 axis, Mogre::Radian angle);
+		void Rotate(Mogre::Vector3 axis, Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
+		void Rotate(Mogre::Vector3 axis, Mogre::Radian angle);
 
 		void Rotate(Mogre::Quaternion q, Mogre::Node::TransformSpace relativeTo);
 		void Rotate(Mogre::Quaternion q);

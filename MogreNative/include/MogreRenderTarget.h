@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "OgreRenderTarget.h"
 //#include "MogreRenderTargetListener.h"
 

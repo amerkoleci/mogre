@@ -24,6 +24,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>MogreNative</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,28 +75,28 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\Debug\x86\</OutDir>
     <IntDir>obj\x32\Debug\</IntDir>
-    <TargetName>MogreNative</TargetName>
+    <TargetName>Mogre</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\Debug\x64\</OutDir>
     <IntDir>obj\x64\Debug\</IntDir>
-    <TargetName>MogreNative</TargetName>
+    <TargetName>Mogre</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\Release\x86\</OutDir>
     <IntDir>obj\x32\Release\</IntDir>
-    <TargetName>MogreNative</TargetName>
+    <TargetName>Mogre</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\Release\x64\</OutDir>
     <IntDir>obj\x64\Release\</IntDir>
-    <TargetName>MogreNative</TargetName>
+    <TargetName>Mogre</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -179,6 +180,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\MogreBillboardChain.h" />
+    <ClInclude Include="include\MogreBillboardSet.h" />
     <ClInclude Include="include\MogreCamera.h" />
     <ClInclude Include="include\MogreCommon.h" />
     <ClInclude Include="include\MogreCompositorManager2.h" />
@@ -186,28 +189,29 @@
     <ClInclude Include="include\Custom\ManagedDataStream.h" />
     <ClInclude Include="include\Custom\MogrePair.h" />
     <ClInclude Include="include\FileSystemLayer.h" />
-    <ClInclude Include="include\IDisposable.h" />
     <ClInclude Include="include\IteratorWrapper.h" />
     <ClInclude Include="include\Marshalling.h" />
     <ClInclude Include="include\MogreDataStream.h" />
     <ClInclude Include="include\MogreEntity.h" />
     <ClInclude Include="include\MogreFrameListener.h" />
     <ClInclude Include="include\MogreFrustum.h" />
+    <ClInclude Include="include\MogreLight.h" />
+    <ClInclude Include="include\MogreLog.h" />
+    <ClInclude Include="include\MogreLogManager.h" />
     <ClInclude Include="include\MogreMovableObject.h" />
     <ClInclude Include="include\MogreNode.h" />
+    <ClInclude Include="include\MogreParticleSystem.h" />
     <ClInclude Include="include\MogrePlatformInformation.h" />
     <ClInclude Include="include\MogreRenderSystem.h" />
     <ClInclude Include="include\MogreRenderTarget.h" />
     <ClInclude Include="include\MogreRenderWindow.h" />
     <ClInclude Include="include\MogreResource.h" />
     <ClInclude Include="include\MogreResourceGroupManager.h" />
+    <ClInclude Include="include\MogreRibbonTrail.h" />
     <ClInclude Include="include\MogreSceneManager.h" />
     <ClInclude Include="include\MogreSceneNode.h" />
     <ClInclude Include="include\MogreStringInterface.h" />
     <ClInclude Include="include\MogreStringVector.h" />
-    <ClInclude Include="include\ObjectTable.h" />
-    <ClInclude Include="include\ObjectTableEventArgs.h" />
-    <ClInclude Include="include\ObjectTableOwnershipType.h" />
     <ClInclude Include="include\MogreRoot.h" />
     <ClInclude Include="include\STLContainerWrappers.h" />
     <ClInclude Include="include\STLDeque.h" />
@@ -223,6 +227,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
+    <ClCompile Include="src\MogreBillboardChain.cpp" />
+    <ClCompile Include="src\MogreBillboardSet.cpp" />
     <ClCompile Include="src\MogreCamera.cpp" />
     <ClCompile Include="src\MogreCompositorManager2.cpp" />
     <ClCompile Include="src\MogreConfigFile.cpp" />
@@ -233,19 +239,21 @@
     <ClCompile Include="src\MogreEntity.cpp" />
     <ClCompile Include="src\MogreFrameListener.cpp" />
     <ClCompile Include="src\MogreFrustum.cpp" />
+    <ClCompile Include="src\MogreLight.cpp" />
+    <ClCompile Include="src\MogreLog.cpp" />
+    <ClCompile Include="src\MogreLogManager.cpp" />
     <ClCompile Include="src\MogreMovableObject.cpp" />
     <ClCompile Include="src\MogreNode.cpp" />
+    <ClCompile Include="src\MogreParticleSystem.cpp" />
     <ClCompile Include="src\MogrePlatformInformation.cpp" />
     <ClCompile Include="src\MogreRenderTarget.cpp" />
     <ClCompile Include="src\MogreRenderWindow.cpp" />
     <ClCompile Include="src\MogreResource.cpp" />
     <ClCompile Include="src\MogreResourceGroupManager.cpp" />
+    <ClCompile Include="src\MogreRibbonTrail.cpp" />
     <ClCompile Include="src\MogreSceneManager.cpp" />
     <ClCompile Include="src\MogreSceneNode.cpp" />
     <ClCompile Include="src\MogreStringVector.cpp" />
-    <ClCompile Include="src\ObjectTable.Disposal.cpp" />
-    <ClCompile Include="src\ObjectTable.Get.cpp" />
-    <ClCompile Include="src\ObjectTable.cpp" />
     <ClCompile Include="src\MogreRenderSystem.cpp" />
     <ClCompile Include="src\MogreRoot.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
@@ -257,7 +265,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mogre\Mogre.Base.csproj">
+    <ProjectReference Include="..\Mogre.Base\Mogre.Base.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
     </ProjectReference>
   </ItemGroup>

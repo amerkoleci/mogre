@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "OgreRoot.h"
 #include "MogreFrameListener.h"
 #include "MogreCommon.h"

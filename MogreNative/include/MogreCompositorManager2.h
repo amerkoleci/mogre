@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "Compositor/OgreCompositorManager2.h"
 #include "Compositor/OgreCompositorWorkspace.h"
 #include "MogreCommon.h"

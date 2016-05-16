@@ -1,16 +1,19 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
+﻿// Alimer - Copyright (C) Amer Koleci
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE.txt', which is part of this source code package.
 
 namespace Mogre
 {
-	/// <summary>
-	/// Represents a color using Red, Green, Blue, and Alpha stored as four float
-	/// values.
-	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+    using System;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+
+    /// <summary>
+    /// Represents a color using Red, Green, Blue, and Alpha stored as four float
+    /// values.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Color4 : IEquatable<Color4>, IFormattable
 	{
 		/// <summary>

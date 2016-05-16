@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "OgreCamera.h"
 #include "MogreFrustum.h"
 

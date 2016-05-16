@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MogreNode.h"
 #include "Marshalling.h"
-#include "ObjectTable.h"
 
 using namespace Mogre;
 
@@ -181,49 +180,53 @@ void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::
 
 	static_cast<Ogre::Node*>(_native)->translate(*p_axes, x, y, z, (Ogre::Node::TransformSpace)relativeTo);
 }
+
 void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::Real z)
 {
 	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
 
 	static_cast<Ogre::Node*>(_native)->translate(*p_axes, x, y, z);
-}
+}*/
 
 void Node::Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
 {
-	static_cast<Ogre::Node*>(_native)->roll(angle, (Ogre::Node::TransformSpace)relativeTo);
+	_native->roll(Ogre::Radian(angle.ValueRadians), (Ogre::Node::TransformSpace)relativeTo);
 }
+
 void Node::Roll(Mogre::Radian angle)
 {
-	static_cast<Ogre::Node*>(_native)->roll(angle);
+	_native->roll(Ogre::Radian(angle.ValueRadians));
 }
 
 void Node::Pitch(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
 {
-	static_cast<Ogre::Node*>(_native)->pitch(angle, (Ogre::Node::TransformSpace)relativeTo);
+	_native->pitch(Ogre::Radian(angle.ValueRadians), (Ogre::Node::TransformSpace)relativeTo);
 }
+
 void Node::Pitch(Mogre::Radian angle)
 {
-	static_cast<Ogre::Node*>(_native)->pitch(angle);
+	_native->pitch(Ogre::Radian(angle.ValueRadians));
 }
 
 void Node::Yaw(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
 {
-	static_cast<Ogre::Node*>(_native)->yaw(angle, (Ogre::Node::TransformSpace)relativeTo);
+	_native->yaw(Ogre::Radian(angle.ValueRadians), (Ogre::Node::TransformSpace)relativeTo);
 }
+
 void Node::Yaw(Mogre::Radian angle)
 {
-	static_cast<Ogre::Node*>(_native)->yaw(angle);
+	_native->yaw(Ogre::Radian(angle.ValueRadians));
 }
 
 void Node::Rotate(Mogre::Vector3 axis, Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
 {
-	static_cast<Ogre::Node*>(_native)->rotate(axis, angle, (Ogre::Node::TransformSpace)relativeTo);
+	_native->rotate(FromVector3(axis), Ogre::Radian(angle.ValueRadians), (Ogre::Node::TransformSpace)relativeTo);
 }
+
 void Node::Rotate(Mogre::Vector3 axis, Mogre::Radian angle)
 {
-	static_cast<Ogre::Node*>(_native)->rotate(axis, angle);
+	_native->rotate(FromVector3(axis), Ogre::Radian(angle.ValueRadians));
 }
-*/
 
 void Node::Rotate(Mogre::Quaternion q, Mogre::Node::TransformSpace relativeTo)
 {

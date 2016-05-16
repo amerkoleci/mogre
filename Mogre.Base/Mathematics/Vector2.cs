@@ -1,15 +1,19 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿// Alimer - Copyright (C) Amer Koleci
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE.txt', which is part of this source code package.
 
 namespace Mogre
 {
-	/// <summary>
-	/// Represents a two dimensional mathematical vector.
-	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+    using System;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+    using System.Text;
+
+    /// <summary>
+    /// Represents a two dimensional mathematical vector.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Vector2 : IEquatable<Vector2>, IFormattable
 	{
 		/// <summary>

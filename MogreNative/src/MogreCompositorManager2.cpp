@@ -4,7 +4,6 @@
 #include "MogreSceneManager.h"
 #include "MogreRenderTarget.h"
 #include "MogreCamera.h"
-#include "ObjectTable.h"
 
 using namespace Mogre;
 
@@ -23,7 +22,7 @@ bool CompositorManager2::HasWorkspaceDefinition(String^ name)
 void CompositorManager2::CreateBasicWorkspaceDef(String^ name, Color4 backgroundColor)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-	_native->createBasicWorkspaceDef(o_name, Ogre::ColourValue(backgroundColor.R, backgroundColor.G, backgroundColor.B, backgroundColor.A));
+	_native->createBasicWorkspaceDef(o_name, FromColor4(backgroundColor));
 }
 
 

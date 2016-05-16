@@ -30,7 +30,7 @@ solution "Mogre"
 include ("MogreNative")
 
 -- Mogre
-include ("Mogre")
+include ("Mogre.Base")
 
 -- Mogre.SampleBrowser
 include ("Mogre.SampleBrowser")

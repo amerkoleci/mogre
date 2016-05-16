@@ -1,6 +1,6 @@
 group "Managed"
-    	external "Mogre"
-		location (path.join(MOGRE_HOME, "Mogre"))
+    	external "Mogre.Base"
+		location (path.join(MOGRE_HOME, "Mogre.Base"))
 		uuid "6F7DD672-BBDD-4EED-B207-1BCBEA6D68B4"
 		kind "SharedLib"
 		language "C#"

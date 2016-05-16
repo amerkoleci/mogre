@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Marshalling.h"
-#include "ObjectTable.h"
 #include "MogreRoot.h"
 #include "MogreRenderSystem.h"
 #include "MogreRenderWindow.h"

@@ -34,6 +34,7 @@
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IDisposable.cs" />
     <Compile Include="Mathematics\Angle.cs" />
     <Compile Include="Mathematics\MathHelper.cs" />
     <Compile Include="Mathematics\Degree.cs" />
@@ -43,6 +44,9 @@
     <Compile Include="Mathematics\Quaternion.cs" />
     <Compile Include="Mathematics\Vector4.cs" />
     <Compile Include="Mathematics\Color4.cs" />
+    <Compile Include="ObjectTable.cs" />
+    <Compile Include="ObjectTableOwnershipType.cs" />
+    <Compile Include="ObjectTableEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Contract.cs" />

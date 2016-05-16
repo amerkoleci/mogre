@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "OgreRenderWindow.h"
 #include "MogreRenderTarget.h"
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IDisposable.h"
 #include "STLContainerWrappers.h"
 #include "IteratorWrapper.h"
 #include "OgreConfigFile.h"

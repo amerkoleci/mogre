@@ -1,79 +1,61 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Text;
+﻿// Alimer - Copyright (C) Amer Koleci
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE.txt', which is part of this source code package.
 
 namespace Mogre
 {
-	/// <summary>
-	/// Represents a four dimensional mathematical vector.
-	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public struct Vector4 : IEquatable<Vector4>, IFormattable
+    using System;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+    using System.Text;
+
+    /// <summary>
+    /// Represents a four dimensional mathematical quaternion in Ogre3D format (w, x, y, z).
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
+	public struct Quaternion : IEquatable<Quaternion>, IFormattable
 	{
 		/// <summary>
-		/// The size of the <see cref="Vector4"/> type, in bytes.
+		/// The size of the <see cref="Quaternion"/> type, in bytes.
 		/// </summary>
 		public const int SizeInBytes = 16;
 
 		/// <summary>
-		/// A <see cref="Vector4"/> with all of its components set to zero.
+		/// A <see cref="Quaternion"/> with all of its components set to zero.
 		/// </summary>
-		public static readonly Vector4 Zero = new Vector4();
+		public static readonly Quaternion Zero = new Quaternion();
 
 		/// <summary>
-		/// The X unit <see cref="Vector4"/> (1, 0, 0, 0).
+		/// The identity <see cref="Quaternion"/> (1, 0, 0, 0).
 		/// </summary>
-		public static readonly Vector4 UnitX = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+		public static readonly Quaternion Identity = new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 
 		/// <summary>
-		/// The Y unit <see cref="Vector4"/> (0, 1, 0, 0).
-		/// </summary>
-		public static readonly Vector4 UnitY = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
-
-		/// <summary>
-		/// The Z unit <see cref="Vector4"/> (0, 0, 1, 0).
-		/// </summary>
-		public static readonly Vector4 UnitZ = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
-
-		/// <summary>
-		/// The W unit <see cref="Vector4"/> (0, 0, 0, 1).
-		/// </summary>
-		public static readonly Vector4 UnitW = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-
-		/// <summary>
-		/// A <see cref="Vector4"/> with all of its components set to one.
-		/// </summary>
-		public static readonly Vector4 One = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-
-		/// <summary>
-		/// The X component of the vector.
-		/// </summary>
-
-		public float X;
-
-		/// <summary>
-		/// The Y component of the vector.
-		/// </summary>
-		public float Y;
-
-		/// <summary>
-		/// The Z component of the vector.
-		/// </summary>
-		public float Z;
-
-		/// <summary>
-		/// The W component of the vector.
+		/// The W component of the quaternion.
 		/// </summary>
 		public float W;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Vector4"/> struct.
+		/// The X component of the quaternion.
+		/// </summary>
+		public float X;
+
+		/// <summary>
+		/// The Y component of the quaternion.
+		/// </summary>
+		public float Y;
+
+		/// <summary>
+		/// The Z component of the quaternion.
+		/// </summary>
+		public float Z;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
-		public Vector4(float value)
+		public Quaternion(float value)
 		{
 			X = value;
 			Y = value;
@@ -82,69 +64,69 @@ namespace Mogre
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Vector4"/> struct.
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
 		/// </summary>
-		/// <param name="x">Initial value for the X component of the vector.</param>
-		/// <param name="y">Initial value for the Y component of the vector.</param>
-		/// <param name="z">Initial value for the Z component of the vector.</param>
-		/// <param name="w">Initial value for the W component of the vector.</param>
-		public Vector4(float x, float y, float z, float w)
+		/// <param name="value">A vector containing the values with which to initialize the components.</param>
+		public Quaternion(Vector4 value)
 		{
+			X = value.X;
+			Y = value.Y;
+			Z = value.Z;
+			W = value.W;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
+		/// </summary>
+		/// <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
+		/// <param name="w">Initial value for the W component of the quaternion.</param>
+		public Quaternion(Vector3 value, float w)
+		{
+			X = value.X;
+			Y = value.Y;
+			Z = value.Z;
+			W = w;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
+		/// </summary>
+		/// <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
+		/// <param name="z">Initial value for the Z component of the quaternion.</param>
+		/// <param name="w">Initial value for the W component of the quaternion.</param>
+		public Quaternion(Vector2 value, float z, float w)
+		{
+			X = value.X;
+			Y = value.Y;
+			Z = z;
+			W = w;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
+		/// </summary>
+		/// <param name="w">Initial value for the X component of the quaternion.</param>
+		/// <param name="x">Initial value for the Y component of the quaternion.</param>
+		/// <param name="y">Initial value for the Z component of the quaternion.</param>
+		/// <param name="z">Initial value for the W component of the quaternion.</param>
+		public Quaternion(float w, float x, float y, float z)
+		{
+			W = w;
 			X = x;
 			Y = y;
 			Z = z;
-			W = w;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Vector4"/> struct.
+		/// Initializes a new instance of the <see cref="Quaternion"/> struct.
 		/// </summary>
-		/// <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
-		/// <param name="w">Initial value for the W component of the vector.</param>
-		public Vector4(Vector3 value, float w)
-		{
-			X = value.X;
-			Y = value.Y;
-			Z = value.Z;
-			W = w;
-		}
-
-		/// <summary>Creates a new instance of Vector4.</summary>
-		/// <param name="value">Value to initialize X,Y,Z.</param>
-		public Vector4(Vector3 value)
-		{
-			X = value.X;
-			Y = value.Y;
-			Z = value.Z;
-			W = 0.0f;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Vector4"/> struct.
-		/// </summary>
-		/// <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
-		/// <param name="z">Initial value for the Z component of the vector.</param>
-		/// <param name="w">Initial value for the W component of the vector.</param>
-		public Vector4(Vector2 value, float z, float w)
-		{
-			X = value.X;
-			Y = value.Y;
-			Z = z;
-			W = w;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Vector4"/> struct.
-		/// </summary>
-		/// <param name="values">The values to assign to the X, Y, Z, and W components of the vector. This must be an array with four elements.</param>
+		/// <param name="values">The values to assign to the X, Y, Z, and W components of the quaternion. This must be an array with four elements.</param>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
-		public Vector4(float[] values)
+		public Quaternion(float[] values)
 		{
 			if (values == null)
 				throw new ArgumentNullException("values");
-			if (values.Length != 4)
-				throw new ArgumentOutOfRangeException("values", "Vector4 needs at least fours inputs");
 
 			X = values[0];
 			Y = values[1];
@@ -157,7 +139,7 @@ namespace Mogre
 		/// </summary>
 		/// <returns>The length of the vector.</returns>
 		/// <remarks>
-		/// <see cref="Vector4.LengthSquared"/> may be preferred when only the relative length is needed
+		/// <see cref="Quaternion.LengthSquared"/> may be preferred when only the relative length is needed
 		/// and speed is of the essence.
 		/// </remarks>
 		public float Length()
@@ -170,7 +152,7 @@ namespace Mogre
 		/// </summary>
 		/// <returns>The squared length of the vector.</returns>
 		/// <remarks>
-		/// This method may be preferred to <see cref="Vector4.Length"/> when only a relative length is needed
+		/// This method may be preferred to <see cref="Quaternion.Length"/> when only a relative length is needed
 		/// and speed is of the essence.
 		/// </remarks>
 		public float LengthSquared()
@@ -183,7 +165,7 @@ namespace Mogre
 		/// </summary>
 		/// <param name="other">The Vector4 to compare this instance to.</param>
 		/// <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
-		public bool Equals(ref Vector4 other)
+		public bool Equals(ref Quaternion other)
 		{
 			return 
 				X == other.X &&
@@ -197,7 +179,7 @@ namespace Mogre
 		/// </summary>
 		/// <param name="other">The Vector4 to compare this instance to.</param>
 		/// <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
-		public bool Equals(Vector4 other)
+		public bool Equals(Quaternion other)
 		{
 			return Equals(ref other);
 		}
@@ -232,13 +214,13 @@ namespace Mogre
 		{
 			var sb = new StringBuilder();
 			string separator = NumberFormatInfo.GetInstance(formatProvider).NumberGroupSeparator + " ";
-			sb.Append(this.X.ToString(format, formatProvider));
+			sb.Append(W.ToString(format, formatProvider));
 			sb.Append(separator);
-			sb.Append(this.Y.ToString(format, formatProvider));
+			sb.Append(X.ToString(format, formatProvider));
 			sb.Append(separator);
-			sb.Append(this.Z.ToString(format, formatProvider));
+			sb.Append(Y.ToString(format, formatProvider));
 			sb.Append(separator);
-			sb.Append(this.W.ToString(format, formatProvider));
+			sb.Append(Z.ToString(format, formatProvider));
 			return sb.ToString();
 		}
 
@@ -263,9 +245,9 @@ namespace Mogre
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public override bool Equals(object obj)
 		{
-			if (!(obj is Vector4))
+			if (!(obj is Quaternion))
 				return false;
-			return Equals((Vector4)obj);
+			return Equals((Quaternion)obj);
 		}
 
 		/// <summary>
@@ -274,7 +256,7 @@ namespace Mogre
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-		public static bool operator ==(Vector4 left, Vector4 right)
+		public static bool operator ==(Quaternion left, Quaternion right)
 		{
 			return left.Equals(right);
 		}
@@ -285,29 +267,9 @@ namespace Mogre
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-		public static bool operator !=(Vector4 left, Vector4 right)
+		public static bool operator !=(Quaternion left, Quaternion right)
 		{
 			return !left.Equals(right);
-		}
-
-		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Vector2"/>.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-		public static explicit operator Vector2(Vector4 value)
-		{
-			return new Vector2(value.X, value.Y);
-		}
-
-		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Vector3"/>.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-		public static explicit operator Vector3(Vector4 value)
-		{
-			return new Vector3(value.X, value.Y, value.Z);
 		}
 	}
 }
