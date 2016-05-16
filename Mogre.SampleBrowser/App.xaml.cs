@@ -1,5 +1,7 @@
 ﻿using Mogre.RTShader;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -11,6 +13,8 @@ namespace Mogre.SampleBrowser
     /// </summary>
     public partial class App : Application
     {
+        SampleContext _sampleContext;
+
         FileSystemLayer _fileSystemLayer;
         Root _root;
         RenderWindow _window;
@@ -21,14 +25,18 @@ namespace Mogre.SampleBrowser
         {
             base.OnStartup(e);
 
+            _sampleContext = new SampleContext();
+
             MainWindow = new MainWindow();
+            MainWindow.DataContext = _sampleContext;
             MainWindow.Loaded += MainWindow_Loaded;
             MainWindow.Show();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var window = (MainWindow)sender;
+#if TODO
+				var window = (MainWindow)sender;
             var handle = window.panel.Handle;
             //var handle = new WindowInteropHelper(window).Handle;
 
@@ -50,7 +58,8 @@ namespace Mogre.SampleBrowser
 
             _sceneManager.SetSkyBox(true, "Examples/SpaceSkyBox", 5000);
 
-            CompositionTarget.Rendering += OnCompositionTargetRendering;
+            CompositionTarget.Rendering += OnCompositionTargetRendering;  
+#endif // TODO
         }
 
         protected override void OnExit(ExitEventArgs e)

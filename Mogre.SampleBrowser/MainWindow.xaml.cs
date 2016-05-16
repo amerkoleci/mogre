@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Mogre.SampleBrowser
 {
-	/// <summary>
-	/// Logica di interazione per MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+    /// <summary>
+    /// Logica di interazione per MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
@@ -26,6 +17,19 @@ namespace Mogre.SampleBrowser
 		private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
-		}
-	}
+
+        }
+
+        void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = (ListBoxItem)sender;
+            var sampleInfo = item.DataContext as SampleInfo;
+            RunSample(sampleInfo);
+        }
+
+        void RunSample(SampleInfo sampleInfo)
+        {
+
+        }
+    }
 }
