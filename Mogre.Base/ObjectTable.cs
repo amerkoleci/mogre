@@ -8,6 +8,7 @@ namespace Mogre
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+
     public static class ObjectTable
     {
         public static event EventHandler<ObjectTableEventArgs> ObjectAdded;

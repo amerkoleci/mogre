@@ -195,12 +195,14 @@
     <ClInclude Include="include\MogreEntity.h" />
     <ClInclude Include="include\MogreFrameListener.h" />
     <ClInclude Include="include\MogreFrustum.h" />
+    <ClInclude Include="include\MogreGpuProgramManager.h" />
     <ClInclude Include="include\MogreLight.h" />
     <ClInclude Include="include\MogreLog.h" />
     <ClInclude Include="include\MogreLogManager.h" />
     <ClInclude Include="include\MogreMovableObject.h" />
     <ClInclude Include="include\MogreNode.h" />
     <ClInclude Include="include\MogreParticleSystem.h" />
+    <ClInclude Include="include\MogrePixelFormat.h" />
     <ClInclude Include="include\MogrePlatformInformation.h" />
     <ClInclude Include="include\MogreRenderSystem.h" />
     <ClInclude Include="include\MogreRenderTarget.h" />
@@ -214,6 +216,7 @@
     <ClInclude Include="include\MogreStringInterface.h" />
     <ClInclude Include="include\MogreStringVector.h" />
     <ClInclude Include="include\MogreRoot.h" />
+    <ClInclude Include="include\MogreTextureManager.h" />
     <ClInclude Include="include\STLContainerWrappers.h" />
     <ClInclude Include="include\STLDeque.h" />
     <ClInclude Include="include\STLHashedVector.h" />
@@ -240,17 +243,20 @@
     <ClCompile Include="src\MogreEntity.cpp" />
     <ClCompile Include="src\MogreFrameListener.cpp" />
     <ClCompile Include="src\MogreFrustum.cpp" />
+    <ClCompile Include="src\MogreGpuProgramManager.cpp" />
     <ClCompile Include="src\MogreLight.cpp" />
     <ClCompile Include="src\MogreLog.cpp" />
     <ClCompile Include="src\MogreLogManager.cpp" />
     <ClCompile Include="src\MogreMovableObject.cpp" />
     <ClCompile Include="src\MogreNode.cpp" />
     <ClCompile Include="src\MogreParticleSystem.cpp" />
+    <ClCompile Include="src\MogrePixelFormat.cpp" />
     <ClCompile Include="src\MogrePlatformInformation.cpp" />
     <ClCompile Include="src\MogreRenderTarget.cpp" />
     <ClCompile Include="src\MogreRenderWindow.cpp" />
     <ClCompile Include="src\MogreResource.cpp" />
     <ClCompile Include="src\MogreResourceGroupManager.cpp" />
+    <ClCompile Include="src\MogreResourceManager.cpp" />
     <ClCompile Include="src\MogreRibbonTrail.cpp" />
     <ClCompile Include="src\MogreRTShaderSystem.cpp" />
     <ClCompile Include="src\MogreSceneManager.cpp" />
@@ -258,6 +264,7 @@
     <ClCompile Include="src\MogreStringVector.cpp" />
     <ClCompile Include="src\MogreRenderSystem.cpp" />
     <ClCompile Include="src\MogreRoot.cpp" />
+    <ClCompile Include="src\MogreTextureManager.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

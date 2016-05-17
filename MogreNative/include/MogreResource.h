@@ -8,6 +8,7 @@ namespace Mogre
 {
 	typedef Ogre::ResourceHandle ResourceHandle;
 	ref class Resource;
+	ref class ResourceManager;
 
 	interface class IResource_Listener_Receiver
 	{
@@ -71,6 +72,10 @@ namespace Mogre
 
 	public protected:
 		Resource(intptr_t ptr) : _native((Ogre::Resource*)ptr)
+		{
+		}
+
+		Resource(Ogre::Resource* ptr) : _native(ptr)
 		{
 		}
 
@@ -173,6 +178,94 @@ namespace Mogre
 			}
 		}
 
+		property Mogre::ResourceManager^ Creator
+		{
+		public:
+			Mogre::ResourceManager^ get();
+		}
+
+		property String^ Group
+		{
+		public:
+			String^ get();
+		}
+
+		property Mogre::ResourceHandle Handle
+		{
+		public:
+			Mogre::ResourceHandle get();
+		}
+
+		property bool IsBackgroundLoaded
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsLoaded
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsManuallyLoaded
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsReloadable
+		{
+		public:
+			bool get();
+		}
+
+		property String^ Name
+		{
+		public:
+			String^ get();
+		}
+
+		property String^ Origin
+		{
+		public:
+			String^ get();
+		}
+
+		property size_t Size
+		{
+		public:
+			size_t get();
+		}
+
+		void Load(bool backgroundThread);
+		void Load();
+
+		void Reload();
+
+		void Unload();
+
+		void Touch();
+
+		Mogre::Resource::LoadingState IsLoading();
+
+		Mogre::Resource::LoadingState GetLoadingState();
+
+		void SetBackgroundLoaded(bool bl);
+
+		void EscalateLoading();
+
+		void ChangeGroupOwnership(String^ newGroup);
+
+		internal:
+			property Ogre::Resource* UnmanagedPointer
+			{
+				Ogre::Resource* get()
+				{
+					return _native;
+				}
+			}
+
 	protected public:
 		virtual void OnLoadingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::LoadingComplete
 		{
@@ -187,6 +280,105 @@ namespace Mogre
 		virtual void OnUnloadingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::UnloadingComplete
 		{
 			UnloadingComplete(param1);
+		}
+	};
+
+	public ref class ResourcePtr : public Resource
+	{
+	public protected:
+		Ogre::ResourcePtr* _sharedPtr;
+
+		ResourcePtr(Ogre::ResourcePtr& sharedPtr) : Resource(sharedPtr.getPointer())
+		{
+			_sharedPtr = new Ogre::ResourcePtr(sharedPtr);
+		}
+
+		!ResourcePtr()
+		{
+			if (_sharedPtr != 0)
+			{
+				delete _sharedPtr;
+				_sharedPtr = 0;
+			}
+		}
+
+		~ResourcePtr()
+		{
+			this->!ResourcePtr();
+		}
+
+	public:
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(ResourcePtr);
+
+			ResourcePtr(Resource^ obj) : Resource(obj->_native)
+		{
+			_sharedPtr = new Ogre::ResourcePtr(static_cast<Ogre::Resource*>(obj->_native));
+		}
+
+		virtual bool Equals(Object^ obj) override
+		{
+			ResourcePtr^ clr = dynamic_cast<ResourcePtr^>(obj);
+			if (clr == CLR_NULL)
+			{
+				return false;
+			}
+
+			return (_native == clr->_native);
+		}
+		bool Equals(ResourcePtr^ obj)
+		{
+			if (obj == CLR_NULL)
+			{
+				return false;
+			}
+
+			return (_native == obj->_native);
+		}
+
+		static bool operator == (ResourcePtr^ val1, ResourcePtr^ val2)
+		{
+			if ((Object^)val1 == (Object^)val2) return true;
+			if ((Object^)val1 == nullptr || (Object^)val2 == nullptr) return false;
+			return (val1->_native == val2->_native);
+		}
+
+		static bool operator != (ResourcePtr^ val1, ResourcePtr^ val2)
+		{
+			return !(val1 == val2);
+		}
+
+		virtual int GetHashCode() override
+		{
+			return reinterpret_cast<int>(_native);
+		}
+
+		property IntPtr NativePtr
+		{
+			IntPtr get() { return (IntPtr)_sharedPtr; }
+		}
+
+		property bool Unique
+		{
+			bool get()
+			{
+				return (*_sharedPtr).unique();
+			}
+		}
+
+		property int UseCount
+		{
+			int get()
+			{
+				return (*_sharedPtr).useCount();
+			}
+		}
+
+		property Resource^ Target
+		{
+			Resource^ get()
+			{
+				return ObjectTable::GetOrCreateObject<Mogre::Resource^>((intptr_t)static_cast<Ogre::Resource*>(_native));
+			}
 		}
 	};
 }
