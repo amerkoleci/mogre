@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System;
+
 namespace Mogre
 {
     public static class MathHelper
@@ -13,6 +15,35 @@ namespace Mogre
             Degree = 0,
             Radian = 1
         }
+
+        /// <summary>
+		/// The value for which all absolute numbers smaller than are considered equal to zero.
+		/// </summary>
+		public const float ZeroTolerance = 1e-6f; // Value a 8x higher than 1.19209290E-07F
+
+        /// <summary>
+		/// A value specifying the approximation of π which is 180 degrees.
+		/// </summary>
+		public const float Pi = (float)PI;
+
+        /// <summary>
+        /// A value specifying the approximation of 2π which is 360 degrees.
+        /// </summary>
+        public const float TwoPi = (float)(2 * PI);
+
+        /// <summary>
+        /// A value specifying the approximation of π/2 which is 90 degrees.
+        /// </summary>
+        public const float PiOverTwo = (float)(PI / 2);
+
+        /// <summary>
+        /// A value specifying the approximation of π/4 which is 45 degrees.
+        /// </summary>
+        public const float PiOverFour = (float)(PI / 4);
+
+        public static readonly float RadiansPerDegree = Pi / 180.0f;
+
+        public static readonly float DegreesPerRadian = 180.0f / Pi;
 
         public const float POS_INFINITY = float.PositiveInfinity;
 
@@ -70,6 +101,26 @@ namespace Mogre
                 return angleunits * fRad2Deg;
 
             return angleunits;
+        }
+
+        /// <summary>
+		/// Determines whether the specified value is close to zero (0.0f).
+		/// </summary>
+		/// <param name="a">The floating value.</param>
+		/// <returns><c>true</c> if the specified value is close to zero (0.0f); otherwise, <c>false</c>.</returns>
+		public static bool IsZero(float a)
+        {
+            return Math.Abs(a) < ZeroTolerance;
+        }
+
+        /// <summary>
+        /// Determines whether the specified value is close to one (1.0f).
+        /// </summary>
+        /// <param name="a">The floating value.</param>
+        /// <returns><c>true</c> if the specified value is close to one (1.0f); otherwise, <c>false</c>.</returns>
+        public static bool IsOne(float a)
+        {
+            return IsZero(a - 1.0f);
         }
     }
 }

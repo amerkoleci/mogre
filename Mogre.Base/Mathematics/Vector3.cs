@@ -226,12 +226,314 @@ namespace Mogre
 			return (X * X) + (Y * Y) + (Z * Z);
 		}
 
-		/// <summary>
-		/// Returns a boolean indicating whether the given Vector3 is equal to this Vector3 instance.
+        /// <summary>
+		/// Calculates the dot Product operation on two vectors.
+		/// <remarks>
+		/// A dot product of two vectors v1 and v2 equals to |v1|*|v2|*cos(fi)
+		/// where fi is the angle between the vectors and |v1| and |v2| are the vector lengths.
+		/// For unit vectors (whose length is one) the dot product will obviously be just cos(fi).
+		/// For example, if the unit vectors are parallel the result is cos(0) = 1.0f,
+		/// if they are perpendicular the result is cos(PI/2) = 0.0f.
+		/// The dot product may be calculated on vectors with any length however.
+		/// A zero vector is treated as perpendicular to any vector (result is 0.0f).
+		/// </remarks>
 		/// </summary>
-		/// <param name="other">The Vector3 to compare this instance to.</param>
-		/// <returns>True if the other Vector3 is equal to this instance; False otherwise.</returns>
-		public bool Equals(ref Vector3 other)
+		/// <param name="vec">The vector to perform the Dot Product against.</param>
+		/// <returns>Products of vector lengths and cosine of the angle between them. </returns>
+		public float Dot(Vector3 vec)
+        {
+            return (X * vec.X) + (Y * vec.Y) + (Z * vec.Z);
+        }
+
+        /// <summary>
+        /// Calculates the dot product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <param name="result">When the method completes, contains the dot product of the two vectors.</param>
+        public static void Dot(ref Vector3 left, ref Vector3 right, out float result)
+        {
+            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
+        }
+
+        /// <summary>
+        /// Calculates the dot product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <returns>The dot product of the two vectors.</returns>
+        public static float Dot(Vector3 left, Vector3 right)
+        {
+            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
+        }
+
+        /// <summary>
+		/// Turns the current vector into a unit vector.
+		/// </summary>
+		/// <remarks>
+		/// The result is a vector one unit in length pointing in the same direction as the original vector.
+		/// </remarks>
+		public void Normalize()
+        {
+            float length = Length();
+            if (!MathHelper.IsZero(length))
+            {
+                float inv = 1.0f / length;
+                X *= inv;
+                Y *= inv;
+                Z *= inv;
+            }
+        }
+
+        /// <summary>
+        /// Converts the vector into a unit vector.
+        /// </summary>
+        /// <param name="value">The vector to normalize.</param>
+        /// <param name="result">When the method completes, contains the normalized vector.</param>
+        public static void Normalize(ref Vector3 value, out Vector3 result)
+        {
+            result = value;
+            result.Normalize();
+        }
+
+        /// <summary>
+        /// Converts the vector into a unit vector.
+        /// </summary>
+        /// <param name="value">The vector to normalize.</param>
+        /// <returns>The normalized vector.</returns>
+        public static Vector3 Normalize(Vector3 value)
+        {
+            value.Normalize();
+            return value;
+        }
+
+        /// <summary>
+		/// Calculates the cross product of two vectors.
+		/// </summary>
+		/// <param name="vector">A vector to perform the Cross Product against.</param>
+		/// <returns>When the method completes, contains he cross product of the two vectors.</returns>
+		public Vector3 Cross(Vector3 vector)
+        {
+            return new Vector3(
+                (Y * vector.Z) - (Z * vector.Y),
+                (Z * vector.X) - (X * vector.Z),
+                (X * vector.Y) - (Y * vector.X));
+        }
+
+        /// <summary>
+        /// Calculates the cross product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <param name="result">When the method completes, contains he cross product of the two vectors.</param>
+        public static void Cross(ref Vector3 left, ref Vector3 right, out Vector3 result)
+        {
+            result = new Vector3(
+                (left.Y * right.Z) - (left.Z * right.Y),
+                (left.Z * right.X) - (left.X * right.Z),
+                (left.X * right.Y) - (left.Y * right.X));
+        }
+
+        /// <summary>
+        /// Calculates the cross product of two vectors.
+        /// </summary>
+        /// <param name="left">First source vector.</param>
+        /// <param name="right">Second source vector.</param>
+        /// <returns>The cross product of the two vectors.</returns>
+        public static Vector3 Cross(Vector3 left, Vector3 right)
+        {
+            Vector3 result;
+            Cross(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+		/// Calculates the distance between two vectors.
+		/// </summary>
+		/// <param name="value1">The first vector.</param>
+		/// <param name="value2">The second vector.</param>
+		/// <param name="result">When the method completes, contains the distance between the two vectors.</param>
+		/// <remarks>
+		/// <see cref="Vector3.DistanceSquared(ref Vector3, ref Vector3, out float)"/> may be preferred when only the relative distance is needed
+		/// and speed is of the essence.
+		/// </remarks>
+		public static void Distance(ref Vector3 value1, ref Vector3 value2, out float result)
+        {
+            float x = value1.X - value2.X;
+            float y = value1.Y - value2.Y;
+            float z = value1.Z - value2.Z;
+
+            result = (float)Math.Sqrt((x * x) + (y * y) + (z * z));
+        }
+
+        /// <summary>
+        /// Calculates the distance between two vectors.
+        /// </summary>
+        /// <param name="value1">The first vector.</param>
+        /// <param name="value2">The second vector.</param>
+        /// <returns>The distance between the two vectors.</returns>
+        /// <remarks>
+        /// <see cref="Vector3.DistanceSquared(Vector3, Vector3)"/> may be preferred when only the relative distance is needed
+        /// and speed is of the essence.
+        /// </remarks>
+        public static float Distance(Vector3 value1, Vector3 value2)
+        {
+            float x = value1.X - value2.X;
+            float y = value1.Y - value2.Y;
+            float z = value1.Z - value2.Z;
+
+            return (float)Math.Sqrt((x * x) + (y * y) + (z * z));
+        }
+
+        /// <summary>
+		/// Calculates the squared distance between two vectors.
+		/// </summary>
+		/// <param name="value1">The first vector.</param>
+		/// <param name="value2">The second vector.</param>
+		/// <param name="result">When the method completes, contains the squared distance between the two vectors.</param>
+		/// <remarks>Distance squared is the value before taking the square root. 
+		/// Distance squared can often be used in place of distance if relative comparisons are being made. 
+		/// For example, consider three points A, B, and C. To determine whether B or C is further from A, 
+		/// compare the distance between A and B to the distance between A and C. Calculating the two distances 
+		/// involves two square roots, which are computationally expensive. However, using distance squared 
+		/// provides the same information and avoids calculating two square roots.
+		/// </remarks>
+		public static void DistanceSquared(ref Vector3 value1, ref Vector3 value2, out float result)
+        {
+            float x = value1.X - value2.X;
+            float y = value1.Y - value2.Y;
+            float z = value1.Z - value2.Z;
+
+            result = (x * x) + (y * y) + (z * z);
+        }
+
+        /// <summary>
+        /// Calculates the squared distance between two vectors.
+        /// </summary>
+        /// <param name="value1">The first vector.</param>
+        /// <param name="value2">The second vector.</param>
+        /// <returns>The squared distance between the two vectors.</returns>
+        /// <remarks>Distance squared is the value before taking the square root. 
+        /// Distance squared can often be used in place of distance if relative comparisons are being made. 
+        /// For example, consider three points A, B, and C. To determine whether B or C is further from A, 
+        /// compare the distance between A and B to the distance between A and C. Calculating the two distances 
+        /// involves two square roots, which are computationally expensive. However, using distance squared 
+        /// provides the same information and avoids calculating two square roots.
+        /// </remarks>
+        public static float DistanceSquared(Vector3 value1, Vector3 value2)
+        {
+            float x = value1.X - value2.X;
+            float y = value1.Y - value2.Y;
+            float z = value1.Z - value2.Z;
+
+            return (x * x) + (y * y) + (z * z);
+        }
+
+        /// <summary>
+		/// Adds two vectors.
+		/// </summary>
+		/// <param name="left">The first vector to add.</param>
+		/// <param name="right">The second vector to add.</param>
+		/// <returns>The sum of the two vectors.</returns>
+		public static Vector3 operator +(Vector3 left, Vector3 right)
+        {
+            return new Vector3(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+        }
+
+        /// <summary>
+        /// Assert a vector (return it unchanged).
+        /// </summary>
+        /// <param name="value">The vector to assert (unchange).</param>
+        /// <returns>The asserted (unchanged) vector.</returns>
+        public static Vector3 operator +(Vector3 value)
+        {
+            return value;
+        }
+
+        /// <summary>
+        /// Subtracts two vectors.
+        /// </summary>
+        /// <param name="left">The first vector to subtract.</param>
+        /// <param name="right">The second vector to subtract.</param>
+        /// <returns>The difference of the two vectors.</returns>
+        public static Vector3 operator -(Vector3 left, Vector3 right)
+        {
+            return new Vector3(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+        }
+
+        /// <summary>
+        /// Reverses the direction of a given vector.
+        /// </summary>
+        /// <param name="value">The vector to negate.</param>
+        /// <returns>A vector facing in the opposite direction.</returns>
+        public static Vector3 operator -(Vector3 value)
+        {
+            return new Vector3(-value.X, -value.Y, -value.Z);
+        }
+
+        /// <summary>
+        /// Scales a vector by the given value.
+        /// </summary>
+        /// <param name="value">The vector to scale.</param>
+        /// <param name="scalar">The amount by which to scale the vector.</param>
+        /// <returns>The scaled vector.</returns>
+        public static Vector3 operator *(float scalar, Vector3 value)
+        {
+            return new Vector3(value.X * scalar, value.Y * scalar, value.Z * scalar);
+        }
+
+        /// <summary>
+        /// Scales a vector by the given value.
+        /// </summary>
+        /// <param name="value">The vector to scale.</param>
+        /// <param name="scalar">The amount by which to scale the vector.</param>
+        /// <returns>The scaled vector.</returns>
+        public static Vector3 operator *(Vector3 value, float scalar)
+        {
+            return new Vector3(value.X * scalar, value.Y * scalar, value.Z * scalar);
+        }
+
+        /// <summary>
+        ///	Scales a Vector3 by another vector.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Vector3 operator *(Vector3 left, Vector3 right)
+        {
+            return new Vector3(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
+        }
+
+
+        /// <summary>
+        /// Scales a vector by the given value.
+        /// </summary>
+        /// <param name="value">The vector to scale.</param>
+        /// <param name="scalar">The amount by which to scale the vector.</param>
+        /// <returns>The scaled vector.</returns>
+        public static Vector3 operator /(Vector3 value, float scalar)
+        {
+            return new Vector3(value.X / scalar, value.Y / scalar, value.Z / scalar);
+        }
+
+
+        /// <summary>
+        ///		Used when a Vector3 is divided by another vector.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static Vector3 operator /(Vector3 left, Vector3 right)
+        {
+            return new Vector3(left.X / right.X, left.Y / right.Y, left.Z / right.Z);
+        }
+
+        /// <summary>
+        /// Returns a boolean indicating whether the given Vector3 is equal to this Vector3 instance.
+        /// </summary>
+        /// <param name="other">The Vector3 to compare this instance to.</param>
+        /// <returns>True if the other Vector3 is equal to this instance; False otherwise.</returns>
+        public bool Equals(ref Vector3 other)
 		{
 			return X == other.X &&
 				   Y == other.Y &&

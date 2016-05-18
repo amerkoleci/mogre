@@ -25,6 +25,15 @@ namespace Mogre.SampleBrowser
         {
             base.OnStartup(e);
 
+            // Setup OgreRoot first
+            _fileSystemLayer = new FileSystemLayer();
+            var pluginFileName = _fileSystemLayer.GetConfigFilePath("plugins.cfg");
+            _root = new Root(pluginFileName,
+                _fileSystemLayer.GetWritablePath("ogre.cfg"),
+                _fileSystemLayer.GetWritablePath("Ogre.log"));
+
+            SetupRenderSystem();
+
             _sampleContext = new SampleContext();
 
             MainWindow = new MainWindow();
@@ -36,18 +45,10 @@ namespace Mogre.SampleBrowser
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 #if TODO
-				var window = (MainWindow)sender;
+            var window = (MainWindow)sender;
             var handle = window.panel.Handle;
             //var handle = new WindowInteropHelper(window).Handle;
-
-            _fileSystemLayer = new FileSystemLayer();
-
-            var pluginFileName = _fileSystemLayer.GetConfigFilePath("plugins.cfg");
-
-            _root = new Root(pluginFileName,
-                _fileSystemLayer.GetWritablePath("ogre.cfg"),
-                _fileSystemLayer.GetWritablePath("Ogre.log"));
-
+            
             SetupRenderSystem();
             CreateRenderWindow(handle);
             InitResources();
@@ -114,8 +115,10 @@ namespace Mogre.SampleBrowser
 
         private void SetupRenderSystem()
         {
+            const string RenderSystemName = "Direct3D9 Rendering Subsystem";
             //const string RenderSystemName = "Direct3D11 Rendering Subsystem";
-            const string RenderSystemName = "OpenGL Rendering Subsystem";
+            //const string RenderSystemName = "OpenGL Rendering Subsystem";
+
             RenderSystem renderSystemByName = _root.GetRenderSystemByName(RenderSystemName);
             _root.RenderSystem = renderSystemByName;
             renderSystemByName.SetConfigOption("Full Screen", "No");
