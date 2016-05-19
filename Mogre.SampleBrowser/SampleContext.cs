@@ -1,16 +1,18 @@
-﻿using System;
+﻿// Alimer - Copyright (C) Amer Koleci
+// This file is subject to the terms and conditions defined in
+// file 'LICENSE.txt', which is part of this source code package.
+
+using Mogre.Framework;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Mogre.SampleBrowser
 {
     public class SampleContext
     {
-        //static readonly Dictionary<TypeInfo, Func<Sample>> _samples = new Dictionary<TypeInfo, Func<Sample>>();
         static readonly List<SampleInfo> _samples = new List<SampleInfo>();
 
         public IEnumerable<SampleInfo> Samples
@@ -22,21 +24,31 @@ namespace Mogre.SampleBrowser
         {
             var sampleTypeInfo = typeof(Sample).GetTypeInfo();
 
-            foreach (var typeInfo in typeof(SampleContext).GetTypeInfo().Assembly.DefinedTypes)
-            {
-                if (typeInfo.IsAbstract == false &&
-                    sampleTypeInfo.IsAssignableFrom(typeInfo))
-                {
-                    var displayNameAttribute = typeInfo.GetCustomAttribute<DisplayNameAttribute>();
-                    var descriptionAttribute = typeInfo.GetCustomAttribute<DescriptionAttribute>();
+            var lookupFolder = Path.GetDirectoryName(typeof(SampleContext).GetTypeInfo().Assembly.Location);
 
-                    _samples.Add(new SampleInfo(
-                        displayNameAttribute != null ? displayNameAttribute.DisplayName : typeInfo.Name,
-                        descriptionAttribute != null ? descriptionAttribute.Description : typeInfo.Name,
-                        () => (Sample)Activator.CreateInstance(typeInfo.AsType())
-                        )
-                       );
-                   // _samples.Add(typeInfo, () => (Sample)Activator.CreateInstance(typeInfo.AsType()));
+            foreach (var exeFile in Directory.GetFiles(lookupFolder, "*.exe"))
+            {
+                try
+                {
+                    var assembly = Assembly.LoadFrom(exeFile);
+                    foreach (var typeInfo in assembly.DefinedTypes)
+                    {
+                        if (typeInfo.IsAbstract == false &&
+                            sampleTypeInfo.IsAssignableFrom(typeInfo))
+                        {
+                            var sampleInfoAttribute = typeInfo.GetCustomAttribute<SampleInfoAttribute>();
+
+                            _samples.Add(new SampleInfo(
+                                sampleInfoAttribute != null ? sampleInfoAttribute.Name : typeInfo.Name,
+                                sampleInfoAttribute != null ? sampleInfoAttribute.Description : typeInfo.Name,
+                                sampleInfoAttribute != null ? sampleInfoAttribute.ThumbnailUrl : string.Empty,
+                                exeFile));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
                 }
             }
         }
@@ -45,21 +57,32 @@ namespace Mogre.SampleBrowser
 
     public sealed class SampleInfo
     {
-        readonly Func<Sample> _factory;
-
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public SampleInfo(string name, string description, Func<Sample> factory)
+        public string Executable { get; private set; }
+
+        public BitmapSource Thumbnail { get; private set; }
+
+        public SampleInfo(string name, string description, string thumbnailUrl, string executable)
         {
             Name = name;
             Description = description;
-            _factory = factory;
-        }
+            Executable = executable;
 
-        public Sample Create()
-        {
-            return _factory();
+            var thumbBasePath = Path.GetFullPath("../../../Media/thumbnails/");
+
+            if (string.IsNullOrEmpty(thumbnailUrl) == false &&
+                File.Exists(Path.Combine(thumbBasePath, thumbnailUrl)))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = new Uri(Path.Combine(thumbBasePath, thumbnailUrl));
+                image.EndInit();
+
+                Thumbnail = image;
+            }
         }
 
         public override string ToString()

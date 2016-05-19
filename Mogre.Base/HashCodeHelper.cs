@@ -4,17 +4,17 @@
 
 namespace Mogre
 {
-	/// <summary>
-	/// Helper class for hashing.
-	/// </summary>
-	public static class HashCodeHelper
-	{
-		/// <summary>
-		/// Combines two hash codes, useful for combining hash codes of individual vector elements
-		/// </summary>
-		public static int CombineHashCodes(int h1, int h2)
-		{
-			return (((h1 << 5) + h1) ^ h2);
-		}
-	}
+    /// <summary>
+    /// Helper class for hashing.
+    /// </summary>
+    public static class HashCodeHelper
+    {
+        /// <summary>
+        /// Combines two hash codes, useful for combining hash codes of individual vector elements
+        /// </summary>
+        public static int CombineHashCodes(int h1, int h2)
+        {
+            return (((h1 << 5) + h1) ^ h2);
+        }
+    }
 }

@@ -43,6 +43,9 @@ namespace Mogre
 
 	Color4 ToColor4(Ogre::ColourValue value);
 	Ogre::ColourValue FromColor4(Color4 value);
+
+	Plane ToPlane(Ogre::Plane value);
+	Ogre::Plane FromPlane(Plane value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\

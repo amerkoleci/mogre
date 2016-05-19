@@ -32,5 +32,11 @@ include ("MogreNative")
 -- Mogre
 include ("Mogre.Base")
 
+-- Mogre.Framework
+include ("Samples/Mogre.Framework")
+
+-- Now Samples
+include ("Samples/Mogre.Sample.SkyBox")
+
 -- Mogre.SampleBrowser
 include ("Mogre.SampleBrowser")

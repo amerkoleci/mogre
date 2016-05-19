@@ -3,6 +3,7 @@
 #include "OgreSceneManager.h"
 #include "MogreCommon.h"
 #include "MogreCamera.h"
+#include "MogreLight.h"
 
 namespace Mogre
 {
@@ -50,10 +51,15 @@ namespace Mogre
 			Mogre::SceneNode^ get();
 		}
 
+		Mogre::Light^ CreateLight();
+		void DestroyLight(Mogre::Light^ light);
+		void DestroyAllLights();
+
 		Mogre::Camera^ CreateCamera(String^ name);
 		Mogre::Camera^ CreateCamera(String^ name, bool notShadowCaster);
 		Mogre::Camera^ CreateCamera(String^ name, bool notShadowCaster, bool forCubemapping);
 		Mogre::Camera^ FindCamera(String^ name);
+		Mogre::Camera^ FindCameraNoThrow(String^ name);
 		void DestroyCamera(Mogre::Camera^ camera);
 		void DestroyAllCameras();
 
@@ -61,15 +67,14 @@ namespace Mogre
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName);
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
 
-		/*void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName);
+		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale);
-		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName);*/
-
+		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName);
 
 		void SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, String^ groupName);
 		void SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation);

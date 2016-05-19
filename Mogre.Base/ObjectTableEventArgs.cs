@@ -8,7 +8,7 @@ namespace Mogre
 
     public class ObjectTableEventArgs : EventArgs
     {
-		public object ManagedObject
+        public object ManagedObject
         {
             get; set;
         }

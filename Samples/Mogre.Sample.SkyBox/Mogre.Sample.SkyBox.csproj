@@ -6,41 +6,44 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B6A3EA75-1A57-4035-A765-460A6E3E4159}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>Mogre.SampleBrowser</RootNamespace>
-    <AssemblyName>Mogre.SampleBrowser</AssemblyName>
+    <ProjectGuid>{4EA2E814-D393-4DDE-B13E-B5540C3AEEEF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Mogre.Sample.SkyBox</RootNamespace>
+    <AssemblyName>Mogre.Sample.SkyBox</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\Debug\x64\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <OutputPath>..\..\bin\Debug\x64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;PCL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>CS1591</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\bin\Release\x64\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;PCL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\bin\Release\x64\Mogre.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Mogre.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\Debug\x86\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;PCL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>CS1591</NoWarn>
@@ -48,69 +51,46 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\bin\Release\x86\</OutputPath>
+    <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\bin\Release\x86\Mogre.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Mogre.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
-    <Compile Include="SampleContext.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SkyboxSample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MogreNative\MogreNative.vcxproj">
-      <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
-      <Name>MogreNative</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mogre.Base\Mogre.Base.csproj">
+    <ProjectReference Include="..\..\Mogre.Base\Mogre.Base.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
       <Name>Mogre.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Samples\Mogre.Framework\Mogre.Framework.csproj">
+    <ProjectReference Include="..\..\MogreNative\MogreNative.vcxproj">
+      <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
+      <Name>MogreNative</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mogre.Framework\Mogre.Framework.csproj">
       <Project>{f5076fc9-2bb9-4588-b217-bc2b070ffbc2}</Project>
       <Name>Mogre.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

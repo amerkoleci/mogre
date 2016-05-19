@@ -87,4 +87,20 @@ namespace Mogre
 	{
 		return Ogre::ColourValue(value.R, value.G, value.B, value.A);
 	}
+
+	Plane ToPlane(Ogre::Plane value)
+	{
+		Plane result = Plane();
+		result.Normal = ToVector3(value.normal);
+		result.D = value.d;
+		return result;
+	}
+
+	Ogre::Plane FromPlane(Plane value)
+	{
+		Ogre::Plane result;
+		result.normal = FromVector3(value.Normal);
+		result.d = value.D;
+		return result;
+	}
 }

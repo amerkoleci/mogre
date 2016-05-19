@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -8,15 +10,15 @@ namespace Mogre.SampleBrowser
     /// Logica di interazione per MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-	{
-		public MainWindow()
-		{
-			InitializeComponent();
-		}
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
-		private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			Application.Current.Shutdown();
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
 
         }
 
@@ -29,7 +31,21 @@ namespace Mogre.SampleBrowser
 
         void RunSample(SampleInfo sampleInfo)
         {
+            try
+            {
+                IsEnabled = false;
+                var process = Process.Start(sampleInfo.Executable);
+                process.Exited += Process_Exited;
+            }
+            catch(Exception)
+            {
+                IsEnabled = true;
+            }
+        }
 
+        void Process_Exited(object sender, EventArgs e)
+        {
+            IsEnabled = true;
         }
     }
 }

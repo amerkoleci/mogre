@@ -28,6 +28,21 @@ bool SceneManager::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+Mogre::Light^ SceneManager::CreateLight()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Light^>((intptr_t)static_cast<Ogre::SceneManager*>(_native)->createLight());
+}
+
+void SceneManager::DestroyLight(Mogre::Light^ light)
+{
+	static_cast<Ogre::SceneManager*>(_native)->destroyLight(GetPointerOrNull(light));
+}
+
+void SceneManager::DestroyAllLights()
+{
+	_native->destroyAllLights();
+}
+
 Mogre::Camera^ SceneManager::CreateCamera(String^ name)
 {
 	return CreateCamera(name, true, false);
@@ -50,6 +65,13 @@ Mogre::Camera^ SceneManager::FindCamera(String^ name)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->findCamera(o_name));
+}
+
+Mogre::Camera^ SceneManager::FindCameraNoThrow(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->findCameraNoThrow(o_name));
 }
 
 void SceneManager::DestroyCamera(Mogre::Camera^ camera)
@@ -84,6 +106,64 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, S
 
 	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
 }
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling, drawFirst, bow, xsegments, ysegments, o_groupName);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling, drawFirst, bow, xsegments, ysegments);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling, drawFirst, bow, xsegments);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling, drawFirst, bow);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling, drawFirst);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale, tiling);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName, scale);
+}
+
+void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName)
+{
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+
+	_native->setSkyPlane(enable, FromPlane(plane), o_materialName);
+}
+
 
 void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, String^ groupName)
 {
