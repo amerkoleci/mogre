@@ -28,6 +28,16 @@ bool SceneManager::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+Mogre::Color4 SceneManager::AmbientLight::get()
+{
+	return ToColor4(_native->getAmbientLight());
+}
+
+void SceneManager::AmbientLight::set(Mogre::Color4 value)
+{
+	_native->setAmbientLight(FromColor4(value));
+}
+
 Mogre::Light^ SceneManager::CreateLight()
 {
 	return ObjectTable::GetOrCreateObject<Mogre::Light^>((intptr_t)static_cast<Ogre::SceneManager*>(_native)->createLight());

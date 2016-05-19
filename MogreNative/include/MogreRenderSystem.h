@@ -66,6 +66,189 @@ namespace Mogre
 		virtual void eventOccurred(const Ogre::String& eventName, const Ogre::NameValuePairList* parameters) override;
 	};
 
+	public enum class Capabilities
+	{
+		RSC_AUTOMIPMAP = Ogre::RSC_AUTOMIPMAP,
+		RSC_BLENDING = Ogre::RSC_BLENDING,
+		RSC_ANISOTROPY = Ogre::RSC_ANISOTROPY,
+		RSC_DOT3 = Ogre::RSC_DOT3,
+		RSC_CUBEMAPPING = Ogre::RSC_CUBEMAPPING,
+		RSC_HWSTENCIL = Ogre::RSC_HWSTENCIL,
+		RSC_VBO = Ogre::RSC_VBO,
+		RSC_VERTEX_PROGRAM = Ogre::RSC_VERTEX_PROGRAM,
+		RSC_FRAGMENT_PROGRAM = Ogre::RSC_FRAGMENT_PROGRAM,
+		RSC_TEXTURE_COMPRESSION = Ogre::RSC_TEXTURE_COMPRESSION,
+		RSC_TEXTURE_COMPRESSION_DXT = Ogre::RSC_TEXTURE_COMPRESSION_DXT,
+		RSC_TEXTURE_COMPRESSION_VTC = Ogre::RSC_TEXTURE_COMPRESSION_VTC,
+		RSC_SCISSOR_TEST = Ogre::RSC_SCISSOR_TEST,
+		RSC_TWO_SIDED_STENCIL = Ogre::RSC_TWO_SIDED_STENCIL,
+		RSC_STENCIL_WRAP = Ogre::RSC_STENCIL_WRAP,
+		RSC_HWOCCLUSION = Ogre::RSC_HWOCCLUSION,
+		RSC_USER_CLIP_PLANES = Ogre::RSC_USER_CLIP_PLANES,
+		RSC_VERTEX_FORMAT_UBYTE4 = Ogre::RSC_VERTEX_FORMAT_UBYTE4,
+		RSC_INFINITE_FAR_PLANE = Ogre::RSC_INFINITE_FAR_PLANE,
+		RSC_HWRENDER_TO_TEXTURE = Ogre::RSC_HWRENDER_TO_TEXTURE,
+		RSC_TEXTURE_FLOAT = Ogre::RSC_TEXTURE_FLOAT,
+		RSC_NON_POWER_OF_2_TEXTURES = Ogre::RSC_NON_POWER_OF_2_TEXTURES,
+		RSC_TEXTURE_3D = Ogre::RSC_TEXTURE_3D,
+		RSC_POINT_SPRITES = Ogre::RSC_POINT_SPRITES,
+		RSC_POINT_EXTENDED_PARAMETERS = Ogre::RSC_POINT_EXTENDED_PARAMETERS,
+		RSC_VERTEX_TEXTURE_FETCH = Ogre::RSC_VERTEX_TEXTURE_FETCH,
+		RSC_MIPMAP_LOD_BIAS = Ogre::RSC_MIPMAP_LOD_BIAS
+	};
+
+	//################################################################
+	//RenderSystemCapabilities
+	//################################################################
+	ref class Log;
+
+	public ref class RenderSystemCapabilities
+	{
+	private protected:
+		virtual void ClearNativePtr()
+		{
+			_native = 0;
+		}
+
+	public protected:
+		RenderSystemCapabilities(Ogre::RenderSystemCapabilities* obj) : _native(obj), _createdByCLR(false)
+		{
+		}
+
+		~RenderSystemCapabilities()
+		{
+			if (_createdByCLR &&_native)
+			{
+				delete _native;
+				_native = 0;
+			}
+		}
+
+		Ogre::RenderSystemCapabilities* _native;
+		bool _createdByCLR;
+
+	public:
+		RenderSystemCapabilities();
+
+		property Ogre::ushort FragmentProgramConstantBoolCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property Ogre::ushort FragmentProgramConstantFloatCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property Ogre::ushort FragmentProgramConstantIntCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property Ogre::Real MaxPointSize
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real s);
+		}
+
+		property bool NonPOW2TexturesLimited
+		{
+		public:
+			bool get();
+		public:
+			void set(bool l);
+		}
+
+		property Ogre::ushort NumTextureUnits
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort num);
+		}
+
+		property Ogre::ushort NumVertexTextureUnits
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort n);
+		}
+
+		property Ogre::ushort NumWorldMatricies
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort num);
+		}
+
+		property Ogre::ushort StencilBufferBitDepth
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort num);
+		}
+
+		property Ogre::ushort VertexProgramConstantBoolCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property Ogre::ushort VertexProgramConstantFloatCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property Ogre::ushort VertexProgramConstantIntCount
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort c);
+		}
+
+		property bool VertexTextureUnitsShared
+		{
+		public:
+			bool get();
+		public:
+			void set(bool shared);
+		}
+
+		void SetNumVertexBlendMatrices(Ogre::ushort num);
+
+		void SetNumMultiRenderTargets(Ogre::ushort num);
+
+		Ogre::ushort NumVertexBlendMatrices();
+
+		Ogre::ushort NumMultiRenderTargets();
+
+		void SetCapability(Mogre::Capabilities c);
+
+		bool HasCapability(Mogre::Capabilities c);
+
+		void Log(Mogre::Log^ pLog);
+	};
+
 	public ref class RenderSystem : public IRenderSystem_Listener_Receiver
 	{
 	public:
@@ -126,6 +309,12 @@ namespace Mogre
 				if (_eventOccurred)
 					_eventOccurred->Invoke(eventName/*, parameters*/);
 			}
+		}
+
+		property Mogre::RenderSystemCapabilities^ Capabilities
+		{
+		public:
+			Mogre::RenderSystemCapabilities^ get();
 		}
 
 		void SetConfigOption(String^ name, String^ value);

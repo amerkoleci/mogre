@@ -44,6 +44,14 @@ namespace Mogre
 		{
 			virtual bool get();
 		}
+
+		property Mogre::Color4 AmbientLight
+		{
+		public:
+			Mogre::Color4 get();
+		public:
+			void set(Mogre::Color4 value);
+		}
 		
 		property Mogre::SceneNode^ RootSceneNode
 		{
