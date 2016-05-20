@@ -38,9 +38,93 @@ void SceneManager::AmbientLight::set(Mogre::Color4 value)
 	_native->setAmbientLight(FromColor4(value));
 }
 
+bool SceneManager::DisplaySceneNodes::get()
+{
+	return _native->getDisplaySceneNodes();
+}
+
+void SceneManager::DisplaySceneNodes::set(bool value)
+{
+	_native->setDisplaySceneNodes(value);
+}
+
+Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::BillboardSet^>((intptr_t)_native->createBillboardSet(poolSize));
+}
+
+void SceneManager::DestroyBillboardSet(Mogre::BillboardSet^ set)
+{
+	_native->destroyBillboardSet(GetPointerOrNull(set));
+}
+
+void SceneManager::DestroyAllBillboardSets()
+{
+	_native->destroyAllBillboardSets();
+}
+
+Mogre::BillboardChain^ SceneManager::CreateBillboardChain()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::BillboardChain^>((intptr_t)_native->createBillboardChain());
+}
+
+void SceneManager::DestroyBillboardChain(Mogre::BillboardChain^ obj)
+{
+	_native->destroyBillboardChain(GetPointerOrNull(obj));
+}
+
+void SceneManager::DestroyAllBillboardChains() 
+{
+	_native->destroyAllBillboardChains();
+}
+
+Mogre::RibbonTrail^ SceneManager::CreateRibbonTrail()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::RibbonTrail^>((intptr_t)_native->createRibbonTrail());
+}
+
+void SceneManager::DestroyRibbonTrail(Mogre::RibbonTrail^ obj)
+{
+	_native->destroyRibbonTrail(GetPointerOrNull(obj));
+}
+
+void SceneManager::DestroyAllRibbonTrails()
+{
+	_native->destroyAllRibbonTrails();
+}
+
+Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(String^ templateName)
+{
+	DECLARE_NATIVE_STRING(o_templateName, templateName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(o_templateName));
+}
+
+Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota, String^ resourceGroup)
+{
+	DECLARE_NATIVE_STRING(o_resourceGroup, resourceGroup);
+
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(quota, o_resourceGroup));
+}
+
+Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(quota));
+}
+
+void SceneManager::DestroyParticleSystem(Mogre::ParticleSystem^ obj)
+{
+	_native->destroyParticleSystem(GetPointerOrNull(obj));
+}
+
+void SceneManager::DestroyAllParticleSystems()
+{
+	static_cast<Ogre::SceneManager*>(_native)->destroyAllParticleSystems();
+}
+
 Mogre::Light^ SceneManager::CreateLight()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Light^>((intptr_t)static_cast<Ogre::SceneManager*>(_native)->createLight());
+	return ObjectTable::GetOrCreateObject<Mogre::Light^>((intptr_t)_native->createLight());
 }
 
 void SceneManager::DestroyLight(Mogre::Light^ light)
@@ -115,6 +199,16 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, S
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
 	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity((Ogre::SceneManager::PrefabType)ptype));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName)
@@ -305,9 +399,15 @@ void SceneManager::SetFog(Mogre::FogMode mode)
 {
 	_native->setFog((Ogre::FogMode)mode);
 }
+
 void SceneManager::SetFog()
 {
 	_native->setFog();
+}
+
+void SceneManager::ClearScene()
+{
+	_native->clearScene();
 }
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()

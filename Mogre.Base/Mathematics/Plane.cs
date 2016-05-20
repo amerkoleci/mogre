@@ -16,6 +16,19 @@ namespace Mogre
     public struct Plane : IEquatable<Plane>
     {
         /// <summary>
+        /// The "positive side" of the plane is the half space to which the
+        /// plane normal points.The "negative side" is the other half
+        /// space.The flag "no side" indicates the plane itself.
+        /// </summary>
+        public enum Side
+        {
+            NO_SIDE,
+            POSITIVE_SIDE,
+            NEGATIVE_SIDE,
+            BOTH_SIDE
+        }
+
+        /// <summary>
         /// The normal of the plane.
         /// </summary>
         public Vector3 Normal;
@@ -55,6 +68,53 @@ namespace Mogre
             Normal = kEdge1.Cross(kEdge2);
             Normal.Normalize();
             D = -Normal.Dot(point0);
+        }
+
+        public float GetDistance(Vector3 point)
+        {
+            return Normal.Dot(point) + D;
+        }
+
+        public Side GetSide(Vector3 point)
+        {
+            var fDistance = GetDistance(point);
+
+            if (fDistance < 0.0f)
+                return Side.NEGATIVE_SIDE;
+
+            if (fDistance > 0.0f)
+                return Side.POSITIVE_SIDE;
+
+            return Side.NO_SIDE;
+        }
+
+        public Side GetSide(AxisAlignedBox box)
+        {
+            if (box.IsNull)
+                return Side.NO_SIDE;
+
+            if (box.IsInfinite)
+                return Side.BOTH_SIDE;
+
+            return GetSide(box.Center, box.HalfSize);
+        }
+
+        public Side GetSide(Vector3 centre, Vector3 halfSize)
+        {
+            // Calculate the distance between box centre and the plane
+            var dist = GetDistance(centre);
+
+            // Calculate the maximise allows absolute distance for
+            // the distance between box centre and plane
+            var maxAbsDist = Normal.AbsDotProduct(halfSize);
+
+            if (dist < -maxAbsDist)
+                return Side.NEGATIVE_SIDE;
+
+            if (dist > +maxAbsDist)
+                return Side.POSITIVE_SIDE;
+
+            return Side.BOTH_SIDE;
         }
 
         /// <summary>

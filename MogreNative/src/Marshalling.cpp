@@ -103,4 +103,14 @@ namespace Mogre
 		result.d = value.D;
 		return result;
 	}
+
+	AxisAlignedBox^ ToAxisAlignedBounds(Ogre::AxisAlignedBox value)
+	{
+		return gcnew AxisAlignedBox(ToVector3(value.getMinimum()), ToVector3(value.getMaximum()));
+	}
+
+	Ogre::AxisAlignedBox FromAxisAlignedBounds(AxisAlignedBox^ value)
+	{
+		return Ogre::AxisAlignedBox(FromVector3(value->Minimum), FromVector3(value->Maximum));
+	}
 }

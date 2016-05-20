@@ -116,6 +116,22 @@ namespace Mogre
         public float Z;
 
         /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float x { get { return X; } set { X = value; } }
+
+        /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float y { get { return Y; } set { Y = value; } }
+
+        /// <summary>
+        /// The Z component of the vector.
+        /// </summary>
+        public float z { get { return Z; } set { Z = value; } }
+
+
+        /// <summary>
         /// Gets or sets the component at the specified index.
         /// </summary>
         /// <value>The value of the X, Y, or Z component, depending on the index.</value>
@@ -429,13 +445,32 @@ namespace Mogre
             return (x * x) + (y * y) + (z * z);
         }
 
+        public void MakeFloor(Vector3 cmp)
+        {
+            if (cmp.x < x) x = cmp.x;
+            if (cmp.y < y) y = cmp.y;
+            if (cmp.z < z) z = cmp.z;
+        }
+
+        public void MakeCeil(Vector3 cmp)
+        {
+            if (cmp.x > x) x = cmp.x;
+            if (cmp.y > y) y = cmp.y;
+            if (cmp.z > z) z = cmp.z;
+        }
+
+        public float AbsDotProduct(Vector3 vector)
+        {
+            return Math.Abs(x * vector.x) + Math.Abs(y * vector.y) + Math.Abs(z * vector.z);
+        }
+
         /// <summary>
-		/// Adds two vectors.
-		/// </summary>
-		/// <param name="left">The first vector to add.</param>
-		/// <param name="right">The second vector to add.</param>
-		/// <returns>The sum of the two vectors.</returns>
-		public static Vector3 operator +(Vector3 left, Vector3 right)
+        /// Adds two vectors.
+        /// </summary>
+        /// <param name="left">The first vector to add.</param>
+        /// <param name="right">The second vector to add.</param>
+        /// <returns>The sum of the two vectors.</returns>
+        public static Vector3 operator +(Vector3 left, Vector3 right)
         {
             return new Vector3(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
         }

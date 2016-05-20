@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IDisposable.cs" />
+    <Compile Include="Mathematics\AxisAlignedBox.cs" />
     <Compile Include="Mathematics\Angle.cs" />
     <Compile Include="Mathematics\Plane.cs" />
     <Compile Include="Mathematics\MathHelper.cs" />

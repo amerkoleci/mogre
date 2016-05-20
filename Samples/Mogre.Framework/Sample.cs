@@ -152,7 +152,7 @@ namespace Mogre.Framework
 
         protected virtual bool Configure()
         {
-            if (_root.ShowConfigDialog())
+            if (_root.RestoreConfig() || _root.ShowConfigDialog())
             {
                 _window = _root.Initialise(true);
                 return true;

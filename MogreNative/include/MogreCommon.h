@@ -1,9 +1,17 @@
 #pragma once
 
 #include "OgreCommon.h"
+#include "STLContainerWrappers.h"
 
 namespace Mogre
 {
+	typedef Ogre::ulong ulong;
+	typedef Ogre::uint uint;
+	typedef Ogre::ushort ushort;
+	typedef Ogre::uchar uchar;
+	typedef Ogre::Real Real;
+	typedef Mogre::Color4 ColourValue;
+
 	public enum class FrameBufferType
 	{
 		FBT_COLOUR = Ogre::FBT_COLOUR,
@@ -135,4 +143,8 @@ namespace Mogre
 		TFO_TRILINEAR = Ogre::TFO_TRILINEAR,
 		TFO_ANISOTROPIC = Ogre::TFO_ANISOTROPIC
 	};
+
+	INC_DECLARE_STLMAP(UnaryOptionList, String^, bool, Ogre::String, bool, public, private);
+	INC_DECLARE_STLMAP(BinaryOptionList, String^, String^, Ogre::String, Ogre::String, public, private);
+	INC_DECLARE_STLMAP(NameValuePairList, String^, String^, Ogre::String, Ogre::String, public, private);
 }

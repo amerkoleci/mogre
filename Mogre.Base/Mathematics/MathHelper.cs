@@ -122,5 +122,27 @@ namespace Mogre
         {
             return IsZero(a - 1.0f);
         }
+
+        public static bool Intersects(Plane plane, AxisAlignedBox box)
+        {
+            if (box.IsNull) return false;
+
+            // Get corners of the box
+            var corners = box.GetAllCorners();
+
+            // Test which side of the plane the corners are
+            // Intersection occurs when at least one corner is on the 
+            // opposite side to another
+            Plane.Side lastSide = plane.GetSide(corners[0]);
+            for (int corner = 1; corner < 8; ++corner)
+            {
+                if (plane.GetSide(corners[corner]) != lastSide)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

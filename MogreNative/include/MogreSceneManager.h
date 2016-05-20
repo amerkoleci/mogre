@@ -4,6 +4,10 @@
 #include "MogreCommon.h"
 #include "MogreCamera.h"
 #include "MogreLight.h"
+#include "MogreBillboardSet.h"
+#include "MogreBillboardChain.h"
+#include "MogreRibbonTrail.h"
+#include "MogreParticleSystem.h"
 
 namespace Mogre
 {
@@ -11,7 +15,7 @@ namespace Mogre
 	ref class SceneNode;
 	ref class Entity;
 
-	
+
 	public ref class SceneManager : IDisposable
 	{
 	public:
@@ -19,6 +23,14 @@ namespace Mogre
 		virtual event EventHandler^ OnDisposing;
 		/// <summary>Raised once all disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposed;
+
+	public:
+		enum class PrefabType
+		{
+			PT_PLANE = Ogre::SceneManager::PT_PLANE,
+			PT_CUBE = Ogre::SceneManager::PT_CUBE,
+			PT_SPHERE = Ogre::SceneManager::PT_SPHERE
+		};
 
 	private:
 		Ogre::SceneManager* _native;
@@ -52,12 +64,39 @@ namespace Mogre
 		public:
 			void set(Mogre::Color4 value);
 		}
-		
+
+		property bool DisplaySceneNodes
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
 		property Mogre::SceneNode^ RootSceneNode
 		{
 		public:
 			Mogre::SceneNode^ get();
 		}
+
+		Mogre::BillboardSet^ CreateBillboardSet(unsigned int poolSize);
+		void DestroyBillboardSet(Mogre::BillboardSet^ set);
+		void DestroyAllBillboardSets();
+
+		Mogre::BillboardChain^ CreateBillboardChain();
+		void DestroyBillboardChain(Mogre::BillboardChain^ obj);
+		void DestroyAllBillboardChains();
+
+		Mogre::RibbonTrail^ CreateRibbonTrail();
+		void DestroyRibbonTrail(Mogre::RibbonTrail^ obj);
+		void DestroyAllRibbonTrails();
+		
+		Mogre::ParticleSystem^ CreateParticleSystem(String^ templateName);
+		Mogre::ParticleSystem^ CreateParticleSystem(size_t quota, String^ resourceGroup);
+		Mogre::ParticleSystem^ CreateParticleSystem(size_t quota);
+
+		void DestroyParticleSystem(Mogre::ParticleSystem^ obj);
+		void DestroyAllParticleSystems();
 
 		Mogre::Light^ CreateLight();
 		void DestroyLight(Mogre::Light^ light);
@@ -74,6 +113,8 @@ namespace Mogre
 		Mogre::Entity^ CreateEntity(String^ meshName);
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName);
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype);
+		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType);
 
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments);
@@ -107,6 +148,8 @@ namespace Mogre
 		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour);
 		void SetFog(Mogre::FogMode mode);
 		void SetFog();
+
+		void ClearScene();
 
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer

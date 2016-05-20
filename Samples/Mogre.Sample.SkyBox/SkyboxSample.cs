@@ -21,27 +21,27 @@ namespace Mogre.Framework
             _sceneManager.RootSceneNode.AttachObject(_sceneManager.CreateEntity("razor.mesh"));
 
             // create a particle system with 200 quota, then set its material and dimensions
-            //ParticleSystem* thrusters = _sceneManager.CreateParticleSystem(25);
-            //thrusters->setMaterialName("Examples/Flare");
-            //thrusters->setDefaultDimensions(25, 25);
+            var thrusters = _sceneManager.CreateParticleSystem(25);
+            thrusters.MaterialName = "Examples/Flare";
+            thrusters.SetDefaultDimensions(25, 25);
 
             //// create two emitters for our thruster particle system
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    ParticleEmitter* emitter = thrusters->addEmitter("Point");  // add a point emitter
+            for (int i = 0; i < 2; i++)
+            {
+                ParticleEmitter emitter = thrusters.AddEmitter("Point");  // add a point emitter
 
-            //    // set the emitter properties
-            //    emitter->setAngle(Degree(3));
-            //    emitter->setTimeToLive(0.5);
-            //    emitter->setEmissionRate(25);
-            //    emitter->setParticleVelocity(25);
-            //    emitter->setDirection(Vector3::NEGATIVE_UNIT_Z);
-            //    emitter->setColour(ColourValue::White, ColourValue::Red);
-            //    emitter->setPosition(Vector3(i == 0 ? 5.7 : -18, 0, 0));
-            //}
+                // set the emitter properties
+                emitter.Angle = new Degree(3);
+                emitter.TimeToLive = 0.5f;
+                emitter.EmissionRate = 25;
+                emitter.ParticleVelocity = 25;
+                emitter.Direction = Vector3.NegativeUnitZ;
+                emitter.SetColour(Color4.White, Color4.Red);
+                emitter.Position = new Vector3(i == 0 ? 5.7f : -18, 0, 0);
+            }
 
-            // attach our thruster particles to the rear of the ship
-            //_sceneManager.RootSceneNode.CreateChildSceneNode(SceneMemoryMgrTypes.Dynamic, new Vector3(0, 6.5f, -67)).AttachObject(thrusters);
+            // Attach our thruster particles to the rear of the ship
+            _sceneManager.RootSceneNode.CreateChildSceneNode(SceneMemoryMgrTypes.Dynamic, new Vector3(0, 6.5f, -67)).AttachObject(thrusters);
 
             // set the camera's initial position and orientation
             _camera.SetPosition(0, 0, 150);

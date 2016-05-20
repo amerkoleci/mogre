@@ -364,3 +364,7 @@ void Root::UnloadPlugin(String^ pluginName)
 
 	_native->unloadPlugin(o_pluginName);
 }
+
+CPP_DECLARE_STLMAP(, UnaryOptionList, String^, bool, Ogre::String, bool);
+CPP_DECLARE_STLMAP(, BinaryOptionList, String^, String^, Ogre::String, Ogre::String);
+CPP_DECLARE_STLMAP(, NameValuePairList, String^, String^, Ogre::String, Ogre::String);

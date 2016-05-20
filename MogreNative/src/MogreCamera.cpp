@@ -2,6 +2,7 @@
 #include "MogreCamera.h"
 #include "MogreSceneNode.h"
 #include "MogreSceneManager.h"
+#include "MogreViewport.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -195,15 +196,22 @@ void Camera::UseRenderingDistance::set(bool use)
 	static_cast<Ogre::Camera*>(_native)->setUseRenderingDistance(use);
 }
 
+Mogre::Viewport^ Camera::LastViewport::get()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((intptr_t)static_cast<const Ogre::Camera*>(_native)->getLastViewport());
+}
+
+const Mogre::Vector3* Camera::WorldSpaceCorners::get()
+{
+	return reinterpret_cast<const Mogre::Vector3*>(static_cast<const Ogre::Camera*>(_native)->getWorldSpaceCorners());
+}
+
 /*Mogre::Matrix4^ Camera::ViewMatrix::get()
 {
 	return static_cast<const Ogre::Camera*>(_native)->getViewMatrix();
 }
 
-Mogre::Viewport^ Camera::Viewport::get()
-{
-	return static_cast<const Ogre::Camera*>(_native)->getViewport();
-}*/
+*/
 
 void Camera::SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {

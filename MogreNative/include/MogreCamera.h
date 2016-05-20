@@ -8,6 +8,7 @@ namespace Mogre
 {
 	ref class SceneNode;
 	ref class SceneManager;
+	ref class Viewport;
 
 	public ref class Camera : public Frustum
 	{
@@ -198,23 +199,24 @@ namespace Mogre
 			void set(bool use);
 		}
 
-		/*property Mogre::Matrix4^ ViewMatrix
-		{
-		public:
-			Mogre::Matrix4^ get();
-		}
-
-		property Mogre::Viewport^ Viewport
+		property Mogre::Viewport^ LastViewport
 		{
 		public:
 			Mogre::Viewport^ get();
 		}
 
+
+		/*property Mogre::Matrix4^ ViewMatrix
+		{
+		public:
+			Mogre::Matrix4^ get();
+		}*/
+		
 		property const Mogre::Vector3* WorldSpaceCorners
 		{
 		public:
 			const Mogre::Vector3* get();
-		}*/
+		}
 
 		void SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 

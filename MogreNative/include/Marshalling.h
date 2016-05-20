@@ -46,6 +46,9 @@ namespace Mogre
 
 	Plane ToPlane(Ogre::Plane value);
 	Ogre::Plane FromPlane(Plane value);
+
+	AxisAlignedBox^ ToAxisAlignedBounds(Ogre::AxisAlignedBox value);
+	Ogre::AxisAlignedBox FromAxisAlignedBounds(AxisAlignedBox^ value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\
