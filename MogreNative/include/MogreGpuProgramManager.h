@@ -160,8 +160,6 @@ namespace Mogre
 		//Mogre::GpuProgramParametersSharedPtr^ GetDefaultParameters();
 
 		void ResetCompileError();
-
-		//DEFINE_MANAGED_NATIVE_CONVERSIONS(GpuProgram);
 	};
 
 	public ref class GpuProgramPtr : public GpuProgram
