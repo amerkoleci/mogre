@@ -157,30 +157,30 @@ namespace Mogre
         }
 
         /// <summary>
-		/// Returns a boolean indicating whether the given Vector2 is equal to this Vector2 instance.
+		/// Returns a boolean indicating whether the given Radian is equal to this Radian instance.
 		/// </summary>
-		/// <param name="other">The Vector2 to compare this instance to.</param>
-		/// <returns>True if the other Vector2 is equal to this instance; False otherwise.</returns>
+		/// <param name="other">The Radian to compare this instance to.</param>
+		/// <returns>True if the other Radian is equal to this instance; False otherwise.</returns>
 		public bool Equals(ref Radian other)
         {
             return _value == other._value;
         }
 
         /// <summary>
-        /// Returns a boolean indicating whether the given Vector2 is equal to this Vector2 instance.
+        /// Returns a boolean indicating whether the given Radian is equal to this Radian instance.
         /// </summary>
-        /// <param name="other">The Vector2 to compare this instance to.</param>
-        /// <returns>True if the other Vector2 is equal to this instance; False otherwise.</returns>
+        /// <param name="other">The Radian to compare this instance to.</param>
+        /// <returns>True if the other Radian is equal to this instance; False otherwise.</returns>
         public bool Equals(Radian other)
         {
             return Equals(ref other);
         }
 
         /// <summary>
-        /// Returns a boolean indicating whether the given Object is equal to this Vector2 instance.
+        /// Returns a boolean indicating whether the given Object is equal to this Radian instance.
         /// </summary>
         /// <param name="obj">The Object to compare against.</param>
-        /// <returns>True if the Object is equal to this Vector2; False otherwise.</returns>
+        /// <returns>True if the Object is equal to this Radian; False otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {

@@ -35,6 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IDisposable.cs" />
+    <Compile Include="Mathematics\Box.cs" />
+    <Compile Include="Mathematics\Matrix4.cs" />
+    <Compile Include="Mathematics\FloatRect.cs" />
+    <Compile Include="Mathematics\Sphere.cs" />
+    <Compile Include="Mathematics\Ray.cs" />
+    <Compile Include="Mathematics\Rect.cs" />
     <Compile Include="Mathematics\AxisAlignedBox.cs" />
     <Compile Include="Mathematics\Angle.cs" />
     <Compile Include="Mathematics\Plane.cs" />

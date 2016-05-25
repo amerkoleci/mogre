@@ -54,13 +54,13 @@ namespace Mogre
         /// <summary>
         /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// </summary>
-        /// <param name="value">The value that will be assigned to all components.</param>
-        public Quaternion(float value)
+        /// <param name="w">The w that will be assigned to w-component.</param>
+        public Quaternion(float w)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            W = w;
+            X = 0.0f;
+            Y = 0.0f;
+            Z = 0.0f;
         }
 
         /// <summary>
@@ -161,10 +161,10 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Returns a boolean indicating whether the given Vector4 is equal to this Vector4 instance.
+        /// Returns a boolean indicating whether the given Quaternion is equal to this Quaternion instance.
         /// </summary>
-        /// <param name="other">The Vector4 to compare this instance to.</param>
-        /// <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
+        /// <param name="other">The Quaternion to compare this instance to.</param>
+        /// <returns>True if the other Quaternion is equal to this instance; False otherwise.</returns>
         public bool Equals(ref Quaternion other)
         {
             return
@@ -175,17 +175,17 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Returns a boolean indicating whether the given Vector4 is equal to this Vector4 instance.
+        /// Returns a boolean indicating whether the given Quaternion is equal to this Quaternion instance.
         /// </summary>
-        /// <param name="other">The Vector4 to compare this instance to.</param>
-        /// <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
+        /// <param name="other">The Quaternion to compare this instance to.</param>
+        /// <returns>True if the other Quaternion is equal to this instance; False otherwise.</returns>
         public bool Equals(Quaternion other)
         {
             return Equals(ref other);
         }
 
         /// <summary>
-        /// Returns a String representing this Vector4 instance.
+        /// Returns a String representing this Quaternion instance.
         /// </summary>
         /// <returns>The string representation.</returns>
         public override string ToString()
@@ -194,7 +194,7 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Returns a String representing this Vector4 instance, using the specified format to format individual elements.
+        /// Returns a String representing this Quaternion instance, using the specified format to format individual elements.
         /// </summary>
         /// <param name="format">The format of individual elements.</param>
         /// <returns>The string representation.</returns>
@@ -204,7 +204,7 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Returns a String representing this Vector4 instance, using the specified format to format individual elements 
+        /// Returns a String representing this Quaternion instance, using the specified format to format individual elements 
         /// and the given IFormatProvider.
         /// </summary>
         /// <param name="format">The format of individual elements.</param>
@@ -238,10 +238,10 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Returns a boolean indicating whether the given Object is equal to this Vector4 instance.
+        /// Returns a boolean indicating whether the given Object is equal to this Quaternion instance.
         /// </summary>
         /// <param name="obj">The Object to compare against.</param>
-        /// <returns>True if the Object is equal to this Vector4; False otherwise.</returns>
+        /// <returns>True if the Object is equal to this Quaternion; False otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {

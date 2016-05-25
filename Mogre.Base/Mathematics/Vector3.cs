@@ -608,6 +608,26 @@ namespace Mogre
         }
 
         /// <summary>
+		/// Performs an explicit conversion from <see cref="Vector3"/> to <see cref="Vector2"/>.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator Vector2(Vector3 value)
+        {
+            return new Vector2(value.X, value.Y);
+        }
+
+        /// <summary>
+        /// Performs an explicit conversion from <see cref="Vector3"/> to <see cref="Vector4"/>.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The result of the conversion.</returns>
+        public static explicit operator Vector4(Vector3 value)
+        {
+            return new Vector4(value, 0.0f);
+        }
+
+        /// <summary>
         /// Returns a String representing this Vector3 instance.
         /// </summary>
         /// <returns>The string representation.</returns>
