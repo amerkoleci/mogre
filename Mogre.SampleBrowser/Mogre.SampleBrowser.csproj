@@ -30,7 +30,8 @@
     <OutputPath>..\bin\Release\x64\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\bin\Release\x64\Mogre.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -53,7 +54,8 @@
     <OutputPath>..\bin\Release\x86\</OutputPath>
     <DefineConstants>TRACE;PCL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\bin\Release\x86\Mogre.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>CS1591</NoWarn>
     <DebugType>pdbonly</DebugType>
