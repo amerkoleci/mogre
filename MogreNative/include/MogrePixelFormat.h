@@ -5,6 +5,8 @@
 
 namespace Mogre
 {
+	value class PixelBox;
+
 	public enum class PixelComponentType
 	{
 		PCT_BYTE = Ogre::PCT_BYTE,
@@ -223,9 +225,8 @@ namespace Mogre
 
 		static void BulkPixelConversion(void* src, Mogre::PixelFormat srcFormat, void* dest, Mogre::PixelFormat dstFormat, unsigned int count);
 
-		//static void BulkPixelConversion(Mogre::PixelBox src, Mogre::PixelBox dst);
+		static void BulkPixelConversion(Mogre::PixelBox src, Mogre::PixelBox dst);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_PLAINWRAPPER(PixelUtil);
-
 	};
 }

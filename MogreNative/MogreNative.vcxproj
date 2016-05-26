@@ -203,6 +203,7 @@
     <ClInclude Include="include\MogreMovableObject.h" />
     <ClInclude Include="include\MogreNode.h" />
     <ClInclude Include="include\MogreParticleSystem.h" />
+    <ClInclude Include="include\MogrePixelBox.h" />
     <ClInclude Include="include\MogrePixelFormat.h" />
     <ClInclude Include="include\MogrePlatformInformation.h" />
     <ClInclude Include="include\MogreRenderSystem.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="src\MogreMovableObject.cpp" />
     <ClCompile Include="src\MogreNode.cpp" />
     <ClCompile Include="src\MogreParticleSystem.cpp" />
+    <ClCompile Include="src\MogrePixelBox.cpp" />
     <ClCompile Include="src\MogrePixelFormat.cpp" />
     <ClCompile Include="src\MogrePlatformInformation.cpp" />
     <ClCompile Include="src\MogreRenderTarget.cpp" />

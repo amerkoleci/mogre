@@ -115,6 +115,9 @@
     <ClCompile Include="src\MogreViewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MogrePixelBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FileSystemLayer.h">
@@ -265,6 +268,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MogreViewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogrePixelBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

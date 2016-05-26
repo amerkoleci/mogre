@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogrePixelFormat.h"
+#include "MogrePixelBox.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -183,7 +184,7 @@ void PixelUtil::BulkPixelConversion(void* src, Mogre::PixelFormat srcFormat, voi
 	Ogre::PixelUtil::bulkPixelConversion(src, (Ogre::PixelFormat)srcFormat, dest, (Ogre::PixelFormat)dstFormat, count);
 }
 
-//void PixelUtil::BulkPixelConversion(Mogre::PixelBox src, Mogre::PixelBox dst)
-//{
-//	Ogre::PixelUtil::bulkPixelConversion(src, dst);
-//}
+void PixelUtil::BulkPixelConversion(Mogre::PixelBox src, Mogre::PixelBox dst)
+{
+	Ogre::PixelUtil::bulkPixelConversion(src, dst);
+}

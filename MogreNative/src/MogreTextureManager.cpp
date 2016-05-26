@@ -200,23 +200,26 @@ Mogre::Color4 Image::GetColourAt(int x, int y, int z)
 	return ToColor4(static_cast<Ogre::Image*>(_native)->getColourAt(x, y, z));
 }
 
-//Mogre::PixelBox Image::GetPixelBox(size_t face, size_t mipmap)
-//{
-//	return static_cast<const Ogre::Image*>(_native)->getPixelBox(face, mipmap);
-//}
-//Mogre::PixelBox Image::GetPixelBox(size_t face)
-//{
-//	return static_cast<const Ogre::Image*>(_native)->getPixelBox(face);
-//}
-//Mogre::PixelBox Image::GetPixelBox()
-//{
-//	return static_cast<const Ogre::Image*>(_native)->getPixelBox();
-//}
+Mogre::PixelBox Image::GetPixelBox(size_t face, size_t mipmap)
+{
+	return static_cast<const Ogre::Image*>(_native)->getPixelBox(face, mipmap);
+}
+
+Mogre::PixelBox Image::GetPixelBox(size_t face)
+{
+	return static_cast<const Ogre::Image*>(_native)->getPixelBox(face);
+}
+
+Mogre::PixelBox Image::GetPixelBox()
+{
+	return static_cast<const Ogre::Image*>(_native)->getPixelBox();
+}
 
 void Image::Resize(Mogre::ushort width, Mogre::ushort height, Mogre::Image::Filter filter)
 {
 	static_cast<Ogre::Image*>(_native)->resize(width, height, (Ogre::Image::Filter)filter);
 }
+
 void Image::Resize(Mogre::ushort width, Mogre::ushort height)
 {
 	static_cast<Ogre::Image*>(_native)->resize(width, height);
@@ -229,15 +232,15 @@ void Image::ApplyGamma([Out] Mogre::uchar% buffer, Mogre::Real gamma, size_t siz
 	Ogre::Image::applyGamma(p_buffer, gamma, size, bpp);
 }
 
-//void Image::Scale(Mogre::PixelBox src, Mogre::PixelBox dst, Mogre::Image::Filter filter)
-//{
-//	Ogre::Image::scale(src, dst, (Ogre::Image::Filter)filter);
-//}
+void Image::Scale(Mogre::PixelBox src, Mogre::PixelBox dst, Mogre::Image::Filter filter)
+{
+	Ogre::Image::scale(src, dst, (Ogre::Image::Filter)filter);
+}
 
-//void Image::Scale(Mogre::PixelBox src, Mogre::PixelBox dst)
-//{
-//	Ogre::Image::scale(src, dst);
-//}
+void Image::Scale(Mogre::PixelBox src, Mogre::PixelBox dst)
+{
+	Ogre::Image::scale(src, dst);
+}
 
 size_t Image::CalculateSize(size_t mipmaps, size_t faces, size_t width, size_t height, size_t depth, Mogre::PixelFormat format)
 {

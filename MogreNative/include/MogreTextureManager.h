@@ -5,6 +5,7 @@
 #include "OgreImage.h"
 #include "MogreResourceManager.h"
 #include "MogrePixelFormat.h"
+#include "MogrePixelBox.h"
 
 namespace Mogre
 {
@@ -196,17 +197,17 @@ namespace Mogre
 
 		Mogre::Color4 GetColourAt(int x, int y, int z);
 
-		//Mogre::PixelBox GetPixelBox(size_t face, size_t mipmap);
-		//Mogre::PixelBox GetPixelBox(size_t face);
-		//Mogre::PixelBox GetPixelBox();
+		Mogre::PixelBox GetPixelBox(size_t face, size_t mipmap);
+		Mogre::PixelBox GetPixelBox(size_t face);
+		Mogre::PixelBox GetPixelBox();
 
 		void Resize(Mogre::ushort width, Mogre::ushort height, Mogre::Image::Filter filter);
 		void Resize(Mogre::ushort width, Mogre::ushort height);
 
 		static void ApplyGamma([Out] Mogre::uchar% buffer, Mogre::Real gamma, size_t size, Mogre::uchar bpp);
 
-		//static void Scale(Mogre::PixelBox src, Mogre::PixelBox dst, Mogre::Image::Filter filter);
-		//static void Scale(Mogre::PixelBox src, Mogre::PixelBox dst);
+		static void Scale(Mogre::PixelBox src, Mogre::PixelBox dst, Mogre::Image::Filter filter);
+		static void Scale(Mogre::PixelBox src, Mogre::PixelBox dst);
 
 		static size_t CalculateSize(size_t mipmaps, size_t faces, size_t width, size_t height, size_t depth, Mogre::PixelFormat format);
 
