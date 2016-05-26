@@ -6,10 +6,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4EA2E814-D393-4DDE-B13E-B5540C3AEEEF}</ProjectGuid>
+    <ProjectGuid>{57E2D301-EABE-4774-98F9-3D55E894F567}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Mogre.Sample.SkyBox</RootNamespace>
-    <AssemblyName>Mogre.Sample.SkyBox</AssemblyName>
+    <RootNamespace>Mogre.Sample.SkyPlane</RootNamespace>
+    <AssemblyName>Mogre.Sample.SkyPlane</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
@@ -76,7 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="SkyboxSample.cs" />
+    <Compile Include="SkyPlaneSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

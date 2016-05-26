@@ -2,4 +2,4 @@
 
 [assembly: AssemblyProduct("Mogre.Samples.SkyBox")]
 [assembly: AssemblyTitle("Mogre.Samples.SkyBox")]
-[assembly: AssemblyDescription("Mogre.Samples.SkyBox library")]
+[assembly: AssemblyDescription("Mogre.Samples.SkyBox Sample")]

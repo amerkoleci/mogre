@@ -109,7 +109,8 @@ Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota, String^ 
 
 Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(quota));
+	auto native = _native->createParticleSystem(quota);
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)native);
 }
 
 void SceneManager::DestroyParticleSystem(Mogre::ParticleSystem^ obj)

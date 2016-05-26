@@ -191,7 +191,15 @@ namespace Mogre
             object result;
             if (!_objectTable.TryGetValue(pointer, out result))
             {
-                object[] args = { pointer };
+                object[] args;
+                if (IntPtr.Size == 8)
+                {
+                    args = new object[]{ pointer };
+                }
+                else
+                {
+                    args = new object[] { (int)pointer };
+                }
                 object @object = Activator.CreateInstance(typeof(T), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, args, null);
                 _objectTable.Add(pointer, @object);
                 result = @object;
@@ -216,6 +224,7 @@ namespace Mogre
 
             throw new ArgumentException("Cannot find the unmanaged object");
         }
+
         public static T GetObject<T>(long pointer)
         {
             if (pointer == 0L)

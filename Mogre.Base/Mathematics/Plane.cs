@@ -44,6 +44,12 @@ namespace Mogre
             D = -constant;
         }
 
+        public Plane(float normalX, float normalY, float normalZ, float constant)
+        {
+            Normal = new Vector3(normalX, normalY, normalZ);
+            D = -constant;
+        }
+
         public Plane(Vector3 normal, Vector3 point)
         {
             Normal = normal;
