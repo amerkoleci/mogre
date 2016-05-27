@@ -2,6 +2,7 @@
 #include "MogreSceneManager.h"
 #include "MogreSceneNode.h"
 #include "MogreEntity.h"
+#include "MogreAnimation.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -269,7 +270,6 @@ void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ material
 	_native->setSkyPlane(enable, FromPlane(plane), o_materialName);
 }
 
-
 void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation, String^ groupName)
 {
 	DECLARE_NATIVE_STRING(o_materialName, materialName);
@@ -277,6 +277,7 @@ void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real dista
 
 	_native->setSkyBox(enable, o_materialName, distance, drawFirst, FromQuaternion(orientation), o_groupName);
 }
+
 void SceneManager::SetSkyBox(bool enable, String^ materialName, Ogre::Real distance, bool drawFirst, Mogre::Quaternion orientation)
 {
 	DECLARE_NATIVE_STRING(o_materialName, materialName);
@@ -409,6 +410,80 @@ void SceneManager::SetFog()
 void SceneManager::ClearScene()
 {
 	_native->clearScene();
+}
+
+Mogre::Animation^ SceneManager::CreateAnimation(String^ name, Mogre::Real length)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((intptr_t)
+		static_cast<Ogre::SceneManager*>(_native)->createAnimation(o_name, length)
+		);
+}
+
+Mogre::Animation^ SceneManager::GetAnimation(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((intptr_t)
+		static_cast<const Ogre::SceneManager*>(_native)->getAnimation(o_name)
+		);
+}
+
+bool SceneManager::HasAnimation(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<const Ogre::SceneManager*>(_native)->hasAnimation(o_name);
+}
+
+void SceneManager::DestroyAnimation(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::SceneManager*>(_native)->destroyAnimation(o_name);
+}
+
+void SceneManager::DestroyAllAnimations()
+{
+	static_cast<Ogre::SceneManager*>(_native)->destroyAllAnimations();
+}
+
+Mogre::AnimationState^ SceneManager::CreateAnimationState(String^ animName)
+{
+	DECLARE_NATIVE_STRING(o_animName, animName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((intptr_t)
+		static_cast<Ogre::SceneManager*>(_native)->createAnimationState(o_animName)
+		);
+}
+
+Mogre::AnimationState^ SceneManager::GetAnimationState(String^ animName)
+{
+	DECLARE_NATIVE_STRING(o_animName, animName);
+
+	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((intptr_t)
+		static_cast<const Ogre::SceneManager*>(_native)->getAnimationState(o_animName)
+		);
+}
+
+bool SceneManager::HasAnimationState(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<const Ogre::SceneManager*>(_native)->hasAnimationState(o_name);
+}
+
+void SceneManager::DestroyAnimationState(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::SceneManager*>(_native)->destroyAnimationState(o_name);
+}
+
+void SceneManager::DestroyAllAnimationStates()
+{
+	static_cast<Ogre::SceneManager*>(_native)->destroyAllAnimationStates();
 }
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()

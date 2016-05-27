@@ -14,7 +14,8 @@ namespace Mogre
 	ref class RenderSystem;
 	ref class SceneNode;
 	ref class Entity;
-
+	ref class Animation;
+	ref class AnimationState;
 
 	public ref class SceneManager : IDisposable
 	{
@@ -148,6 +149,26 @@ namespace Mogre
 		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour);
 		void SetFog(Mogre::FogMode mode);
 		void SetFog();
+
+		Mogre::Animation^ CreateAnimation(String^ name, Mogre::Real length);
+
+		Mogre::Animation^ GetAnimation(String^ name);
+
+		bool HasAnimation(String^ name);
+
+		void DestroyAnimation(String^ name);
+
+		void DestroyAllAnimations();
+
+		Mogre::AnimationState^ CreateAnimationState(String^ animName);
+
+		Mogre::AnimationState^ GetAnimationState(String^ animName);
+
+		bool HasAnimationState(String^ name);
+
+		void DestroyAnimationState(String^ name);
+
+		void DestroyAllAnimationStates();
 
 		void ClearScene();
 

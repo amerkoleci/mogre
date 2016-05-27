@@ -118,6 +118,46 @@ unsigned short RenderTarget::NumViewports::get()
 	return static_cast<const Ogre::RenderTarget*>(_native)->getNumViewports();
 }
 
+unsigned int RenderTarget::Width::get()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->getWidth();
+}
+
+unsigned int RenderTarget::Height::get()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->getHeight();
+}
+
+unsigned int RenderTarget::ColourDepth::get()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->getColourDepth();
+}
+
+bool RenderTarget::IsActive::get()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->isActive();
+}
+
+bool RenderTarget::IsPrimary::get()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->isPrimary();
+}
+
+
+void RenderTarget::IsActive::set(bool state)
+{
+	static_cast<Ogre::RenderTarget*>(_native)->setActive(state);
+}
+
+void RenderTarget::GetMetrics([Out] unsigned int% width, [Out] unsigned int% height, [Out] unsigned int% colourDepth)
+{
+	pin_ptr<unsigned int> p_width = &width;
+	pin_ptr<unsigned int> p_height = &height;
+	pin_ptr<unsigned int> p_colourDepth = &colourDepth;
+
+	static_cast<Ogre::RenderTarget*>(_native)->getMetrics(*p_width, *p_height, *p_colourDepth);
+}
+
 Mogre::Viewport^ RenderTarget::AddViewport(float left, float top, float width, float height)
 {
 	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((intptr_t)
@@ -179,6 +219,38 @@ Mogre::RenderTarget::FrameStats^ RenderTarget::GetStatistics()
 void RenderTarget::ResetStatistics()
 {
 	static_cast<Ogre::RenderTarget*>(_native)->resetStatistics();
+}
+
+void RenderTarget::GetCustomAttribute(String^ name, void* pData)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::RenderTarget*>(_native)->getCustomAttribute(o_name, pData);
+}
+
+void RenderTarget::RemoveAllListeners()
+{
+	static_cast<Ogre::RenderTarget*>(_native)->removeAllListeners();
+}
+
+void RenderTarget::WriteContentsToFile(String^ filename)
+{
+	DECLARE_NATIVE_STRING(o_filename, filename);
+
+	static_cast<Ogre::RenderTarget*>(_native)->writeContentsToFile(o_filename);
+}
+
+String^ RenderTarget::WriteContentsToTimestampedFile(String^ filenamePrefix, String^ filenameSuffix)
+{
+	DECLARE_NATIVE_STRING(o_filenamePrefix, filenamePrefix);
+	DECLARE_NATIVE_STRING(o_filenameSuffix, filenameSuffix);
+
+	return TO_CLR_STRING(static_cast<Ogre::RenderTarget*>(_native)->writeContentsToTimestampedFile(o_filenamePrefix, o_filenameSuffix));
+}
+
+bool RenderTarget::RequiresTextureFlipping()
+{
+	return static_cast<const Ogre::RenderTarget*>(_native)->requiresTextureFlipping();
 }
 
 Ogre::RenderTarget* RenderTarget::UnmanagedPointer::get()

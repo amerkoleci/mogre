@@ -55,8 +55,8 @@ namespace Mogre
 		virtual event EventHandler^ OnDisposed;
 
 	public:
-		//typedef Mogre::Box Box;
-		//typedef Mogre::Rect Rect;
+		typedef Mogre::Box Box;
+		typedef Mogre::Rect Rect;
 
 	public: enum class Filter
 	{

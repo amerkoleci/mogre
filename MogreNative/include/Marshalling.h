@@ -137,6 +137,21 @@ namespace Mogre
 				return (t == CLR_NULL) ? 0 : t->_GetNativePtr();				\
 			}
 
+#define RETURN_CLR_OBJECT(T,n) return ObjectTable::GetOrCreateObject<T^>( (intptr_t)n );
+
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS(T)						\
+			static operator T^ (const Ogre::T* t) {						\
+				RETURN_CLR_OBJECT(T, (const_cast<Ogre::T*>(t)) )		\
+			}															\
+			static operator T^ (const Ogre::T& t) {						\
+				RETURN_CLR_OBJECT(T, (&const_cast<Ogre::T&>(t)) )		\
+			}															\
+			inline static operator Ogre::T* (T^ t) {					\
+				return (t == CLR_NULL) ? 0 : static_cast<Ogre::T*>(t->_native);		\
+			}															\
+			inline static operator Ogre::T& (T^ t) {					\
+				return *static_cast<Ogre::T*>(t->_native);				\
+			}
 
 	// Most of Ogre classes that are wrapped by Mogre derive from CLRObject.
 	// It acts as the connection between the .NET objects and the Ogre objects that they wrap.

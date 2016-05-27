@@ -109,6 +109,7 @@
       <Optimization>Disabled</Optimization>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <DisableSpecificWarnings>4786;4503;4251;4275;4290;4661;4996;4127;4100;4702;4201;4793</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,6 +127,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableSpecificWarnings>4786;4503;4251;4275;4290;4661;4996;4127;4100;4702;4201;4793</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +149,7 @@
       <StringPooling>true</StringPooling>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <DisableSpecificWarnings>4786;4503;4251;4275;4290;4661;4996;4127;4100;4702;4201;4793</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,6 +172,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableSpecificWarnings>4786;4503;4251;4275;4290;4661;4996;4127;4100;4702;4201;4793</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,6 +184,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\MogreAnimation.h" />
     <ClInclude Include="include\MogreBillboardChain.h" />
     <ClInclude Include="include\MogreBillboardSet.h" />
     <ClInclude Include="include\MogreCamera.h" />
@@ -234,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
+    <ClCompile Include="src\MogreAnimation.cpp" />
     <ClCompile Include="src\MogreBillboardChain.cpp" />
     <ClCompile Include="src\MogreBillboardSet.cpp" />
     <ClCompile Include="src\MogreCamera.cpp" />

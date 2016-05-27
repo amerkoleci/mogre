@@ -425,6 +425,40 @@ namespace Mogre
 			size_t get();
 		}
 
+		property unsigned int Width
+		{
+		public:
+			unsigned int get();
+		}
+
+		property unsigned int Height
+		{
+		public:
+			unsigned int get();
+		}
+
+		property unsigned int ColourDepth
+		{
+		public:
+			unsigned int get();
+		}
+
+		property bool IsActive
+		{
+		public:
+			bool get();
+		public:
+			void set(bool state);
+		}
+
+		property bool IsPrimary
+		{
+		public:
+			bool get();
+		}
+
+		void GetMetrics([Out] unsigned int% width, [Out] unsigned int% height, [Out] unsigned int% colourDepth);
+
 		Mogre::Viewport^ AddViewport(float left, float top, float width, float height);
 		Mogre::Viewport^ AddViewport(float left, float top, float width);
 		Mogre::Viewport^ AddViewport(float left, float top);
@@ -439,6 +473,33 @@ namespace Mogre
 
 		Mogre::RenderTarget::FrameStats^ GetStatistics();
 		void ResetStatistics();
+
+		void GetCustomAttribute(String^ name, void* pData);
+		void GetCustomAttribute(String^ name, [Out] bool% value)
+		{
+			pin_ptr<bool> p = &value;
+			GetCustomAttribute(name, p);
+		}
+
+		void GetCustomAttribute(String^ name, [Out] int% value)
+		{
+			pin_ptr<int> p = &value;
+			GetCustomAttribute(name, p);
+		}
+
+		void GetCustomAttribute(String^ name, [Out] IntPtr% value)
+		{
+			pin_ptr<IntPtr> p = &value;
+			GetCustomAttribute(name, p);
+		}
+
+		void RemoveAllListeners();
+
+		void WriteContentsToFile(String^ filename);
+
+		String^ WriteContentsToTimestampedFile(String^ filenamePrefix, String^ filenameSuffix);
+
+		bool RequiresTextureFlipping();
 
 	internal:
 		property Ogre::RenderTarget* UnmanagedPointer
