@@ -415,3 +415,330 @@ VertexElementType VertexElement::GetBaseType(VertexElementType multiType)
 	// To keep compiler happy
 	return VertexElementType::VET_FLOAT1;
 }
+
+
+CPP_DECLARE_STLLIST_READONLY(VertexDeclaration::, VertexElementList, Mogre::VertexElement^, Ogre::VertexElement);
+
+//Public Declarations
+VertexDeclaration::VertexDeclaration()
+{
+	_createdByCLR = true;
+	_native = new Ogre::VertexDeclaration();
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+VertexDeclaration::~VertexDeclaration()
+{
+	this->!VertexDeclaration();
+}
+
+VertexDeclaration::!VertexDeclaration()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native != 0)
+	{
+		delete _native; _native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+size_t VertexDeclaration::ElementCount::get()
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->getElementCount();
+}
+
+unsigned short VertexDeclaration::MaxSource::get()
+{
+	return static_cast<const Ogre::VertexDeclaration*>(_native)->getMaxSource();
+}
+
+Mogre::VertexDeclaration::Const_VertexElementList^ VertexDeclaration::GetElements()
+{
+	return static_cast<const Ogre::VertexDeclaration*>(_native)->getElements();
+}
+
+Mogre::VertexElement^ VertexDeclaration::GetElement(unsigned short index)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->getElement(index);
+}
+
+void VertexDeclaration::Sort()
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->sort();
+}
+
+void VertexDeclaration::CloseGapsInSource()
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->closeGapsInSource();
+}
+
+Mogre::VertexDeclaration^ VertexDeclaration::GetAutoOrganisedDeclaration(bool skeletalAnimation, bool vertexAnimation, bool vertexAnimationNormals)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->getAutoOrganisedDeclaration(skeletalAnimation, vertexAnimation, vertexAnimationNormals);
+}
+
+Mogre::VertexElement^ VertexDeclaration::AddElement(unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->addElement(source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic, index);
+}
+Mogre::VertexElement^ VertexDeclaration::AddElement(unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->addElement(source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic);
+}
+
+Mogre::VertexElement^ VertexDeclaration::InsertElement(unsigned short atPosition, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->insertElement(atPosition, source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic, index);
+}
+Mogre::VertexElement^ VertexDeclaration::InsertElement(unsigned short atPosition, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->insertElement(atPosition, source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic);
+}
+
+void VertexDeclaration::RemoveElement(unsigned short elem_index)
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->removeElement(elem_index);
+}
+
+void VertexDeclaration::RemoveElement(Mogre::VertexElementSemantic semantic, unsigned short index)
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->removeElement((Ogre::VertexElementSemantic)semantic, index);
+}
+void VertexDeclaration::RemoveElement(Mogre::VertexElementSemantic semantic)
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->removeElement((Ogre::VertexElementSemantic)semantic);
+}
+
+void VertexDeclaration::RemoveAllElements()
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->removeAllElements();
+}
+
+void VertexDeclaration::ModifyElement(unsigned short elem_index, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index)
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->modifyElement(elem_index, source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic, index);
+}
+void VertexDeclaration::ModifyElement(unsigned short elem_index, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic)
+{
+	static_cast<Ogre::VertexDeclaration*>(_native)->modifyElement(elem_index, source, offset, (Ogre::VertexElementType)theType, (Ogre::VertexElementSemantic)semantic);
+}
+
+Mogre::VertexElement^ VertexDeclaration::FindElementBySemantic(Mogre::VertexElementSemantic sem, unsigned short index)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->findElementBySemantic((Ogre::VertexElementSemantic)sem, index);
+}
+Mogre::VertexElement^ VertexDeclaration::FindElementBySemantic(Mogre::VertexElementSemantic sem)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->findElementBySemantic((Ogre::VertexElementSemantic)sem);
+}
+
+Mogre::VertexDeclaration::Const_VertexElementList^ VertexDeclaration::FindElementsBySource(unsigned short source)
+{
+	return Mogre::VertexDeclaration::VertexElementList::ByValue(static_cast<Ogre::VertexDeclaration*>(_native)->findElementsBySource(source))->ReadOnlyInstance;
+}
+
+size_t VertexDeclaration::GetVertexSize(unsigned short source)
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->getVertexSize(source);
+}
+
+Mogre::VertexDeclaration^ VertexDeclaration::Clone()
+{
+	return static_cast<Ogre::VertexDeclaration*>(_native)->clone();
+}
+
+bool VertexDeclaration::Equals(Object^ obj)
+{
+	VertexDeclaration^ clr = dynamic_cast<VertexDeclaration^>(obj);
+	if (clr == CLR_NULL)
+	{
+		return false;
+	}
+
+	if (_native == NULL) throw gcnew Exception("The underlying native object for the caller is null.");
+	if (clr->_native == NULL) throw gcnew ArgumentException("The underlying native object for parameter 'obj' is null.");
+
+	return *(static_cast<Ogre::VertexDeclaration*>(_native)) == *(static_cast<Ogre::VertexDeclaration*>(clr->_native));
+}
+
+bool VertexDeclaration::Equals(VertexDeclaration^ obj)
+{
+	if (obj == CLR_NULL)
+	{
+		return false;
+	}
+
+	if (_native == NULL) throw gcnew Exception("The underlying native object for the caller is null.");
+	if (obj->_native == NULL) throw gcnew ArgumentException("The underlying native object for parameter 'obj' is null.");
+
+	return *(static_cast<Ogre::VertexDeclaration*>(_native)) == *(static_cast<Ogre::VertexDeclaration*>(obj->_native));
+}
+
+bool VertexDeclaration::operator ==(VertexDeclaration^ obj1, VertexDeclaration^ obj2)
+{
+	if ((Object^)obj1 == (Object^)obj2) return true;
+	if ((Object^)obj1 == nullptr || (Object^)obj2 == nullptr) return false;
+
+	return obj1->Equals(obj2);
+}
+
+bool VertexDeclaration::operator !=(VertexDeclaration^ obj1, VertexDeclaration^ obj2)
+{
+	return !(obj1 == obj2);
+}
+
+
+bool VertexDeclaration::VertexElementLess(Mogre::VertexElement^ e1, Mogre::VertexElement^ e2)
+{
+	pin_ptr<Ogre::VertexElement> p_e1 = interior_ptr<Ogre::VertexElement>(&e1->data);
+	pin_ptr<Ogre::VertexElement> p_e2 = interior_ptr<Ogre::VertexElement>(&e2->data);
+
+	return Ogre::VertexDeclaration::vertexElementLess(*p_e1, *p_e2);
+}
+
+
+CPP_DECLARE_STLMAP(VertexBufferBinding::, VertexBufferBindingMap, unsigned short, Mogre::HardwareVertexBufferSharedPtr^, unsigned short, Ogre::HardwareVertexBufferSharedPtr);
+CPP_DECLARE_STLMAP(VertexBufferBinding::, BindingIndexMap, Mogre::ushort, Mogre::ushort, Ogre::ushort, Ogre::ushort);
+
+VertexBufferBinding::VertexBufferBinding() 
+{
+	_createdByCLR = true;
+	_native = new Ogre::VertexBufferBinding();
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+VertexBufferBinding::~VertexBufferBinding()
+{
+	this->!VertexBufferBinding();
+}
+
+VertexBufferBinding::!VertexBufferBinding()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native != 0)
+	{
+		delete _native; _native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+size_t VertexBufferBinding::BufferCount::get()
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->getBufferCount();
+}
+
+bool VertexBufferBinding::HasGaps::get()
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->hasGaps();
+}
+
+unsigned short VertexBufferBinding::LastBoundIndex::get()
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->getLastBoundIndex();
+}
+
+unsigned short VertexBufferBinding::NextIndex::get()
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->getNextIndex();
+}
+
+void VertexBufferBinding::SetBinding(unsigned short index, Mogre::HardwareVertexBufferSharedPtr^ buffer)
+{
+	static_cast<Ogre::VertexBufferBinding*>(_native)->setBinding(index, (const Ogre::HardwareVertexBufferSharedPtr&)buffer);
+}
+
+void VertexBufferBinding::UnsetBinding(unsigned short index)
+{
+	static_cast<Ogre::VertexBufferBinding*>(_native)->unsetBinding(index);
+}
+
+void VertexBufferBinding::UnsetAllBindings()
+{
+	static_cast<Ogre::VertexBufferBinding*>(_native)->unsetAllBindings();
+}
+
+Mogre::VertexBufferBinding::Const_VertexBufferBindingMap^ VertexBufferBinding::GetBindings()
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->getBindings();
+}
+
+Mogre::HardwareVertexBufferSharedPtr^ VertexBufferBinding::GetBuffer(unsigned short index)
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->getBuffer(index);
+}
+
+bool VertexBufferBinding::IsBufferBound(unsigned short index)
+{
+	return static_cast<const Ogre::VertexBufferBinding*>(_native)->isBufferBound(index);
+}
+
+void VertexBufferBinding::CloseGaps(Mogre::VertexBufferBinding::BindingIndexMap^ bindingIndexMap)
+{
+	static_cast<Ogre::VertexBufferBinding*>(_native)->closeGaps(bindingIndexMap);
+}
+
+// ----------------- HardwareBufferManager -----------------
+
+Mogre::HardwareVertexBufferSharedPtr^ HardwareBufferManager::CreateVertexBuffer(size_t vertexSize, size_t numVerts, Mogre::HardwareBuffer::Usage usage, bool useShadowBuffer)
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createVertexBuffer(vertexSize, numVerts, (Ogre::HardwareBuffer::Usage)usage, useShadowBuffer);
+}
+Mogre::HardwareVertexBufferSharedPtr^ HardwareBufferManager::CreateVertexBuffer(size_t vertexSize, size_t numVerts, Mogre::HardwareBuffer::Usage usage)
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createVertexBuffer(vertexSize, numVerts, (Ogre::HardwareBuffer::Usage)usage);
+}
+
+Mogre::HardwareIndexBufferSharedPtr^ HardwareBufferManager::CreateIndexBuffer(Mogre::HardwareIndexBuffer::IndexType itype, size_t numIndexes, Mogre::HardwareBuffer::Usage usage, bool useShadowBuffer)
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createIndexBuffer((Ogre::HardwareIndexBuffer::IndexType)itype, numIndexes, (Ogre::HardwareBuffer::Usage)usage, useShadowBuffer);
+}
+
+Mogre::HardwareIndexBufferSharedPtr^ HardwareBufferManager::CreateIndexBuffer(Mogre::HardwareIndexBuffer::IndexType itype, size_t numIndexes, Mogre::HardwareBuffer::Usage usage)
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createIndexBuffer((Ogre::HardwareIndexBuffer::IndexType)itype, numIndexes, (Ogre::HardwareBuffer::Usage)usage);
+}
+
+Mogre::VertexDeclaration^ HardwareBufferManager::CreateVertexDeclaration()
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createVertexDeclaration();
+}
+
+void HardwareBufferManager::DestroyVertexDeclaration(Mogre::VertexDeclaration^ decl)
+{
+	static_cast<Ogre::HardwareBufferManager*>(_native)->destroyVertexDeclaration(decl);
+}
+
+Mogre::VertexBufferBinding^ HardwareBufferManager::CreateVertexBufferBinding()
+{
+	return static_cast<Ogre::HardwareBufferManager*>(_native)->createVertexBufferBinding();
+}
+
+void HardwareBufferManager::DestroyVertexBufferBinding(Mogre::VertexBufferBinding^ binding)
+{
+	static_cast<Ogre::HardwareBufferManager*>(_native)->destroyVertexBufferBinding(binding);
+}
+
+void HardwareBufferManager::RegisterVertexBufferSourceAndCopy(Mogre::HardwareVertexBufferSharedPtr^ sourceBuffer, Mogre::HardwareVertexBufferSharedPtr^ copy)
+{
+	static_cast<Ogre::HardwareBufferManager*>(_native)->registerVertexBufferSourceAndCopy((const Ogre::HardwareVertexBufferSharedPtr&)sourceBuffer, (const Ogre::HardwareVertexBufferSharedPtr&)copy);
+}
+
+void HardwareBufferManager::ReleaseVertexBufferCopy(Mogre::HardwareVertexBufferSharedPtr^ bufferCopy)
+{
+	static_cast<Ogre::HardwareBufferManager*>(_native)->releaseVertexBufferCopy((const Ogre::HardwareVertexBufferSharedPtr&)bufferCopy);
+}
+
+void HardwareBufferManager::TouchVertexBufferCopy(Mogre::HardwareVertexBufferSharedPtr^ bufferCopy)
+{
+	static_cast<Ogre::HardwareBufferManager*>(_native)->touchVertexBufferCopy((const Ogre::HardwareVertexBufferSharedPtr&)bufferCopy);
+}

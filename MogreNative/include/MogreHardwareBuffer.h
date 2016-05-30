@@ -4,10 +4,12 @@
 #include "OgreHardwareIndexBuffer.h"
 #include "OgreHardwareVertexBuffer.h"
 #include "OgreHardwarePixelBuffer.h"
+#include "OgreHardwareBufferManager.h"
 #include "MogreCommon.h"
 #include "MogrePixelFormat.h"
 #include "MogreTextureManager.h"
 #include "Marshalling.h"
+#include "STLContainerWrappers.h"
 
 namespace Mogre
 {
@@ -826,5 +828,260 @@ namespace Mogre
 		{
 			*pElem = static_cast<unsigned short*>(pBase) + data.mOffset;
 		}
+	};
+
+	//################################################################
+	//VertexDeclaration
+	//################################################################
+
+	public ref class VertexDeclaration : public IMogreDisposable
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	public:
+		ref class VertexElementList;
+
+		INC_DECLARE_STLLIST_READONLY(VertexElementList, Mogre::VertexElement^, Ogre::VertexElement, public:, private:);
+
+	internal:
+		Ogre::VertexDeclaration* _native;
+		bool _createdByCLR;
+
+		//Internal Declarations
+	public protected:
+		VertexDeclaration(Ogre::VertexDeclaration* obj) : _native(obj)
+		{
+		}
+
+		VertexDeclaration(intptr_t ptr) : _native((Ogre::VertexDeclaration*)ptr)
+		{
+
+		}
+
+		~VertexDeclaration();
+		!VertexDeclaration();
+
+	public:
+		VertexDeclaration();
+
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
+		property size_t ElementCount
+		{
+		public:
+			size_t get();
+		}
+
+		property unsigned short MaxSource
+		{
+		public:
+			unsigned short get();
+		}
+
+		Mogre::VertexDeclaration::Const_VertexElementList^ GetElements();
+
+		Mogre::VertexElement^ GetElement(unsigned short index);
+
+		void Sort();
+
+		void CloseGapsInSource();
+
+		Mogre::VertexDeclaration^ GetAutoOrganisedDeclaration(bool skeletalAnimation, bool vertexAnimation, bool vertexAnimationNormals);
+
+		Mogre::VertexElement^ AddElement(unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index);
+		Mogre::VertexElement^ AddElement(unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic);
+
+		Mogre::VertexElement^ InsertElement(unsigned short atPosition, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index);
+		Mogre::VertexElement^ InsertElement(unsigned short atPosition, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic);
+
+		void RemoveElement(unsigned short elem_index);
+
+		void RemoveElement(Mogre::VertexElementSemantic semantic, unsigned short index);
+		void RemoveElement(Mogre::VertexElementSemantic semantic);
+
+		void RemoveAllElements();
+
+		void ModifyElement(unsigned short elem_index, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic, unsigned short index);
+		void ModifyElement(unsigned short elem_index, unsigned short source, size_t offset, Mogre::VertexElementType theType, Mogre::VertexElementSemantic semantic);
+
+		Mogre::VertexElement^ FindElementBySemantic(Mogre::VertexElementSemantic sem, unsigned short index);
+		Mogre::VertexElement^ FindElementBySemantic(Mogre::VertexElementSemantic sem);
+
+		Mogre::VertexDeclaration::Const_VertexElementList^ FindElementsBySource(unsigned short source);
+
+		size_t GetVertexSize(unsigned short source);
+
+		Mogre::VertexDeclaration^ Clone();
+
+		virtual bool Equals(Object^ obj) override;
+		bool Equals(VertexDeclaration^ obj);
+		static bool operator == (VertexDeclaration^ obj1, VertexDeclaration^ obj2);
+		static bool operator != (VertexDeclaration^ obj1, VertexDeclaration^ obj2);
+
+		void CopyTo(VertexDeclaration^ dest)
+		{
+			if (_native == NULL) throw gcnew Exception("The underlying native object for the caller is null.");
+			if (dest->_native == NULL) throw gcnew ArgumentException("The underlying native object for parameter 'dest' is null.");
+
+			*(dest->_native) = *_native;
+		}
+
+		static bool VertexElementLess(Mogre::VertexElement^ e1, Mogre::VertexElement^ e2);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(VertexDeclaration);
+	};
+
+	//################################################################
+	//VertexBufferBinding
+	//################################################################
+
+	public ref class VertexBufferBinding : public IMogreDisposable
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	public:
+		ref class VertexBufferBindingMap;
+		ref class BindingIndexMap;
+
+		INC_DECLARE_STLMAP(VertexBufferBindingMap, unsigned short, Mogre::HardwareVertexBufferSharedPtr^, unsigned short, Ogre::HardwareVertexBufferSharedPtr, public:, private:);
+		INC_DECLARE_STLMAP(BindingIndexMap, Mogre::ushort, Mogre::ushort, Ogre::ushort, Ogre::ushort, public:, private:);
+
+	internal:
+		Ogre::VertexBufferBinding* _native;
+		bool _createdByCLR;
+
+	public protected:
+		VertexBufferBinding(intptr_t ptr) : _native((Ogre::VertexBufferBinding*)ptr)
+		{
+
+		}
+
+		VertexBufferBinding(Ogre::VertexBufferBinding* obj) : _native(obj)
+		{
+		}
+
+		~VertexBufferBinding();
+		!VertexBufferBinding();
+
+	public:
+		VertexBufferBinding();
+
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
+		property size_t BufferCount
+		{
+		public:
+			size_t get();
+		}
+
+		property bool HasGaps
+		{
+		public:
+			bool get();
+		}
+
+		property unsigned short LastBoundIndex
+		{
+		public:
+			unsigned short get();
+		}
+
+		property unsigned short NextIndex
+		{
+		public:
+			unsigned short get();
+		}
+
+		void SetBinding(unsigned short index, Mogre::HardwareVertexBufferSharedPtr^ buffer);
+
+		void UnsetBinding(unsigned short index);
+
+		void UnsetAllBindings();
+
+		Mogre::VertexBufferBinding::Const_VertexBufferBindingMap^ GetBindings();
+
+		Mogre::HardwareVertexBufferSharedPtr^ GetBuffer(unsigned short index);
+
+		bool IsBufferBound(unsigned short index);
+
+		void CloseGaps(Mogre::VertexBufferBinding::BindingIndexMap^ bindingIndexMap);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(VertexBufferBinding);
+	};
+
+	public ref class HardwareBufferManager
+	{
+	public:
+		enum class BufferLicenseType
+		{
+			BLT_MANUAL_RELEASE = Ogre::HardwareBufferManager::BLT_MANUAL_RELEASE,
+			BLT_AUTOMATIC_RELEASE = Ogre::HardwareBufferManager::BLT_AUTOMATIC_RELEASE
+		};
+
+	private protected:
+		static HardwareBufferManager^ _singleton;
+		Ogre::HardwareBufferManager* _native;
+		bool _createdByCLR;
+
+		//Internal Declarations
+	public protected:
+		HardwareBufferManager(Ogre::HardwareBufferManager* obj) : _native(obj)
+		{
+		}
+
+	public:
+
+		static property HardwareBufferManager^ Singleton
+		{
+			HardwareBufferManager^ get()
+			{
+				if (_singleton == CLR_NULL)
+				{
+					Ogre::HardwareBufferManager* ptr = Ogre::HardwareBufferManager::getSingletonPtr();
+					if (ptr) _singleton = gcnew HardwareBufferManager(ptr);
+				}
+				return _singleton;
+			}
+		}
+
+		Mogre::HardwareVertexBufferSharedPtr^ CreateVertexBuffer(size_t vertexSize, size_t numVerts, Mogre::HardwareBuffer::Usage usage, bool useShadowBuffer);
+		Mogre::HardwareVertexBufferSharedPtr^ CreateVertexBuffer(size_t vertexSize, size_t numVerts, Mogre::HardwareBuffer::Usage usage);
+
+		Mogre::HardwareIndexBufferSharedPtr^ CreateIndexBuffer(Mogre::HardwareIndexBuffer::IndexType itype, size_t numIndexes, Mogre::HardwareBuffer::Usage usage, bool useShadowBuffer);
+		Mogre::HardwareIndexBufferSharedPtr^ CreateIndexBuffer(Mogre::HardwareIndexBuffer::IndexType itype, size_t numIndexes, Mogre::HardwareBuffer::Usage usage);
+
+		Mogre::VertexDeclaration^ CreateVertexDeclaration();
+
+		void DestroyVertexDeclaration(Mogre::VertexDeclaration^ decl);
+
+		Mogre::VertexBufferBinding^ CreateVertexBufferBinding();
+
+		void DestroyVertexBufferBinding(Mogre::VertexBufferBinding^ binding);
+
+		void RegisterVertexBufferSourceAndCopy(Mogre::HardwareVertexBufferSharedPtr^ sourceBuffer, Mogre::HardwareVertexBufferSharedPtr^ copy);
+
+		void ReleaseVertexBufferCopy(Mogre::HardwareVertexBufferSharedPtr^ bufferCopy);
+
+		void TouchVertexBufferCopy(Mogre::HardwareVertexBufferSharedPtr^ bufferCopy);
 	};
 }
