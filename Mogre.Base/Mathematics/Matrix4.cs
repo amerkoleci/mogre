@@ -12,89 +12,29 @@ namespace Mogre
     public struct Matrix4 : IEquatable<Matrix4>
     {
         /// <summary>
-		/// The size of the <see cref="Matrix4x4"/> type, in bytes.
+		/// The size of the <see cref="Matrix4"/> type, in bytes.
 		/// </summary>
 		public const int SizeInBytes = 64; // 4 * 16
 
-        /// <summary>
-        /// Value at row 1 column 1 of the Matrix4x4.
-        /// </summary>
-        public float M11;
+        public float m00;
+        public float m01;
+        public float m02;
+        public float m03;
 
-        /// <summary>
-        /// Value at row 1 column 2 of the Matrix4x4.
-        /// </summary>
-        public float M12;
+        public float m10;
+        public float m11;
+        public float m12;
+        public float m13;
 
-        /// <summary>
-        /// Value at row 1 column 3 of the Matrix4x4.
-        /// </summary>
-        public float M13;
+        public float m20;
+        public float m21;
+        public float m22;
+        public float m23;
 
-        /// <summary>
-        /// Value at row 1 column 4 of the Matrix4x4.
-        /// </summary>
-        public float M14;
-
-        /// <summary>
-        /// Value at row 2 column 1 of the Matrix4x4.
-        /// </summary>
-        public float M21;
-
-        /// <summary>
-        /// Value at row 2 column 2 of the Matrix4x4.
-        /// </summary>
-        public float M22;
-
-        /// <summary>
-        /// Value at row 2 column 3 of the Matrix4x4.
-        /// </summary>
-        public float M23;
-
-        /// <summary>
-        /// Value at row 2 column 4 of the Matrix4x4.
-        /// </summary>
-        public float M24;
-
-        /// <summary>
-        /// Value at row 3 column 1 of the Matrix4x4.
-        /// </summary>
-        public float M31;
-
-        /// <summary>
-        /// Value at row 3 column 2 of the Matrix4x4.
-        /// </summary>
-        public float M32;
-
-        /// <summary>
-        /// Value at row 3 column 3 of the Matrix4x4.
-        /// </summary>
-        public float M33;
-
-        /// <summary>
-        /// Value at row 3 column 4 of the Matrix4x4.
-        /// </summary>
-        public float M34;
-
-        /// <summary>
-        /// Value at row 4 column 1 of the Matrix4x4.
-        /// </summary>
-        public float M41;
-
-        /// <summary>
-        /// Value at row 4 column 2 of the Matrix4x4.
-        /// </summary>
-        public float M42;
-
-        /// <summary>
-        /// Value at row 4 column 3 of the Matrix4x4.
-        /// </summary>
-        public float M43;
-
-        /// <summary>
-        /// Value at row 4 column 4 of the Matrix4x4.
-        /// </summary>
-        public float M44;
+        public float m30;
+        public float m31;
+        public float m32;
+        public float m33;
 
         /// <summary>
         /// A <see cref="Matrix4"/> with all of its components set to zero.
@@ -104,87 +44,16 @@ namespace Mogre
         /// <summary>
         /// The identity <see cref="Matrix4"/>.
         /// </summary>
-        public static readonly Matrix4 Identity = new Matrix4 { M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f };
+        public static readonly Matrix4 Identity = new Matrix4 { m00 = 1.0f, m11 = 1.0f, m22 = 1.0f, m33 = 1.0f };
 
-        /// <summary>
-		/// Gets or sets the first row in the Matrix4x4; that is M11, M12, M13, and M14.
-		/// </summary>
-		public Vector4 Row1
-        {
-            get { return new Vector4(M11, M12, M13, M14); }
-            set { M11 = value.X; M12 = value.Y; M13 = value.Z; M14 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the second row in the Matrix4x4; that is M21, M22, M23, and M24.
-        /// </summary>
-        public Vector4 Row2
-        {
-            get { return new Vector4(M21, M22, M23, M24); }
-            set { M21 = value.X; M22 = value.Y; M23 = value.Z; M24 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the third row in the Matrix4x4; that is M31, M32, M33, and M34.
-        /// </summary>
-        public Vector4 Row3
-        {
-            get { return new Vector4(M31, M32, M33, M34); }
-            set { M31 = value.X; M32 = value.Y; M33 = value.Z; M34 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the fourth row in the Matrix4x4; that is M41, M42, M43, and M44.
-        /// </summary>
-        public Vector4 Row4
-        {
-            get { return new Vector4(M41, M42, M43, M44); }
-            set { M41 = value.X; M42 = value.Y; M43 = value.Z; M44 = value.W; }
-        }
-
-        /// <summary>
-		/// Gets or sets the first column in the Matrix4x4; that is M11, M21, M31, and M41.
-		/// </summary>
-		public Vector4 Column1
-        {
-            get { return new Vector4(M11, M21, M31, M41); }
-            set { M11 = value.X; M21 = value.Y; M31 = value.Z; M41 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the second column in the Matrix4x4; that is M12, M22, M32, and M42.
-        /// </summary>
-        public Vector4 Column2
-        {
-            get { return new Vector4(M12, M22, M32, M42); }
-            set { M12 = value.X; M22 = value.Y; M32 = value.Z; M42 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the third column in the Matrix4x4; that is M13, M23, M33, and M43.
-        /// </summary>
-        public Vector4 Column3
-        {
-            get { return new Vector4(M13, M23, M33, M43); }
-            set { M13 = value.X; M23 = value.Y; M33 = value.Z; M43 = value.W; }
-        }
-
-        /// <summary>
-        /// Gets or sets the fourth column in the Matrix4x4; that is M14, M24, M34, and M44.
-        /// </summary>
-        public Vector4 Column4
-        {
-            get { return new Vector4(M14, M24, M34, M44); }
-            set { M14 = value.X; M24 = value.Y; M34 = value.Z; M44 = value.W; }
-        }
 
         /// <summary>
 		/// Gets or sets the translation of the Matrix4x4; that is M41, M42, and M43.
 		/// </summary>
 		public Vector3 Translation
         {
-            get { return new Vector3(M41, M42, M43); }
-            set { M41 = value.X; M42 = value.Y; M43 = value.Z; }
+            get { return new Vector3(m03, m13, m23); }
+            set { m03 = value.X; m13 = value.Y; m23 = value.Z; }
         }
 
         /// <summary>
@@ -192,8 +61,8 @@ namespace Mogre
 		/// </summary>
 		public Vector3 Scale
         {
-            get { return new Vector3(M11, M22, M33); }
-            set { M11 = value.X; M22 = value.Y; M33 = value.Z; }
+            get { return new Vector3(m00, m11, m22); }
+            set { m00 = value.X; m11 = value.Y; m22 = value.Z; }
         }
 
         /// <summary>
@@ -223,22 +92,22 @@ namespace Mogre
             {
                 switch (index)
                 {
-                    case 0: return M11;
-                    case 1: return M12;
-                    case 2: return M13;
-                    case 3: return M14;
-                    case 4: return M21;
-                    case 5: return M22;
-                    case 6: return M23;
-                    case 7: return M24;
-                    case 8: return M31;
-                    case 9: return M32;
-                    case 10: return M33;
-                    case 11: return M34;
-                    case 12: return M41;
-                    case 13: return M42;
-                    case 14: return M43;
-                    case 15: return M44;
+                    case 0: return m00;
+                    case 1: return m01;
+                    case 2: return m02;
+                    case 3: return m03;
+                    case 4: return m10;
+                    case 5: return m11;
+                    case 6: return m12;
+                    case 7: return m13;
+                    case 8: return m20;
+                    case 9: return m21;
+                    case 10: return m22;
+                    case 11: return m23;
+                    case 12: return m30;
+                    case 13: return m31;
+                    case 14: return m32;
+                    case 15: return m33;
                 }
 
                 throw new ArgumentOutOfRangeException("index", "Indices for Matrix4x4 run from 0 to 15, inclusive.");
@@ -248,22 +117,22 @@ namespace Mogre
             {
                 switch (index)
                 {
-                    case 0: M11 = value; break;
-                    case 1: M12 = value; break;
-                    case 2: M13 = value; break;
-                    case 3: M14 = value; break;
-                    case 4: M21 = value; break;
-                    case 5: M22 = value; break;
-                    case 6: M23 = value; break;
-                    case 7: M24 = value; break;
-                    case 8: M31 = value; break;
-                    case 9: M32 = value; break;
-                    case 10: M33 = value; break;
-                    case 11: M34 = value; break;
-                    case 12: M41 = value; break;
-                    case 13: M42 = value; break;
-                    case 14: M43 = value; break;
-                    case 15: M44 = value; break;
+                    case 0: m00 = value; break;
+                    case 1: m01 = value; break;
+                    case 2: m02 = value; break;
+                    case 3: m03 = value; break;
+                    case 4: m10 = value; break;
+                    case 5: m11 = value; break;
+                    case 6: m12 = value; break;
+                    case 7: m13 = value; break;
+                    case 8: m20 = value; break;
+                    case 9: m21 = value; break;
+                    case 10: m22 = value; break;
+                    case 11: m23 = value; break;
+                    case 12: m30 = value; break;
+                    case 13: m31 = value; break;
+                    case 14: m32 = value; break;
+                    case 15: m33 = value; break;
                     default: throw new ArgumentOutOfRangeException("index", "Indices for Matrix4x4 run from 0 to 15, inclusive.");
                 }
             }
@@ -301,88 +170,35 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Creates an array containing the elements of the Matrix4x4.
-        /// </summary>
-        /// <returns>A sixteen-element array containing the components of the Matrix4x4.</returns>
-        public float[] ToArray()
-        {
-            return new[] { M11, M12, M13, M14, M21, M22, M23, M24, M31, M32, M33, M34, M41, M42, M43, M44 };
-        }
-
-        /// <summary>
 		/// Initializes a new instance of the <see cref="Matrix4"/> struct.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		public Matrix4(float value)
         {
-            M11 = M12 = M13 = M14 =
-            M21 = M22 = M23 = M24 =
-            M31 = M32 = M33 = M34 =
-            M41 = M42 = M43 = M44 = value;
+            m00 = m01 = m02 = m03 =
+            m10 = m11 = m12 = m13 =
+            m20 = m21 = m22 = m23 =
+            m30 = m31 = m32 = m33 = value;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix4"/> struct.
-        /// </summary>
-        /// <param name="m11">The value to assign at row 1 column 1 of the Matrix4x4.</param>
-        /// <param name="m12">The value to assign at row 1 column 2 of the Matrix4x4.</param>
-        /// <param name="m13">The value to assign at row 1 column 3 of the Matrix4x4.</param>
-        /// <param name="m14">The value to assign at row 1 column 4 of the Matrix4x4.</param>
-        /// <param name="m21">The value to assign at row 2 column 1 of the Matrix4x4.</param>
-        /// <param name="m22">The value to assign at row 2 column 2 of the Matrix4x4.</param>
-        /// <param name="m23">The value to assign at row 2 column 3 of the Matrix4x4.</param>
-        /// <param name="m24">The value to assign at row 2 column 4 of the Matrix4x4.</param>
-        /// <param name="m31">The value to assign at row 3 column 1 of the Matrix4x4.</param>
-        /// <param name="m32">The value to assign at row 3 column 2 of the Matrix4x4.</param>
-        /// <param name="m33">The value to assign at row 3 column 3 of the Matrix4x4.</param>
-        /// <param name="m34">The value to assign at row 3 column 4 of the Matrix4x4.</param>
-        /// <param name="m41">The value to assign at row 4 column 1 of the Matrix4x4.</param>
-        /// <param name="m42">The value to assign at row 4 column 2 of the Matrix4x4.</param>
-        /// <param name="m43">The value to assign at row 4 column 3 of the Matrix4x4.</param>
-        /// <param name="m44">The value to assign at row 4 column 4 of the Matrix4x4.</param>
-        public Matrix4(float m11, float m12, float m13, float m14,
-            float m21, float m22, float m23, float m24,
-            float m31, float m32, float m33, float m34,
-            float m41, float m42, float m43, float m44)
+        public Matrix4(float fm00, float fm01, float fm02, float fm03, float fm10, float fm11, float fm12, float fm13, float fm20, float fm21, float fm22, float fm23, float fm30, float fm31, float fm32, float fm33)
         {
-            M11 = m11; M12 = m12; M13 = m13; M14 = m14;
-            M21 = m21; M22 = m22; M23 = m23; M24 = m24;
-            M31 = m31; M32 = m32; M33 = m33; M34 = m34;
-            M41 = m41; M42 = m42; M43 = m43; M44 = m44;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix4"/> struct.
-        /// </summary>
-        /// <param name="values">The values to assign to the components of the Matrix4x4. This must be an array with sixteen elements.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than sixteen elements.</exception>
-        public Matrix4(float[] values)
-        {
-            if (values == null)
-                throw new ArgumentNullException("values");
-            if (values.Length != 16)
-                throw new ArgumentOutOfRangeException("values", "There must be sixteen and only sixteen input values for Matrix4x4.");
-
-            M11 = values[0];
-            M12 = values[1];
-            M13 = values[2];
-            M14 = values[3];
-
-            M21 = values[4];
-            M22 = values[5];
-            M23 = values[6];
-            M24 = values[7];
-
-            M31 = values[8];
-            M32 = values[9];
-            M33 = values[10];
-            M34 = values[11];
-
-            M41 = values[12];
-            M42 = values[13];
-            M43 = values[14];
-            M44 = values[15];
+            this.m00 = fm00;
+            this.m01 = fm01;
+            this.m02 = fm02;
+            this.m03 = fm03;
+            this.m10 = fm10;
+            this.m11 = fm11;
+            this.m12 = fm12;
+            this.m13 = fm13;
+            this.m20 = fm20;
+            this.m21 = fm21;
+            this.m22 = fm22;
+            this.m23 = fm23;
+            this.m30 = fm30;
+            this.m31 = fm31;
+            this.m32 = fm32;
+            this.m33 = fm33;
         }
 
         /// <summary>
@@ -393,25 +209,25 @@ namespace Mogre
 		public bool Equals(ref Matrix4 other)
         {
             return
-                other.M11 == M11 &&
-                other.M12 == M12 &&
-                other.M13 == M13 &&
-                other.M14 == M14 &&
+                other.m00 == m00 &&
+                other.m01 == m01 &&
+                other.m02 == m02 &&
+                other.m03 == m03 &&
 
-                other.M21 == M21 &&
-                other.M22 == M22 &&
-                other.M23 == M23 &&
-                other.M24 == M24 &&
+                other.m10 == m10 &&
+                other.m11 == m11 &&
+                other.m12 == m12 &&
+                other.m13 == m12 &&
 
-                other.M31 == M31 &&
-                other.M32 == M32 &&
-                other.M33 == M33 &&
-                other.M34 == M34 &&
+                other.m20 == m20 &&
+                other.m21 == m21 &&
+                other.m22 == m22 &&
+                other.m23 == m23 &&
 
-                other.M41 == M41 &&
-                other.M42 == M42 &&
-                other.M43 == M43 &&
-                other.M44 == M44;
+                other.m30 == m30 &&
+                other.m31 == m31 &&
+                other.m32 == m32 &&
+                other.m33 == m33;
         }
 
         /// <summary>
@@ -466,10 +282,11 @@ namespace Mogre
 		/// <returns>The hash code.</returns>
 		public override int GetHashCode()
         {
-            return M11.GetHashCode() + M12.GetHashCode() + M13.GetHashCode() + M14.GetHashCode() +
-                M21.GetHashCode() + M22.GetHashCode() + M23.GetHashCode() + M24.GetHashCode() +
-                M31.GetHashCode() + M32.GetHashCode() + M33.GetHashCode() + M34.GetHashCode() +
-                M41.GetHashCode() + M42.GetHashCode() + M43.GetHashCode() + M44.GetHashCode();
+            return 
+                m00.GetHashCode() + m01.GetHashCode() + m02.GetHashCode() + m03.GetHashCode() +
+                m10.GetHashCode() + m11.GetHashCode() + m12.GetHashCode() + m13.GetHashCode() +
+                m20.GetHashCode() + m21.GetHashCode() + m22.GetHashCode() + m23.GetHashCode() +
+                m30.GetHashCode() + m31.GetHashCode() + m32.GetHashCode() + m33.GetHashCode();
         }
     }
 }

@@ -148,6 +148,27 @@ void ResourceGroupManager::DestroyResourceGroup(String^ name)
 	_native->destroyResourceGroup(o_name);
 }
 
+bool ResourceGroupManager::IsResourceGroupInitialised(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->isResourceGroupInitialised(o_name);
+}
+
+bool ResourceGroupManager::IsResourceGroupLoaded(String^name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->isResourceGroupLoaded(o_name);
+}
+
+bool ResourceGroupManager::ResourceGroupExists(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->resourceGroupExists(o_name);
+}
+
 void ResourceGroupManager::AddResourceLocation(String^ name, String^ locType, String^ resGroup, bool recursive)
 {
 	DECLARE_NATIVE_STRING(o_name, name);

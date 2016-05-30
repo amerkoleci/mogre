@@ -6,7 +6,7 @@ using System;
 
 namespace Mogre
 {
-    public static class MathHelper
+    public static class Math
     {
         public enum AngleUnit
         {
@@ -110,7 +110,7 @@ namespace Mogre
 		/// <returns><c>true</c> if the specified value is close to zero (0.0f); otherwise, <c>false</c>.</returns>
 		public static bool IsZero(float a)
         {
-            return Math.Abs(a) < ZeroTolerance;
+            return System.Math.Abs(a) < ZeroTolerance;
         }
 
         /// <summary>

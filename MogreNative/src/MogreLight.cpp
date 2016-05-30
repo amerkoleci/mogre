@@ -49,12 +49,12 @@ Mogre::Vector3 Light::DerivedDirection::get()
 	return ToVector3(static_cast<const Ogre::Light*>(_native)->getDerivedDirection());
 }
 
-Mogre::Color4 Light::DiffuseColour::get()
+Mogre::ColourValue Light::DiffuseColour::get()
 {
 	return ToColor4(static_cast<const Ogre::Light*>(_native)->getDiffuseColour());
 }
 
-void Light::DiffuseColour::set(Mogre::Color4 colour)
+void Light::DiffuseColour::set(Mogre::ColourValue colour)
 {
 	static_cast<Ogre::Light*>(_native)->setDiffuseColour(FromColor4(colour));
 }
@@ -74,6 +74,7 @@ String^ Light::MovableType::get()
 	return TO_CLR_STRING(static_cast<const Ogre::Light*>(_native)->getMovableType());
 }
 
+
 Ogre::Real Light::PowerScale::get()
 {
 	return static_cast<const Ogre::Light*>(_native)->getPowerScale();
@@ -83,12 +84,12 @@ void Light::PowerScale::set(Ogre::Real power)
 	static_cast<Ogre::Light*>(_native)->setPowerScale(power);
 }
 
-Mogre::Color4 Light::SpecularColour::get()
+Mogre::ColourValue Light::SpecularColour::get()
 {
 	return ToColor4(static_cast<const Ogre::Light*>(_native)->getSpecularColour());
 }
 
-void Light::SpecularColour::set(Mogre::Color4 colour)
+void Light::SpecularColour::set(Mogre::ColourValue colour)
 {
 	static_cast<Ogre::Light*>(_native)->setSpecularColour(FromColor4(colour));
 }

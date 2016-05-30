@@ -47,7 +47,7 @@ namespace Mogre
 
 	public:
 		bool HasWorkspaceDefinition(String^ name);
-		void CreateBasicWorkspaceDef(String^ name, Color4 backgroundColor);
+		void CreateBasicWorkspaceDef(String^ name, ColourValue backgroundColor);
 
 		CompositorWorkspace^ AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName);
 		CompositorWorkspace^ AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled);

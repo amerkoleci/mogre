@@ -164,6 +164,11 @@ bool Root::ShowConfigDialog()
 	return _native->showConfigDialog();
 }
 
+Mogre::Const_RenderSystemList^ Root::GetAvailableRenderers()
+{
+	return _native->getAvailableRenderers();
+}
+
 Mogre::SceneManager^ Root::CreateSceneManager(String^ typeName, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, String^ instanceName)
 {
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
@@ -368,3 +373,4 @@ void Root::UnloadPlugin(String^ pluginName)
 CPP_DECLARE_STLMAP(, UnaryOptionList, String^, bool, Ogre::String, bool);
 CPP_DECLARE_STLMAP(, BinaryOptionList, String^, String^, Ogre::String, Ogre::String);
 CPP_DECLARE_STLMAP(, NameValuePairList, String^, String^, Ogre::String, Ogre::String);
+CPP_DECLARE_STLVECTOR(, RenderSystemList, Mogre::RenderSystem^, Ogre::RenderSystem*);

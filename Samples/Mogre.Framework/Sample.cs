@@ -111,7 +111,7 @@ namespace Mogre.Framework
             string workspaceName = GetType().Name + "Workspace";
             if (!compositorManager.HasWorkspaceDefinition(workspaceName))
             {
-                var backgroundColor = Color4.Black;
+                var backgroundColor = ColourValue.Black;
                 compositorManager.CreateBasicWorkspaceDef(workspaceName, backgroundColor);
             }
 

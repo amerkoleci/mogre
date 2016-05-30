@@ -195,6 +195,9 @@ namespace Mogre
 		void ClearResourceGroup(String^ name);
 
 		void DestroyResourceGroup(String^ name);
+		bool IsResourceGroupInitialised(String^ name);
+		bool IsResourceGroupLoaded(String^name);
+		bool ResourceGroupExists(String^ name);
 
 		void AddResourceLocation(String^ name, String^ locType, String^ resGroup, bool recursive);
 		void AddResourceLocation(String^ name, String^ locType, String^ resGroup);

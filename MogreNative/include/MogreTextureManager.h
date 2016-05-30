@@ -195,7 +195,7 @@ namespace Mogre
 
 		bool HasFlag(Mogre::ImageFlags imgFlag);
 
-		Mogre::Color4 GetColourAt(int x, int y, int z);
+		Mogre::ColourValue GetColourAt(int x, int y, int z);
 
 		Mogre::PixelBox GetPixelBox(size_t face, size_t mipmap);
 		Mogre::PixelBox GetPixelBox(size_t face);

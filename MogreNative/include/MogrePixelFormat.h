@@ -211,13 +211,13 @@ namespace Mogre
 
 		static Mogre::PixelFormat GetFormatForBitDepths(Mogre::PixelFormat fmt, Ogre::ushort integerBits, Ogre::ushort floatBits);
 
-		static void PackColour(Color4 colour, Mogre::PixelFormat pf, void* dest);
+		static void PackColour(ColourValue colour, Mogre::PixelFormat pf, void* dest);
 
 		static void PackColour(Ogre::uint8 r, Ogre::uint8 g, Ogre::uint8 b, Ogre::uint8 a, Mogre::PixelFormat pf, void* dest);
 
 		static void PackColour(float r, float g, float b, float a, Mogre::PixelFormat pf, void* dest);
 
-		static void UnpackColour(Color4* colour, Mogre::PixelFormat pf, const void* src);
+		static void UnpackColour(ColourValue* colour, Mogre::PixelFormat pf, const void* src);
 
 		static void UnpackColour([Out] Ogre::uint8% r, [Out] Ogre::uint8% g, [Out] Ogre::uint8% b, [Out] Ogre::uint8% a, Mogre::PixelFormat pf, const void* src);
 

@@ -36,28 +36,28 @@ namespace Mogre
 			void set(Mogre::Radian angle);
 		}
 
-		property Mogre::Color4 Colour
+		property Mogre::ColourValue Colour
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 colour);
+			void set(Mogre::ColourValue colour);
 		}
 
-		property Mogre::Color4 ColourRangeEnd
+		property Mogre::ColourValue ColourRangeEnd
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 colour);
+			void set(Mogre::ColourValue colour);
 		}
 
-		property Mogre::Color4 ColourRangeStart
+		property Mogre::ColourValue ColourRangeStart
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 colour);
+			void set(Mogre::ColourValue colour);
 		}
 
 		property Mogre::Vector3 Direction
@@ -228,7 +228,7 @@ namespace Mogre
 
 		void SetTimeToLive(Ogre::Real minTtl, Ogre::Real maxTtl);
 
-		void SetColour(Mogre::Color4 colourStart, Mogre::Color4 colourEnd);
+		void SetColour(Mogre::ColourValue colourStart, Mogre::ColourValue colourEnd);
 
 		void SetDuration(Ogre::Real min, Ogre::Real max);
 

@@ -528,7 +528,7 @@ namespace Mogre
         /// Returns whether or not this box intersects another.</summary>
         public bool Intersects(Plane p)
         {
-            return MathHelper.Intersects(p, this);
+            return Math.Intersects(p, this);
         }
 
         ///// <summary>Returns whether or not this box intersects another. </summary>

@@ -18,7 +18,7 @@ namespace Mogre
             get; set;
         }
 
-        public ObjectTableOwnershipType(object owner, Type type)
+        public ObjectTableOwnershipType(object owner, Type type) : this()
         {
             Owner = owner;
             Type = type;

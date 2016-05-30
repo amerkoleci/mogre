@@ -10,7 +10,6 @@ namespace Mogre
 	typedef Ogre::ushort ushort;
 	typedef Ogre::uchar uchar;
 	typedef Ogre::Real Real;
-	typedef Mogre::Color4 ColourValue;
 
 	public enum class FrameBufferType
 	{

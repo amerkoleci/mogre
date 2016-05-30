@@ -3,11 +3,13 @@
 #include "OgreRoot.h"
 #include "MogreFrameListener.h"
 #include "MogreCommon.h"
+#include "STLContainerWrappers.h"
 
 namespace Mogre
 {
 	ref class RenderSystem;
 	ref class RenderSystemList;
+	ref class Const_RenderSystemList;
 
 	ref class RenderTarget;
 	ref class RenderWindow;
@@ -225,7 +227,7 @@ namespace Mogre
 		bool RestoreConfig();
 		bool ShowConfigDialog();
 
-		//Mogre::RenderSystemList^ GetAvailableRenderers();
+		Mogre::Const_RenderSystemList^ GetAvailableRenderers();
 		Mogre::RenderSystem^ GetRenderSystemByName(String^ name);
 
 		Mogre::RenderWindow^ Initialise(bool autoCreateWindow, String^ windowTitle);
@@ -281,4 +283,6 @@ namespace Mogre
 			return FrameEnded(evt);
 		}
 	};
+
+	INC_DECLARE_STLVECTOR(RenderSystemList, Mogre::RenderSystem^, Ogre::RenderSystem*, public, private);
 }

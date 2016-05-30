@@ -51,6 +51,8 @@ namespace Mogre
         /// </summary>
         public static readonly Vector4 One = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
+        public static Vector4 ZERO = new Vector4();
+
         /// <summary>
         /// The X component of the vector.
         /// </summary>
@@ -71,6 +73,26 @@ namespace Mogre
         /// The W component of the vector.
         /// </summary>
         public float W;
+
+        /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float x { get { return X; } set { X = value; } }
+
+        /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float y { get { return Y; } set { Y = value; } }
+
+        /// <summary>
+        /// The Z component of the vector.
+        /// </summary>
+        public float z { get { return Z; } set { Z = value; } }
+
+        /// <summary>
+        /// The W component of the vector.
+        /// </summary>
+        public float w { get { return W; } set { W = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
@@ -165,7 +187,7 @@ namespace Mogre
         /// </remarks>
         public float Length()
         {
-            return (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+            return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
         }
 
         /// <summary>

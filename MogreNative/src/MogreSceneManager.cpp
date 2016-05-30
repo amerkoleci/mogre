@@ -3,6 +3,7 @@
 #include "MogreSceneNode.h"
 #include "MogreEntity.h"
 #include "MogreAnimation.h"
+#include "MogreMeshManager.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -29,12 +30,12 @@ bool SceneManager::IsDisposed::get()
 	return (_native == nullptr);
 }
 
-Mogre::Color4 SceneManager::AmbientLight::get()
+Mogre::ColourValue SceneManager::AmbientLight::get()
 {
 	return ToColor4(_native->getAmbientLight());
 }
 
-void SceneManager::AmbientLight::set(Mogre::Color4 value)
+void SceneManager::AmbientLight::set(Mogre::ColourValue value)
 {
 	_native->setAmbientLight(FromColor4(value));
 }
@@ -47,6 +48,21 @@ bool SceneManager::DisplaySceneNodes::get()
 void SceneManager::DisplaySceneNodes::set(bool value)
 {
 	_native->setDisplaySceneNodes(value);
+}
+
+Mogre::SceneNode^ SceneManager::CreateSceneNode()
+{
+	return _native->createSceneNode();
+}
+
+Mogre::SceneNode^ SceneManager::CreateSceneNode(SceneMemoryMgrTypes sceneType)
+{
+	return static_cast<Ogre::SceneManager*>(_native)->createSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+}
+
+void SceneManager::DestroySceneNode(Mogre::SceneNode^ node)
+{
+	_native->destroySceneNode(node);
 }
 
 Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
@@ -74,7 +90,7 @@ void SceneManager::DestroyBillboardChain(Mogre::BillboardChain^ obj)
 	_native->destroyBillboardChain(GetPointerOrNull(obj));
 }
 
-void SceneManager::DestroyAllBillboardChains() 
+void SceneManager::DestroyAllBillboardChains()
 {
 	_native->destroyAllBillboardChains();
 }
@@ -211,6 +227,26 @@ Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype)
 Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType)
 {
 	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType));
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(mesh));
+}
+
+void SceneManager::DestroyEntity(Mogre::Entity^ ent)
+{
+	_native->destroyEntity(GetPointerOrNull(ent));
+}
+
+void SceneManager::DestroyAllEntities()
+{
+	_native->destroyAllEntities();
 }
 
 void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName)
@@ -377,22 +413,22 @@ void SceneManager::SetSkyDome(bool enable, String^ materialName)
 	_native->setSkyDome(enable, o_materialName);
 }
 
-void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart, Ogre::Real linearEnd)
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity, Ogre::Real linearStart, Ogre::Real linearEnd)
 {
 	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity, linearStart, linearEnd);
 }
 
-void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart)
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity, Ogre::Real linearStart)
 {
 	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity, linearStart);
 }
 
-void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity)
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity)
 {
 	_native->setFog((Ogre::FogMode)mode, FromColor4(colour), expDensity);
 }
 
-void SceneManager::SetFog(Mogre::FogMode mode, Mogre::Color4 colour)
+void SceneManager::SetFog(Mogre::FogMode mode, Mogre::ColourValue colour)
 {
 	_native->setFog((Ogre::FogMode)mode, FromColor4(colour));
 }

@@ -41,8 +41,8 @@ namespace Mogre
 	Quaternion ToQuaternion(Ogre::Quaternion value);
 	Ogre::Quaternion FromQuaternion(Quaternion value);
 
-	Color4 ToColor4(Ogre::ColourValue value);
-	Ogre::ColourValue FromColor4(Color4 value);
+	Mogre::ColourValue ToColor4(Ogre::ColourValue value);
+	Ogre::ColourValue FromColor4(Mogre::ColourValue value);
 
 	Plane ToPlane(Ogre::Plane value);
 	Ogre::Plane FromPlane(Plane value);

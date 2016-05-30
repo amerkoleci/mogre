@@ -14,7 +14,7 @@ namespace Mogre
     /// values.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Color4 : IEquatable<Color4>, IFormattable
+    public struct ColourValue : IEquatable<ColourValue>, IFormattable
     {
         /// <summary>
         /// The red component of the color.
@@ -37,45 +37,45 @@ namespace Mogre
         public float A;
 
         /// <summary>
-        /// A <see cref="Color4"/> with all of its components set to zero.
+        /// A <see cref="ColourValue"/> with all of its components set to zero.
         /// </summary>
-        public static readonly Color4 Zero = new Color4();
+        public static readonly ColourValue Zero = new ColourValue();
 
         /// <summary>
-        /// A Black <see cref="Color4"/>.
+        /// A Black <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 Black = new Color4(0.0f, 0.0f, 0.0f, 1.0f);
+        public static readonly ColourValue Black = new ColourValue(0.0f, 0.0f, 0.0f, 1.0f);
 
         /// <summary>
-        /// A TransparentBlack <see cref="Color4"/>.
+        /// A TransparentBlack <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 TransparentBlack = new Color4(0.0f, 0.0f, 0.0f, 0.0f);
+        public static readonly ColourValue TransparentBlack = new ColourValue(0.0f, 0.0f, 0.0f, 0.0f);
 
         /// <summary>
-        /// A White <see cref="Color4"/>.
+        /// A White <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 White = new Color4(1.0f, 1.0f, 1.0f, 1.0f);
+        public static readonly ColourValue White = new ColourValue(1.0f, 1.0f, 1.0f, 1.0f);
 
         /// <summary>
-        /// A Red <see cref="Color4"/>.
+        /// A Red <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 Red = new Color4(1.0f, 0.0f, 0.0f);
+        public static readonly ColourValue Red = new ColourValue(1.0f, 0.0f, 0.0f);
 
         /// <summary>
-        /// A Green <see cref="Color4"/>.
+        /// A Green <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 Green = new Color4(0.0f, 1.0f, 0.0f);
+        public static readonly ColourValue Green = new ColourValue(0.0f, 1.0f, 0.0f);
 
         /// <summary>
-        /// A Blue <see cref="Color4"/>.
+        /// A Blue <see cref="ColourValue"/>.
         /// </summary>
-        public static readonly Color4 Blue = new Color4(0.0f, 0.0f, 1.0f);
+        public static readonly ColourValue Blue = new ColourValue(0.0f, 0.0f, 1.0f);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color4"/> struct.
+        /// Initializes a new instance of the <see cref="ColourValue"/> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
-        public Color4(float value)
+        public ColourValue(float value)
         {
             R = G = B = A = value;
         }
@@ -86,7 +86,7 @@ namespace Mogre
         /// <param name="red">The red component of the color.</param>
         /// <param name="green">The green component of the color.</param>
         /// <param name="blue">The blue component of the color.</param>
-        public Color4(float red, float green, float blue)
+        public ColourValue(float red, float green, float blue)
         {
             R = red;
             G = green;
@@ -101,7 +101,7 @@ namespace Mogre
         /// <param name="green">The green component of the color.</param>
         /// <param name="blue">The blue component of the color.</param>
         /// <param name="alpha">The alpha component of the color.</param>
-        public Color4(float red, float green, float blue, float alpha)
+        public ColourValue(float red, float green, float blue, float alpha)
         {
             R = red;
             G = green;
@@ -113,7 +113,7 @@ namespace Mogre
         /// Initializes a new instance of the <see cref="Alimer.Color4"/> struct.
         /// </summary>
         /// <param name="argb">A packed integer containing all four color components.</param>
-        public Color4(int argb)
+        public ColourValue(int argb)
         {
             A = ((argb >> 24) & 255) / 255.0f;
             R = ((argb >> 16) & 255) / 255.0f;
@@ -127,7 +127,7 @@ namespace Mogre
         /// <param name="red">The red component of the color.</param>
         /// <param name="green">The green component of the color.</param>
         /// <param name="blue">The blue component of the color.</param>
-        public Color4(int red, int green, int blue)
+        public ColourValue(int red, int green, int blue)
         {
             R = red / 255.0f;
             G = green / 255.0f;
@@ -142,7 +142,7 @@ namespace Mogre
         /// <param name="green">The green component of the color.</param>
         /// <param name="blue">The blue component of the color.</param>
         /// <param name="alpha">The alpha component of the color.</param>
-        public Color4(int red, int green, int blue, int alpha)
+        public ColourValue(int red, int green, int blue, int alpha)
         {
             R = red / 255.0f;
             G = green / 255.0f;
@@ -151,17 +151,17 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color4"/> struct.
+        /// Initializes a new instance of the <see cref="ColourValue"/> struct.
         /// </summary>
         /// <param name="values">The values to assign to the red, green, blue, and alpha components of the color. This must be an array with four elements.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
-        public Color4(float[] values)
+        public ColourValue(float[] values)
         {
             if (values == null)
-                throw new ArgumentNullException(nameof(values));
+                throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException(nameof(values), "There must be four and only four input values for Color4.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Color4.");
 
             R = values[0];
             G = values[1];
@@ -175,7 +175,7 @@ namespace Mogre
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(Color4 left, Color4 right)
+        public static bool operator ==(ColourValue left, ColourValue right)
         {
             return left.Equals(right);
         }
@@ -186,7 +186,7 @@ namespace Mogre
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(Color4 left, Color4 right)
+        public static bool operator !=(ColourValue left, ColourValue right)
         {
             return !left.Equals(right);
         }
@@ -210,14 +210,14 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Color4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="ColourValue"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Color4"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="ColourValue"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Color4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="ColourValue"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(ref Color4 other)
+        public bool Equals(ref ColourValue other)
         {
             return
                 A == other.A &&
@@ -227,14 +227,14 @@ namespace Mogre
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Color4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="ColourValue"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Color4"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="ColourValue"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Color4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="ColourValue"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Color4 other)
+        public bool Equals(ColourValue other)
         {
             return Equals(ref other);
         }
@@ -248,10 +248,10 @@ namespace Mogre
         /// </returns>
         public override bool Equals(object value)
         {
-            if (!(value is Color4))
+            if (!(value is ColourValue))
                 return false;
 
-            var strongValue = (Color4)value;
+            var strongValue = (ColourValue)value;
             return Equals(ref strongValue);
         }
 

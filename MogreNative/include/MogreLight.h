@@ -70,12 +70,12 @@ namespace Mogre
 			Mogre::Vector3 get();
 		}
 
-		property Mogre::Color4 DiffuseColour
+		property Mogre::ColourValue DiffuseColour
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 colour);
+			void set(Mogre::ColourValue colour);
 		}
 
 		property Mogre::Vector3 Direction
@@ -100,12 +100,12 @@ namespace Mogre
 			void set(Ogre::Real power);
 		}
 
-		property Mogre::Color4 SpecularColour
+		property Mogre::ColourValue SpecularColour
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 colour);
+			void set(Mogre::ColourValue colour);
 		}
 
 		property Ogre::Real SpotlightFalloff

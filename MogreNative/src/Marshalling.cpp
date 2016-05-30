@@ -78,12 +78,12 @@ namespace Mogre
 		return Ogre::Quaternion(value.W, value.X, value.Y, value.Z);
 	}
 
-	Color4 ToColor4(Ogre::ColourValue value)
+	Mogre::ColourValue ToColor4(Ogre::ColourValue value)
 	{
-		return Color4(value.r, value.g, value.b, value.a);
+		return Mogre::ColourValue(value.r, value.g, value.b, value.a);
 	}
 
-	Ogre::ColourValue FromColor4(Color4 value)
+	Ogre::ColourValue FromColor4(Mogre::ColourValue value)
 	{
 		return Ogre::ColourValue(value.R, value.G, value.B, value.A);
 	}

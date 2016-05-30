@@ -18,20 +18,22 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;PCL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;PCL</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Mogre.Base.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IDisposable.cs" />
@@ -44,14 +46,14 @@
     <Compile Include="Mathematics\AxisAlignedBox.cs" />
     <Compile Include="Mathematics\Angle.cs" />
     <Compile Include="Mathematics\Plane.cs" />
-    <Compile Include="Mathematics\MathHelper.cs" />
+    <Compile Include="Mathematics\Math.cs" />
     <Compile Include="Mathematics\Degree.cs" />
     <Compile Include="Mathematics\Radian.cs" />
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
     <Compile Include="Mathematics\Quaternion.cs" />
     <Compile Include="Mathematics\Vector4.cs" />
-    <Compile Include="Mathematics\Color4.cs" />
+    <Compile Include="Mathematics\ColourValue.cs" />
     <Compile Include="ObjectTable.cs" />
     <Compile Include="ObjectTableOwnershipType.cs" />
     <Compile Include="ObjectTableEventArgs.cs" />

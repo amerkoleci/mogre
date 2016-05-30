@@ -17,7 +17,7 @@ namespace Mogre
         {
             get
             {
-                return MathHelper.RadiansToAngleUnits(_value);
+                return Math.RadiansToAngleUnits(_value);
             }
         }
 
@@ -33,7 +33,7 @@ namespace Mogre
         {
             get
             {
-                return MathHelper.RadiansToDegrees(_value);
+                return Math.RadiansToDegrees(_value);
             }
         }
 

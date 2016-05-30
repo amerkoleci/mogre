@@ -3,6 +3,7 @@
 #include "OgreSceneNode.h"
 #include "MogreNode.h"
 #include "MogreCommon.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -36,6 +37,8 @@ namespace Mogre
 
 		void DetachAllObjects();
 
+		
+
 		Mogre::SceneNode^ CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate, Mogre::Quaternion rotate);
 		Mogre::SceneNode^ CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate);
 		Mogre::SceneNode^ CreateChildSceneNode(SceneMemoryMgrTypes sceneType);
@@ -59,6 +62,14 @@ namespace Mogre
 		void SetAutoTracking(bool enabled, Mogre::SceneNode^ target, Mogre::Vector3 localDirectionVector);
 		void SetAutoTracking(bool enabled, Mogre::SceneNode^ target);
 		void SetAutoTracking(bool enabled);
+
+		void SetVisible(bool visible, bool cascade);
+		void SetVisible(bool visible);
+
+		void FlipVisibility(bool cascade);
+		void FlipVisibility();
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneNode);
 
 	internal:
 		property Ogre::SceneNode* UnmanagedPointer

@@ -195,7 +195,7 @@ bool Image::HasFlag(Mogre::ImageFlags imgFlag)
 	return static_cast<const Ogre::Image*>(_native)->hasFlag((Ogre::ImageFlags)imgFlag);
 }
 
-Mogre::Color4 Image::GetColourAt(int x, int y, int z)
+Mogre::ColourValue Image::GetColourAt(int x, int y, int z)
 {
 	return ToColor4(static_cast<Ogre::Image*>(_native)->getColourAt(x, y, z));
 }

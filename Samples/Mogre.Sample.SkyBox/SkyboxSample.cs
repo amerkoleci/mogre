@@ -10,7 +10,7 @@ namespace Mogre.Framework
         protected override void CreateScene()
         {
             // setup some basic lighting for our scene
-            _sceneManager.AmbientLight = new Color4(0.3f, 0.3f, 0.3f);
+            _sceneManager.AmbientLight = new ColourValue(0.3f, 0.3f, 0.3f);
             var lightNode = _sceneManager.RootSceneNode.CreateChildSceneNode();
             lightNode.SetPosition(20, 80, 50);
             lightNode.AttachObject(_sceneManager.CreateLight());

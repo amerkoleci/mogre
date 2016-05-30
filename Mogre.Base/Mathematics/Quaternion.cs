@@ -52,6 +52,27 @@ namespace Mogre
         public float Z;
 
         /// <summary>
+        /// The W component of the vector.
+        /// </summary>
+        public float w { get { return W; } set { W = value; } }
+
+        /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float x { get { return X; } set { X = value; } }
+
+        /// <summary>
+        /// The X component of the vector.
+        /// </summary>
+        public float y { get { return Y; } set { Y = value; } }
+
+        /// <summary>
+        /// The Z component of the vector.
+        /// </summary>
+        public float z { get { return Z; } set { Z = value; } }
+        
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// </summary>
         /// <param name="w">The w that will be assigned to w-component.</param>
@@ -144,7 +165,7 @@ namespace Mogre
         /// </remarks>
         public float Length()
         {
-            return (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+            return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
         }
 
         /// <summary>

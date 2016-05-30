@@ -137,7 +137,7 @@ Mogre::PixelFormat PixelUtil::GetFormatForBitDepths(Mogre::PixelFormat fmt, Ogre
 	return (Mogre::PixelFormat)Ogre::PixelUtil::getFormatForBitDepths((Ogre::PixelFormat)fmt, integerBits, floatBits);
 }
 
-void PixelUtil::PackColour(Color4 colour, Mogre::PixelFormat pf, void* dest)
+void PixelUtil::PackColour(ColourValue colour, Mogre::PixelFormat pf, void* dest)
 {
 	Ogre::PixelUtil::packColour(FromColor4(colour), (Ogre::PixelFormat)pf, dest);
 }
@@ -152,7 +152,7 @@ void PixelUtil::PackColour(float r, float g, float b, float a, Mogre::PixelForma
 	Ogre::PixelUtil::packColour(r, g, b, a, (Ogre::PixelFormat)pf, dest);
 }
 
-void PixelUtil::UnpackColour(Color4* colour, Mogre::PixelFormat pf, const void* src)
+void PixelUtil::UnpackColour(ColourValue* colour, Mogre::PixelFormat pf, const void* src)
 {
 	Ogre::ColourValue* o_colour = reinterpret_cast<Ogre::ColourValue*>(colour);
 

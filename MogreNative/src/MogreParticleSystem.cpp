@@ -15,27 +15,27 @@ void ParticleEmitter::Angle::set(Mogre::Radian angle)
 	_native->setAngle(Ogre::Radian(angle.ValueRadians));
 }
 
-Mogre::Color4 ParticleEmitter::Colour::get()
+Mogre::ColourValue ParticleEmitter::Colour::get()
 {
 	return ToColor4(_native->getColour());
 }
 
-void ParticleEmitter::Colour::set(Mogre::Color4 colour)
+void ParticleEmitter::Colour::set(Mogre::ColourValue colour)
 {
 	_native->setColour(FromColor4(colour));
 }
 
-Mogre::Color4 ParticleEmitter::ColourRangeEnd::get()
+Mogre::ColourValue ParticleEmitter::ColourRangeEnd::get()
 {
 	return ToColor4(_native->getColourRangeEnd());
 }
 
-void ParticleEmitter::ColourRangeEnd::set(Mogre::Color4 colour)
+void ParticleEmitter::ColourRangeEnd::set(Mogre::ColourValue colour)
 {
 	_native->setColourRangeEnd(FromColor4(colour));
 }
 
-Mogre::Color4 ParticleEmitter::ColourRangeStart::get()
+Mogre::ColourValue ParticleEmitter::ColourRangeStart::get()
 {
 	return ToColor4(_native->getColourRangeStart());
 }
@@ -246,7 +246,7 @@ void ParticleEmitter::SetTimeToLive(Mogre::Real minTtl, Mogre::Real maxTtl)
 	_native->setTimeToLive(minTtl, maxTtl);
 }
 
-void ParticleEmitter::SetColour(Mogre::Color4 colourStart, Mogre::Color4 colourEnd)
+void ParticleEmitter::SetColour(Mogre::ColourValue colourStart, Mogre::ColourValue colourEnd)
 {
 	_native->setColour(FromColor4(colourStart), FromColor4(colourEnd));
 }

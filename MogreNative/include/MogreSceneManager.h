@@ -16,6 +16,7 @@ namespace Mogre
 	ref class Entity;
 	ref class Animation;
 	ref class AnimationState;
+	ref class MeshPtr;
 
 	public ref class SceneManager : IDisposable
 	{
@@ -58,12 +59,12 @@ namespace Mogre
 			virtual bool get();
 		}
 
-		property Mogre::Color4 AmbientLight
+		property Mogre::ColourValue AmbientLight
 		{
 		public:
-			Mogre::Color4 get();
+			Mogre::ColourValue get();
 		public:
-			void set(Mogre::Color4 value);
+			void set(Mogre::ColourValue value);
 		}
 
 		property bool DisplaySceneNodes
@@ -79,6 +80,10 @@ namespace Mogre
 		public:
 			Mogre::SceneNode^ get();
 		}
+
+		Mogre::SceneNode^ CreateSceneNode();
+		Mogre::SceneNode^ CreateSceneNode(SceneMemoryMgrTypes sceneType);
+		void DestroySceneNode(Mogre::SceneNode^ node);
 
 		Mogre::BillboardSet^ CreateBillboardSet(unsigned int poolSize);
 		void DestroyBillboardSet(Mogre::BillboardSet^ set);
@@ -116,6 +121,10 @@ namespace Mogre
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype);
 		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(MeshPtr^ mesh);
+		void DestroyEntity(Mogre::Entity^ ent);
+		void DestroyAllEntities();
 
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName);
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments);
@@ -143,10 +152,10 @@ namespace Mogre
 		void SetSkyDome(bool enable, String^ materialName, Ogre::Real curvature);
 		void SetSkyDome(bool enable, String^ materialName);
 
-		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart, Ogre::Real linearEnd);
-		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity, Ogre::Real linearStart);
-		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour, Ogre::Real expDensity);
-		void SetFog(Mogre::FogMode mode, Mogre::Color4 colour);
+		void SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity, Ogre::Real linearStart, Ogre::Real linearEnd);
+		void SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity, Ogre::Real linearStart);
+		void SetFog(Mogre::FogMode mode, Mogre::ColourValue colour, Ogre::Real expDensity);
+		void SetFog(Mogre::FogMode mode, Mogre::ColourValue colour);
 		void SetFog(Mogre::FogMode mode);
 		void SetFog();
 

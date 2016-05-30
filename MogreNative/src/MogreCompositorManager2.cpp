@@ -19,7 +19,7 @@ bool CompositorManager2::HasWorkspaceDefinition(String^ name)
 	return _native->hasWorkspaceDefinition(o_name);
 }
 
-void CompositorManager2::CreateBasicWorkspaceDef(String^ name, Color4 backgroundColor)
+void CompositorManager2::CreateBasicWorkspaceDef(String^ name, ColourValue backgroundColor)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 	_native->createBasicWorkspaceDef(o_name, FromColor4(backgroundColor));

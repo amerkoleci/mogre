@@ -100,6 +100,22 @@ namespace Mogre
         /// </summary>
         public static readonly Vector3 NegativeInfinity = new Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
 
+        public static Vector3 ZERO = new Vector3();
+
+        public static Vector3 UNIT_X = new Vector3(1.0f, 0.0f, 0.0f);
+
+        public static Vector3 UNIT_Y = new Vector3(0.0f, 1.0f, 0.0f);
+
+        public static Vector3 UNIT_Z = new Vector3(0.0f, 0.0f, 1.0f);
+
+        public static Vector3 NEGATIVE_UNIT_X = new Vector3(-1.0f, 0.0f, 0.0f);
+
+        public static Vector3 NEGATIVE_UNIT_Y = new Vector3(0.0f, -1.0f, 0.0f);
+
+        public static Vector3 NEGATIVE_UNIT_Z = new Vector3(0.0f, 0.0f, -1.0f);
+
+        public static Vector3 UNIT_SCALE = new Vector3(1.0f, 1.0f, 1.0f);
+
         /// <summary>
         /// The X component of the vector.
         /// </summary>
@@ -227,7 +243,7 @@ namespace Mogre
         /// </remarks>
         public float Length()
         {
-            return (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+            return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
         }
 
         /// <summary>
@@ -292,7 +308,7 @@ namespace Mogre
 		public void Normalize()
         {
             float length = Length();
-            if (!MathHelper.IsZero(length))
+            if (!Math.IsZero(length))
             {
                 float inv = 1.0f / length;
                 X *= inv;
@@ -379,7 +395,7 @@ namespace Mogre
             float y = value1.Y - value2.Y;
             float z = value1.Z - value2.Z;
 
-            result = (float)Math.Sqrt((x * x) + (y * y) + (z * z));
+            result = (float)System.Math.Sqrt((x * x) + (y * y) + (z * z));
         }
 
         /// <summary>
@@ -398,7 +414,7 @@ namespace Mogre
             float y = value1.Y - value2.Y;
             float z = value1.Z - value2.Z;
 
-            return (float)Math.Sqrt((x * x) + (y * y) + (z * z));
+            return (float)System.Math.Sqrt((x * x) + (y * y) + (z * z));
         }
 
         /// <summary>
@@ -461,7 +477,7 @@ namespace Mogre
 
         public float AbsDotProduct(Vector3 vector)
         {
-            return Math.Abs(x * vector.x) + Math.Abs(y * vector.y) + Math.Abs(z * vector.z);
+            return System.Math.Abs(x * vector.x) + System.Math.Abs(y * vector.y) + System.Math.Abs(z * vector.z);
         }
 
         /// <summary>

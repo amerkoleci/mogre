@@ -20,13 +20,13 @@ namespace Mogre
 
         public static implicit operator Radian(Angle angle)
         {
-            Radian result = new Radian(MathHelper.AngleUnitsToRadians(angle._value));
+            Radian result = new Radian(Math.AngleUnitsToRadians(angle._value));
             return result;
         }
 
         public static implicit operator Degree(Angle angle)
         {
-            Degree result = new Degree(MathHelper.AngleUnitsToDegrees(angle._value));
+            Degree result = new Degree(Math.AngleUnitsToDegrees(angle._value));
             return result;
         }
 

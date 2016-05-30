@@ -141,6 +141,26 @@ void SceneNode::SetAutoTracking(bool enabled)
 	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled);
 }
 
+void SceneNode::SetVisible(bool visible, bool cascade)
+{
+	static_cast<Ogre::SceneNode*>(_native)->setVisible(visible, cascade);
+}
+
+void SceneNode::SetVisible(bool visible)
+{
+	static_cast<Ogre::SceneNode*>(_native)->setVisible(visible);
+}
+
+void SceneNode::FlipVisibility(bool cascade)
+{
+	static_cast<Ogre::SceneNode*>(_native)->flipVisibility(cascade);
+}
+
+void SceneNode::FlipVisibility()
+{
+	static_cast<Ogre::SceneNode*>(_native)->flipVisibility();
+}
+
 Ogre::SceneNode* SceneNode::UnmanagedPointer::get()
 {
 	return static_cast<Ogre::SceneNode*>(_native);

@@ -2,6 +2,7 @@
 
 #include "OgreRenderSystem.h"
 #include "STLContainerWrappers.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -358,6 +359,8 @@ namespace Mogre
 
 		void SetConfigOption(String^ name, String^ value);
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderSystem);
+
 	internal:
 		property Ogre::RenderSystem* UnmanagedPointer
 		{
@@ -371,6 +374,4 @@ namespace Mogre
 			EventOccurred(eventName/*, parameters*/);
 		}
 	};
-
-	//INC_DECLARE_STLVECTOR(RenderSystemList, Mogre::RenderSystem^, Ogre::RenderSystem*, public, private);
 }
