@@ -95,6 +95,30 @@ void SceneManager::DestroyAllBillboardChains()
 	_native->destroyAllBillboardChains();
 }
 
+Mogre::ManualObject^ SceneManager::CreateManualObject(SceneMemoryMgrTypes sceneType)
+{
+	return ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)
+		static_cast<Ogre::SceneManager*>(_native)->createManualObject((Ogre::SceneMemoryMgrTypes)sceneType)
+		);
+}
+
+Mogre::ManualObject^ SceneManager::CreateManualObject()
+{
+	return ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)
+		static_cast<Ogre::SceneManager*>(_native)->createManualObject()
+		);
+}
+
+void SceneManager::DestroyManualObject(Mogre::ManualObject^ obj)
+{
+	_native->destroyManualObject(GetPointerOrNull(obj));
+}
+
+void SceneManager::DestroyAllManualObjects()
+{
+	_native->destroyAllManualObjects();
+}
+
 Mogre::RibbonTrail^ SceneManager::CreateRibbonTrail()
 {
 	return ObjectTable::GetOrCreateObject<Mogre::RibbonTrail^>((intptr_t)_native->createRibbonTrail());

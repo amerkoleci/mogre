@@ -8,6 +8,7 @@
 #include "MogreBillboardChain.h"
 #include "MogreRibbonTrail.h"
 #include "MogreParticleSystem.h"
+#include "MogreManualObject.h"
 
 namespace Mogre
 {
@@ -92,6 +93,11 @@ namespace Mogre
 		Mogre::BillboardChain^ CreateBillboardChain();
 		void DestroyBillboardChain(Mogre::BillboardChain^ obj);
 		void DestroyAllBillboardChains();
+
+		Mogre::ManualObject^ CreateManualObject(SceneMemoryMgrTypes sceneType);
+		Mogre::ManualObject^ CreateManualObject();
+		void DestroyManualObject(Mogre::ManualObject^ obj);
+		void DestroyAllManualObjects();
 
 		Mogre::RibbonTrail^ CreateRibbonTrail();
 		void DestroyRibbonTrail(Mogre::RibbonTrail^ obj);

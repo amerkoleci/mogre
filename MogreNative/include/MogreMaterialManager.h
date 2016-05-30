@@ -158,6 +158,7 @@ namespace Mogre
 		}
 
 	public:
+		MaterialManager();
 
 		static property MaterialManager^ Singleton
 		{
@@ -171,5 +172,49 @@ namespace Mogre
 				return _singleton;
 			}
 		}
+
+		static property String^ DEFAULT_SCHEME_NAME
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ value);
+		}
+
+		property String^ ActiveScheme
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ schemeName);
+		}
+
+		property unsigned int DefaultAnisotropy
+		{
+		public:
+			unsigned int get();
+		public:
+			void set(unsigned int maxAniso);
+		}
+
+		void Initialise();
+
+		void ParseScript(Mogre::DataStreamPtr^ stream, String^ groupName);
+
+		void SetDefaultTextureFiltering(Mogre::TextureFilterOptions fo);
+
+		void SetDefaultTextureFiltering(Mogre::FilterType ftype, Mogre::FilterOptions opts);
+
+		void SetDefaultTextureFiltering(Mogre::FilterOptions minFilter, Mogre::FilterOptions magFilter, Mogre::FilterOptions mipFilter);
+
+		Mogre::FilterOptions GetDefaultTextureFiltering(Mogre::FilterType ftype);
+
+		Mogre::MaterialPtr^ GetDefaultSettings();
+
+		unsigned short _getSchemeIndex(String^ name);
+
+		String^ _getSchemeName(unsigned short index);
+
+		unsigned short _getActiveSchemeIndex();
 	};
 }
