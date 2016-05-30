@@ -127,6 +127,12 @@
     <ClCompile Include="src\MogreStringConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MogreMaterialManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreManualObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FileSystemLayer.h">
@@ -289,6 +295,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MogreHardwareBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreMaterialManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreManualObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

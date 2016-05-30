@@ -73,9 +73,9 @@ namespace Mogre
 		static operator MeshPtr ^ (ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
-			Ogre::Mesh* castptr = dynamic_cast<Ogre::Mesh*>(ptr->_native);
+			void* castptr = dynamic_cast<Ogre::Mesh*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Mesh.");
-			return gcnew MeshPtr(Ogre::MeshPtr(castptr));
+			return gcnew MeshPtr(Ogre::MeshPtr(ptr->_sharedPtr->dynamicCast<Ogre::Mesh>()));
 		}
 
 		MeshPtr(Mesh^ obj) : Mesh(obj->_native)

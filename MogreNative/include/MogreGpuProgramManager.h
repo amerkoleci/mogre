@@ -941,9 +941,9 @@ namespace Mogre
 		static operator GpuProgramPtr ^ (ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
-			Ogre::GpuProgram* castptr = dynamic_cast<Ogre::GpuProgram*>(ptr->_native);
+			void* castptr = dynamic_cast<Ogre::GpuProgram*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type GpuProgram.");
-			return gcnew GpuProgramPtr(Ogre::GpuProgramPtr(castptr));
+			return gcnew GpuProgramPtr(Ogre::GpuProgramPtr(ptr->_sharedPtr->dynamicCast<Ogre::GpuProgram>()));
 		}
 
 		GpuProgramPtr(GpuProgram^ obj) : GpuProgram(obj->_native)

@@ -433,9 +433,9 @@ namespace Mogre
 		static operator TexturePtr ^ (ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
-			Ogre::Texture* castptr = dynamic_cast<Ogre::Texture*>(ptr->_native);
+			void* castptr = dynamic_cast<Ogre::Texture*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Texture.");
-			return gcnew TexturePtr(Ogre::TexturePtr(castptr));
+			return gcnew TexturePtr(Ogre::TexturePtr(ptr->_sharedPtr->dynamicCast<Ogre::Texture>()));
 		}
 
 		TexturePtr(Texture^ obj) : Texture(obj->_native)
