@@ -6,6 +6,111 @@
 
 using namespace Mogre;
 
+class MovableObject_Listener_Proxy : public Ogre::MovableObject::Listener
+{
+public:
+	friend ref class Mogre::MovableObject::Listener;
+
+	gcroot<Mogre::MovableObject::Listener^> _managed;
+
+	MovableObject_Listener_Proxy(Mogre::MovableObject::Listener^ managedObj) : Ogre::MovableObject::Listener()
+		, _managed(managedObj)
+	{
+	}
+
+	virtual void objectDestroyed(Ogre::MovableObject* param1) override;
+
+	virtual void objectAttached(Ogre::MovableObject* param1) override;
+
+	virtual void objectDetached(Ogre::MovableObject* param1) override;
+};
+
+void MovableObject_Listener_Proxy::objectDestroyed(Ogre::MovableObject* param1)
+{
+	_managed->ObjectDestroyed(param1);
+}
+
+void MovableObject_Listener_Proxy::objectAttached(Ogre::MovableObject* param1)
+{
+	_managed->ObjectAttached(param1);
+}
+
+void MovableObject_Listener_Proxy::objectDetached(Ogre::MovableObject* param1)
+{
+	_managed->ObjectDetached(param1);
+}
+
+Ogre::MovableObject::Listener* MovableObject::Listener::_IListener_GetNativePtr()
+{
+	return static_cast<Ogre::MovableObject::Listener*>(static_cast<MovableObject_Listener_Proxy*>(_native));
+}
+
+MovableObject::Listener::Listener() 
+{
+	_createdByCLR = true;
+	Type^ thisType = this->GetType();
+	MovableObject_Listener_Proxy* proxy = new MovableObject_Listener_Proxy(this);
+	_native = proxy;
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+MovableObject::Listener::~Listener()
+{
+	this->!Listener();
+}
+
+MovableObject::Listener::!Listener()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native != 0)
+	{
+		delete _native; _native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+void MovableObject::Listener::ObjectDestroyed(Mogre::MovableObject^ param1)
+{
+	static_cast<MovableObject_Listener_Proxy*>(_native)->objectDestroyed(param1);
+}
+
+void MovableObject::Listener::ObjectAttached(Mogre::MovableObject^ param1)
+{
+	static_cast<MovableObject_Listener_Proxy*>(_native)->objectAttached(param1);
+}
+
+void MovableObject::Listener::ObjectDetached(Mogre::MovableObject^ param1)
+{
+	static_cast<MovableObject_Listener_Proxy*>(_native)->objectDetached(param1);
+}
+
+// ------------- MovableObject -------------
+
+MovableObject::~MovableObject()
+{
+	this->!MovableObject();
+}
+
+MovableObject::!MovableObject()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native != 0)
+	{
+		delete _native; _native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
 Ogre::Real MovableObject::WorldRadius::get()
 {
 	return static_cast<const Ogre::MovableObject*>(_native)->getWorldRadius();
@@ -141,6 +246,16 @@ void MovableObject::RemoveVisibilityFlags(Ogre::uint32 flags)
 {
 	static_cast<Ogre::MovableObject*>(_native)->removeVisibilityFlags(flags);
 }
+
+void MovableObject::SetListener(Mogre::MovableObject::IListener^ listener)
+{
+	static_cast<Ogre::MovableObject*>(_native)->setListener(listener->_GetNativePtr());
+}
+
+/*Mogre::MovableObject::IListener^ MovableObject::GetListener()
+{
+	return static_cast<const Ogre::MovableObject*>(_native)->getListener();
+}*/
 
 Ogre::MovableObject* MovableObject::UnmanagedPointer::get()
 {

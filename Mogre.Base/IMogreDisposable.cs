@@ -6,7 +6,7 @@ namespace Mogre
 {
     using System;
 
-    public interface IDisposable : System.IDisposable
+    public interface IMogreDisposable : System.IDisposable
     {
         event EventHandler OnDisposed;
 

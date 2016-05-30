@@ -217,7 +217,7 @@ namespace Mogre
                 other.m10 == m10 &&
                 other.m11 == m11 &&
                 other.m12 == m12 &&
-                other.m13 == m12 &&
+                other.m13 == m13 &&
 
                 other.m20 == m20 &&
                 other.m21 == m21 &&

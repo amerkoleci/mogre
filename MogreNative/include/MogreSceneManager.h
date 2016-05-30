@@ -18,7 +18,7 @@ namespace Mogre
 	ref class AnimationState;
 	ref class MeshPtr;
 
-	public ref class SceneManager : IDisposable
+	public ref class SceneManager : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

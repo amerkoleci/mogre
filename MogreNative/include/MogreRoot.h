@@ -22,7 +22,7 @@ namespace Mogre
 		Threaded = Ogre::INSTANCING_CULLING_THREADED
 	};
 
-	public ref class Root : IDisposable, public IFrameListener_Receiver
+	public ref class Root : IMogreDisposable, public IFrameListener_Receiver
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

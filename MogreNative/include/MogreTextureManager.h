@@ -46,7 +46,7 @@ namespace Mogre
 	ref class TexturePtr;
 	ref class DataStreamPtr;
 
-	public ref class Image : IDisposable
+	public ref class Image : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

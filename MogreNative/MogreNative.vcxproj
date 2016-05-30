@@ -201,6 +201,7 @@
     <ClInclude Include="include\MogreFrameListener.h" />
     <ClInclude Include="include\MogreFrustum.h" />
     <ClInclude Include="include\MogreGpuProgramManager.h" />
+    <ClInclude Include="include\MogreHardwareBuffer.h" />
     <ClInclude Include="include\MogreLight.h" />
     <ClInclude Include="include\MogreLog.h" />
     <ClInclude Include="include\MogreLogManager.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="include\MogreRTShaderSystem.h" />
     <ClInclude Include="include\MogreSceneManager.h" />
     <ClInclude Include="include\MogreSceneNode.h" />
+    <ClInclude Include="include\MogreStringConverter.h" />
     <ClInclude Include="include\MogreStringInterface.h" />
     <ClInclude Include="include\MogreStringVector.h" />
     <ClInclude Include="include\MogreRoot.h" />
@@ -253,6 +255,7 @@
     <ClCompile Include="src\MogreFrameListener.cpp" />
     <ClCompile Include="src\MogreFrustum.cpp" />
     <ClCompile Include="src\MogreGpuProgramManager.cpp" />
+    <ClCompile Include="src\MogreHardwareBuffer.cpp" />
     <ClCompile Include="src\MogreLight.cpp" />
     <ClCompile Include="src\MogreLog.cpp" />
     <ClCompile Include="src\MogreLogManager.cpp" />
@@ -272,6 +275,7 @@
     <ClCompile Include="src\MogreRTShaderSystem.cpp" />
     <ClCompile Include="src\MogreSceneManager.cpp" />
     <ClCompile Include="src\MogreSceneNode.cpp" />
+    <ClCompile Include="src\MogreStringConverter.cpp" />
     <ClCompile Include="src\MogreStringVector.cpp" />
     <ClCompile Include="src\MogreRenderSystem.cpp" />
     <ClCompile Include="src\MogreRoot.cpp" />

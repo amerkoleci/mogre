@@ -236,7 +236,7 @@ namespace Mogre
 		}
 	};
 
-	public ref class GpuProgramParameters : IDisposable
+	public ref class GpuProgramParameters : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

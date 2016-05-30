@@ -49,6 +49,12 @@ namespace Mogre
 
 	AxisAlignedBox^ ToAxisAlignedBounds(Ogre::AxisAlignedBox value);
 	Ogre::AxisAlignedBox FromAxisAlignedBounds(AxisAlignedBox^ value);
+
+	Matrix3 ToMatrix3(Ogre::Matrix3 value);
+	Ogre::Matrix3 FromMatrix3(Matrix3^ value);
+
+	Matrix4 ToMatrix4(Ogre::Matrix4 value);
+	Ogre::Matrix4 FromMatrix4(Matrix4^ value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\
@@ -115,26 +121,6 @@ namespace Mogre
 			}															\
 			inline static operator Ogre::T& (T^ t) {					\
 				return *static_cast<Ogre::T*>(t->_native);				\
-			}
-
-#define RETURN_CLR_OBJECT_FOR_INTERFACE(MT, NT, n)			\
-			if (0 == n) return nullptr;							\
-			CLRObject* clr_obj = dynamic_cast<CLRObject*>(n);	\
-			if (0 == clr_obj)									\
-				throw gcnew System::Exception("The native class that implements " #NT " isn't a subclass of CLRObject. Cannot create the CLR wrapper object.");	\
-			Object^ clr = *clr_obj;								\
-			if (nullptr == clr) {								\
-				clr_obj->_Init_CLRObject();						\
-				clr = *clr_obj;									\
-			}													\
-			return static_cast<MT^>(clr);
-
-#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_INTERFACE(MT, NT)				\
-			static operator MT^ (const NT* t) {									\
-				RETURN_CLR_OBJECT_FOR_INTERFACE(MT, NT, (const_cast<NT*>(t)) )	\
-			}																	\
-			inline static operator NT* (MT^ t) {								\
-				return (t == CLR_NULL) ? 0 : t->_GetNativePtr();				\
 			}
 
 #define RETURN_CLR_OBJECT(T,n) return ObjectTable::GetOrCreateObject<T^>( (intptr_t)n );

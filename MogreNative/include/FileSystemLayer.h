@@ -4,7 +4,7 @@
 
 namespace Mogre
 {
-	public ref class FileSystemLayer : IDisposable
+	public ref class FileSystemLayer : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

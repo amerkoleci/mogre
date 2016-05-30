@@ -17,14 +17,14 @@ namespace Mogre
 		// A collection of native objects to their managed version
 		static readonly Dictionary<long, object> _objectTable = new Dictionary<long, object>();
 		// A collection of managed objects to their managed owner
-		static readonly Dictionary<IDisposable, IDisposable> _ownership = new Dictionary<IDisposable, IDisposable>();
+		static readonly Dictionary<IMogreDisposable, IMogreDisposable> _ownership = new Dictionary<IMogreDisposable, IMogreDisposable>();
 		// A collection of ownership-type pairs to a collection of objects
 		// This dictionary is used to lookup objects which are owned by X and of type Y. (e.g. property Physics.Cloths > Key: Owner: physics, Type: Cloth yields a collection of Cloth).
 		static readonly Dictionary<ObjectTableOwnershipType, List<object>> _ownerTypeLookup = new Dictionary<ObjectTableOwnershipType, List<object>>();
 
 		static bool _performingDisposal;
 
-		public static void Add<T>(long pointer, T @object, IDisposable owner = null) where T : IDisposable
+		public static void Add<T>(long pointer, T @object, IMogreDisposable owner = null) where T : IMogreDisposable
 		{
 			if (@object == null)
 			{
@@ -53,7 +53,7 @@ namespace Mogre
 			}
 		}
 
-		public static void AddObjectOwner(IDisposable @object, IDisposable owner)
+		public static void AddObjectOwner(IMogreDisposable @object, IMogreDisposable owner)
 		{
 			if (@object == null)
 			{
@@ -64,7 +64,7 @@ namespace Mogre
 			_ownership.Add(@object, owner);
 		}
 
-		public static void AddOwnerTypeLookup<T>(object owner, T @object) where T : IDisposable
+		public static void AddOwnerTypeLookup<T>(object owner, T @object) where T : IMogreDisposable
 		{
 			if (@object == null)
 			{
@@ -128,7 +128,7 @@ namespace Mogre
 			object @object = _objectTable[pointer];
 
 			// Unbind the OnDisposing event
-			var disposableObject = @object as Mogre.IDisposable;
+			var disposableObject = @object as Mogre.IMogreDisposable;
 			if (disposableObject != null)
 			{
 				disposableObject.OnDisposing -= disposableObject_OnDisposing;
@@ -140,7 +140,7 @@ namespace Mogre
 			// Remove the from owner-type dictionary
 			if (disposableObject != null)
 			{
-				IDisposable owner = _ownership[disposableObject];
+				IMogreDisposable owner = _ownership[disposableObject];
 
 				var ownerTypeKey = new ObjectTableOwnershipType(owner, @object.GetType());
 
@@ -289,17 +289,17 @@ namespace Mogre
 			if (!_performingDisposal)
 			{
 				_performingDisposal = true;
-				DisposeOfObjectAndDependents(sender as IDisposable);
+				DisposeOfObjectAndDependents(sender as IMogreDisposable);
 				Remove(sender);
 				_performingDisposal = false;
 			}
 		}
 
-		static void GetDependents(IDisposable disposable, List<IDisposable> disposables)
+		static void GetDependents(IMogreDisposable disposable, List<IMogreDisposable> disposables)
 		{
 			foreach (var pair in _ownership)
 			{
-				IDisposable dependent = pair.Key;
+				IMogreDisposable dependent = pair.Key;
 				if (dependent != null)
 				{
 					if (pair.Value == disposable)
@@ -311,23 +311,23 @@ namespace Mogre
 			}
 		}
 
-		static IDisposable[] GetDependents(IDisposable disposable)
+		static IMogreDisposable[] GetDependents(IMogreDisposable disposable)
 		{
-			List<IDisposable> allDependents = new List<IDisposable>();
+			List<IMogreDisposable> allDependents = new List<IMogreDisposable>();
 			GetDependents(disposable, allDependents);
 			return allDependents.ToArray();
 		}
 
-		static void DisposeOfObjectAndDependents(IDisposable disposable)
+		static void DisposeOfObjectAndDependents(IMogreDisposable disposable)
 		{
 			if (disposable != null &&
 				disposable.IsDisposed == false &&
 				_ownership.ContainsKey(disposable))
 			{
-				IDisposable[] dependents = GetDependents(disposable);
+				IMogreDisposable[] dependents = GetDependents(disposable);
 				for (int i = 0; i < dependents.Length; i++)
 				{
-					IDisposable dependent = dependents[i];
+					IMogreDisposable dependent = dependents[i];
 					if (dependent != null)
 					{
 						dependent.Dispose();
@@ -341,7 +341,7 @@ namespace Mogre
 
 				for (int j = 0; j < dependents.Length; j++)
 				{
-					IDisposable dependent = dependents[j];
+					IMogreDisposable dependent = dependents[j];
 					Remove(dependent);
 				}
 			}

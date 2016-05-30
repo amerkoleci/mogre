@@ -49,7 +49,7 @@ namespace Mogre
 
 	//Log
 
-	public ref class Log : IDisposable, public ILogListener_Receiver
+	public ref class Log : IMogreDisposable, public ILogListener_Receiver
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

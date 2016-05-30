@@ -36,8 +36,9 @@
     </NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IDisposable.cs" />
+    <Compile Include="IMogreDisposable.cs" />
     <Compile Include="Mathematics\Box.cs" />
+    <Compile Include="Mathematics\Matrix3.cs" />
     <Compile Include="Mathematics\Matrix4.cs" />
     <Compile Include="Mathematics\FloatRect.cs" />
     <Compile Include="Mathematics\Sphere.cs" />

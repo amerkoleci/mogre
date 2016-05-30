@@ -13,7 +13,7 @@ namespace Mogre
 
 	namespace RTShader
 	{
-		public ref class ShaderGenerator : IDisposable
+		public ref class ShaderGenerator : IMogreDisposable
 		{
 		public:
 			/// <summary>Raised before any disposing is performed.</summary>

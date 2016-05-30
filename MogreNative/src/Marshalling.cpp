@@ -113,4 +113,35 @@ namespace Mogre
 	{
 		return Ogre::AxisAlignedBox(FromVector3(value->Minimum), FromVector3(value->Maximum));
 	}
+
+	Matrix3 ToMatrix3(Ogre::Matrix3 value)
+	{
+		float* ptr = value[0];
+		return Matrix3(
+			ptr[0], ptr[1], ptr[2],
+			ptr[3], ptr[4], ptr[5],
+			ptr[6], ptr[7], ptr[8]);
+	}
+
+	Ogre::Matrix3 FromMatrix3(Matrix3^ value)
+	{
+		pin_ptr<Ogre::Matrix3> p_val = interior_ptr<Ogre::Matrix3>(&value->m00);
+		return Ogre::Matrix3(*p_val);
+	}
+
+	Matrix4 ToMatrix4(Ogre::Matrix4 value)
+	{
+		float* ptr = value[0];
+		return Matrix4(
+			ptr[0], ptr[1], ptr[2], ptr[3], 
+			ptr[4], ptr[5], ptr[6], ptr[7], 
+			ptr[8], ptr[9], ptr[10], ptr[11],
+			ptr[12], ptr[13], ptr[14], ptr[15]);
+	}
+
+	Ogre::Matrix4 FromMatrix4(Matrix4^ value)
+	{
+		pin_ptr<Ogre::Matrix4> p_val = interior_ptr<Ogre::Matrix4>(&value->m00);
+		return Ogre::Matrix4(*p_val);
+	}
 }

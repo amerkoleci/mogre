@@ -120,7 +120,7 @@ namespace Mogre
 	};
 
 
-	public ref class RenderTarget : IDisposable, public IRenderTargetListener_Receiver
+	public ref class RenderTarget : IMogreDisposable, public IRenderTargetListener_Receiver
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

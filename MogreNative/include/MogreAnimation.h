@@ -26,7 +26,7 @@ namespace Mogre
 	//TimeIndex
 	//################################################################
 
-	public ref class TimeIndex : IDisposable
+	public ref class TimeIndex : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -89,7 +89,7 @@ namespace Mogre
 	//KeyFrame
 	//################################################################
 
-	public ref class KeyFrame : IDisposable
+	public ref class KeyFrame : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -232,7 +232,7 @@ namespace Mogre
 	//AnimationTrack
 	//################################################################
 
-	public ref class AnimationTrack : IDisposable
+	public ref class AnimationTrack : IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -466,9 +466,15 @@ namespace Mogre
 	//################################################################
 	//AnimationState
 	//################################################################
+	ref class AnimationStateSet;
 
-	public ref class AnimationState
+	public ref class AnimationState : IMogreDisposable
 	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
 	private protected:
 		String^ _animationName;
 
@@ -484,12 +490,90 @@ namespace Mogre
 		{
 		}
 
-		~AnimationState()
-		{
-			if (_createdByCLR && _native != 0) { delete _native; _native = 0; }
-		}
+	public:
+		~AnimationState();
+	protected:
+		!AnimationState();
 
 	public:
+		AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight, bool enabled);
+		AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight);
+		AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length);
+		AnimationState(Mogre::AnimationStateSet^ parent, Mogre::AnimationState^ rhs);
+
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
+		property String^ AnimationName
+		{
+		public:
+			String^ get();
+		}
+
+		property bool Enabled
+		{
+		public:
+			bool get();
+		public:
+			void set(bool enabled);
+		}
+
+		property bool HasEnded
+		{
+		public:
+			bool get();
+		}
+
+		property Mogre::Real Length
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real len);
+		}
+
+		property bool Loop
+		{
+		public:
+			bool get();
+		public:
+			void set(bool loop);
+		}
+
+		property Mogre::AnimationStateSet^ Parent
+		{
+		public:
+			Mogre::AnimationStateSet^ get();
+		}
+
+		property Mogre::Real TimePosition
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real timePos);
+		}
+
+		property Mogre::Real Weight
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real weight);
+		}
+
+		void AddTime(Mogre::Real offset);
+
+		virtual bool Equals(Object^ obj) override;
+		bool Equals(AnimationState^ obj);
+		static bool operator == (AnimationState^ obj1, AnimationState^ obj2);
+		static bool operator != (AnimationState^ obj1, AnimationState^ obj2);
+
 		void CopyTo(AnimationState^ dest)
 		{
 			if (_native == NULL) throw gcnew Exception("The underlying native object for the caller is null.");
@@ -497,7 +581,9 @@ namespace Mogre
 
 			*(dest->_native) = *_native;
 		}
+		void CopyStateFrom(Mogre::AnimationState^ animState);
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(AnimationState);
 	internal:
 		property Ogre::AnimationState* UnmanagedPointer
 		{
@@ -509,10 +595,104 @@ namespace Mogre
 	};
 
 	//################################################################
+	//AnimationStateSet
+	//################################################################
+	ref class AnimationStateIterator;
+	ref class ConstEnabledAnimationStateIterator;
+
+	public ref class AnimationStateSet : public IMogreDisposable
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+	private protected:
+
+		virtual void ClearNativePtr() //= INativePointer::ClearNativePtr
+		{
+			_native = 0;
+		}
+
+	public protected:
+		AnimationStateSet(Ogre::AnimationStateSet* obj) : _native(obj), _createdByCLR(false)
+		{
+		}
+
+		Ogre::AnimationStateSet* _native;
+		bool _createdByCLR;
+
+	public:
+		~AnimationStateSet();
+	protected:
+		!AnimationStateSet();
+
+	public:
+		AnimationStateSet();
+		AnimationStateSet(Mogre::AnimationStateSet^ rhs);
+
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
+		property unsigned long DirtyFrameNumber
+		{
+		public:
+			unsigned long get();
+		}
+
+		property bool HasEnabledAnimationState
+		{
+		public:
+			bool get();
+		}
+
+		Mogre::AnimationState^ CreateAnimationState(String^ animName, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight, bool enabled);
+		Mogre::AnimationState^ CreateAnimationState(String^ animName, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight);
+		Mogre::AnimationState^ CreateAnimationState(String^ animName, Mogre::Real timePos, Mogre::Real length);
+
+		Mogre::AnimationState^ GetAnimationState(String^ name);
+
+		bool HasAnimationState(String^ name);
+
+		void RemoveAnimationState(String^ name);
+
+		void RemoveAllAnimationStates();
+
+		Mogre::AnimationStateIterator^ GetAnimationStateIterator();
+
+		void CopyMatchingState(Mogre::AnimationStateSet^ target);
+
+		void _notifyDirty();
+
+		void _notifyAnimationStateEnabled(Mogre::AnimationState^ target, bool enabled);
+
+		Mogre::ConstEnabledAnimationStateIterator^ GetEnabledAnimationStateIterator();
+
+	internal:
+		property Ogre::AnimationStateSet* UnmanagedPointer
+		{
+			Ogre::AnimationStateSet* get()
+			{
+				return _native;
+			}
+		}
+	};
+
+	INC_DECLARE_STLMAP(AnimationStateMap, String^, Mogre::AnimationState^, Ogre::String, Ogre::AnimationState*, public, private);
+	public INC_DECLARE_MAP_ITERATOR(AnimationStateIterator, Ogre::AnimationStateIterator, Mogre::AnimationStateMap, Mogre::AnimationState^, Ogre::AnimationState*, String^, Ogre::String);
+	INC_DECLARE_STLLIST(EnabledAnimationStateList, Mogre::AnimationState^, Ogre::AnimationState*, public, private);
+	public INC_DECLARE_ITERATOR(ConstEnabledAnimationStateIterator, Ogre::ConstEnabledAnimationStateIterator, Mogre::EnabledAnimationStateList, Mogre::AnimationState^, Ogre::AnimationState*);
+
+	//################################################################
 	//Animation
 	//################################################################
 
-	public ref class Animation : public IDisposable
+	public ref class Animation : public IMogreDisposable
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

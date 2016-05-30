@@ -1,14 +1,67 @@
 #pragma once
 
 #include "OgreMovableObject.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
 	ref class Node;
 	ref class SceneNode;
 
-	public ref class MovableObject// : public ShadowCaster, public IAnimableObject
+	public ref class MovableObject : IMogreDisposable// : public ShadowCaster, public IAnimableObject
 	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+		interface class IListener
+		{
+			virtual Ogre::MovableObject::Listener* _GetNativePtr();
+		public:
+			virtual void ObjectDestroyed(Mogre::MovableObject^ param1);
+			virtual void ObjectAttached(Mogre::MovableObject^ param1);
+			virtual void ObjectDetached(Mogre::MovableObject^ param1);
+		};
+
+		ref class Listener : public IMogreDisposable, public Mogre::MovableObject::IListener
+		{
+		public:
+			/// <summary>Raised before any disposing is performed.</summary>
+			virtual event EventHandler^ OnDisposing;
+			/// <summary>Raised once all disposing is performed.</summary>
+			virtual event EventHandler^ OnDisposed;
+
+		internal:
+			Ogre::MovableObject::Listener* _native;
+			bool _createdByCLR;
+
+		public protected:
+			Listener(Ogre::MovableObject::Listener* obj) : _native(obj)
+			{
+			}
+
+			virtual Ogre::MovableObject::Listener* _IListener_GetNativePtr() = IListener::_GetNativePtr;
+		public:
+			Listener();
+			
+			~Listener();
+			!Listener();
+
+			virtual void ObjectDestroyed(Mogre::MovableObject^ param1);
+			virtual void ObjectAttached(Mogre::MovableObject^ param1);
+			virtual void ObjectDetached(Mogre::MovableObject^ param1);
+
+			property bool IsDisposed
+			{
+				virtual bool get()
+				{
+					return _native == nullptr;
+				}
+			}
+		};
+
 	internal:
 		Ogre::MovableObject* _native;
 		bool _createdByCLR;
@@ -24,7 +77,18 @@ namespace Mogre
 
 		}
 
+		~MovableObject();
+		!MovableObject();
+
 	public:
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
 		property Ogre::Real WorldRadius
 		{
 		public:
@@ -132,6 +196,11 @@ namespace Mogre
 
 		void AddVisibilityFlags(Ogre::uint32 flags);
 		void RemoveVisibilityFlags(Ogre::uint32 flags);
+
+		void SetListener(Mogre::MovableObject::IListener^ listener);
+		//Mogre::MovableObject::IListener^ GetListener();
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(MovableObject);
 
 	internal:
 		property Ogre::MovableObject* UnmanagedPointer
