@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OgreRenderSystem.h"
+#include "MogreHardwareBuffer.h"
 #include "STLContainerWrappers.h"
 #include "Marshalling.h"
 
@@ -355,6 +356,42 @@ namespace Mogre
 		{
 		public:
 			Mogre::RenderSystemCapabilities^ get();
+		}
+
+		property Mogre::VertexElementType ColourVertexElementType
+		{
+		public:
+			Mogre::VertexElementType get();
+		}
+
+		property Ogre::Real HorizontalTexelOffset
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property Ogre::Real MaximumDepthInputValue
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property Ogre::Real MinimumDepthInputValue
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property String^ Name
+		{
+		public:
+			String^ get();
+		}
+
+		property Ogre::Real VerticalTexelOffset
+		{
+		public:
+			Ogre::Real get();
 		}
 
 		void SetConfigOption(String^ name, String^ value);

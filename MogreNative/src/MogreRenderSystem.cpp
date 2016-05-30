@@ -185,6 +185,36 @@ Mogre::RenderSystemCapabilities^ RenderSystem::Capabilities::get()
 	return ObjectTable::GetOrCreateObject<Mogre::RenderSystemCapabilities^>((intptr_t) _native->getCapabilities());
 }
 
+Mogre::VertexElementType RenderSystem::ColourVertexElementType::get()
+{
+	return (Mogre::VertexElementType)static_cast<const Ogre::RenderSystem*>(_native)->getColourVertexElementType();
+}
+
+Ogre::Real RenderSystem::HorizontalTexelOffset::get()
+{
+	return static_cast<Ogre::RenderSystem*>(_native)->getHorizontalTexelOffset();
+}
+
+Ogre::Real RenderSystem::MaximumDepthInputValue::get()
+{
+	return static_cast<Ogre::RenderSystem*>(_native)->getMaximumDepthInputValue();
+}
+
+Ogre::Real RenderSystem::MinimumDepthInputValue::get()
+{
+	return static_cast<Ogre::RenderSystem*>(_native)->getMinimumDepthInputValue();
+}
+
+String^ RenderSystem::Name::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::RenderSystem*>(_native)->getName());
+}
+
+Ogre::Real RenderSystem::VerticalTexelOffset::get()
+{
+	return static_cast<Ogre::RenderSystem*>(_native)->getVerticalTexelOffset();
+}
+
 void RenderSystem::SetConfigOption(String^ name, String^ value)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
