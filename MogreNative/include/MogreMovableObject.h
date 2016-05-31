@@ -131,6 +131,12 @@ namespace Mogre
 			String^ get();
 		}
 
+		property Ogre::IdType Id
+		{
+		public:
+			Ogre::IdType get();
+		}
+
 		property String^ Name
 		{
 		public:

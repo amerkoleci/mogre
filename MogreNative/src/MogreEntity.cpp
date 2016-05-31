@@ -3,6 +3,7 @@
 #include "MogreVertexIndexData.h"
 #include "MogreMeshManager.h"
 #include "MogreMaterialManager.h"
+#include "MogreMeshManager.h"
 #include "MogreCamera.h"
 
 using namespace Mogre;
@@ -57,10 +58,10 @@ Mogre::SubEntity^ Entity::GetSubEntity(String^ name)
 		);
 }
 
-//Mogre::SubMesh^ SubEntity::SubMesh::get()
-//{
-//	return static_cast<Ogre::SubEntity*>(_native)->getSubMesh();
-//}
+Mogre::SubMesh^ SubEntity::SubMesh::get()
+{
+	return static_cast<Ogre::SubEntity*>(_native)->getSubMesh();
+}
 
 Mogre::Technique^ SubEntity::Technique::get()
 {

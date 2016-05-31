@@ -33,6 +33,39 @@ namespace Mogre
             return Origin + (Direction * t);
         }
 
+        /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        public Pair<bool, float> Intersects(AxisAlignedBox box)
+        {
+            return Math.Intersects(this, box);
+        }
+
+        /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        public Pair<bool, float> Intersects(Sphere s)
+        {
+            return Math.Intersects(this, s);
+        }
+
+        /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        public Pair<bool, float> Intersects(Plane p)
+        {
+            return Math.Intersects(this, p);
+        }
+
+        /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        //public Pair<bool, float> Intersects(PlaneBoundedVolume p)
+        //{
+        //    byte normalIsOutside;
+        //    if (p.outside == Plane.Side.POSITIVE_SIDE)
+        //    {
+        //        normalIsOutside = 1;
+        //    }
+        //    else
+        //    {
+        //        normalIsOutside = 0;
+        //    }
+        //    return Math.Intersects(this, p.planes, normalIsOutside != 0);
+        //}
+
         /// <summary>
         /// Returns a boolean indicating whether the given Ray is equal to this Ray instance.
         /// </summary>

@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 
 namespace Mogre
 {
@@ -65,18 +66,67 @@ namespace Mogre
         {
             return (iValue >= 0 ? iValue : -iValue);
         }
-        public static int ICeil(float fValue)
+
+        public static int ICeil(float value)
         {
-            return (int)System.Math.Ceiling(fValue);
+            return (int)System.Math.Ceiling(value);
         }
-        public static int IFloor(float fValue)
+
+        public static int IFloor(float value)
         {
-            return (int)System.Math.Floor(fValue);
+            return (int)System.Math.Floor(value);
         }
 
         public static int ISign(int iValue)
         {
             return (iValue > 0 ? +1 : (iValue < 0 ? -1 : 0));
+        }
+
+        public static float Abs(float fValue)
+        {
+            return System.Math.Abs(fValue);
+        }
+
+        public static Radian ATan(float value)
+        {
+            return new Radian((float)System.Math.Atan(value));
+        }
+
+        public static Radian ATan2(float fY, float fX)
+        {
+            return new Radian((float)System.Math.Atan2(fY, fX));
+        }
+
+        public static float Sin(float value)
+        {
+            return (float)System.Math.Sin(value);
+        }
+
+        /// <summary>Sine function. </summary>
+        /// <param name="radians">Angle in radians </param>
+        public static float Sin(Radian radians)
+        {
+            return (float)System.Math.Sin(radians.ValueRadians);
+        }
+
+        public static float Cos(float value)
+        {
+            return (float)System.Math.Cos(value);
+        }
+
+        public static float Cos(Radian value)
+        {
+            return (float)System.Math.Cos(value.ValueRadians);
+        }
+
+        public static float Sqrt(float value)
+        {
+            return (float)System.Math.Sqrt(value);
+        }
+
+        public static Radian Sqrt(Radian value)
+        {
+            return new Radian((float)System.Math.Sqrt(value.ValueRadians));
         }
 
         public static float DegreesToRadians(float degrees)
@@ -141,6 +191,74 @@ namespace Mogre
             return IsZero(a - 1.0f);
         }
 
+        /// <summary>Calculate a face normal, no w-information. </summary>
+        public static Vector3 CalculateBasicFaceNormal(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            Vector3 rkVector = v3 - v1;
+            Vector3 result = (v2 - v1).CrossProduct(rkVector);
+            result.Normalise();
+            return result;
+        }
+
+        /// <summary>Calculate a face normal without normalize, no w-information. </summary>
+        public static Vector3 CalculateBasicFaceNormalWithoutNormalize(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            Vector3 rkVector = v3 - v1;
+            return (v2 - v1).CrossProduct(rkVector);
+        }
+
+        /// <summary>Calculate a face normal, including the w component which is the offset from the origin. </summary>
+        public static Vector4 CalculateFaceNormal(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            Vector3 vector = CalculateBasicFaceNormal(v1, v2, v3);
+            return new Vector4(vector.x, vector.y, vector.z, -vector.DotProduct(v1));
+        }
+
+        /// <summary>Calculate a face normal without normalize, including the w component which is the offset from the origin. </summary>
+        public static Vector4 CalculateFaceNormalWithoutNormalize(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            Vector3 vector = Math.CalculateBasicFaceNormalWithoutNormalize(v1, v2, v3);
+            return new Vector4(vector.x, vector.y, vector.z, -vector.DotProduct(v1));
+        }
+
+        public static Vector3 CalculateTangentSpaceVector(
+            Vector3 position1, Vector3 position2, Vector3 position3,
+            float u1, float v1, float u2, float v2, float u3, float v3)
+        {
+            //side0 is the vector along one side of the triangle of vertices passed in, 
+            //and side1 is the vector along another side. Taking the cross product of these returns the normal.
+            Vector3 side0 = position1 - position2;
+            Vector3 side1 = position3 - position1;
+            //Calculate face normal
+            Vector3 normal = side1.CrossProduct(side0);
+            normal.Normalise();
+            //Now we use a formula to calculate the tangent. 
+            float deltaV0 = v1 - v2;
+            float deltaV1 = v3 - v1;
+            Vector3 tangent = deltaV1 * side0 - deltaV0 * side1;
+            tangent.Normalise();
+            //Calculate binormal
+            float deltaU0 = u1 - u2;
+            float deltaU1 = u3 - u1;
+            Vector3 binormal = deltaU1 * side0 - deltaU0 * side1;
+            binormal.Normalise();
+            //Now, we take the cross product of the tangents to get a vector which 
+            //should point in the same direction as our normal calculated above. 
+            //If it points in the opposite direction (the dot product between the normals is less than zero), 
+            //then we need to reverse the s and t tangents. 
+            //This is because the triangle has been mirrored when going from tangent space to object space.
+            //reverse tangents if necessary
+            Vector3 tangentCross = tangent.CrossProduct(binormal);
+            if (tangentCross.DotProduct(normal) < 0.0f)
+            {
+                tangent = -tangent;
+                binormal = -binormal;
+            }
+
+            return tangent;
+
+        }
+
         public static bool Intersects(Plane plane, AxisAlignedBox box)
         {
             if (box.IsNull) return false;
@@ -161,6 +279,427 @@ namespace Mogre
             }
 
             return false;
+        }
+
+        public static bool Intersects(Sphere sphere, Plane plane)
+        {
+            Vector3 center = sphere.Center;
+            return Abs(plane.Normal.DotProduct(center)) <= sphere.Radius;
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, IList<Plane> planes, bool normalIsOutside)
+        {
+            bool allInside = true;
+            var result = new Pair<bool, float>(false, 0.0f);
+
+            Plane.Side side = normalIsOutside ? Plane.Side.POSITIVE_SIDE : Plane.Side.NEGATIVE_SIDE;
+
+            for (int i = 0; i < planes.Count; i++)
+            {
+                var plane = planes[i];
+                Vector3 origin = ray.Origin;
+                if (plane.GetSide(origin) == side)
+                {
+                    allInside = false;
+                    Pair<bool, float> pair = ray.Intersects(plane);
+                    if (pair.first)
+                    {
+                        result.first = true;
+                        result.second = System.Math.Max(result.second, pair.second);
+                    }
+                }
+            }
+
+            if (allInside)
+            {
+                result.first = true;
+                result.second = 0.0f;
+            }
+
+            return result;
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, IEnumerable<Plane> planes, bool normalIsOutside)
+        {
+            bool allInside = true;
+            var result = new Pair<bool, float>(false, 0.0f);
+
+            Plane.Side side = normalIsOutside ? Plane.Side.POSITIVE_SIDE : Plane.Side.NEGATIVE_SIDE;
+
+            foreach (var plane in planes)
+            {
+                Vector3 origin = ray.Origin;
+                if (plane.GetSide(origin) == side)
+                {
+                    allInside = false;
+                    Pair<bool, float> pair = ray.Intersects(plane);
+                    if (pair.first)
+                    {
+                        result.first = true;
+                        result.second = System.Math.Max(result.second, pair.second);
+                    }
+                }
+            }
+
+            if (allInside)
+            {
+                result.first = true;
+                result.second = 0.0f;
+            }
+
+            return result;
+        }
+
+        public static bool Intersects(Sphere sphere, AxisAlignedBox box)
+        {
+            if (box.IsNull)
+            {
+                return false;
+            }
+
+            // Use splitting planes
+            Vector3 center = sphere.Center;
+            float radius = sphere.Radius;
+            Vector3 min = box.Minimum;
+            Vector3 max = box.Maximum;
+
+            // just test facing planes, early fail if sphere is totally outside
+            if (center.x < min.x &&
+                min.x - center.x > radius)
+            {
+                return false;
+            }
+            if (center.x > max.x &&
+                center.x - max.x > radius)
+            {
+                return false;
+            }
+
+            if (center.y < min.y &&
+                min.y - center.y > radius)
+            {
+                return false;
+            }
+            if (center.y > max.y &&
+                center.y - max.y > radius)
+            {
+                return false;
+            }
+
+            if (center.z < min.z &&
+                min.z - center.z > radius)
+            {
+                return false;
+            }
+            if (center.z > max.z &&
+                center.z - max.z > radius)
+            {
+                return false;
+            }
+
+            // Must intersect
+            return true;
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c)
+        {
+            return Math.Intersects(ray, a, b, c, true, true);
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide)
+        {
+            return Math.Intersects(ray, a, b, c, positiveSide, true);
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide, bool negativeSide)
+        {
+            Vector3 normal = Math.CalculateBasicFaceNormalWithoutNormalize(a, b, c);
+            return Math.Intersects(ray, a, b, c, normal, positiveSide, negativeSide);
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal)
+        {
+            return Math.Intersects(ray, a, b, c, normal, true, true);
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal, bool positiveSide, bool negativeSide)
+        {
+            //
+            // Calculate intersection with plane.
+            //
+            float t;
+            {
+                float denom = normal.DotProduct(ray.Direction);
+
+                // Check intersect side
+                if (denom > +float.Epsilon)
+                {
+                    if (!negativeSide)
+                        return new Pair<bool, float>(false, 0);
+                }
+                else if (denom < -float.Epsilon)
+                {
+                    if (!positiveSide)
+                        return new Pair<bool, float>(false, 0);
+                }
+                else
+                {
+                    // Parallel or triangle area is close to zero when
+                    // the plane normal not normalised.
+                    return new Pair<bool, float>(false, 0);
+                }
+
+                t = normal.DotProduct(a - ray.Origin) / denom;
+
+                if (t < 0)
+                {
+                    // Intersection is behind origin
+                    return new Pair<bool, float>(false, 0);
+                }
+            }
+
+            //
+            // Calculate the largest area projection plane in X, Y or Z.
+            //
+            int i0, i1;
+            {
+                float n0 = Math.Abs(normal[0]);
+                float n1 = Math.Abs(normal[1]);
+                float n2 = Math.Abs(normal[2]);
+
+                i0 = 1; i1 = 2;
+                if (n1 > n2)
+                {
+                    if (n1 > n0) i0 = 0;
+                }
+                else
+                {
+                    if (n2 > n0) i1 = 0;
+                }
+            }
+
+            //
+            // Check the intersection point is inside the triangle.
+            //
+            {
+                float u1 = b[i0] - a[i0];
+                float v1 = b[i1] - a[i1];
+                float u2 = c[i0] - a[i0];
+                float v2 = c[i1] - a[i1];
+                float u0 = t * ray.Direction[i0] + ray.Origin[i0] - a[i0];
+                float v0 = t * ray.Direction[i1] + ray.Origin[i1] - a[i1];
+
+                float alpha = u0 * v2 - u2 * v0;
+                float beta = u1 * v0 - u0 * v1;
+                float area = u1 * v2 - u2 * v1;
+
+                // epsilon to avoid float precision error
+                const float EPSILON = 1e-3f;
+
+                float tolerance = -EPSILON * area;
+
+                if (area > 0)
+                {
+                    if (alpha < tolerance || beta < tolerance || alpha + beta > area - tolerance)
+                        return new Pair<bool, float>(false, 0);
+                }
+                else
+                {
+                    if (alpha > tolerance || beta > tolerance || alpha + beta < area - tolerance)
+                        return new Pair<bool, float>(false, 0);
+                }
+            }
+
+            return new Pair<bool, float>(true, t);
+        }
+
+        /// <summary>Ray / sphere intersection, returns boolean result and distance. </summary>
+        public static Pair<bool, float> Intersects(Ray ray, Sphere sphere)
+        {
+            return Math.Intersects(ray, sphere, true);
+        }
+
+        public static Pair<bool, float> Intersects(Ray ray, Sphere sphere, bool discardInside)
+        {
+            Vector3 raydir = ray.Direction;
+            // Adjust ray origin relative to sphere center
+            Vector3 rayorig = ray.Origin - sphere.Center;
+            float radius = sphere.Radius;
+
+            // Check origin inside first
+            if (rayorig.SquaredLength <= radius * radius && discardInside)
+            {
+                return new Pair<bool, float>(true, 0);
+            }
+
+            // Mmm, quadratics
+            // Build coeffs which can be used with std quadratic solver
+            // ie t = (-b +/- sqrt(b*b + 4ac)) / 2a
+            float a = raydir.DotProduct(raydir);
+            float b = 2 * rayorig.DotProduct(raydir);
+            float c = rayorig.DotProduct(rayorig) - radius * radius;
+
+            // Calc determinant
+            float d = (b * b) - (4 * a * c);
+            if (d < 0)
+            {
+                // No intersection
+                return new Pair<bool, float>(false, 0);
+            }
+            else
+            {
+                // BTW, if d=0 there is one intersection, if d > 0 there are 2
+                // But we only want the closest one, so that's ok, just use the 
+                // '-' version of the solver
+                float t = (-b - Math.Sqrt(d)) / (2 * a);
+                if (t < 0)
+                    t = (-b + Math.Sqrt(d)) / (2 * a);
+                return new Pair<bool, float>(true, t);
+            }
+        }
+
+        /// <summary>Ray / box intersection, returns boolean result and distance. </summary>
+        public static Pair<bool, float> Intersects(Ray ray, AxisAlignedBox box)
+        {
+            if (box.IsNull) return new Pair<bool, float>(false, 0);
+
+            float lowt = 0.0f;
+            float t;
+            bool hit = false;
+            Vector3 hitpoint;
+            Vector3 min = box.Minimum;
+            Vector3 max = box.Maximum;
+            Vector3 rayorig = ray.Origin;
+            Vector3 raydir = ray.Direction;
+
+            // Check origin inside first
+            if (rayorig > min && rayorig < max)
+            {
+                return new Pair<bool, float>(true, 0);
+            }
+
+            // Check each face in turn, only check closest 3
+            // Min x
+            if (rayorig.x < min.x && raydir.x > 0)
+            {
+                t = (min.x - rayorig.x) / raydir.x;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.y >= min.y && hitpoint.y <= max.y &&
+                        hitpoint.z >= min.z && hitpoint.z <= max.z &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+            // Max x
+            if (rayorig.x > max.x && raydir.x < 0)
+            {
+                t = (max.x - rayorig.x) / raydir.x;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.y >= min.y && hitpoint.y <= max.y &&
+                        hitpoint.z >= min.z && hitpoint.z <= max.z &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+            // Min y
+            if (rayorig.y < min.y && raydir.y > 0)
+            {
+                t = (min.y - rayorig.y) / raydir.y;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.x >= min.x && hitpoint.x <= max.x &&
+                        hitpoint.z >= min.z && hitpoint.z <= max.z &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+            // Max y
+            if (rayorig.y > max.y && raydir.y < 0)
+            {
+                t = (max.y - rayorig.y) / raydir.y;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.x >= min.x && hitpoint.x <= max.x &&
+                        hitpoint.z >= min.z && hitpoint.z <= max.z &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+            // Min z
+            if (rayorig.z < min.z && raydir.z > 0)
+            {
+                t = (min.z - rayorig.z) / raydir.z;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.x >= min.x && hitpoint.x <= max.x &&
+                        hitpoint.y >= min.y && hitpoint.y <= max.y &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+            // Max z
+            if (rayorig.z > max.z && raydir.z < 0)
+            {
+                t = (max.z - rayorig.z) / raydir.z;
+                if (t > 0)
+                {
+                    // Substitute t back into ray and check bounds and dist
+                    hitpoint = rayorig + raydir * t;
+                    if (hitpoint.x >= min.x && hitpoint.x <= max.x &&
+                        hitpoint.y >= min.y && hitpoint.y <= max.y &&
+                        (!hit || t < lowt))
+                    {
+                        hit = true;
+                        lowt = t;
+                    }
+                }
+            }
+
+            return new Pair<bool, float>(hit, lowt);
+        }
+
+        /// <summary>Ray / plane intersection, returns boolean result and distance. </summary>
+        public static Pair<bool, float> Intersects(Ray ray, Plane plane)
+        {
+            float denom = plane.Normal.DotProduct(ray.Direction);
+            if (Math.Abs(denom) < float.Epsilon)
+            {
+                // Parallel
+                return new Pair<bool, float>(false, 0);
+            }
+            else
+            {
+                float nom = plane.Normal.DotProduct(ray.Origin) + plane.D;
+                float t = -(nom / denom);
+                return new Pair<bool, float>(t >= 0, t);
+            }
         }
     }
 }

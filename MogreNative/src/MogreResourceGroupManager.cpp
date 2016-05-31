@@ -260,6 +260,21 @@ void ResourceGroupManager::UndeclareResource(String^ name, String^ groupName)
 	_native->undeclareResource(o_name, o_groupName);
 }
 
+bool ResourceGroupManager::ResourceLocationExists(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	return _native->resourceLocationExists(o_name);
+}
+
+bool ResourceGroupManager::ResourceLocationExists(String^ name, String^ resGroup)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_resGroup, resGroup);
+
+	return _native->resourceLocationExists(o_name, o_resGroup);
+}
+
+
 void ResourceGroupManager::ShutdownAll()
 {
 	_native->shutdownAll();

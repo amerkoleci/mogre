@@ -2,8 +2,158 @@
 #include "MogreManualObject.h"
 #include "MogreCommon.h"
 #include "MogreMeshManager.h"
+#include "MogreMaterialManager.h"
+#include "MogreCamera.h"
 
 using namespace Mogre;
+
+ManualObject::ManualObjectSection::ManualObjectSection(Mogre::ManualObject^ parent, String^ materialName, Mogre::RenderOperation::OperationTypes opType) 
+{
+	_createdByCLR = true;
+	DECLARE_NATIVE_STRING(o_materialName, materialName);
+	_native = new Ogre::ManualObject::ManualObjectSection(parent, o_materialName, (Ogre::RenderOperation::OperationType)opType);
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+ManualObject::ManualObjectSection::~ManualObjectSection()
+{
+	this->!ManualObjectSection();
+}
+
+ManualObject::ManualObjectSection::!ManualObjectSection()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+
+String^ ManualObject::ManualObjectSection::MaterialName::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getMaterialName());
+}
+
+void ManualObject::ManualObjectSection::MaterialName::set(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->setMaterialName(o_name);
+}
+
+Mogre::RenderOperation^ ManualObject::ManualObjectSection::RenderOperation::get()
+{
+	return static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->getRenderOperation();
+}
+
+Mogre::MaterialPtr^ ManualObject::ManualObjectSection::GetMaterial()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getMaterial();
+}
+
+void ManualObject::ManualObjectSection::GetRenderOperation(Mogre::RenderOperation^ op)
+{
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->getRenderOperation(op);
+}
+
+void ManualObject::ManualObjectSection::GetWorldTransforms(Mogre::Matrix4* xform)
+{
+	Ogre::Matrix4* o_xform = reinterpret_cast<Ogre::Matrix4*>(xform);
+
+	static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getWorldTransforms(o_xform);
+}
+
+Mogre::Real ManualObject::ManualObjectSection::GetSquaredViewDepth(Mogre::Camera^ param1)
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getSquaredViewDepth(param1);
+}
+
+//Mogre::Const_LightList^ ManualObject::ManualObjectSection::GetLights()
+//{
+//	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getLights();
+//}
+
+//------------------------------------------------------------
+// Implementation for IRenderable
+//------------------------------------------------------------
+
+bool ManualObject::ManualObjectSection::CastsShadows::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getCastsShadows();
+}
+
+unsigned short ManualObject::ManualObjectSection::NumWorldTransforms::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getNumWorldTransforms();
+}
+
+bool ManualObject::ManualObjectSection::PolygonModeOverrideable::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getPolygonModeOverrideable();
+}
+void ManualObject::ManualObjectSection::PolygonModeOverrideable::set(bool override)
+{
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->setPolygonModeOverrideable(override);
+}
+
+Mogre::Technique^ ManualObject::ManualObjectSection::Technique::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getTechnique();
+}
+
+bool ManualObject::ManualObjectSection::UseIdentityProjection::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getUseIdentityProjection();
+}
+void ManualObject::ManualObjectSection::UseIdentityProjection::set(bool useIdentityProjection)
+{
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->setUseIdentityProjection(useIdentityProjection);
+}
+
+bool ManualObject::ManualObjectSection::UseIdentityView::get()
+{
+	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getUseIdentityView();
+}
+void ManualObject::ManualObjectSection::UseIdentityView::set(bool useIdentityView)
+{
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->setUseIdentityView(useIdentityView);
+}
+
+//Mogre::Const_PlaneList^ ManualObject::ManualObjectSection::GetClipPlanes()
+//{
+//	return static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getClipPlanes();
+//}
+
+void ManualObject::ManualObjectSection::SetCustomParameter(size_t index, Mogre::Vector4 value)
+{
+	static_cast<Ogre::ManualObject::ManualObjectSection*>(_native)->setCustomParameter(index, FromVector4(value));
+}
+
+Mogre::Vector4 ManualObject::ManualObjectSection::GetCustomParameter(size_t index)
+{
+	return ToVector4(
+		static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getCustomParameter(index)
+		);
+}
+
+//void ManualObject::ManualObjectSection::_updateCustomGpuParameter(Mogre::GpuProgramParameters::AutoConstantEntry_NativePtr constantEntry, Mogre::GpuProgramParameters^ params)
+//{
+//	static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->_updateCustomGpuParameter(constantEntry, params);
+//}
+
+#define STLDECL_MANAGEDTYPE Mogre::ManualObject::ManualObjectSection^
+#define STLDECL_NATIVETYPE Ogre::ManualObject::ManualObjectSection*
+CPP_DECLARE_STLVECTOR(ManualObject::, SectionList, STLDECL_MANAGEDTYPE, STLDECL_NATIVETYPE);
+#undef STLDECL_MANAGEDTYPE
+#undef STLDECL_NATIVETYPE
 
 bool ManualObject::Dynamic::get()
 {
@@ -99,6 +249,16 @@ void ManualObject::Normal(Mogre::Real x, Mogre::Real y, Mogre::Real z)
 	static_cast<Ogre::ManualObject*>(_native)->normal(x, y, z);
 }
 
+void ManualObject::Tangent(Mogre::Vector3 norm)
+{
+	static_cast<Ogre::ManualObject*>(_native)->tangent(FromVector3(norm));
+}
+
+void ManualObject::Tangent(Mogre::Real x, Mogre::Real y, Mogre::Real z)
+{
+	static_cast<Ogre::ManualObject*>(_native)->tangent(x, y, z);
+}
+
 void ManualObject::TextureCoord(Mogre::Real u)
 {
 	static_cast<Ogre::ManualObject*>(_native)->textureCoord(u);
@@ -138,29 +298,29 @@ void ManualObject::Colour(Mogre::Real r, Mogre::Real g, Mogre::Real b)
 	static_cast<Ogre::ManualObject*>(_native)->colour(r, g, b);
 }
 
-void ManualObject::Index(Ogre::uint16 idx)
+void ManualObject::Index(Ogre::uint32 idx)
 {
 	static_cast<Ogre::ManualObject*>(_native)->index(idx);
 }
 
-void ManualObject::Triangle(Ogre::uint16 i1, Ogre::uint16 i2, Ogre::uint16 i3)
+void ManualObject::Triangle(Ogre::uint32 i1, Ogre::uint32 i2, Ogre::uint32 i3)
 {
 	static_cast<Ogre::ManualObject*>(_native)->triangle(i1, i2, i3);
 }
 
-void ManualObject::Quad(Ogre::uint16 i1, Ogre::uint16 i2, Ogre::uint16 i3, Ogre::uint16 i4)
+void ManualObject::Quad(Ogre::uint32 i1, Ogre::uint32 i2, Ogre::uint32 i3, Ogre::uint32 i4)
 {
 	static_cast<Ogre::ManualObject*>(_native)->quad(i1, i2, i3, i4);
 }
 
-//Mogre::ManualObject::ManualObjectSection^ ManualObject::End()
-//{
-//	return static_cast<Ogre::ManualObject*>(_native)->end();
-//}
-
-void ManualObject::End()
+Mogre::ManualObject::ManualObjectSection^ ManualObject::End()
 {
-	static_cast<Ogre::ManualObject*>(_native)->end();
+	return static_cast<Ogre::ManualObject*>(_native)->end();
+}
+
+Mogre::ManualObject::ManualObjectSection^ ManualObject::GetSection(unsigned int index)
+{
+	return static_cast<const Ogre::ManualObject*>(_native)->getSection(index);
 }
 
 void ManualObject::SetMaterialName(size_t subindex, String^ name)

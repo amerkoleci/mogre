@@ -103,6 +103,8 @@ namespace Mogre
 
 		void RemoveAll();
 
+		Mogre::ResourcePtr^ GetByName(String^ name);
+		Mogre::ResourcePtr^ GetResourceByName(String^ name);
 		Mogre::ResourcePtr^ GetByHandle(Mogre::ResourceHandle handle);
 
 		bool ResourceExists(String^ name);
@@ -119,6 +121,9 @@ namespace Mogre
 		//Mogre::ResourcePtr^ Load(String^ name, String^ group, bool isManual, Mogre::IManualResourceLoader^ loader);
 		Mogre::ResourcePtr^ Load(String^ name, String^ group, bool isManual);
 		Mogre::ResourcePtr^ Load(String^ name, String^ group);
+
+		void RemoveUnreferencedResources();
+		void RemoveUnreferencedResources(bool reloadableOnly);
 
 		Mogre::Const_StringVector^ GetScriptPatterns();
 

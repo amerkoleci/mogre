@@ -10,6 +10,7 @@
 #include "MogreRibbonTrail.h"
 #include "MogreParticleSystem.h"
 #include "MogreManualObject.h"
+#include "MogreStaticGeometry.h"
 
 namespace Mogre
 {
@@ -19,6 +20,12 @@ namespace Mogre
 	ref class Animation;
 	ref class AnimationState;
 	ref class MeshPtr;
+
+	ref class AxisAlignedBoxSceneQuery;
+	ref class SphereSceneQuery;
+	ref class PlaneBoundedVolumeListSceneQuery;
+	ref class RaySceneQuery;
+	ref class IntersectionSceneQuery;
 
 	interface class IRenderQueueListener_Receiver
 	{
@@ -312,6 +319,28 @@ namespace Mogre
 		void DestroyAnimationState(String^ name);
 
 		void DestroyAllAnimationStates();
+
+		Mogre::StaticGeometry^ CreateStaticGeometry(String^ name);
+		Mogre::StaticGeometry^ GetStaticGeometry(String^ name);
+		bool HasStaticGeometry(String^ name);
+		void DestroyStaticGeometry(Mogre::StaticGeometry^ geom);
+		void DestroyStaticGeometry(String^ name);
+		void DestroyAllStaticGeometry();
+
+		Mogre::AxisAlignedBoxSceneQuery^ CreateAABBQuery(Mogre::AxisAlignedBox^ box, unsigned long mask);
+		Mogre::AxisAlignedBoxSceneQuery^ CreateAABBQuery(Mogre::AxisAlignedBox^ box);
+
+		Mogre::SphereSceneQuery^ CreateSphereQuery(Mogre::Sphere sphere, unsigned long mask);
+		Mogre::SphereSceneQuery^ CreateSphereQuery(Mogre::Sphere sphere);
+
+		//Mogre::PlaneBoundedVolumeListSceneQuery^ CreatePlaneBoundedVolumeQuery(Mogre::Const_PlaneBoundedVolumeList^ volumes, unsigned long mask);
+		//Mogre::PlaneBoundedVolumeListSceneQuery^ CreatePlaneBoundedVolumeQuery(Mogre::Const_PlaneBoundedVolumeList^ volumes);
+
+		Mogre::RaySceneQuery^ CreateRayQuery(Mogre::Ray ray, unsigned long mask);
+		Mogre::RaySceneQuery^ CreateRayQuery(Mogre::Ray ray);
+
+		Mogre::IntersectionSceneQuery^ CreateIntersectionQuery(unsigned long mask);
+		Mogre::IntersectionSceneQuery^ CreateIntersectionQuery();
 
 		void ClearScene();
 

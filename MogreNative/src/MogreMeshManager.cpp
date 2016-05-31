@@ -32,6 +32,97 @@ bool SubMesh::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+bool SubMesh::useSharedVertices::get()
+{
+	return _native->useSharedVertices;
+}
+
+void SubMesh::useSharedVertices::set(bool value)
+{
+	_native->useSharedVertices = value;
+}
+
+Mogre::RenderOperation::OperationTypes SubMesh::operationType::get()
+{
+	return (Mogre::RenderOperation::OperationTypes)_native->operationType;
+}
+
+void SubMesh::operationType::set(Mogre::RenderOperation::OperationTypes value)
+{
+	_native->operationType = (Ogre::RenderOperation::OperationType)value;
+}
+
+Mogre::VertexData^ SubMesh::vertexData::get()
+{
+	return _native->vertexData;
+}
+
+void SubMesh::vertexData::set(Mogre::VertexData^ value)
+{
+	_native->vertexData = value;
+}
+
+Mogre::IndexData^ SubMesh::indexData::get()
+{
+	return _native->indexData;
+}
+
+void SubMesh::indexData::set(Mogre::IndexData^ value)
+{
+	_native->indexData = value;
+}
+
+//Mogre::SubMesh::IndexMap^ SubMesh::blendIndexToBoneIndexMap::get()
+//{
+//	return (CLR_NULL == _blendIndexToBoneIndexMap) ? (_blendIndexToBoneIndexMap = static_cast<Ogre::SubMesh*>(_native)->blendIndexToBoneIndexMap) : _blendIndexToBoneIndexMap;
+//}
+//
+//SubMesh::STLVector_Vector3^ SubMesh::extremityPoints::get()
+//{
+//	return (CLR_NULL == _extremityPoints) ? (_extremityPoints = static_cast<Ogre::SubMesh*>(_native)->extremityPoints) : _extremityPoints;
+//}
+
+Mogre::Mesh^ SubMesh::parent::get()
+{
+	return _native->parent;
+}
+
+void SubMesh::parent::set(Mogre::Mesh^ value)
+{
+	_native->parent = value;
+}
+
+//bool SubMesh::HasTextureAliases::get()
+//{
+//	return static_cast<const Ogre::SubMesh*>(_native)->hasTextureAliases();
+//}
+//
+//bool SubMesh::IsMatInitialised::get()
+//{
+//	return static_cast<const Ogre::SubMesh*>(_native)->isMatInitialised();
+//}
+
+String^ SubMesh::MaterialName::get()
+{
+	return TO_CLR_STRING(_native->getMaterialName());
+}
+
+void SubMesh::MaterialName::set(String^ matName)
+{
+	DECLARE_NATIVE_STRING(o_matName, matName);
+
+	_native->setMaterialName(o_matName);
+}
+
+//size_t SubMesh::TextureAliasCount::get()
+//{
+//	return static_cast<const Ogre::SubMesh*>(_native)->getTextureAliasCount();
+//}
+
+Mogre::VertexAnimationType SubMesh::VertexAnimationType::get()
+{
+	return (Mogre::VertexAnimationType)_native->getVertexAnimationType();
+}
 
 CPP_DECLARE_STLVECTOR(Mesh::, IndexMap, unsigned short, unsigned short);
 

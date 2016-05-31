@@ -60,11 +60,11 @@ namespace Mogre
 			Mogre::Entity^ get();
 		}
 
-		/*property Mogre::SubMesh^ SubMesh
+		property Mogre::SubMesh^ SubMesh
 		{
 		public:
 			Mogre::SubMesh^ get();
-		}*/
+		}
 
 		property Mogre::Technique^ Technique
 		{

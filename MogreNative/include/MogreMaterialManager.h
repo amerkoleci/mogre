@@ -96,6 +96,7 @@ namespace Mogre
 	ref class GpuProgramPtr;
 	ref class GpuProgramParametersSharedPtr;
 	ref class Frustum;
+	ref class TexturePtr;
 
 	public value class IlluminationPass_NativePtr
 	{
@@ -702,10 +703,10 @@ namespace Mogre
 
 		void _notifyParent(Mogre::Pass^ parent);
 
-		//Mogre::TexturePtr^ _getTexturePtr();
-		//Mogre::TexturePtr^ _getTexturePtr(size_t frame);
-		//void _setTexturePtr(Mogre::TexturePtr^ texptr);
-		//void _setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame);
+		Mogre::TexturePtr^ _getTexturePtr();
+		Mogre::TexturePtr^ _getTexturePtr(size_t frame);
+		void _setTexturePtr(Mogre::TexturePtr^ texptr);
+		void _setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame);
 
 		property bool IsDisposed
 		{

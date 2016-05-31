@@ -45,6 +45,7 @@ namespace Mogre
 
 	ref class TexturePtr;
 	ref class DataStreamPtr;
+	ref class HardwarePixelBufferSharedPtr;
 
 	public ref class Image : IMogreDisposable
 	{
@@ -384,9 +385,9 @@ namespace Mogre
 
 		void SetDesiredBitDepths(Mogre::ushort integerBits, Mogre::ushort floatBits);
 
-		/*Mogre::HardwarePixelBufferSharedPtr^ GetBuffer(size_t face, size_t mipmap);
+		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer(size_t face, size_t mipmap);
 		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer(size_t face);
-		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer();*/
+		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer();
 
 	internal:
 		property Ogre::Texture* UnmanagedPointer

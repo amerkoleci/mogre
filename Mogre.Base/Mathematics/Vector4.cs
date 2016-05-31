@@ -315,6 +315,16 @@ namespace Mogre
             return !left.Equals(right);
         }
 
+        public static bool operator <(Vector4 lhs, Vector4 rhs)
+        {
+            return lhs.X < rhs.X && lhs.Y < rhs.Y && lhs.Z < rhs.Z && lhs.W < rhs.W;
+        }
+
+        public static bool operator >(Vector4 lhs, Vector4 rhs)
+        {
+            return lhs.X > rhs.X && lhs.Y > rhs.Y && lhs.Z > rhs.Z && lhs.W < rhs.W;
+        }
+
         /// <summary>
         /// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Vector2"/>.
         /// </summary>

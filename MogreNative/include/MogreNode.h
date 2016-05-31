@@ -156,6 +156,34 @@ namespace Mogre
 		Mogre::Node^ CreateChild(SceneMemoryMgrTypes sceneType);
 		Mogre::Node^ CreateChild();
 
+		void AddChild(Mogre::Node^ child);
+
+		unsigned short NumChildren();
+
+		Mogre::Node^ GetChild(unsigned short index);
+
+		Mogre::Node^ GetChild(String^ name);
+
+		//Mogre::Node::ChildNodeIterator^ GetChildIterator();
+
+		Mogre::Node^ RemoveChild(unsigned short index);
+
+		Mogre::Node^ RemoveChild(Mogre::Node^ child);
+
+		Mogre::Node^ RemoveChild(String^ name);
+
+		void RemoveAllChildren();
+
+		Mogre::Quaternion _getDerivedOrientation();
+
+		Mogre::Vector3 _getDerivedPosition();
+
+		Mogre::Vector3 _getDerivedScale();
+
+		Mogre::Matrix4^ _getFullTransform();
+
+		void _updateFromParent();
+
 	internal:
 		property Ogre::Node* UnmanagedPointer
 		{

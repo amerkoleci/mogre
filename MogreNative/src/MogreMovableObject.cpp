@@ -156,6 +156,11 @@ String^ MovableObject::MovableType::get()
 	return TO_CLR_STRING(static_cast<const Ogre::MovableObject*>(_native)->getMovableType());
 }
 
+Ogre::IdType MovableObject::Id::get()
+{
+	return static_cast<const Ogre::MovableObject*>(_native)->getId();
+}
+
 String^ MovableObject::Name::get()
 {
 	return TO_CLR_STRING(static_cast<const Ogre::MovableObject*>(_native)->getName());

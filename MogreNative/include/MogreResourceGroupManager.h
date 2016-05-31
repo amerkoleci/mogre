@@ -215,26 +215,29 @@ namespace Mogre
 
 		void UndeclareResource(String^ name, String^ groupName);
 
-		//Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound, Mogre::Resource^ resourceBeingLoaded);
-		//Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound);
-		//Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName);
-		//Mogre::DataStreamPtr^ OpenResource(String^ resourceName);
+		Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound, Mogre::Resource^ resourceBeingLoaded);
+		Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound);
+		Mogre::DataStreamPtr^ OpenResource(String^ resourceName, String^ groupName);
+		Mogre::DataStreamPtr^ OpenResource(String^ resourceName);
 
-		//Mogre::DataStreamListPtr^ OpenResources(String^ pattern, String^ groupName);
-		//Mogre::DataStreamListPtr^ OpenResources(String^ pattern);
+		Mogre::DataStreamListPtr^ OpenResources(String^ pattern, String^ groupName);
+		Mogre::DataStreamListPtr^ OpenResources(String^ pattern);
 
-		//Mogre::StringVectorPtr^ ListResourceNames(String^ groupName, bool dirs);
-		//Mogre::StringVectorPtr^ ListResourceNames(String^ groupName);
+		Mogre::StringVectorPtr^ ListResourceNames(String^ groupName, bool dirs);
+		Mogre::StringVectorPtr^ ListResourceNames(String^ groupName);
 
 		//Mogre::FileInfoListPtr^ ListResourceFileInfo(String^ groupName, bool dirs);
 		//Mogre::FileInfoListPtr^ ListResourceFileInfo(String^ groupName);
 
-		//Mogre::StringVectorPtr^ FindResourceNames(String^ groupName, String^ pattern, bool dirs);
-		//Mogre::StringVectorPtr^ FindResourceNames(String^ groupName, String^ pattern);
+		Mogre::StringVectorPtr^ FindResourceNames(String^ groupName, String^ pattern, bool dirs);
+		Mogre::StringVectorPtr^ FindResourceNames(String^ groupName, String^ pattern);
 
-		//bool ResourceExists(String^ group, String^ filename);
+		bool ResourceExists(String^ group, String^ filename);
 
-		//String^ FindGroupContainingResource(String^ filename);
+		String^ FindGroupContainingResource(String^ filename);
+
+		bool ResourceLocationExists(String^ name);
+		bool ResourceLocationExists(String^ name, String^ resGroup);
 
 		//Mogre::FileInfoListPtr^ FindResourceFileInfo(String^ group, String^ pattern, bool dirs);
 		//Mogre::FileInfoListPtr^ FindResourceFileInfo(String^ group, String^ pattern);

@@ -103,6 +103,37 @@ namespace Mogre
         }
 
         /// <summary>
+		/// Gets or sets the component at the specified index.
+		/// </summary>
+		/// <value>The value of the Matrix4x4 component, depending on the index.</value>
+		/// <param name="row">The row of the Matrix4x4 to access.</param>
+		/// <param name="column">The column of the Matrix4x4 to access.</param>
+		/// <returns>The value of the component at the specified index.</returns>
+		/// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
+		public float this[int row, int column]
+        {
+            get
+            {
+                if (row < 0 || row > 2)
+                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                if (column < 0 || column > 2)
+                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 2, inclusive.");
+
+                return this[(row * 3) + column];
+            }
+
+            set
+            {
+                if (row < 0 || row > 2)
+                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                if (column < 0 || column > 2)
+                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 2, inclusive.");
+
+                this[(row * 3) + column] = value;
+            }
+        }
+
+        /// <summary>
 		/// Initializes a new instance of the <see cref="Matrix3"/> struct.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>

@@ -31,6 +31,10 @@ namespace Mogre
         /// </summary>
         public static readonly Quaternion Identity = new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 
+        public static Quaternion ZERO = new Quaternion();
+
+        public static Quaternion IDENTITY = new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
+
         /// <summary>
         /// The W component of the quaternion.
         /// </summary>
@@ -70,7 +74,76 @@ namespace Mogre
         /// The Z component of the vector.
         /// </summary>
         public float z { get { return Z; } set { Z = value; } }
-        
+
+        /// <summary>
+        /// Gets or sets the component at the specified index.
+        /// </summary>
+        /// <value>The value of the X, Y, Z, or W component, depending on the index.</value>
+        /// <param name="index">The index of the component to access. Use 0 for the X component, 1 for the Y component, 2 for the Z component, and 3 for the W component.</param>
+        /// <returns>The value of the component at the specified index.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 3].</exception>
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return W;
+                    case 1: return X;
+                    case 2: return Y;
+                    case 3: return Z;
+                }
+
+                throw new ArgumentOutOfRangeException("index", "Indices for Quaternion run from 0 to 3, inclusive.");
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: W = value; break;
+                    case 1: X = value; break;
+                    case 2: Y = value; break;
+                    case 3: Z = value; break;
+                    default: throw new ArgumentOutOfRangeException("index", "Indices for Quaternion run from 0 to 3, inclusive.");
+                }
+            }
+        }
+
+        public float Norm
+        {
+            get
+            {
+                return W * W + X * X + Y * Y + Z * Z;
+            }
+        }
+
+        /// <summary>Calculate the local pitch element of this quaternion </summary>
+        public Radian Pitch
+        {
+            get
+            {
+                return Math.ATan2((2.0f * Y * Z) + (W * X), (W * W) - (X * X) - (Y * Y) + (Z * Z));
+            }
+        }
+
+        /// <summary>Calculate the local roll element of this quaternion. </summary>
+        public Radian Roll
+        {
+            get
+            {
+                return Math.ATan2((2.0f * X * Y) + (W * Z), (W * W) + (X * X) - (Y * Y) - (Z * Z));
+            }
+        }
+
+        /// <summary>Calculate the local yaw element of this quaternion </summary>
+        public Radian Yaw
+        {
+            get
+            {
+                return new Radian((float)System.Math.Asin((-2.0f * X * Z) - (W * Y)));
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Quaternion"/> struct.
@@ -154,6 +227,24 @@ namespace Mogre
             Z = values[2];
             W = values[3];
         }
+
+        /// <summary>Construct a quaternion from 3 orthonormal local axes. </summary>
+        public Quaternion(Vector3 xaxis, Vector3 yaxis, Vector3 zaxis) : this()
+        {
+            FromAxes(xaxis, yaxis, zaxis);
+        }
+
+        public Quaternion(Radian angle, Vector3 axis) : this()
+        {
+            FromAngleAxis(angle, axis);
+        }
+
+        /// <summary>Construct a quaternion from a rotation matrix. </summary>
+        public Quaternion(Matrix3 rot) : this()
+        {
+            FromRotationMatrix(rot);
+        }
+
 
         /// <summary>
         /// Calculates the length of the vector.
@@ -293,6 +384,24 @@ namespace Mogre
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts the quaternion into a unit quaternion.
+        /// </summary>
+        public float Normalise()
+        {
+            float length = Length();
+            if (!Math.IsZero(length))
+            {
+                float inverse = 1.0f / length;
+                X *= inverse;
+                Y *= inverse;
+                Z *= inverse;
+                W *= inverse;
+            }
+
+            return length;
+        }
+
         public static Vector3 operator *(Quaternion q, Vector3 v)
         {
             // nVidia SDK implementation
@@ -304,6 +413,97 @@ namespace Mogre
             uuv *= 2.0f;
 
             return v + uv + uuv;
+        }
+
+        public static bool operator <(Quaternion lhs, Quaternion rhs)
+        {
+            return lhs.X < rhs.X && lhs.Y < rhs.Y && lhs.Z < rhs.Z && lhs.W < rhs.W;
+        }
+
+        public static bool operator >(Quaternion lhs, Quaternion rhs)
+        {
+            return lhs.X > rhs.X && lhs.Y > rhs.Y && lhs.Z > rhs.Z && lhs.W < rhs.W;
+        }
+
+        public void FromAxes(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
+        {
+            FromRotationMatrix(new Matrix3
+            {
+                m00 = xAxis.x,
+                m10 = xAxis.y,
+                m20 = xAxis.z,
+                m01 = yAxis.x,
+                m11 = yAxis.y,
+                m21 = yAxis.z,
+                m02 = zAxis.x,
+                m12 = zAxis.y,
+                m22 = zAxis.z
+            });
+        }
+
+        public void FromAxes(Vector3[] akAxis)
+        {
+            Matrix3 matrix = new Matrix3();
+            for (var index = 0; index < 3; index++)
+            {
+                matrix[0, index] = akAxis[index].X;
+                matrix[1, index] = akAxis[index].Y;
+                matrix[2, index] = akAxis[index].Z;
+            }
+
+            FromRotationMatrix(matrix);
+        }
+
+        public unsafe void FromRotationMatrix(Matrix3 rotationMatrix)
+        {
+            float fTrace = rotationMatrix.m00 + rotationMatrix.m11 + rotationMatrix.m22;
+            float fRoot;
+
+            if (fTrace > 0.0)
+            {
+                // |w| > 1/2, may as well choose w > 1/2
+                fRoot = (float)System.Math.Sqrt(fTrace + 1.0f);  // 2w
+                w = 0.5f * fRoot;
+                fRoot = 0.5f / fRoot;  // 1/(4w)
+                x = (rotationMatrix.m21 - rotationMatrix.m12) * fRoot;
+                y = (rotationMatrix.m02 - rotationMatrix.m20) * fRoot;
+                z = (rotationMatrix.m10 - rotationMatrix.m01) * fRoot;
+            }
+            else
+            {
+                // |w| <= 1/2
+                var s_iNext = new int[] { 1, 2, 0 };
+                int i = 0;
+                if (rotationMatrix.m11 > rotationMatrix.m00)
+                    i = 1;
+                if (rotationMatrix.m22 > rotationMatrix[i, i])
+                    i = 2;
+                int j = s_iNext[i];
+                int k = s_iNext[j];
+
+                fRoot = (float)System.Math.Sqrt(rotationMatrix[i, i] - rotationMatrix[j, j] - rotationMatrix[k, k] + 1.0);
+
+                this[i + 1] = 0.5f * fRoot;
+                fRoot = 0.5f / fRoot;
+                w = (rotationMatrix[k, j] - rotationMatrix[j, k]) * fRoot;
+                this[j + 1] = (rotationMatrix[j, i] + rotationMatrix[i, j]) * fRoot;
+                this[k + 1] = (rotationMatrix[k, i] + rotationMatrix[i, k]) * fRoot;
+            }
+        }
+
+        public void FromAngleAxis(Radian rfAngle, Vector3 rkAxis)
+        {
+            Radian halfAngle = 0.5f * rfAngle;
+            float fSin = Math.Sin(halfAngle);
+            W = Math.Cos(halfAngle);
+            X = fSin * rkAxis.X;
+            Y = fSin * rkAxis.Y;
+            Z = fSin * rkAxis.Z;
+        }
+
+        public float Dot(Quaternion quaternion)
+        {
+            return w * quaternion.w + x * quaternion.x + y * quaternion.y + z * quaternion.z;
         }
     }
 }

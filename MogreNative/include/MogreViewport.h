@@ -33,6 +33,92 @@ namespace Mogre
 		!Viewport();
 
 	public:
+		property int ActualHeight
+		{
+		public:
+			int get();
+		}
+
+		property int ActualLeft
+		{
+		public:
+			int get();
+		}
+
+		property int ActualTop
+		{
+		public:
+			int get();
+		}
+
+		property int ActualWidth
+		{
+		public:
+			int get();
+		}
+
+		property Ogre::Real Height
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property Ogre::Real Left
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property String^ MaterialScheme
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ schemeName);
+		}
+
+		property bool OverlaysEnabled
+		{
+		public:
+			bool get();
+		public:
+			void set(bool enabled);
+		}
+
+		property String^ RenderQueueInvocationSequenceName
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ sequenceName);
+		}
+
+		property bool SkiesEnabled
+		{
+		public:
+			bool get();
+		public:
+			void set(bool enabled);
+		}
+
+		property Ogre::Real Top
+		{
+		public:
+			Ogre::Real get();
+		}
+
+		property Ogre::uint VisibilityMask
+		{
+		public:
+			Ogre::uint get();
+		}
+
+		property Ogre::Real Width
+		{
+		public:
+			Ogre::Real get();
+		}
+
 		property bool IsDisposed
 		{
 			virtual bool get()

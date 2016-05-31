@@ -30,7 +30,7 @@ namespace Mogre
 
         public bool Intersects(Sphere other)
         {
-            return (other.Center - Center).Length() <=
+            return (other.Center - Center).Length <=
                 (other.Radius + Radius);
         }
 

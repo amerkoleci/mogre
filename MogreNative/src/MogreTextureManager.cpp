@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogreTextureManager.h"
+#include "MogreHardwareBuffer.h"
 
 using namespace Mogre;
 
@@ -418,6 +419,21 @@ void Texture::LoadRawData(Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mo
 void Texture::SetDesiredBitDepths(Mogre::ushort integerBits, Mogre::ushort floatBits)
 {
 	static_cast<Ogre::Texture*>(_native)->setDesiredBitDepths(integerBits, floatBits);
+}
+
+Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer(size_t face, size_t mipmap)
+{
+	return static_cast<Ogre::Texture*>(_native)->getBuffer(face, mipmap);
+}
+
+Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer(size_t face)
+{
+	return static_cast<Ogre::Texture*>(_native)->getBuffer(face);
+}
+
+Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer()
+{
+	return static_cast<Ogre::Texture*>(_native)->getBuffer();
 }
 
 // TextureManager

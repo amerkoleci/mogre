@@ -139,6 +139,18 @@
     <ClCompile Include="src\MogreVertexIndexData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MogreOverlayManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreStaticGeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreSceneQuery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreRenderQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FileSystemLayer.h">
@@ -315,19 +327,31 @@
     <ClInclude Include="include\MogreVertexIndexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\MogreStaticGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreOverlayManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreSceneQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRenderQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{daed6c1d-1434-4e66-a44a-f4f0387129c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Custom">
+      <UniqueIdentifier>{234ecd9b-cb28-4c31-8ba7-b53a1031a0dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{83c27716-a33a-415f-9df5-bbde7e6f70c9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Custom">
       <UniqueIdentifier>{51928ffd-a88e-464c-9231-28692d3bdc44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Custom">
-      <UniqueIdentifier>{234ecd9b-cb28-4c31-8ba7-b53a1031a0dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

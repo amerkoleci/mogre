@@ -84,14 +84,17 @@ Pair<Mogre::ResourcePtr^, bool> ResourceManager::CreateOrRetrieve(String^ name, 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return ToManaged<Pair<Mogre::ResourcePtr^, bool>, Ogre::ResourceManager::ResourceCreateOrRetrieveResult>(static_cast<Ogre::ResourceManager*>(_native)->createOrRetrieve(o_name, o_group, isManual));
+	auto pair = _native->createOrRetrieve(o_name, o_group, isManual);
+	return Pair<Mogre::ResourcePtr^, bool>(pair.first, pair.second);
 }
+
 Pair<Mogre::ResourcePtr^, bool> ResourceManager::CreateOrRetrieve(String^ name, String^ group)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return ToManaged<Pair<Mogre::ResourcePtr^, bool>, Ogre::ResourceManager::ResourceCreateOrRetrieveResult>(static_cast<Ogre::ResourceManager*>(_native)->createOrRetrieve(o_name, o_group));
+	auto pair = _native->createOrRetrieve(o_name, o_group);
+	return Pair<Mogre::ResourcePtr^, bool>(pair.first, pair.second);
 }
 
 void ResourceManager::Unload(String^ name)
@@ -164,6 +167,20 @@ void ResourceManager::RemoveAll()
 	static_cast<Ogre::ResourceManager*>(_native)->removeAll();
 }
 
+Mogre::ResourcePtr^ ResourceManager::GetByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->getResourceByName(o_name);
+}
+
+Mogre::ResourcePtr^ ResourceManager::GetResourceByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->getResourceByName(o_name);
+}
+
 Mogre::ResourcePtr^ ResourceManager::GetByHandle(Mogre::ResourceHandle handle)
 {
 	return static_cast<Ogre::ResourceManager*>(_native)->getByHandle(handle);
@@ -218,12 +235,23 @@ Mogre::ResourcePtr^ ResourceManager::Load(String^ name, String^ group, bool isMa
 
 	return static_cast<Ogre::ResourceManager*>(_native)->load(o_name, o_group, isManual);
 }
+
 Mogre::ResourcePtr^ ResourceManager::Load(String^ name, String^ group)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::ResourceManager*>(_native)->load(o_name, o_group);
+	return _native->load(o_name, o_group);
+}
+
+void ResourceManager::RemoveUnreferencedResources()
+{
+	_native->removeUnreferencedResources();
+}
+
+void ResourceManager::RemoveUnreferencedResources(bool reloadableOnly)
+{
+	_native->removeUnreferencedResources(reloadableOnly);
 }
 
 Mogre::Const_StringVector^ ResourceManager::GetScriptPatterns()

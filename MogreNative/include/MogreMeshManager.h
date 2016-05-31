@@ -6,6 +6,8 @@
 #include "MogreResourceManager.h"
 #include "MogreHardwareBuffer.h"
 #include "MogreAnimation.h"
+#include "MogreRenderOperation.h"
+#include "MogreCommon.h"
 #include "Marshalling.h"
 
 namespace Mogre
@@ -14,8 +16,9 @@ namespace Mogre
 	ref class DataStreamPtr;
 	ref class VertexData;
 	ref class IndexData;
+	ref class Mesh;
 	ref class MeshPtr;
-
+	
 	public ref class SubMesh : IMogreDisposable
 	{
 	public:
@@ -44,6 +47,60 @@ namespace Mogre
 		property bool IsDisposed
 		{
 			virtual bool get();
+		}
+
+		property bool useSharedVertices
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
+		property Mogre::RenderOperation::OperationTypes operationType
+		{
+		public:
+			Mogre::RenderOperation::OperationTypes get();
+		public:
+			void set(Mogre::RenderOperation::OperationTypes value);
+		}
+
+		property Mogre::VertexData^ vertexData
+		{
+		public:
+			Mogre::VertexData^ get();
+		public:
+			void set(Mogre::VertexData^ value);
+		}
+
+		property Mogre::IndexData^ indexData
+		{
+		public:
+			Mogre::IndexData^ get();
+		public:
+			void set(Mogre::IndexData^ value);
+		}
+
+		property Mogre::Mesh^ parent
+		{
+		public:
+			Mogre::Mesh^ get();
+		public:
+			void set(Mogre::Mesh^ value);
+		}
+
+		property String^ MaterialName
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ matName);
+		}
+
+		property Mogre::VertexAnimationType VertexAnimationType
+		{
+		public:
+			Mogre::VertexAnimationType get();
 		}
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(SubMesh);

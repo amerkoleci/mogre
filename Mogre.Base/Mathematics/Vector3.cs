@@ -241,9 +241,12 @@ namespace Mogre
         /// <remarks>
         /// and speed is of the essence.
         /// </remarks>
-        public float Length()
+        public float Length
         {
-            return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+            get
+            {
+                return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+            }
         }
 
         /// <summary>
@@ -253,9 +256,12 @@ namespace Mogre
         /// <remarks>
         /// and speed is of the essence.
         /// </remarks>
-        public float LengthSquared()
+        public float SquaredLength
         {
-            return (X * X) + (Y * Y) + (Z * Z);
+            get
+            {
+                return (X * X) + (Y * Y) + (Z * Z);
+            }
         }
 
         /// <summary>
@@ -305,9 +311,9 @@ namespace Mogre
 		/// <remarks>
 		/// The result is a vector one unit in length pointing in the same direction as the original vector.
 		/// </remarks>
-		public void Normalise()
+		public float Normalise()
         {
-            float length = Length();
+            float length = Length;
             if (!Math.IsZero(length))
             {
                 float inv = 1.0f / length;
@@ -315,6 +321,8 @@ namespace Mogre
                 Y *= inv;
                 Z *= inv;
             }
+
+            return length;
         }
 
         /// <summary>
@@ -491,6 +499,11 @@ namespace Mogre
             return result;
         }
 
+        public float DotProduct(Vector3 vector)
+        {
+            return X * vector.X + Y * vector.Y + Z * vector.Z;
+        }
+
         /// <summary>
         /// Adds two vectors.
         /// </summary>
@@ -565,8 +578,7 @@ namespace Mogre
         {
             return new Vector3(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
         }
-
-
+        
         /// <summary>
         /// Scales a vector by the given value.
         /// </summary>
@@ -578,7 +590,6 @@ namespace Mogre
             return new Vector3(value.X / scalar, value.Y / scalar, value.Z / scalar);
         }
 
-
         /// <summary>
         ///		Used when a Vector3 is divided by another vector.
         /// </summary>
@@ -588,6 +599,16 @@ namespace Mogre
         public static Vector3 operator /(Vector3 left, Vector3 right)
         {
             return new Vector3(left.X / right.X, left.Y / right.Y, left.Z / right.Z);
+        }
+
+        public static bool operator <(Vector3 lhs, Vector3 rhs)
+        {
+            return lhs.X < rhs.X && lhs.Y < rhs.Y && lhs.Z < rhs.Z;
+        }
+
+        public static bool operator >(Vector3 lhs, Vector3 rhs)
+        {
+            return lhs.X > rhs.X && lhs.Y > rhs.Y && lhs.Z > rhs.Z;
         }
 
         /// <summary>

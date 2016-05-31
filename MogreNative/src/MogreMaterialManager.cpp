@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogreMaterialManager.h"
+#include "MogreTextureManager.h"
 #include "MogreGpuProgramManager.h"
 #include "MogreFrustum.h"
 
@@ -480,11 +481,14 @@ void TextureUnitState::SetAnimatedTextureName(array<String^>^ names, unsigned in
 
 Pair<size_t, size_t> TextureUnitState::GetTextureDimensions(unsigned int frame)
 {
-	return ToManaged<Pair<size_t, size_t>, std::pair<size_t, size_t>>(static_cast<const Ogre::TextureUnitState*>(_native)->getTextureDimensions(frame));
+	auto pair = static_cast<const Ogre::TextureUnitState*>(_native)->getTextureDimensions(frame);
+	return Pair<size_t, size_t>(pair.first, pair.second);
 }
+
 Pair<size_t, size_t> TextureUnitState::GetTextureDimensions()
 {
-	return ToManaged<Pair<size_t, size_t>, std::pair<size_t, size_t>>(static_cast<const Ogre::TextureUnitState*>(_native)->getTextureDimensions());
+	auto pair = static_cast<const Ogre::TextureUnitState*>(_native)->getTextureDimensions();
+	return Pair<size_t, size_t>(pair.first, pair.second);
 }
 
 String^ TextureUnitState::GetFrameTextureName(unsigned int frameNumber)
@@ -754,25 +758,25 @@ void TextureUnitState::_notifyParent(Mogre::Pass^ parent)
 	static_cast<Ogre::TextureUnitState*>(_native)->_notifyParent(parent);
 }
 
-//Mogre::TexturePtr^ TextureUnitState::_getTexturePtr()
-//{
-//	return static_cast<const Ogre::TextureUnitState*>(_native)->_getTexturePtr();
-//}
-//
-//Mogre::TexturePtr^ TextureUnitState::_getTexturePtr(size_t frame)
-//{
-//	return static_cast<const Ogre::TextureUnitState*>(_native)->_getTexturePtr(frame);
-//}
-//
-//void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr)
-//{
-//	static_cast<Ogre::TextureUnitState*>(_native)->_setTexturePtr((const Ogre::TexturePtr&)texptr);
-//}
-//
-//void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame)
-//{
-//	static_cast<Ogre::TextureUnitState*>(_native)->_setTexturePtr((const Ogre::TexturePtr&)texptr, frame);
-//}
+Mogre::TexturePtr^ TextureUnitState::_getTexturePtr()
+{
+	return _native->_getTexturePtr();
+}
+
+Mogre::TexturePtr^ TextureUnitState::_getTexturePtr(size_t frame)
+{
+	return _native->_getTexturePtr(frame);
+}
+
+void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr)
+{
+	_native->_setTexturePtr((const Ogre::TexturePtr&)texptr);
+}
+
+void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame)
+{
+	_native->_setTexturePtr((const Ogre::TexturePtr&)texptr, frame);
+}
 
 // --------------- IlluminationPass_NativePtr ---------------
 
