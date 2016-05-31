@@ -61,6 +61,24 @@ namespace Mogre
 
         public static AngleUnit CurrentAngleUnit = AngleUnit.Degree;
 
+        public static int IAbs(int iValue)
+        {
+            return (iValue >= 0 ? iValue : -iValue);
+        }
+        public static int ICeil(float fValue)
+        {
+            return (int)System.Math.Ceiling(fValue);
+        }
+        public static int IFloor(float fValue)
+        {
+            return (int)System.Math.Floor(fValue);
+        }
+
+        public static int ISign(int iValue)
+        {
+            return (iValue > 0 ? +1 : (iValue < 0 ? -1 : 0));
+        }
+
         public static float DegreesToRadians(float degrees)
         {
             return degrees * fDeg2Rad;

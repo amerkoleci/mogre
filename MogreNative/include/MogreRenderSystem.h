@@ -7,6 +7,8 @@
 
 namespace Mogre
 {
+	ref class ConfigOptionMap;
+
 	public enum class StencilOperation
 	{
 		SOP_KEEP = Ogre::SOP_KEEP,
@@ -394,6 +396,7 @@ namespace Mogre
 			Ogre::Real get();
 		}
 
+		Mogre::ConfigOptionMap^ GetConfigOptions();
 		void SetConfigOption(String^ name, String^ value);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderSystem);

@@ -292,5 +292,18 @@ namespace Mogre
         {
             return !left.Equals(right);
         }
+
+        public static Vector3 operator *(Quaternion q, Vector3 v)
+        {
+            // nVidia SDK implementation
+            Vector3 uv, uuv;
+            Vector3 qvec = new Vector3(q.X, q.Y, q.Z);
+            uv = qvec.CrossProduct(v);
+            uuv = qvec.CrossProduct(uv);
+            uv *= (2.0f * q.w);
+            uuv *= 2.0f;
+
+            return v + uv + uuv;
+        }
     }
 }

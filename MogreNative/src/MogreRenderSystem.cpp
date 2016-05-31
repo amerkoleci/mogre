@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MogreRenderSystem.h"
 #include "MogreLog.h"
+#include "MogreConfigFile.h"
 
 using namespace Mogre;
 
@@ -213,6 +214,11 @@ String^ RenderSystem::Name::get()
 Ogre::Real RenderSystem::VerticalTexelOffset::get()
 {
 	return static_cast<Ogre::RenderSystem*>(_native)->getVerticalTexelOffset();
+}
+
+Mogre::ConfigOptionMap^ RenderSystem::GetConfigOptions()
+{
+	return static_cast<Ogre::RenderSystem*>(_native)->getConfigOptions();
 }
 
 void RenderSystem::SetConfigOption(String^ name, String^ value)

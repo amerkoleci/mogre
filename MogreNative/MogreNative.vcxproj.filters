@@ -133,6 +133,12 @@
     <ClCompile Include="src\MogreManualObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MogreRenderOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MogreVertexIndexData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FileSystemLayer.h">
@@ -301,6 +307,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MogreManualObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreRenderOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MogreVertexIndexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

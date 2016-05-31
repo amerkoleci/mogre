@@ -257,7 +257,7 @@ namespace Mogre
 		void RemoveResourceLocation(String^ name, String^ groupName);
 		void RemoveResourceLocation(String^ name);
 
-		//Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen, Mogre::Const_NameValuePairList^ miscParams);
+		Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen, Mogre::Const_NameValuePairList^ miscParams);
 		Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen);
 		Mogre::RenderWindow^ CreateRenderWindow(String^ name, unsigned int width, unsigned int height);
 

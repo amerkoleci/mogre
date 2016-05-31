@@ -5,15 +5,58 @@
 #include "MogreResource.h"
 #include "MogreResourceManager.h"
 #include "MogreHardwareBuffer.h"
+#include "MogreAnimation.h"
 #include "Marshalling.h"
 
 namespace Mogre
 {
 	ref class TexturePtr;
 	ref class DataStreamPtr;
+	ref class VertexData;
+	ref class IndexData;
+	ref class MeshPtr;
+
+	public ref class SubMesh : IMogreDisposable
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	public protected:
+		Ogre::SubMesh* _native;
+		bool _createdByCLR;
+
+		SubMesh(Ogre::SubMesh* obj) : _native(obj)
+		{
+		}
+
+		SubMesh(intptr_t ptr) : _native((Ogre::SubMesh*)ptr)
+		{
+		}
+
+	public:
+		~SubMesh();
+	protected:
+		!SubMesh();
+	public:
+		property bool IsDisposed
+		{
+			virtual bool get();
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(SubMesh);
+	};
 
 	public ref class Mesh : public Resource
 	{
+	public:
+		INC_DECLARE_STLVECTOR(IndexMap, unsigned short, unsigned short, public:, private:);
+
+	private protected:
+		Mogre::Mesh::IndexMap^ _sharedBlendIndexToBoneIndexMap;
+
 	public protected:
 		Mesh(Ogre::Mesh* obj) : Resource(obj)
 		{
@@ -26,6 +69,148 @@ namespace Mogre
 		Mesh(Ogre::Resource* obj) : Resource(obj)
 		{
 		}
+
+	public:
+		//Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual, Mogre::IManualResourceLoader^ loader);
+		Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual);
+		Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group);
+
+		property Mogre::VertexData^ sharedVertexData
+		{
+		public:
+			Mogre::VertexData^ get();
+		public:
+			void set(Mogre::VertexData^ value);
+		}
+
+		property Mogre::Mesh::IndexMap^ sharedBlendIndexToBoneIndexMap
+		{
+		public:
+			Mogre::Mesh::IndexMap^ get();
+		}
+
+		property bool AutoBuildEdgeLists
+		{
+		public:
+			bool get();
+		public:
+			void set(bool autobuild);
+		}
+
+		property Mogre::Real BoundingSphereRadius
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::AxisAlignedBox^ Bounds
+		{
+		public:
+			Mogre::AxisAlignedBox^ get();
+		}
+
+		property bool HasSkeleton
+		{
+		public:
+			bool get();
+		}
+
+		property bool HasVertexAnimation
+		{
+		public:
+			bool get();
+		}
+
+		property Mogre::HardwareBuffer::Usage IndexBufferUsage
+		{
+		public:
+			Mogre::HardwareBuffer::Usage get();
+		}
+
+		property bool IsEdgeListBuilt
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsIndexBufferShadowed
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsPreparedForShadowVolumes
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsVertexBufferShadowed
+		{
+		public:
+			bool get();
+		}
+
+		property unsigned short NumAnimations
+		{
+		public:
+			unsigned short get();
+		}
+
+		property Mogre::ushort NumLodLevels
+		{
+		public:
+			Mogre::ushort get();
+		}
+
+		property unsigned short NumSubMeshes
+		{
+		public:
+			unsigned short get();
+		}
+
+		property size_t PoseCount
+		{
+		public:
+			size_t get();
+		}
+
+		property Mogre::VertexAnimationType SharedVertexDataAnimationType
+		{
+		public:
+			Mogre::VertexAnimationType get();
+		}
+
+		property String^ SkeletonName
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ skelName);
+		}
+
+		property Mogre::HardwareBuffer::Usage VertexBufferUsage
+		{
+		public:
+			Mogre::HardwareBuffer::Usage get();
+		}
+
+		Mogre::SubMesh^ CreateSubMesh();
+
+		Mogre::SubMesh^ CreateSubMesh(String^ name);
+
+		void NameSubMesh(String^ name, Mogre::ushort index);
+
+		Mogre::ushort _getSubMeshIndex(String^ name);
+
+		Mogre::SubMesh^ GetSubMesh(unsigned short index);
+
+		Mogre::SubMesh^ GetSubMesh(String^ name);
+
+		//Mogre::Mesh::SubMeshIterator^ GetSubMeshIterator();
+
+		Mogre::MeshPtr^ Clone(String^ newName, String^ newGroup);
+		Mogre::MeshPtr^ Clone(String^ newName);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Mesh);
 

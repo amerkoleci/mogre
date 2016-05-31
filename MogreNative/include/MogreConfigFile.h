@@ -9,10 +9,10 @@ namespace Mogre
 {
 	ref class DataStreamPtr;
 
-	public ref class ConfigFile 
+	public ref class ConfigFile
 	{
 		//Nested Types
-	public: 
+	public:
 		ref class SettingsMultiMap;
 		ref class SettingsBySection;
 
@@ -57,4 +57,65 @@ namespace Mogre
 
 		void Clear();
 	};
+
+	public value class ConfigOption_NativePtr
+	{
+	private protected:
+		Ogre::_ConfigOption* _native;
+
+	public:
+		property String^ name
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ value);
+		}
+
+		property String^ currentValue
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ value);
+		}
+
+		property Mogre::StringVector^ possibleValues
+		{
+		public:
+			Mogre::StringVector^ get();
+		public:
+			void set(Mogre::StringVector^ value);
+		}
+
+		property bool immutable
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_NATIVEPTRVALUECLASS(ConfigOption_NativePtr, Ogre::_ConfigOption);
+
+		property IntPtr NativePtr
+		{
+			IntPtr get() { return (IntPtr)_native; }
+		}
+
+		static ConfigOption_NativePtr Create();
+
+		void DestroyNativePtr()
+		{
+			if (_native) { delete _native; _native = 0; }
+		}
+
+		property bool IsNull
+		{
+			bool get() { return (_native == 0); }
+		}
+	};
+
+	typedef Mogre::ConfigOption_NativePtr ConfigOption_NativePtr;
+	INC_DECLARE_STLMAP(ConfigOptionMap, String^, Mogre::ConfigOption_NativePtr, Ogre::String, Ogre::ConfigOption, public, private);
 }

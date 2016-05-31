@@ -39,6 +39,14 @@ namespace Mogre
 			Mogre::SceneNode^ get();
 		}
 
+		property Mogre::Frustum^ CullingFrustum
+		{
+		public:
+			Mogre::Frustum^ get();
+		public:
+			void set(Mogre::Frustum^ frustum);
+		}
+
 		property Mogre::Vector3 DerivedDirection
 		{
 		public:
@@ -206,11 +214,11 @@ namespace Mogre
 		}
 
 
-		/*property Mogre::Matrix4^ ViewMatrix
+		property Mogre::Matrix4^ ViewMatrix
 		{
 		public:
 			Mogre::Matrix4^ get();
-		}*/
+		}
 		
 		property const Mogre::Vector3* WorldSpaceCorners
 		{
@@ -246,6 +254,28 @@ namespace Mogre
 		void SetAutoTracking(bool enabled, Mogre::SceneNode^ target, Mogre::Vector3 offset);
 		void SetAutoTracking(bool enabled, Mogre::SceneNode^ target);
 		void SetAutoTracking(bool enabled);
+
+		Mogre::Ray GetCameraToViewportRay(Ogre::Real screenx, Ogre::Real screeny);
+		void SetWindow(Mogre::Real Left, Mogre::Real Top, Mogre::Real Right, Mogre::Real Bottom);
+
+		void ResetWindow();
+
+		bool IsVisible(Mogre::AxisAlignedBox^ bound, [Out] Mogre::FrustumPlane% culledBy);
+		bool IsVisible(Mogre::AxisAlignedBox^ bound);
+
+		bool IsVisible(Mogre::Sphere bound, [Out] Mogre::FrustumPlane% culledBy);
+		bool IsVisible(Mogre::Sphere bound);
+
+		bool IsVisible(Mogre::Vector3 vert, [Out] Mogre::FrustumPlane% culledBy);
+		bool IsVisible(Mogre::Vector3 vert);
+
+		Mogre::Plane GetFrustumPlane(unsigned short plane);
+
+		bool ProjectSphere(Mogre::Sphere sphere, [Out] Mogre::Real% left, [Out] Mogre::Real% top, [Out] Mogre::Real% right, [Out] Mogre::Real% bottom);
+
+		Mogre::Matrix4^ GetViewMatrix(bool ownFrustumOnly);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Camera);
 
 	internal:
 		property Ogre::Camera* UnmanagedPointer

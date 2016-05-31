@@ -36,8 +36,14 @@ namespace Mogre
 		virtual void unloadingComplete(Ogre::Resource* param1) override;
 	};
 
-	public ref class Resource : /*public IStringInterface,*/ public IResource_Listener_Receiver
+	public ref class Resource : IMogreDisposable, /*public IStringInterface,*/ public IResource_Listener_Receiver
 	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
 	public:
 		ref class Listener;
 
@@ -69,6 +75,7 @@ namespace Mogre
 
 	internal:
 		Ogre::Resource* _native;
+		bool _createdByCLR;
 
 	public protected:
 		Resource(intptr_t ptr) : _native((Ogre::Resource*)ptr)
@@ -81,6 +88,16 @@ namespace Mogre
 
 		~Resource()
 		{
+			this->!Resource();
+		}
+
+		!Resource()
+		{
+			OnDisposing(this, nullptr);
+
+			if (IsDisposed)
+				return;
+
 			if (_listener != 0)
 			{
 				if (_native != 0)
@@ -89,11 +106,18 @@ namespace Mogre
 				delete _listener;
 				_listener = 0;
 			}
+
+			OnDisposed(this, nullptr);
 		}
 
 		//virtual Ogre::StringInterface* _IStringInterface_GetNativePtr() = IStringInterface::_GetNativePtr;
 
 	public:
+		property bool IsDisposed
+		{
+			virtual bool get() { return _native == nullptr; }
+		}
+
 		event Mogre::Resource::Listener::LoadingCompleteHandler^ LoadingComplete
 		{
 			void add(Mogre::Resource::Listener::LoadingCompleteHandler^ hnd)

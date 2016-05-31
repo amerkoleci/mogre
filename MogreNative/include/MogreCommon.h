@@ -143,7 +143,10 @@ namespace Mogre
 		TFO_ANISOTROPIC = Ogre::TFO_ANISOTROPIC
 	};
 
+	typedef Ogre::TrackVertexColourType TrackVertexColourType;
+
 	INC_DECLARE_STLMAP(UnaryOptionList, String^, bool, Ogre::String, bool, public, private);
 	INC_DECLARE_STLMAP(BinaryOptionList, String^, String^, Ogre::String, Ogre::String, public, private);
 	INC_DECLARE_STLMAP(NameValuePairList, String^, String^, Ogre::String, Ogre::String, public, private);
+	INC_DECLARE_STLMAP(AliasTextureNamePairList, String^, String^, Ogre::String, Ogre::String, public, private);
 }

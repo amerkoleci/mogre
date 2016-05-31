@@ -109,8 +109,21 @@ namespace Mogre
 		public Matrix3(float value)
         {
             m00 = m01 = m02 =
-            m10 = m11 = m12 = 
+            m10 = m11 = m12 =
             m20 = m21 = m22 = value;
+        }
+
+        public Matrix3(Matrix3 other)
+        {
+            m00 = other.m00;
+            m01 = other.m01;
+            m02 = other.m02;
+            m10 = other.m10;
+            m11 = other.m11;
+            m12 = other.m12;
+            m20 = other.m20;
+            m21 = other.m21;
+            m22 = other.m22;
         }
 
         public Matrix3(float fEntry00, float fEntry01, float fEntry02, float fEntry10, float fEntry11, float fEntry12, float fEntry20, float fEntry21, float fEntry22)
@@ -199,10 +212,126 @@ namespace Mogre
 		/// <returns>The hash code.</returns>
 		public override int GetHashCode()
         {
-            return 
-                m00.GetHashCode() + m01.GetHashCode() + m02.GetHashCode() + 
+            return
+                m00.GetHashCode() + m01.GetHashCode() + m02.GetHashCode() +
                 m10.GetHashCode() + m11.GetHashCode() + m12.GetHashCode() +
                 m20.GetHashCode() + m21.GetHashCode() + m22.GetHashCode();
+        }
+
+        /// <summary>
+		/// Adds two matricies.
+		/// </summary>
+		/// <param name="left">The first Matrix3 to add.</param>
+		/// <param name="right">The second Matrix3 to add.</param>
+		/// <returns>The sum of the two matricies.</returns>
+		public static Matrix3 operator +(Matrix3 left, Matrix3 right)
+        {
+            Matrix3 result = new Matrix3();
+            result.m00 = left.m00 + right.m00;
+            result.m01 = left.m01 + right.m01;
+            result.m02 = left.m02 + right.m02;
+            result.m10 = left.m10 + right.m10;
+            result.m11 = left.m11 + right.m11;
+            result.m12 = left.m12 + right.m12;
+            result.m20 = left.m20 + right.m20;
+            result.m21 = left.m21 + right.m21;
+            result.m22 = left.m22 + right.m22;
+            return result;
+        }
+
+        /// <summary>
+		/// Subtracts two matricies.
+		/// </summary>
+		/// <param name="left">The first Matrix3 to subtract.</param>
+		/// <param name="right">The second Matrix3 to subtract.</param>
+		/// <returns>The difference between the two matricies.</returns>
+		public static Matrix3 operator -(Matrix3 left, Matrix3 right)
+        {
+            Matrix3 result = new Matrix3();
+            result.m00 = left.m00 - right.m00;
+            result.m01 = left.m01 - right.m01;
+            result.m02 = left.m02 - right.m02;
+            result.m10 = left.m10 - right.m10;
+            result.m11 = left.m11 - right.m11;
+            result.m12 = left.m12 - right.m12;
+            result.m20 = left.m20 - right.m20;
+            result.m21 = left.m21 - right.m21;
+            result.m22 = left.m22 - right.m22;
+            return result;
+        }
+
+        /// <summary>
+		/// Multiplies two matricies.
+		/// </summary>
+		/// <param name="left">The first Matrix3 to multiply.</param>
+		/// <param name="right">The second Matrix3 to multiply.</param>
+		/// <returns>The product of the two matricies.</returns>
+		public static Matrix3 operator *(Matrix3 left, Matrix3 right)
+        {
+            Matrix3 result = new Matrix3();
+            result.m00 = left.m00 * right.m00;
+            result.m01 = left.m01 * right.m01;
+            result.m02 = left.m02 * right.m02;
+            result.m10 = left.m10 * right.m10;
+            result.m11 = left.m11 * right.m11;
+            result.m12 = left.m12 * right.m12;
+            result.m20 = left.m20 * right.m20;
+            result.m21 = left.m21 * right.m21;
+            result.m22 = left.m22 * right.m22;
+            return result;
+        }
+
+        /// <summary>
+		/// Divides two matricies.
+		/// </summary>
+		/// <param name="left">The first Matrix3 to divide.</param>
+		/// <param name="right">The second Matrix4x4 to divide.</param>
+		/// <returns>The quotient of the two matricies.</returns>
+		public static Matrix3 operator /(Matrix3 left, Matrix3 right)
+        {
+            Matrix3 result = new Matrix3();
+            result.m00 = left.m00 / right.m00;
+            result.m01 = left.m01 / right.m01;
+            result.m02 = left.m02 / right.m02;
+            result.m10 = left.m10 / right.m10;
+            result.m11 = left.m11 / right.m11;
+            result.m12 = left.m12 / right.m12;
+            result.m20 = left.m20 / right.m20;
+            result.m21 = left.m21 / right.m21;
+            result.m22 = left.m22 / right.m22;
+            return result;
+        }
+
+
+        public Vector3 GetColumn(uint iCol)
+        {
+            unsafe
+            {
+                fixed (float* ptr = &m00)
+                {
+                    return new Vector3(*(ptr + iCol), *(ptr + 3 + iCol), *(ptr + 6 + iCol));
+                }
+            }
+        }
+
+        public void SetColumn(uint iCol, Vector3 vec)
+        {
+            unsafe
+            {
+                fixed (float* ptr = &m00)
+                {
+                    *(ptr + iCol) = vec.x;
+                    *(ptr + 3 + iCol) = vec.y;
+                    *(ptr + 6 + iCol) = vec.z;
+                }
+            }
+        }
+
+        public void FromAxes(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
+        {
+            SetColumn(0, xAxis);
+            SetColumn(1, yAxis);
+            SetColumn(2, zAxis);
         }
     }
 }

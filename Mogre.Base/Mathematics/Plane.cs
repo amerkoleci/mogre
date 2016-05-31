@@ -72,7 +72,7 @@ namespace Mogre
             Vector3 kEdge1 = point1 - point0;
             Vector3 kEdge2 = point2 - point0;
             Normal = kEdge1.Cross(kEdge2);
-            Normal.Normalize();
+            Normal.Normalise();
             D = -Normal.Dot(point0);
         }
 

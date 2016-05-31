@@ -26,7 +26,7 @@ Mogre::SceneNode^ Camera::AutoTrackTarget::get()
 	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<const Ogre::Camera*>(_native)->getAutoTrackTarget());
 }
 
-/*Mogre::Frustum^ Camera::CullingFrustum::get()
+Mogre::Frustum^ Camera::CullingFrustum::get()
 {
 	return static_cast<Ogre::Camera*>(_native)->getCullingFrustum();
 }
@@ -34,7 +34,7 @@ Mogre::SceneNode^ Camera::AutoTrackTarget::get()
 void Camera::CullingFrustum::set(Mogre::Frustum^ frustum)
 {
 	static_cast<Ogre::Camera*>(_native)->setCullingFrustum(frustum);
-}*/
+}
 
 Mogre::Vector3 Camera::DerivedDirection::get()
 {
@@ -206,12 +206,10 @@ const Mogre::Vector3* Camera::WorldSpaceCorners::get()
 	return reinterpret_cast<const Mogre::Vector3*>(static_cast<const Ogre::Camera*>(_native)->getWorldSpaceCorners());
 }
 
-/*Mogre::Matrix4^ Camera::ViewMatrix::get()
+Mogre::Matrix4^ Camera::ViewMatrix::get()
 {
-	return static_cast<const Ogre::Camera*>(_native)->getViewMatrix();
+	return ToMatrix4(static_cast<const Ogre::Camera*>(_native)->getViewMatrix());
 }
-
-*/
 
 void Camera::SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
@@ -293,6 +291,79 @@ void Camera::SetAutoTracking(bool enabled)
 	static_cast<Ogre::Camera*>(_native)->setAutoTracking(enabled);
 }
 
+Mogre::Ray Camera::GetCameraToViewportRay(Mogre::Real screenx, Mogre::Real screeny)
+{
+	auto ogreRay = static_cast<const Ogre::Camera*>(_native)->getCameraToViewportRay(screenx, screeny);
+	return Mogre::Ray(ToVector3(ogreRay.getOrigin()), ToVector3(ogreRay.getDirection()));
+}
+
+void Camera::SetWindow(Mogre::Real Left, Mogre::Real Top, Mogre::Real Right, Mogre::Real Bottom)
+{
+	static_cast<Ogre::Camera*>(_native)->setWindow(Left, Top, Right, Bottom);
+}
+
+void Camera::ResetWindow()
+{
+	static_cast<Ogre::Camera*>(_native)->resetWindow();
+}
+
+//Camera::Const_STLVector_Plane^ Camera::GetWindowPlanes()
+//{
+//	return static_cast<const Ogre::Camera*>(_native)->getWindowPlanes();
+//}
+
+bool Camera::IsVisible(Mogre::AxisAlignedBox^ bound, [Out] Mogre::FrustumPlane% culledBy)
+{
+	pin_ptr<Mogre::FrustumPlane> p_culledBy = &culledBy;
+
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromAxisAlignedBounds(bound), (Ogre::FrustumPlane*)p_culledBy);
+}
+bool Camera::IsVisible(Mogre::AxisAlignedBox^ bound)
+{
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromAxisAlignedBounds(bound));
+}
+
+bool Camera::IsVisible(Mogre::Sphere bound, [Out] Mogre::FrustumPlane% culledBy)
+{
+	pin_ptr<Mogre::FrustumPlane> p_culledBy = &culledBy;
+
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromSphere(bound), (Ogre::FrustumPlane*)p_culledBy);
+}
+bool Camera::IsVisible(Mogre::Sphere bound)
+{
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromSphere(bound));
+}
+
+bool Camera::IsVisible(Mogre::Vector3 vert, [Out] Mogre::FrustumPlane% culledBy)
+{
+	pin_ptr<Mogre::FrustumPlane> p_culledBy = &culledBy;
+
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromVector3(vert), (Ogre::FrustumPlane*)p_culledBy);
+}
+bool Camera::IsVisible(Mogre::Vector3 vert)
+{
+	return static_cast<const Ogre::Camera*>(_native)->isVisible(FromVector3(vert));
+}
+
+Mogre::Plane Camera::GetFrustumPlane(unsigned short plane)
+{
+	return ToPlane(static_cast<const Ogre::Camera*>(_native)->getFrustumPlane(plane));
+}
+
+bool Camera::ProjectSphere(Mogre::Sphere sphere, [Out] Mogre::Real% left, [Out] Mogre::Real% top, [Out] Mogre::Real% right, [Out] Mogre::Real% bottom)
+{
+	pin_ptr<Mogre::Real> p_left = &left;
+	pin_ptr<Mogre::Real> p_top = &top;
+	pin_ptr<Mogre::Real> p_right = &right;
+	pin_ptr<Mogre::Real> p_bottom = &bottom;
+
+	return static_cast<const Ogre::Camera*>(_native)->projectSphere(FromSphere(sphere), p_left, p_top, p_right, p_bottom);
+}
+
+Mogre::Matrix4^ Camera::GetViewMatrix(bool ownFrustumOnly)
+{
+	return ToMatrix4(static_cast<const Ogre::Camera*>(_native)->getViewMatrix(ownFrustumOnly));
+}
 
 Ogre::Camera* Camera::UnmanagedPointer::get()
 {

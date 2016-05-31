@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OgreSceneManager.h"
+#include "OgreRenderQueueListener.h"
 #include "MogreCommon.h"
 #include "MogreCamera.h"
 #include "MogreLight.h"
@@ -19,7 +20,47 @@ namespace Mogre
 	ref class AnimationState;
 	ref class MeshPtr;
 
-	public ref class SceneManager : IMogreDisposable
+	interface class IRenderQueueListener_Receiver
+	{
+		void RenderQueueStarted(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% skipThisInvocation);
+		void RenderQueueEnded(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation);
+	};
+
+	public ref class RenderQueueListener abstract sealed
+	{
+	public:
+		delegate static void RenderQueueStartedHandler(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% skipThisInvocation);
+		delegate static void RenderQueueEndedHandler(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation);
+	};
+
+	//################################################################
+	//RenderQueueListener
+	//################################################################
+
+	class RenderQueueListener_Director : public Ogre::RenderQueueListener
+	{
+	private:
+		gcroot<IRenderQueueListener_Receiver^> _receiver;
+
+		//Internal Declarations
+
+		//Public Declarations
+	public:
+		RenderQueueListener_Director(IRenderQueueListener_Receiver^ recv)
+			: _receiver(recv), doCallForRenderQueueStarted(false), doCallForRenderQueueEnded(false)
+		{
+		}
+
+		bool doCallForRenderQueueStarted;
+		bool doCallForRenderQueueEnded;
+
+		virtual void preRenderQueues() override;
+		virtual void postRenderQueues() override;
+		virtual void renderQueueStarted(Ogre::RenderQueue *rq, Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation) override;
+		virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation) override;
+	};
+
+	public ref class SceneManager : IMogreDisposable, public IRenderQueueListener_Receiver
 	{
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -39,6 +80,11 @@ namespace Mogre
 		Ogre::SceneManager* _native;
 		bool _createdByCLR;
 
+		//Event and Listener fields
+		RenderQueueListener_Director* _renderQueueListener;
+		Mogre::RenderQueueListener::RenderQueueStartedHandler^ _renderQueueStarted;
+		Mogre::RenderQueueListener::RenderQueueEndedHandler^ _renderQueueEnded;
+
 	private:
 		SceneManager(Ogre::SceneManager* obj) : _native(obj)
 		{
@@ -54,7 +100,64 @@ namespace Mogre
 		~SceneManager();
 	protected:
 		!SceneManager();
+
 	public:
+		event Mogre::RenderQueueListener::RenderQueueStartedHandler^ RenderQueueStarted
+		{
+			void add(Mogre::RenderQueueListener::RenderQueueStartedHandler^ hnd)
+			{
+				if (_renderQueueStarted == CLR_NULL)
+				{
+					if (_renderQueueListener == 0)
+					{
+						_renderQueueListener = new RenderQueueListener_Director(this);
+						_native->addRenderQueueListener(_renderQueueListener);
+					}
+					_renderQueueListener->doCallForRenderQueueStarted = true;
+				}
+				_renderQueueStarted += hnd;
+			}
+			void remove(Mogre::RenderQueueListener::RenderQueueStartedHandler^ hnd)
+			{
+				_renderQueueStarted -= hnd;
+				if (_renderQueueStarted == CLR_NULL) _renderQueueListener->doCallForRenderQueueStarted = false;
+			}
+		private:
+			void raise(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% skipThisInvocation)
+			{
+				if (_renderQueueStarted)
+					_renderQueueStarted->Invoke(queueGroupId, invocation, skipThisInvocation);
+			}
+		}
+
+		event Mogre::RenderQueueListener::RenderQueueEndedHandler^ RenderQueueEnded
+		{
+			void add(Mogre::RenderQueueListener::RenderQueueEndedHandler^ hnd)
+			{
+				if (_renderQueueEnded == CLR_NULL)
+				{
+					if (_renderQueueListener == 0)
+					{
+						_renderQueueListener = new RenderQueueListener_Director(this);
+						_native->addRenderQueueListener(_renderQueueListener);
+					}
+					_renderQueueListener->doCallForRenderQueueEnded = true;
+				}
+				_renderQueueEnded += hnd;
+			}
+			void remove(Mogre::RenderQueueListener::RenderQueueEndedHandler^ hnd)
+			{
+				_renderQueueEnded -= hnd;
+				if (_renderQueueEnded == CLR_NULL) _renderQueueListener->doCallForRenderQueueEnded = false;
+			}
+		private:
+			void raise(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation)
+			{
+				if (_renderQueueEnded)
+					_renderQueueEnded->Invoke(queueGroupId, invocation, repeatThisInvocation);
+			}
+		}
+
 		property bool IsDisposed
 		{
 			virtual bool get();
@@ -82,6 +185,31 @@ namespace Mogre
 			Mogre::SceneNode^ get();
 		}
 
+		property Ogre::Real ShadowFarDistance
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real distance);
+		}
+
+		property bool ShadowCasterRenderBackFaces
+		{
+		public:
+			bool get();
+		public:
+			void set(bool bf);
+		}
+
+		property Mogre::ColourValue ShadowColour
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue colour);
+		}
+
+
 		Mogre::SceneNode^ CreateSceneNode();
 		Mogre::SceneNode^ CreateSceneNode(SceneMemoryMgrTypes sceneType);
 		void DestroySceneNode(Mogre::SceneNode^ node);
@@ -102,7 +230,7 @@ namespace Mogre
 		Mogre::RibbonTrail^ CreateRibbonTrail();
 		void DestroyRibbonTrail(Mogre::RibbonTrail^ obj);
 		void DestroyAllRibbonTrails();
-		
+
 		Mogre::ParticleSystem^ CreateParticleSystem(String^ templateName);
 		Mogre::ParticleSystem^ CreateParticleSystem(size_t quota, String^ resourceGroup);
 		Mogre::ParticleSystem^ CreateParticleSystem(size_t quota);
@@ -191,6 +319,17 @@ namespace Mogre
 		property Ogre::SceneManager* UnmanagedPointer
 		{
 			Ogre::SceneManager* get();
+		}
+
+	protected public:
+		virtual void OnRenderQueueStarted(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% skipThisInvocation) = IRenderQueueListener_Receiver::RenderQueueStarted
+		{
+			RenderQueueStarted(queueGroupId, invocation, skipThisInvocation);
+		}
+
+		virtual void OnRenderQueueEnded(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation) = IRenderQueueListener_Receiver::RenderQueueEnded
+		{
+			RenderQueueEnded(queueGroupId, invocation, repeatThisInvocation);
 		}
 	};
 }

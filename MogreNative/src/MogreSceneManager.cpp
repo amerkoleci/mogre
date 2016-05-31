@@ -8,6 +8,33 @@
 
 using namespace Mogre;
 
+void RenderQueueListener_Director::preRenderQueues()
+{
+	// TODO
+}
+
+void RenderQueueListener_Director::postRenderQueues()
+{
+	// TODO
+}
+
+void RenderQueueListener_Director::renderQueueStarted(Ogre::RenderQueue *rq, Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation)
+{
+	(void)rq;
+	if (doCallForRenderQueueStarted)
+	{
+		_receiver->RenderQueueStarted(queueGroupId, TO_CLR_STRING(invocation), skipThisInvocation);
+	}
+}
+
+void RenderQueueListener_Director::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation)
+{
+	if (doCallForRenderQueueEnded)
+	{
+		_receiver->RenderQueueEnded(queueGroupId, TO_CLR_STRING(invocation), repeatThisInvocation);
+	}
+}
+
 SceneManager::~SceneManager()
 {
 	this->!SceneManager();
@@ -19,6 +46,17 @@ SceneManager::!SceneManager()
 
 	if (IsDisposed)
 		return;
+
+	if (_renderQueueListener != 0)
+	{
+		if (_native != 0) static_cast<Ogre::SceneManager*>(_native)->removeRenderQueueListener(_renderQueueListener);
+		delete _renderQueueListener; _renderQueueListener = 0;
+	}
+	/*if (_shadowListener != 0)
+	{
+		if (_native != 0) static_cast<Ogre::SceneManager*>(_native)->removeShadowListener(_shadowListener);
+		delete _shadowListener; _shadowListener = 0;
+	}*/
 
 	if (_createdByCLR && _native) { delete _native; _native = 0; }
 
@@ -549,6 +587,36 @@ void SceneManager::DestroyAllAnimationStates()
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()
 {
 	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)_native->getRootSceneNode());
+}
+
+Ogre::Real SceneManager::ShadowFarDistance::get()
+{
+	return _native->getShadowFarDistance();
+}
+
+void SceneManager::ShadowFarDistance::set(Ogre::Real distance)
+{
+	_native->setShadowFarDistance(distance);
+}
+
+bool SceneManager::ShadowCasterRenderBackFaces::get()
+{
+	return _native->getShadowCasterRenderBackFaces();
+}
+
+void SceneManager::ShadowCasterRenderBackFaces::set(bool bf)
+{
+	_native->setShadowCasterRenderBackFaces(bf);
+}
+
+Mogre::ColourValue SceneManager::ShadowColour::get()
+{
+	return ToColor4(_native->getShadowColour());
+}
+
+void SceneManager::ShadowColour::set(Mogre::ColourValue colour)
+{
+	_native->setShadowColour(FromColor4(colour));
 }
 
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()

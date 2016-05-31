@@ -2,10 +2,19 @@
 
 #include "OgreEntity.h"
 #include "MogreMovableObject.h"
+#include "MogreRenderOperation.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
 	ref class Entity;
+	ref class VertexData;
+	ref class Mesh;
+	ref class MeshPtr;
+	ref class SubMesh;
+	ref class Technique;
+	ref class MaterialPtr;
+	ref class Camera;
 
 	public ref class SubEntity // : public IRenderable
 	{
@@ -51,6 +60,62 @@ namespace Mogre
 			Mogre::Entity^ get();
 		}
 
+		/*property Mogre::SubMesh^ SubMesh
+		{
+		public:
+			Mogre::SubMesh^ get();
+		}*/
+
+		property Mogre::Technique^ Technique
+		{
+		public:
+			virtual Mogre::Technique^ get();
+		}
+
+		property Mogre::VertexData^ VertexDataForBinding
+		{
+		public:
+			Mogre::VertexData^ get();
+		}
+
+		virtual Mogre::MaterialPtr^ GetMaterial();
+
+		virtual void GetRenderOperation(Mogre::RenderOperation^ op);
+
+		virtual void GetWorldTransforms(Mogre::Matrix4* xform);
+
+		virtual Ogre::Real GetSquaredViewDepth(Mogre::Camera^ cam);
+
+		property bool PolygonModeOverrideable
+		{
+		public:
+			virtual bool get();
+		public:
+			virtual void set(bool override);
+		}
+
+		property bool UseIdentityProjection
+		{
+		public:
+			bool get();
+		public:
+			void set(bool useIdentityProjection);
+		}
+
+		property bool UseIdentityView
+		{
+		public:
+			bool get();
+		public:
+			void set(bool useIdentityView);
+		}
+
+		void SetCustomParameter(size_t index, Mogre::Vector4 value);
+
+		Mogre::Vector4 GetCustomParameter(size_t index);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(SubEntity);
+
 	internal:
 		property Ogre::SubEntity* UnmanagedPointer
 		{
@@ -66,7 +131,108 @@ namespace Mogre
 
 		}
 
+		Entity(Ogre::Entity* obj) : MovableObject(obj)
+		{
+
+		}
+
 	public:
+		property bool DisplaySkeleton
+		{
+		public:
+			bool get();
+		public:
+			void set(bool display);
+		}
+
+		/*property Mogre::EdgeData^ EdgeList
+		{
+		public:
+			Mogre::EdgeData^ get();
+		}*/
+
+		property bool HasEdgeList
+		{
+		public:
+			bool get();
+		}
+
+		property bool HasSkeleton
+		{
+		public:
+			bool get();
+		}
+
+		property bool HasVertexAnimation
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsHardwareAnimationEnabled
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsInitialised
+		{
+		public:
+			bool get();
+		}
+
+		property String^ MovableType
+		{
+		public:
+			String^ get();
+		}
+
+		property size_t NumManualLodLevels
+		{
+		public:
+			size_t get();
+		}
+
+		property unsigned int NumSubEntities
+		{
+		public:
+			unsigned int get();
+		}
+
+		property Ogre::uint8 RenderQueueGroup
+		{
+		public:
+			Ogre::uint8 get();
+		public:
+			void set(Ogre::uint8 queueID);
+		}
+
+		/*property Mogre::SkeletonInstance^ Skeleton
+		{
+		public:
+			Mogre::SkeletonInstance^ get();
+		}*/
+
+		property int SoftwareAnimationNormalsRequests
+		{
+		public:
+			int get();
+		}
+
+		property int SoftwareAnimationRequests
+		{
+		public:
+			int get();
+		}
+
+		property Mogre::VertexData^ VertexDataForBinding
+		{
+		public:
+			Mogre::VertexData^ get();
+		}
+
+		Mogre::MeshPtr^ GetMesh();
+
 		Mogre::SubEntity^ GetSubEntity(size_t index);
 		Mogre::SubEntity^ GetSubEntity(String^ name);
 
@@ -75,6 +241,8 @@ namespace Mogre
 		void SetMaterialName(String^ name);
 
 		void SetPolygonModeOverrideable(bool PolygonModeOverrideable);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Entity);
 
 	internal:
 		property Ogre::Entity* UnmanagedPointer

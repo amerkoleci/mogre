@@ -305,7 +305,7 @@ namespace Mogre
 		/// <remarks>
 		/// The result is a vector one unit in length pointing in the same direction as the original vector.
 		/// </remarks>
-		public void Normalize()
+		public void Normalise()
         {
             float length = Length();
             if (!Math.IsZero(length))
@@ -322,10 +322,10 @@ namespace Mogre
         /// </summary>
         /// <param name="value">The vector to normalize.</param>
         /// <param name="result">When the method completes, contains the normalized vector.</param>
-        public static void Normalize(ref Vector3 value, out Vector3 result)
+        public static void Normalise(ref Vector3 value, out Vector3 result)
         {
             result = value;
-            result.Normalize();
+            result.Normalise();
         }
 
         /// <summary>
@@ -333,9 +333,9 @@ namespace Mogre
         /// </summary>
         /// <param name="value">The vector to normalize.</param>
         /// <returns>The normalized vector.</returns>
-        public static Vector3 Normalize(Vector3 value)
+        public static Vector3 Normalise(Vector3 value)
         {
-            value.Normalize();
+            value.Normalise();
             return value;
         }
 
@@ -478,6 +478,17 @@ namespace Mogre
         public float AbsDotProduct(Vector3 vector)
         {
             return System.Math.Abs(x * vector.x) + System.Math.Abs(y * vector.y) + System.Math.Abs(z * vector.z);
+        }
+
+        public Vector3 CrossProduct(Vector3 vector)
+        {
+            Vector3 result;
+
+            result.X = y * vector.z - z * vector.y;
+            result.Y = z * vector.x - x * vector.z;
+            result.Z = x * vector.y - y * vector.x;
+
+            return result;
         }
 
         /// <summary>

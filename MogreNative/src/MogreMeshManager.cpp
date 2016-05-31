@@ -1,7 +1,245 @@
 #include "stdafx.h"
 #include "MogreMeshManager.h"
+#include "MogreVertexIndexData.h"
 
 using namespace Mogre;
+
+
+// ------------- SubMesh
+SubMesh::~SubMesh()
+{
+	this->!SubMesh();
+}
+
+SubMesh::!SubMesh()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+bool SubMesh::IsDisposed::get()
+{
+	return (_native == nullptr);
+}
+
+
+CPP_DECLARE_STLVECTOR(Mesh::, IndexMap, unsigned short, unsigned short);
+
+//Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual, Mogre::IManualResourceLoader^ loader) : Resource((CLRObject*)0)
+//{
+//	_createdByCLR = true;
+//	DECLARE_NATIVE_STRING(o_name, name);
+//	DECLARE_NATIVE_STRING(o_group, group);
+//
+//	_native = new Ogre::Mesh(creator, o_name, handle, o_group, isManual, loader);
+//	ObjectTable::Add((intptr_t)_native, this, nullptr);
+//}
+
+Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual) : Resource((Ogre::Resource*)0)
+{
+	_createdByCLR = true;
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_group, group);
+	_native = new Ogre::Mesh(creator, o_name, handle, o_group, isManual);
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group) : Resource((Ogre::Resource*)0)
+{
+	_createdByCLR = true;
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_group, group);
+	_native = new Ogre::Mesh(creator, o_name, handle, o_group);
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+Mogre::VertexData^ Mesh::sharedVertexData::get()
+{
+	return static_cast<Ogre::Mesh*>(_native)->sharedVertexData;
+}
+void Mesh::sharedVertexData::set(Mogre::VertexData^ value)
+{
+	static_cast<Ogre::Mesh*>(_native)->sharedVertexData = value;
+}
+
+Mogre::Mesh::IndexMap^ Mesh::sharedBlendIndexToBoneIndexMap::get()
+{
+	if (CLR_NULL == _sharedBlendIndexToBoneIndexMap)
+	{
+		/*Ogre::vector<unsigned short> vector;
+			static_cast<Ogre::Mesh*>(_native)->sharedBlendIndexToBoneIndexMap.begin(),
+			static_cast<Ogre::Mesh*>(_native)->sharedBlendIndexToBoneIndexMap.end());
+		_sharedBlendIndexToBoneIndexMap = gcnew Mogre::Mesh::IndexMap(vector);*/
+	}
+	
+	return _sharedBlendIndexToBoneIndexMap;
+}
+
+bool Mesh::AutoBuildEdgeLists::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getAutoBuildEdgeLists();
+}
+void Mesh::AutoBuildEdgeLists::set(bool autobuild)
+{
+	static_cast<Ogre::Mesh*>(_native)->setAutoBuildEdgeLists(autobuild);
+}
+
+Mogre::Real Mesh::BoundingSphereRadius::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getBoundingSphereRadius();
+}
+
+Mogre::AxisAlignedBox^ Mesh::Bounds::get()
+{
+	return  ToAxisAlignedBounds(static_cast<const Ogre::Mesh*>(_native)->getBounds());
+}
+
+bool Mesh::HasSkeleton::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->hasSkeleton();
+}
+
+bool Mesh::HasVertexAnimation::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->hasVertexAnimation();
+}
+
+Mogre::HardwareBuffer::Usage Mesh::IndexBufferUsage::get()
+{
+	return (Mogre::HardwareBuffer::Usage)static_cast<const Ogre::Mesh*>(_native)->getIndexBufferUsage();
+}
+
+bool Mesh::IsEdgeListBuilt::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->isEdgeListBuilt();
+}
+
+bool Mesh::IsIndexBufferShadowed::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->isIndexBufferShadowed();
+}
+
+bool Mesh::IsPreparedForShadowVolumes::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->isPreparedForShadowVolumes();
+}
+
+bool Mesh::IsVertexBufferShadowed::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->isVertexBufferShadowed();
+}
+
+unsigned short Mesh::NumAnimations::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getNumAnimations();
+}
+
+Mogre::ushort Mesh::NumLodLevels::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getNumLodLevels();
+}
+
+unsigned short Mesh::NumSubMeshes::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getNumSubMeshes();
+}
+
+size_t Mesh::PoseCount::get()
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getPoseCount();
+}
+
+Mogre::VertexAnimationType Mesh::SharedVertexDataAnimationType::get()
+{
+	return (Mogre::VertexAnimationType)static_cast<const Ogre::Mesh*>(_native)->getSharedVertexDataAnimationType();
+}
+
+String^ Mesh::SkeletonName::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::Mesh*>(_native)->getSkeletonName());
+}
+
+void Mesh::SkeletonName::set(String^ skelName)
+{
+	DECLARE_NATIVE_STRING(o_skelName, skelName);
+
+	static_cast<Ogre::Mesh*>(_native)->setSkeletonName(o_skelName);
+}
+
+Mogre::HardwareBuffer::Usage Mesh::VertexBufferUsage::get()
+{
+	return (Mogre::HardwareBuffer::Usage)static_cast<const Ogre::Mesh*>(_native)->getVertexBufferUsage();
+}
+
+Mogre::SubMesh^ Mesh::CreateSubMesh()
+{
+	return static_cast<Ogre::Mesh*>(_native)->createSubMesh();
+}
+
+Mogre::SubMesh^ Mesh::CreateSubMesh(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::Mesh*>(_native)->createSubMesh(o_name);
+}
+
+void Mesh::NameSubMesh(String^ name, Mogre::ushort index)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::Mesh*>(_native)->nameSubMesh(o_name, index);
+}
+
+Mogre::ushort Mesh::_getSubMeshIndex(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<const Ogre::Mesh*>(_native)->_getSubMeshIndex(o_name);
+}
+
+Mogre::SubMesh^ Mesh::GetSubMesh(unsigned short index)
+{
+	return static_cast<const Ogre::Mesh*>(_native)->getSubMesh(index);
+}
+
+Mogre::SubMesh^ Mesh::GetSubMesh(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<const Ogre::Mesh*>(_native)->getSubMesh(o_name);
+}
+
+//Mogre::Mesh::SubMeshIterator^ Mesh::GetSubMeshIterator()
+//{
+//	return static_cast<Ogre::Mesh*>(_native)->getSubMeshIterator();
+//}
+
+Mogre::MeshPtr^ Mesh::Clone(String^ newName, String^ newGroup)
+{
+	DECLARE_NATIVE_STRING(o_newName, newName);
+	DECLARE_NATIVE_STRING(o_newGroup, newGroup);
+
+	return static_cast<Ogre::Mesh*>(_native)->clone(o_newName, o_newGroup);
+}
+
+Mogre::MeshPtr^ Mesh::Clone(String^ newName)
+{
+	DECLARE_NATIVE_STRING(o_newName, newName);
+
+	return static_cast<Ogre::Mesh*>(_native)->clone(o_newName);
+}
+
+// ------------- MeshLodUsage
 
 MeshLodUsage::MeshLodUsage()
 {

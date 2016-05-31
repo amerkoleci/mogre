@@ -298,12 +298,12 @@ void Root::RemoveResourceLocation(String^ name)
 	_native->removeResourceLocation(o_name);
 }
 
-/*Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen, Mogre::Const_NameValuePairList^ miscParams)
+Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen, Mogre::Const_NameValuePairList^ miscParams)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	return _native->createRenderWindow(o_name, width, height, fullScreen, miscParams);
-}*/
+}
 
 Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen)
 {
@@ -374,3 +374,4 @@ CPP_DECLARE_STLMAP(, UnaryOptionList, String^, bool, Ogre::String, bool);
 CPP_DECLARE_STLMAP(, BinaryOptionList, String^, String^, Ogre::String, Ogre::String);
 CPP_DECLARE_STLMAP(, NameValuePairList, String^, String^, Ogre::String, Ogre::String);
 CPP_DECLARE_STLVECTOR(, RenderSystemList, Mogre::RenderSystem^, Ogre::RenderSystem*);
+CPP_DECLARE_STLMAP(, AliasTextureNamePairList, String^, String^, Ogre::String, Ogre::String);

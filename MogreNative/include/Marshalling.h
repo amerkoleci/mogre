@@ -47,6 +47,12 @@ namespace Mogre
 	Plane ToPlane(Ogre::Plane value);
 	Ogre::Plane FromPlane(Plane value);
 
+	Sphere ToSphere(Ogre::Sphere value);
+	Ogre::Sphere FromSphere(Sphere value);
+
+	Ray ToRay(Ogre::Ray value);
+	Ogre::Ray FromRay(Ray value);
+
 	AxisAlignedBox^ ToAxisAlignedBounds(Ogre::AxisAlignedBox value);
 	Ogre::AxisAlignedBox FromAxisAlignedBounds(AxisAlignedBox^ value);
 

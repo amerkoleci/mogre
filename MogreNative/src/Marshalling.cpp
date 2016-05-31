@@ -104,6 +104,26 @@ namespace Mogre
 		return result;
 	}
 
+	Sphere ToSphere(Ogre::Sphere value)
+	{
+		return Sphere(ToVector3(value.getCenter()), value.getRadius());
+	}
+
+	Ogre::Sphere FromSphere(Sphere value)
+	{
+		return Ogre::Sphere(FromVector3(value.Center), value.Radius);
+	}
+
+	Ray ToRay(Ogre::Ray value)
+	{
+		return Ray(ToVector3(value.getOrigin()), ToVector3(value.getDirection()));
+	}
+
+	Ogre::Ray FromRay(Ray value)
+	{
+		return Ogre::Ray(FromVector3(value.Origin), FromVector3(value.Direction));
+	}
+
 	AxisAlignedBox^ ToAxisAlignedBounds(Ogre::AxisAlignedBox value)
 	{
 		return gcnew AxisAlignedBox(ToVector3(value.getMinimum()), ToVector3(value.getMaximum()));
