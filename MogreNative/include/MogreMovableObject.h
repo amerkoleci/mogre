@@ -45,7 +45,7 @@ namespace Mogre
 			virtual Ogre::MovableObject::Listener* _IListener_GetNativePtr() = IListener::_GetNativePtr;
 		public:
 			Listener();
-			
+
 			~Listener();
 			!Listener();
 
@@ -125,6 +125,14 @@ namespace Mogre
 			bool get();
 		}
 
+		property bool IsStatic
+		{
+		public:
+			bool get();
+		public:
+			void set(bool value);
+		}
+
 		property String^ MovableType
 		{
 		public:
@@ -197,6 +205,15 @@ namespace Mogre
 			void set(bool visible);
 		}
 
+	protected:
+		Object^ _userObject;
+	public:
+		property Object^ UserObject
+		{
+			Object^ get() { return _userObject; }
+			void set(Object^ obj) { _userObject = obj; }
+		}
+
 		void AddQueryFlags(Ogre::uint32 flags);
 		void RemoveQueryFlags(unsigned long flags);
 
@@ -206,7 +223,17 @@ namespace Mogre
 		void SetListener(Mogre::MovableObject::IListener^ listener);
 		//Mogre::MovableObject::IListener^ GetListener();
 
+		void DetachFromParent();
+
+		bool IsVisible();
+
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(MovableObject);
+
+	public:
+		property Ogre::MovableObject* NativePtr
+		{
+			Ogre::MovableObject* get() { return _native; }
+		}
 
 	internal:
 		property Ogre::MovableObject* UnmanagedPointer

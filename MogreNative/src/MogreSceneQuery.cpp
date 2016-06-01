@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MogreSceneQuery.h"
-
+#include "MogreMovableObject.h"
 using namespace Mogre;
 
 //CPP_DECLARE_STLLIST(SceneQuery::WorldFragment::, STLList_Plane, Mogre::Plane, Ogre::Plane);

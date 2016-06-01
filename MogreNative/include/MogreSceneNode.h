@@ -69,6 +69,9 @@ namespace Mogre
 		void FlipVisibility(bool cascade);
 		void FlipVisibility();
 
+		void RemoveAndDestroyChild(SceneNode^ node);
+		void RemoveAndDestroyAllChildren();
+
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneNode);
 
 	internal:

@@ -673,6 +673,8 @@ namespace Mogre
 
 		Mogre::ConstEnabledAnimationStateIterator^ GetEnabledAnimationStateIterator();
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(AnimationStateSet);
+
 	internal:
 		property Ogre::AnimationStateSet* UnmanagedPointer
 		{

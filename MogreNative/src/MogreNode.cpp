@@ -169,6 +169,11 @@ void Node::SetScale(Mogre::Vector3 scale)
 	_native->setScale(FromVector3(scale));
 }
 
+Mogre::Vector3 Node::GetScale()
+{
+	return ToVector3(_native->getScale());
+}
+
 void Node::ScaleVector(Mogre::Vector3 scale)
 {
 	_native->scale(FromVector3(scale));

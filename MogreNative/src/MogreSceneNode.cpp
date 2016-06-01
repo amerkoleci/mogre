@@ -161,6 +161,16 @@ void SceneNode::FlipVisibility()
 	static_cast<Ogre::SceneNode*>(_native)->flipVisibility();
 }
 
+void SceneNode::RemoveAndDestroyChild(SceneNode^ node)
+{
+	static_cast<Ogre::SceneNode*>(_native)->removeAndDestroyChild(node);
+}
+
+void SceneNode::RemoveAndDestroyAllChildren()
+{
+	static_cast<Ogre::SceneNode*>(_native)->removeAndDestroyAllChildren();
+}
+
 Ogre::SceneNode* SceneNode::UnmanagedPointer::get()
 {
 	return static_cast<Ogre::SceneNode*>(_native);

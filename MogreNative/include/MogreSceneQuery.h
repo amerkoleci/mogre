@@ -3,13 +3,13 @@
 #include "OgreSceneQuery.h"
 #include "MogreCommon.h"
 #include "MogreRenderOperation.h"
-#include "MogreMovableObject.h"
 #include "Marshalling.h"
 #include "STLContainerWrappers.h"
 #include "IteratorWrapper.h"
 
 namespace Mogre
 {
+	ref class MovableObject;
 	ref class RaySceneQueryResult;
 	ref class SceneQueryMovableIntersectionList;
 	ref class SceneQueryMovableWorldFragmentIntersectionList;

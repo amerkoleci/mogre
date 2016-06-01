@@ -15,6 +15,8 @@ namespace Mogre
 	ref class Technique;
 	ref class MaterialPtr;
 	ref class Camera;
+	ref class AnimationState;
+	ref class AnimationStateSet;
 
 	public ref class SubEntity // : public IRenderable
 	{
@@ -110,8 +112,10 @@ namespace Mogre
 			void set(bool useIdentityView);
 		}
 
-		void SetCustomParameter(size_t index, Mogre::Vector4 value);
+		void SetMaterialName(String^ name);
+		void SetMaterialName(String^ name, String^ resGroup);
 
+		void SetCustomParameter(size_t index, Mogre::Vector4 value);
 		Mogre::Vector4 GetCustomParameter(size_t index);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(SubEntity);
@@ -137,6 +141,12 @@ namespace Mogre
 		}
 
 	public:
+		property Mogre::AnimationStateSet^ AllAnimationStates
+		{
+		public:
+			Mogre::AnimationStateSet^ get();
+		}
+
 		property bool DisplaySkeleton
 		{
 		public:
@@ -239,6 +249,9 @@ namespace Mogre
 		Mogre::Entity^ Clone();
 
 		void SetMaterialName(String^ name);
+
+		Mogre::AnimationState^ GetAnimationState(String^ name);
+		Mogre::Entity^ GetManualLodLevel(size_t index);
 
 		void SetPolygonModeOverrideable(bool PolygonModeOverrideable);
 

@@ -27,17 +27,17 @@ namespace Mogre
 			World = Ogre::Node::TS_WORLD
 		};
 
-//#define STLDECL_MANAGEDKEY String^
-//#define STLDECL_MANAGEDVALUE Mogre::Node^
-//#define STLDECL_NATIVEKEY Ogre::String
-//#define STLDECL_NATIVEVALUE Ogre::Node*
-//		INC_DECLARE_STLHASHMAP(ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE, public:, private:);
-//#undef STLDECL_MANAGEDKEY
-//#undef STLDECL_MANAGEDVALUE
-//#undef STLDECL_NATIVEKEY
-//#undef STLDECL_NATIVEVALUE
+		//#define STLDECL_MANAGEDKEY String^
+		//#define STLDECL_MANAGEDVALUE Mogre::Node^
+		//#define STLDECL_NATIVEKEY Ogre::String
+		//#define STLDECL_NATIVEVALUE Ogre::Node*
+		//		INC_DECLARE_STLHASHMAP(ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE, public:, private:);
+		//#undef STLDECL_MANAGEDKEY
+		//#undef STLDECL_MANAGEDVALUE
+		//#undef STLDECL_NATIVEKEY
+		//#undef STLDECL_NATIVEVALUE
 
-		//INC_DECLARE_MAP_ITERATOR(ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String);
+				//INC_DECLARE_MAP_ITERATOR(ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String);
 
 	internal:
 		Ogre::Node* _native;
@@ -156,6 +156,7 @@ namespace Mogre
 		void SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		void SetScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		void SetScale(Mogre::Vector3 scale);
+		Mogre::Vector3 GetScale();
 
 		void ScaleVector(Mogre::Vector3 scale);
 		void ScaleXYZ(Ogre::Real x, Ogre::Real y, Ogre::Real z);
@@ -213,6 +214,12 @@ namespace Mogre
 		Mogre::Matrix4^ _getFullTransform();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Node);
+
+	public:
+		property Ogre::Node* NativePtr
+		{
+			Ogre::Node* get() { return _native; }
+		}
 
 	internal:
 		property Ogre::Node* UnmanagedPointer

@@ -330,6 +330,21 @@ Mogre::MeshPtr^ Mesh::Clone(String^ newName)
 	return static_cast<Ogre::Mesh*>(_native)->clone(o_newName);
 }
 
+void Mesh::BuildEdgeList()
+{
+	static_cast<Ogre::Mesh*>(_native)->buildEdgeList();
+}
+
+void Mesh::FreeEdgeList()
+{
+	static_cast<Ogre::Mesh*>(_native)->freeEdgeList();
+}
+
+void Mesh::PrepareForShadowVolume()
+{
+	static_cast<Ogre::Mesh*>(_native)->prepareForShadowVolume();
+}
+
 // ------------- MeshLodUsage
 
 MeshLodUsage::MeshLodUsage()

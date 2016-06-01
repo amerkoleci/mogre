@@ -151,6 +151,16 @@ bool MovableObject::IsAttached::get()
 	return static_cast<const Ogre::MovableObject*>(_native)->isAttached();
 }
 
+bool MovableObject::IsStatic::get()
+{
+	return _native->isStatic();
+}
+
+void MovableObject::IsStatic::set(bool visible)
+{
+	_native->setStatic(visible);
+}
+
 String^ MovableObject::MovableType::get()
 {
 	return TO_CLR_STRING(static_cast<const Ogre::MovableObject*>(_native)->getMovableType());
@@ -261,6 +271,16 @@ void MovableObject::SetListener(Mogre::MovableObject::IListener^ listener)
 {
 	return static_cast<const Ogre::MovableObject*>(_native)->getListener();
 }*/
+
+void MovableObject::DetachFromParent()
+{
+	_native->detachFromParent();
+}
+
+bool MovableObject::IsVisible()
+{
+	return _native->isVisible();
+}
 
 Ogre::MovableObject* MovableObject::UnmanagedPointer::get()
 {

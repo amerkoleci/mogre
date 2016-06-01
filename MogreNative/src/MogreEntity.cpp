@@ -5,6 +5,7 @@
 #include "MogreMaterialManager.h"
 #include "MogreMeshManager.h"
 #include "MogreCamera.h"
+#include "MogreAnimation.h"
 
 using namespace Mogre;
 
@@ -123,6 +124,19 @@ void SubEntity::UseIdentityView::set(bool useIdentityView)
 	static_cast<Ogre::SubEntity*>(_native)->setUseIdentityView(useIdentityView);
 }
 
+void SubEntity::SetMaterialName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	_native->setMaterialName(o_name);
+}
+
+void SubEntity::SetMaterialName(String^ name, String^ resGroup)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_resGroup, resGroup);
+
+	_native->setMaterialName(o_name, o_resGroup);
+}
 
 void SubEntity::SetCustomParameter(size_t index, Mogre::Vector4 value)
 {
@@ -135,6 +149,10 @@ Mogre::Vector4 SubEntity::GetCustomParameter(size_t index)
 }
 
 // -------------- Entity --------------
+Mogre::AnimationStateSet^ Entity::AllAnimationStates::get()
+{
+	return static_cast<const Ogre::Entity*>(_native)->getAllAnimationStates();
+}
 
 bool Entity::DisplaySkeleton::get()
 {
@@ -236,6 +254,18 @@ void Entity::SetMaterialName(String^ name)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	static_cast<Ogre::Entity*>(_native)->setMaterialName(o_name);
+}
+
+Mogre::AnimationState^ Entity::GetAnimationState(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<const Ogre::Entity*>(_native)->getAnimationState(o_name);
+}
+
+Mogre::Entity^ Entity::GetManualLodLevel(size_t index)
+{
+	return static_cast<const Ogre::Entity*>(_native)->getManualLodLevel(index);
 }
 
 void Entity::SetPolygonModeOverrideable(bool PolygonModeOverrideable)

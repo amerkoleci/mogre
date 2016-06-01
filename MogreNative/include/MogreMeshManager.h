@@ -269,6 +269,10 @@ namespace Mogre
 		Mogre::MeshPtr^ Clone(String^ newName, String^ newGroup);
 		Mogre::MeshPtr^ Clone(String^ newName);
 
+		void BuildEdgeList();
+		void FreeEdgeList();
+		void PrepareForShadowVolume();
+
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Mesh);
 
 	internal:

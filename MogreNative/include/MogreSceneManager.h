@@ -20,7 +20,7 @@ namespace Mogre
 	ref class Animation;
 	ref class AnimationState;
 	ref class MeshPtr;
-
+	ref class MovableObject;
 	ref class SceneQuery;
 	ref class AxisAlignedBoxSceneQuery;
 	ref class SphereSceneQuery;
@@ -345,6 +345,11 @@ namespace Mogre
 		void DestroyQuery(Mogre::SceneQuery^ query);
 
 		void ClearScene();
+
+		bool HasMovableObject(MovableObject^ movable);
+		void DestroyMovableObject(MovableObject^ movable, String^ typeName);
+		void DestroyMovableObject(MovableObject^ movable);
+		void DestroyAllMovableObjects();
 
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer

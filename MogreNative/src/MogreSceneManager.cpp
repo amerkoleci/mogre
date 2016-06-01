@@ -712,6 +712,28 @@ void SceneManager::DestroyQuery(Mogre::SceneQuery^ query)
 	_native->destroyQuery(query);
 }
 
+bool SceneManager::HasMovableObject(MovableObject^ movable)
+{
+	return _native->hasMovableObject(movable);
+}
+
+void SceneManager::DestroyMovableObject(MovableObject^ movable, String^ typeName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+
+	_native->destroyMovableObject(movable, o_typeName);
+}
+
+void SceneManager::DestroyMovableObject(MovableObject^ movable)
+{
+	_native->destroyMovableObject(movable);
+}
+
+void SceneManager::DestroyAllMovableObjects()
+{
+	_native->destroyAllMovableObjects();
+}
+
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()
 {
 	return _native;
