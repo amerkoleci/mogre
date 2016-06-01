@@ -197,6 +197,7 @@
     <ClInclude Include="include\IteratorWrapper.h" />
     <ClInclude Include="include\Marshalling.h" />
     <ClInclude Include="include\MogreDataStream.h" />
+    <ClInclude Include="include\MogreEdgeListBuilder.h" />
     <ClInclude Include="include\MogreEntity.h" />
     <ClInclude Include="include\MogreException.h" />
     <ClInclude Include="include\MogreFrameListener.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="src\FileSystemLayer.cpp" />
     <ClCompile Include="src\Marshalling.cpp" />
     <ClCompile Include="src\MogreDataStream.cpp" />
+    <ClCompile Include="src\MogreEdgeListBuilder.cpp" />
     <ClCompile Include="src\MogreEntity.cpp" />
     <ClCompile Include="src\MogreException.cpp" />
     <ClCompile Include="src\MogreFrameListener.cpp" />

@@ -4,6 +4,7 @@
 #include "MogreMeshManager.h"
 #include "MogreMaterialManager.h"
 #include "MogreCamera.h"
+#include "MogreEdgeListBuilder.h"
 
 using namespace Mogre;
 
@@ -163,6 +164,16 @@ bool ManualObject::Dynamic::get()
 void ManualObject::Dynamic::set(bool dyn)
 {
 	static_cast<Ogre::ManualObject*>(_native)->setDynamic(dyn);
+}
+
+Mogre::EdgeData^ ManualObject::EdgeList::get()
+{
+	return static_cast<Ogre::ManualObject*>(_native)->getEdgeList();
+}
+
+bool ManualObject::HasEdgeList::get()
+{
+	return static_cast<Ogre::ManualObject*>(_native)->hasEdgeList();
 }
 
 String^ ManualObject::MovableType::get()

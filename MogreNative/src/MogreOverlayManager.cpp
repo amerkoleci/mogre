@@ -4,6 +4,54 @@
 
 using namespace Mogre;
 
+// ---------------- OverlayElement ---------------------
+
+OverlayElement::~OverlayElement()
+{
+	this->!OverlayElement();
+}
+
+OverlayElement::!OverlayElement()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		OGRE_DELETE _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+// ---------------- Overlay ---------------------
+
+Overlay::~Overlay()
+{
+	this->!Overlay();
+}
+
+Overlay::!Overlay()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		OGRE_DELETE _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+// ---------------- OverlaySystem ---------------------
+
 OverlaySystem::OverlaySystem(SceneManager^ sceneManager)
 	: _sceneManager(sceneManager)
 {
@@ -37,6 +85,8 @@ OverlaySystem::!OverlaySystem()
 
 	OnDisposed(this, nullptr);
 }
+
+// ---------------- OverlayManager ---------------------
 
 OverlayManager::OverlayManager()
 {

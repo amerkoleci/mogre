@@ -196,6 +196,18 @@ namespace Mogre
 		return TO_CLR_STRING(str);
 	}
 
+	template <>
+	inline Ogre::Vector4 ToNative(Mogre::Vector4 vector)
+	{
+		return FromVector4(vector);
+	}
+
+	template <>
+	inline Mogre::Vector4 ToManaged(const Ogre::Vector4& vector)
+	{
+		return ToVector4(vector);
+	}
+
 	template <typename M, typename N>
 	inline std::pair<typename N::first_type, typename N::second_type> ToNative(Pair<typename M::first_type, typename M::second_type> value)
 	{

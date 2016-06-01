@@ -16,6 +16,7 @@ namespace Mogre
 	ref class MaterialPtr;
 	ref class Camera;
 	ref class ManualObject;
+	ref class EdgeData;
 
 	public ref class ManualObject : public MovableObject
 	{
@@ -164,6 +165,18 @@ namespace Mogre
 			bool get();
 		public:
 			void set(bool dyn);
+		}
+
+		property Mogre::EdgeData^ EdgeList
+		{
+		public:
+			Mogre::EdgeData^ get();
+		}
+
+		property bool HasEdgeList
+		{
+		public:
+			bool get();
 		}
 
 		property String^ MovableType
