@@ -3,6 +3,8 @@
 #include "OgreSceneNode.h"
 #include "MogreNode.h"
 #include "MogreCommon.h"
+#include "STLContainerWrappers.h"
+#include "IteratorWrapper.h"
 #include "Marshalling.h"
 
 namespace Mogre
@@ -11,6 +13,13 @@ namespace Mogre
 
 	public ref class SceneNode : public Node
 	{
+	public:
+		ref class ObjectVec;
+
+	public:
+		INC_DECLARE_STLVECTOR(ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, public:, private:);
+		INC_DECLARE_ITERATOR(ObjectIterator, Ogre::SceneNode::ObjectIterator, Mogre::SceneNode::ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
+
 	public protected:
 		SceneNode(intptr_t ptr) : Node(ptr)
 		{
@@ -37,7 +46,7 @@ namespace Mogre
 
 		void DetachAllObjects();
 
-		
+
 
 		Mogre::SceneNode^ CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate, Mogre::Quaternion rotate);
 		Mogre::SceneNode^ CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate);
@@ -68,6 +77,8 @@ namespace Mogre
 
 		void FlipVisibility(bool cascade);
 		void FlipVisibility();
+
+		Mogre::SceneNode::ObjectIterator^ GetAttachedObjectIterator();
 
 		void RemoveAndDestroyChild(SceneNode^ node);
 		void RemoveAndDestroyAllChildren();

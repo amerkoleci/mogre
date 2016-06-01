@@ -4,7 +4,7 @@
 ref class CLASS_NAME : Collections::Generic::IEnumerable<Collections::Generic::KeyValuePair<MK, MV>>	\
 {																					\
 public:																				\
-	typedef HashMap<NK,NV> Container;										\
+	typedef OGRE_HashMap<NK,NV> Container;										\
 	typedef Container::iterator Iter;												\
 																					\
 	ref class Enumerator : Collections::Generic::IEnumerator<Collections::Generic::KeyValuePair<MK,MV>>		\
@@ -288,7 +288,7 @@ public:																				\
 #define INC_DECLARE_STLHASHMAP_CONST( CLASS_NAME, MK, MV, NK, NV )					\
 ref class Const_##CLASS_NAME : Collections::Generic::IEnumerable<Collections::Generic::KeyValuePair<MK, MV>>			\
 {																					\
-	typedef HashMap<NK,NV> Container;										\
+	typedef OGRE_HashMap<NK,NV> Container;										\
 	typedef Container::const_iterator Iter;											\
 																					\
 public:																				\
@@ -518,7 +518,7 @@ public:																				\
 #define INC_DECLARE_STLHASHMAP_EMPTY_NONCONST( CLASS_NAME, MK, MV, NK, NV )			\
 ref class CLASS_NAME																\
 {																					\
-	typedef HashMap<NK,NV> Container;										\
+	typedef OGRE_HashMap<NK,NV> Container;										\
 																					\
 internal:																			\
 	Container* _native;																\

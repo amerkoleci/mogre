@@ -2,7 +2,13 @@
 #include "MogreSceneNode.h"
 #include "MogreMovableObject.h"
 #include "Marshalling.h"
+
 using namespace Mogre;
+
+CPP_DECLARE_STLVECTOR(SceneNode::, ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
+CPP_DECLARE_ITERATOR(SceneNode::, ObjectIterator, Ogre::SceneNode::ObjectIterator, Mogre::SceneNode::ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, );
+
+
 
 Mogre::SceneNode^ SceneNode::ParentSceneNode::get()
 {
@@ -159,6 +165,11 @@ void SceneNode::FlipVisibility(bool cascade)
 void SceneNode::FlipVisibility()
 {
 	static_cast<Ogre::SceneNode*>(_native)->flipVisibility();
+}
+
+Mogre::SceneNode::ObjectIterator^ SceneNode::GetAttachedObjectIterator()
+{
+	return static_cast<Ogre::SceneNode*>(_native)->getAttachedObjectIterator();
 }
 
 void SceneNode::RemoveAndDestroyChild(SceneNode^ node)
