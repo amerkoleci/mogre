@@ -3,6 +3,40 @@
 #include "Marshalling.h"
 
 using namespace Mogre;
+//
+//#define STLDECL_MANAGEDKEY String^
+//#define STLDECL_MANAGEDVALUE Mogre::Node^
+//#define STLDECL_NATIVEKEY Ogre::String
+//#define STLDECL_NATIVEVALUE Ogre::Node*
+//CPP_DECLARE_STLHASHMAP(Node::, ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE);
+//#undef STLDECL_MANAGEDKEY
+//#undef STLDECL_MANAGEDVALUE
+//#undef STLDECL_NATIVEKEY
+//#undef STLDECL_NATIVEVALUE
+
+//CPP_DECLARE_MAP_ITERATOR(Node::, ChildNodeIterator, Ogre::Node::ChildNodeIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String, );
+
+
+Node::~Node()
+{
+	this->!Node();
+}
+
+Node::!Node()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
 
 bool Node::InheritOrientation::get()
 {
@@ -130,6 +164,11 @@ void Node::SetScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 	_native->setScale(x, y, z);
 }
 
+void Node::SetScale(Mogre::Vector3 scale)
+{
+	_native->setScale(FromVector3(scale));
+}
+
 void Node::ScaleVector(Mogre::Vector3 scale)
 {
 	_native->scale(FromVector3(scale));
@@ -160,33 +199,33 @@ void Node::Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 	_native->translate(x, y, z);
 }
 
-/*void Node::Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo)
+void Node::Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo)
 {
 	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
 
-	static_cast<Ogre::Node*>(_native)->translate(*p_axes, move, (Ogre::Node::TransformSpace)relativeTo);
+	_native->translate(*p_axes, FromVector3(move), (Ogre::Node::TransformSpace)relativeTo);
 }
 
 void Node::Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move)
 {
 	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
 
-	static_cast<Ogre::Node*>(_native)->translate(*p_axes, move);
+	_native->translate(*p_axes, FromVector3(move));
 }
 
 void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::Real z, Mogre::Node::TransformSpace relativeTo)
 {
 	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
 
-	static_cast<Ogre::Node*>(_native)->translate(*p_axes, x, y, z, (Ogre::Node::TransformSpace)relativeTo);
+	_native->translate(*p_axes, x, y, z, (Ogre::Node::TransformSpace)relativeTo);
 }
 
 void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::Real z)
 {
 	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
 
-	static_cast<Ogre::Node*>(_native)->translate(*p_axes, x, y, z);
-}*/
+	_native->translate(*p_axes, x, y, z);
+}
 
 void Node::Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
 {
@@ -258,6 +297,56 @@ Mogre::Node^ Node::CreateChild(SceneMemoryMgrTypes sceneType)
 Mogre::Node^ Node::CreateChild()
 {
 	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)_native->createChild());
+}
+
+void Node::AddChild(Mogre::Node^ child)
+{
+	_native->addChild(child);
+}
+
+unsigned short Node::NumChildren()
+{
+	return _native->numChildren();
+}
+
+Mogre::Node^ Node::GetChild(unsigned short index)
+{
+	return static_cast<const Ogre::Node*>(_native)->getChild(index);
+}
+
+//Mogre::Node::ChildNodeIterator^ Node::GetChildIterator()
+//{
+//	return static_cast<Ogre::Node*>(_native)->getChildIterator();
+//}
+
+void Node::RemoveChild(Mogre::Node^ child)
+{
+	_native->removeChild(child);
+}
+
+void Node::RemoveAllChildren()
+{
+	_native->removeAllChildren();
+}
+
+Mogre::Quaternion Node::_getDerivedOrientation()
+{
+	return ToQuaternion(_native->_getDerivedOrientation());
+}
+
+Mogre::Vector3 Node::_getDerivedPosition()
+{
+	return ToVector3(_native->_getDerivedPosition());
+}
+
+Mogre::Vector3 Node::_getDerivedScale()
+{
+	return ToVector3(_native->_getDerivedScale());
+}
+
+Mogre::Matrix4^ Node::_getFullTransform()
+{
+	return ToMatrix4(_native->_getFullTransform());
 }
 
 Ogre::Node* Node::UnmanagedPointer::get()

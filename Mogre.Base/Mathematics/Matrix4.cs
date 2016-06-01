@@ -202,6 +202,403 @@ namespace Mogre
         }
 
         /// <summary>
+		/// Determines the sum of two matrices.
+		/// </summary>
+		/// <param name="left">The first Matrix4x4 to add.</param>
+		/// <param name="right">The second Matrix4x4 to add.</param>
+		/// <param name="result">When the method completes, contains the sum of the two matrices.</param>
+		public static void Add(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.m00 = left.m00 + right.m00;
+            result.m01 = left.m01 + right.m01;
+            result.m02 = left.m02 + right.m02;
+            result.m03 = left.m03 + right.m03;
+            result.m10 = left.m10 + right.m10;
+            result.m11 = left.m11 + right.m11;
+            result.m12 = left.m12 + right.m12;
+            result.m13 = left.m13 + right.m13;
+            result.m20 = left.m20 + right.m20;
+            result.m21 = left.m21 + right.m21;
+            result.m22 = left.m22 + right.m22;
+            result.m23 = left.m23 + right.m23;
+            result.m30 = left.m30 + right.m30;
+            result.m31 = left.m31 + right.m31;
+            result.m32 = left.m32 + right.m32;
+            result.m33 = left.m33 + right.m33;
+        }
+
+        /// <summary>
+        /// Determines the sum of two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to add.</param>
+        /// <param name="right">The second Matrix4x4 to add.</param>
+        /// <returns>The sum of the two matrices.</returns>
+        public static Matrix4 Add(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the difference between two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to subtract.</param>
+        /// <param name="right">The second Matrix4x4 to subtract.</param>
+        /// <param name="result">When the method completes, contains the difference between the two matrices.</param>
+        public static void Subtract(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.m00 = left.m00 - right.m00;
+            result.m01 = left.m01 - right.m01;
+            result.m02 = left.m02 - right.m02;
+            result.m03 = left.m03 - right.m03;
+            result.m10 = left.m10 - right.m10;
+            result.m11 = left.m11 - right.m11;
+            result.m12 = left.m12 - right.m12;
+            result.m13 = left.m13 - right.m13;
+            result.m20 = left.m20 - right.m20;
+            result.m21 = left.m21 - right.m21;
+            result.m22 = left.m22 - right.m22;
+            result.m23 = left.m23 - right.m23;
+            result.m30 = left.m30 - right.m30;
+            result.m31 = left.m31 - right.m31;
+            result.m32 = left.m32 - right.m32;
+            result.m33 = left.m33 - right.m33;
+        }
+
+        /// <summary>
+        /// Determines the difference between two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to subtract.</param>
+        /// <param name="right">The second Matrix4x4 to subtract.</param>
+        /// <returns>The difference between the two matrices.</returns>
+        public static Matrix4 Subtract(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Subtract(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Scales a Matrix4x4 by the given value.
+        /// </summary>
+        /// <param name="left">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <param name="result">When the method completes, contains the scaled Matrix4x4.</param>
+        public static void Multiply(ref Matrix4 left, float scalar, out Matrix4 result)
+        {
+            result.m00 = left.m00 - scalar;
+            result.m01 = left.m01 - scalar;
+            result.m02 = left.m02 - scalar;
+            result.m03 = left.m03 - scalar;
+            result.m10 = left.m10 - scalar;
+            result.m11 = left.m11 - scalar;
+            result.m12 = left.m12 - scalar;
+            result.m13 = left.m13 - scalar;
+            result.m20 = left.m20 - scalar;
+            result.m21 = left.m21 - scalar;
+            result.m22 = left.m22 - scalar;
+            result.m23 = left.m23 - scalar;
+            result.m30 = left.m30 - scalar;
+            result.m31 = left.m31 - scalar;
+            result.m32 = left.m32 - scalar;
+            result.m33 = left.m33 - scalar;
+        }
+
+        /// <summary>
+        /// Scales a Matrix4x4 by the given value.
+        /// </summary>
+        /// <param name="left">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <returns>The scaled Matrix4x4.</returns>
+        public static Matrix4 Multiply(Matrix4 left, float scalar)
+        {
+            Matrix4 result;
+            Multiply(ref left, scalar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the product of two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to multiply.</param>
+        /// <param name="right">The second Matrix4x4 to multiply.</param>
+        /// <param name="result">The product of the two matrices.</param>
+        public static void Multiply(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.m00 = (left.m00 * right.m00) + (left.m01 * right.m10) + (left.m02 * right.m20) + (left.m03 * right.m30);
+            result.m01 = (left.m00 * right.m01) + (left.m01 * right.m11) + (left.m02 * right.m21) + (left.m03 * right.m31);
+            result.m02 = (left.m00 * right.m02) + (left.m01 * right.m12) + (left.m02 * right.m22) + (left.m03 * right.m32);
+            result.m03 = (left.m00 * right.m03) + (left.m01 * right.m13) + (left.m02 * right.m23) + (left.m03 * right.m33);
+            result.m10 = (left.m10 * right.m00) + (left.m11 * right.m10) + (left.m12 * right.m20) + (left.m13 * right.m30);
+            result.m11 = (left.m10 * right.m01) + (left.m11 * right.m11) + (left.m12 * right.m21) + (left.m13 * right.m31);
+            result.m12 = (left.m10 * right.m02) + (left.m11 * right.m12) + (left.m12 * right.m22) + (left.m13 * right.m32);
+            result.m13 = (left.m10 * right.m03) + (left.m11 * right.m13) + (left.m12 * right.m23) + (left.m13 * right.m33);
+            result.m20 = (left.m20 * right.m00) + (left.m21 * right.m10) + (left.m22 * right.m20) + (left.m23 * right.m30);
+            result.m21 = (left.m20 * right.m01) + (left.m21 * right.m11) + (left.m22 * right.m21) + (left.m23 * right.m31);
+            result.m22 = (left.m20 * right.m02) + (left.m21 * right.m12) + (left.m22 * right.m22) + (left.m23 * right.m32);
+            result.m23 = (left.m20 * right.m03) + (left.m21 * right.m13) + (left.m22 * right.m23) + (left.m23 * right.m33);
+            result.m30 = (left.m30 * right.m00) + (left.m31 * right.m10) + (left.m32 * right.m20) + (left.m33 * right.m30);
+            result.m31 = (left.m30 * right.m01) + (left.m31 * right.m11) + (left.m32 * right.m21) + (left.m33 * right.m31);
+            result.m32 = (left.m30 * right.m02) + (left.m31 * right.m12) + (left.m32 * right.m22) + (left.m33 * right.m32);
+            result.m33 = (left.m30 * right.m03) + (left.m31 * right.m13) + (left.m32 * right.m23) + (left.m33 * right.m33);
+        }
+
+        /// <summary>
+		/// Scales a Matrix4x4 by the given value.
+		/// </summary>
+		/// <param name="left">The Matrix4x4 to scale.</param>
+		/// <param name="scalar">The amount by which to scale.</param>
+		/// <param name="result">When the method completes, contains the scaled Matrix4x4.</param>
+		public static void Divide(ref Matrix4 left, float scalar, out Matrix4 result)
+        {
+            float inv = 1.0f / scalar;
+
+            result.m00 = left.m00 * inv;
+            result.m01 = left.m01 * inv;
+            result.m02 = left.m02 * inv;
+            result.m03 = left.m03 * inv;
+            result.m10 = left.m10 * inv;
+            result.m11 = left.m11 * inv;
+            result.m12 = left.m12 * inv;
+            result.m13 = left.m13 * inv;
+            result.m20 = left.m20 * inv;
+            result.m21 = left.m21 * inv;
+            result.m22 = left.m22 * inv;
+            result.m23 = left.m23 * inv;
+            result.m30 = left.m30 * inv;
+            result.m31 = left.m31 * inv;
+            result.m32 = left.m32 * inv;
+            result.m33 = left.m33 * inv;
+        }
+
+        /// <summary>
+        /// Scales a Matrix4x4 by the given value.
+        /// </summary>
+        /// <param name="left">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <returns>The scaled Matrix4x4.</returns>
+        public static Matrix4 Divide(Matrix4 left, float scalar)
+        {
+            Matrix4 result;
+            Divide(ref left, scalar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the quotient of two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to divide.</param>
+        /// <param name="right">The second Matrix4x4 to divide.</param>
+        /// <param name="result">When the method completes, contains the quotient of the two matrices.</param>
+        public static void Divide(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.m00 = left.m00 / right.m00;
+            result.m01 = left.m01 / right.m01;
+            result.m02 = left.m02 / right.m02;
+            result.m03 = left.m03 / right.m03;
+            result.m10 = left.m10 / right.m10;
+            result.m11 = left.m11 / right.m11;
+            result.m12 = left.m12 / right.m12;
+            result.m13 = left.m13 / right.m13;
+            result.m20 = left.m20 / right.m20;
+            result.m21 = left.m21 / right.m21;
+            result.m22 = left.m22 / right.m22;
+            result.m23 = left.m23 / right.m23;
+            result.m30 = left.m30 / right.m30;
+            result.m31 = left.m31 / right.m31;
+            result.m32 = left.m32 / right.m32;
+            result.m33 = left.m33 / right.m33;
+        }
+
+        /// <summary>
+        /// Determines the quotient of two matrices.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to divide.</param>
+        /// <param name="right">The second Matrix4x4 to divide.</param>
+        /// <returns>The quotient of the two matrices.</returns>
+        public static Matrix4 Divide(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Divide(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Negates a Matrix4x4.
+        /// </summary>
+        /// <param name="value">The Matrix4x4 to be negated.</param>
+        /// <param name="result">When the method completes, contains the negated Matrix4x4.</param>
+        public static void Negate(ref Matrix4 value, out Matrix4 result)
+        {
+            result.m00 = -value.m00;
+            result.m01 = -value.m01;
+            result.m02 = -value.m02;
+            result.m03 = -value.m03;
+            result.m10 = -value.m10;
+            result.m11 = -value.m11;
+            result.m12 = -value.m12;
+            result.m13 = -value.m13;
+            result.m20 = -value.m20;
+            result.m21 = -value.m21;
+            result.m22 = -value.m22;
+            result.m23 = -value.m23;
+            result.m30 = -value.m30;
+            result.m31 = -value.m31;
+            result.m32 = -value.m32;
+            result.m33 = -value.m33;
+        }
+
+        /// <summary>
+		/// Adds two matricies.
+		/// </summary>
+		/// <param name="left">The first Matrix4x4 to add.</param>
+		/// <param name="right">The second Matrix4x4 to add.</param>
+		/// <returns>The sum of the two matricies.</returns>
+		public static Matrix4 operator +(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Assert a Matrix4x4 (return it unchanged).
+        /// </summary>
+        /// <param name="value">The Matrix4x4 to assert (unchange).</param>
+        /// <returns>The asserted (unchanged) Matrix4x4.</returns>
+        public static Matrix4 operator +(Matrix4 value)
+        {
+            return value;
+        }
+
+        /// <summary>
+        /// Subtracts two matricies.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to subtract.</param>
+        /// <param name="right">The second Matrix4x4 to subtract.</param>
+        /// <returns>The difference between the two matricies.</returns>
+        public static Matrix4 operator -(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Subtract(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Negates a Matrix4x4.
+        /// </summary>
+        /// <param name="value">The Matrix4x4 to negate.</param>
+        /// <returns>The negated Matrix4x4.</returns>
+        public static Matrix4 operator -(Matrix4 value)
+        {
+            Matrix4 result;
+            Negate(ref value, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Scales a Matrix4x4 by a given value.
+        /// </summary>
+        /// <param name="right">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <returns>The scaled Matrix4x4.</returns>
+        public static Matrix4 operator *(float scalar, Matrix4 right)
+        {
+            Matrix4 result;
+            Multiply(ref right, scalar, out result);
+            return result;
+        }
+
+
+        /// <summary>
+        /// Scales a Matrix4x4 by a given value.
+        /// </summary>
+        /// <param name="left">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <returns>The scaled Matrix4x4.</returns>
+        public static Matrix4 operator *(Matrix4 left, float scalar)
+        {
+            Matrix4 result;
+            Multiply(ref left, scalar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two matricies.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to multiply.</param>
+        /// <param name="right">The second Matrix4x4 to multiply.</param>
+        /// <returns>The product of the two matricies.</returns>
+        public static Matrix4 operator *(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Multiply(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Scales a Matrix4x4 by a given value.
+        /// </summary>
+        /// <param name="left">The Matrix4x4 to scale.</param>
+        /// <param name="scalar">The amount by which to scale.</param>
+        /// <returns>The scaled Matrix4x4.</returns>
+        public static Matrix4 operator /(Matrix4 left, float scalar)
+        {
+            Matrix4 result;
+            Divide(ref left, scalar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Divides two matricies.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to divide.</param>
+        /// <param name="right">The second Matrix4x4 to divide.</param>
+        /// <returns>The quotient of the two matricies.</returns>
+        public static Matrix4 operator /(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Divide(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies with vector.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to multiply.</param>
+        /// <param name="right">The second Vector3 to multiply.</param>
+        /// <returns>The product.</returns>
+        public static Vector3 operator *(Matrix4 left, Vector3 right)
+        {
+            Vector3 result = new Vector3();
+
+            float fInvW = 1.0f / (left.m30 * right.x + left.m31 * right.y + left.m32 * right.z + left.m33);
+
+            result.x = (left.m00 * right.x + left.m01 * right.y + left.m02 * right.z + left.m03) * fInvW;
+            result.y = (left.m10 * right.x + left.m11 * right.y + left.m12 * right.z + left.m13) * fInvW;
+            result.z = (left.m20 * right.x + left.m21 * right.y + left.m22 * right.z + left.m23) * fInvW;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies with vector.
+        /// </summary>
+        /// <param name="left">The first Matrix4x4 to multiply.</param>
+        /// <param name="right">The second Vector3 to multiply.</param>
+        /// <returns>The product.</returns>
+        public static Vector4 operator *(Matrix4 left, Vector4 right)
+        {
+            return new Vector4(
+                   left.m00 * right.x + left.m01 * right.y + left.m02 * right.z + left.m03 * right.w,
+                   left.m10 * right.x + left.m11 * right.y + left.m12 * right.z + left.m13 * right.w,
+                   left.m20 * right.x + left.m21 * right.y + left.m22 * right.z + left.m23 * right.w,
+                   left.m30 * right.x + left.m31 * right.y + left.m32 * right.z + left.m33 * right.w
+                   );
+        }
+
+        /// <summary>
 		/// Returns a boolean indicating whether the given Matrix4 is equal to this Matrix4 instance.
 		/// </summary>
 		/// <param name="other">The Matrix4 to compare this instance to.</param>

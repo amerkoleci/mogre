@@ -12,9 +12,12 @@ namespace Mogre
     {
         protected enum Extent
         {
-            Infinite = 2,
+            Null = 0,
             Finite = 1,
-            Null = 0
+            Infinite = 2,
+            EXTENT_NULL = 0,
+            EXTENT_FINITE = 1,
+            EXTENT_INFINITE = 2
         }
 
         public enum CornerEnum
@@ -27,6 +30,14 @@ namespace Mogre
             NearLeftTop = 5,
             NearLeftBottom = 6,
             NearRightBottom = 7,
+            FAR_LEFT_BOTTOM = FarLeftBottom,
+            FAR_LEFT_TOP = FarLeftTop,
+            FAR_RIGHT_TOP = FarRightTop,
+            FAR_RIGHT_BOTTOM = FarRightBottom,
+            NEAR_RIGHT_BOTTOM = NearRightBottom,
+            NEAR_LEFT_BOTTOM = NearLeftBottom,
+            NEAR_LEFT_TOP = NearLeftTop,
+            NEAR_RIGHT_TOP = NearRightTop
         }
 
         protected Vector3 _minimum;

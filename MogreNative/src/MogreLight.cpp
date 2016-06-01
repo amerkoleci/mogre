@@ -179,6 +179,26 @@ void Light::SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle
 	static_cast<Ogre::Light*>(_native)->setSpotlightRange(Ogre::Radian(innerAngle.ValueRadians), Ogre::Radian(outerAngle.ValueRadians));
 }
 
+Ogre::Real Light::ShadowNearClipDistance::get()
+{
+	return static_cast<const Ogre::Light*>(_native)->getShadowNearClipDistance();
+}
+
+void Light::ShadowNearClipDistance::set(Ogre::Real power)
+{
+	static_cast<Ogre::Light*>(_native)->setShadowNearClipDistance(power);
+}
+
+Ogre::Real Light::ShadowFarClipDistance::get()
+{
+	return static_cast<const Ogre::Light*>(_native)->getShadowFarClipDistance();
+}
+
+void Light::ShadowFarClipDistance::set(Ogre::Real power)
+{
+	static_cast<Ogre::Light*>(_native)->setShadowFarClipDistance(power);
+}
+
 Ogre::Light* Light::UnmanagedPointer::get()
 {
 	return static_cast<Ogre::Light*>(_native);

@@ -198,6 +198,7 @@
     <ClInclude Include="include\Marshalling.h" />
     <ClInclude Include="include\MogreDataStream.h" />
     <ClInclude Include="include\MogreEntity.h" />
+    <ClInclude Include="include\MogreException.h" />
     <ClInclude Include="include\MogreFrameListener.h" />
     <ClInclude Include="include\MogreFrustum.h" />
     <ClInclude Include="include\MogreGpuProgramManager.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="include\MogreSceneManager.h" />
     <ClInclude Include="include\MogreSceneNode.h" />
     <ClInclude Include="include\MogreSceneQuery.h" />
+    <ClInclude Include="include\MogreShadowCameraSetup.h" />
     <ClInclude Include="include\MogreStaticGeometry.h" />
     <ClInclude Include="include\MogreStringConverter.h" />
     <ClInclude Include="include\MogreStringInterface.h" />
@@ -235,6 +237,7 @@
     <ClInclude Include="include\MogreTextureManager.h" />
     <ClInclude Include="include\MogreVertexIndexData.h" />
     <ClInclude Include="include\MogreViewport.h" />
+    <ClInclude Include="include\MogreWindowEventUtilities.h" />
     <ClInclude Include="include\STLContainerWrappers.h" />
     <ClInclude Include="include\STLDeque.h" />
     <ClInclude Include="include\STLHashedVector.h" />
@@ -260,6 +263,7 @@
     <ClCompile Include="src\Marshalling.cpp" />
     <ClCompile Include="src\MogreDataStream.cpp" />
     <ClCompile Include="src\MogreEntity.cpp" />
+    <ClCompile Include="src\MogreException.cpp" />
     <ClCompile Include="src\MogreFrameListener.cpp" />
     <ClCompile Include="src\MogreFrustum.cpp" />
     <ClCompile Include="src\MogreGpuProgramManager.cpp" />
@@ -289,6 +293,7 @@
     <ClCompile Include="src\MogreSceneManager.cpp" />
     <ClCompile Include="src\MogreSceneNode.cpp" />
     <ClCompile Include="src\MogreSceneQuery.cpp" />
+    <ClCompile Include="src\MogreShadowCameraSetup.cpp" />
     <ClCompile Include="src\MogreStaticGeometry.cpp" />
     <ClCompile Include="src\MogreStringConverter.cpp" />
     <ClCompile Include="src\MogreStringVector.cpp" />
@@ -297,6 +302,7 @@
     <ClCompile Include="src\MogreTextureManager.cpp" />
     <ClCompile Include="src\MogreVertexIndexData.cpp" />
     <ClCompile Include="src\MogreViewport.cpp" />
+    <ClCompile Include="src\MogreWindowEventUtilities.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

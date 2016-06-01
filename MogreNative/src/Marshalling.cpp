@@ -91,16 +91,16 @@ namespace Mogre
 	Plane ToPlane(Ogre::Plane value)
 	{
 		Plane result = Plane();
-		result.Normal = ToVector3(value.normal);
-		result.D = value.d;
+		result.normal = ToVector3(value.normal);
+		result.d = value.d;
 		return result;
 	}
 
 	Ogre::Plane FromPlane(Plane value)
 	{
 		Ogre::Plane result;
-		result.normal = FromVector3(value.Normal);
-		result.d = value.D;
+		result.normal = FromVector3(value.normal);
+		result.d = value.d;
 		return result;
 	}
 

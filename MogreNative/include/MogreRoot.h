@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OgreRoot.h"
+#include "OgreFrameStats.h"
 #include "MogreFrameListener.h"
 #include "MogreCommon.h"
 #include "STLContainerWrappers.h"
@@ -20,6 +21,91 @@ namespace Mogre
 	{
 		SingleThread = Ogre::INSTANCING_CULLING_SINGLETHREAD,
 		Threaded = Ogre::INSTANCING_CULLING_THREADED
+	};
+
+	public ref class FrameStats
+	{
+	public protected:
+		FrameStats()
+		{
+		}
+
+		float _fps;
+		float _avgFPS;
+		float _bestTime;
+		float _worstTime;
+		float _lastTime;
+		float _avgTime;
+		size_t _triangleCount;
+		size_t _batchCount;
+
+		static operator FrameStats ^ (const Ogre::FrameStats& obj)
+		{
+			FrameStats^ clr = gcnew FrameStats;
+			clr->_fps = obj.getFps();
+			clr->_avgFPS = obj.getAvgFps();
+			clr->_bestTime = obj.getBestTime();
+			clr->_worstTime = obj.getWorstTime();
+			clr->_lastTime = obj.getLastTime();
+			clr->_avgTime = obj.getAvgTime();
+
+			return clr;
+		}
+
+		static operator FrameStats ^ (const Ogre::FrameStats* pObj)
+		{
+			return *pObj;
+		}
+
+		//Public Declarations
+	public:
+		property float FPS
+		{
+			float get()
+			{
+				return _fps;
+			}
+		}
+
+		property float AvgFPS
+		{
+			float get()
+			{
+				return _avgFPS;
+			}
+		}
+
+		property float BestTime
+		{
+			float get()
+			{
+				return _bestTime;
+			}
+		}
+
+		property float WorstTime
+		{
+			float get()
+			{
+				return _worstTime;
+			}
+		}
+
+		property float LastTime
+		{
+			float get()
+			{
+				return _lastTime;
+			}
+		}
+
+		property float AvgTime
+		{
+			float get()
+			{
+				return _avgTime;
+			}
+		}
 	};
 
 	public ref class Root : IMogreDisposable, public IFrameListener_Receiver
@@ -159,6 +245,8 @@ namespace Mogre
 			}
 		}
 
+		Mogre::FrameStats^ GetFrameStats();
+
 		property Mogre::CompositorManager2^ CompositorManager2
 		{
 		public:
@@ -272,13 +360,15 @@ namespace Mogre
 		void LoadPlugin(String^ pluginName);
 		void UnloadPlugin(String^ pluginName);
 
+		void _updateAllRenderTargets();
+
 	protected public:
 		virtual bool OnFrameStarted(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameStarted
 		{
 			return FrameStarted(evt);
 		}
 
-		virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
+			virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
 		{
 			return FrameEnded(evt);
 		}

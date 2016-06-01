@@ -78,6 +78,11 @@ bool Root::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+Mogre::FrameStats^ Root::GetFrameStats()
+{
+	return _native->getFrameStats();
+}
+
 
 Mogre::CompositorManager2^ Root::CompositorManager2::get()
 {
@@ -368,6 +373,11 @@ void Root::UnloadPlugin(String^ pluginName)
 	DECLARE_NATIVE_STRING(o_pluginName, pluginName);
 
 	_native->unloadPlugin(o_pluginName);
+}
+
+void Root::_updateAllRenderTargets()
+{
+	static_cast<Ogre::Root*>(_native)->_updateAllRenderTargets();
 }
 
 CPP_DECLARE_STLMAP(, UnaryOptionList, String^, bool, Ogre::String, bool);

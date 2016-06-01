@@ -148,6 +148,22 @@ namespace Mogre
 			void set(bool visible);
 		}
 
+		property Ogre::Real ShadowNearClipDistance
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real visible);
+		}
+
+		property Ogre::Real ShadowFarClipDistance
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real visible);
+		}
+
 		void _calcTempSquareDist(Mogre::Vector3 worldPos);
 
 		void SetDiffuseColour(Ogre::Real red, Ogre::Real green, Ogre::Real blue);

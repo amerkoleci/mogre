@@ -145,6 +145,23 @@ namespace Mogre
 				return *static_cast<Ogre::T*>(t->_native);				\
 			}
 
+#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_PLAINWRAPPER_EXPLICIT(MT, NT)		\
+			inline static operator MT^ (const Ogre::NT* t) {			\
+				if (t)													\
+					return gcnew MT(const_cast<Ogre::NT*>(t));			\
+				else													\
+					return nullptr;										\
+			}															\
+			inline static operator MT^ (const Ogre::NT& t) {			\
+				return gcnew MT(&const_cast<Ogre::NT&>(t));				\
+			}															\
+			inline static operator Ogre::NT* (MT^ t) {					\
+			return (t == CLR_NULL) ? 0 : static_cast<Ogre::NT*>(t->_native);		\
+			}															\
+			inline static operator Ogre::NT& (MT^ t) {					\
+				return *static_cast<Ogre::NT*>(t->_native);				\
+			}
+
 	// Most of Ogre classes that are wrapped by Mogre derive from CLRObject.
 	// It acts as the connection between the .NET objects and the Ogre objects that they wrap.
 	// Without it, a new .NET object will be created each time an Ogre object is requested.
@@ -190,7 +207,6 @@ namespace Mogre
 	{
 		return Pair<typename M::first_type, typename M::second_type>(ToManaged<M::first_type,N::first_type>(value.first), ToManaged<M::second_type,N::second_type>(value.second));
 	}
-
 
 	template <typename MElem, typename NVec>
 	array<MElem>^ GetArrayFromVector(const NVec& vec)

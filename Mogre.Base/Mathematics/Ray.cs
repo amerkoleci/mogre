@@ -34,19 +34,19 @@ namespace Mogre
         }
 
         /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
-        public Pair<bool, float> Intersects(AxisAlignedBox box)
+        public Tuple<bool, float> Intersects(AxisAlignedBox box)
         {
             return Math.Intersects(this, box);
         }
 
         /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
-        public Pair<bool, float> Intersects(Sphere s)
+        public Tuple<bool, float> Intersects(Sphere s)
         {
             return Math.Intersects(this, s);
         }
 
         /// <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
-        public Pair<bool, float> Intersects(Plane p)
+        public Tuple<bool, float> Intersects(Plane p)
         {
             return Math.Intersects(this, p);
         }

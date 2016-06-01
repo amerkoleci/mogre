@@ -31,29 +31,29 @@ namespace Mogre
         /// <summary>
         /// The normal of the plane.
         /// </summary>
-        public Vector3 Normal;
+        public Vector3 normal;
 
         /// <summary>
         /// The distance of the plane.
         /// </summary>
-        public float D;
+        public float d;
 
         public Plane(Vector3 normal, float constant)
         {
-            Normal = normal;
-            D = -constant;
+            this.normal = normal;
+            this.d = -constant;
         }
 
         public Plane(float normalX, float normalY, float normalZ, float d)
         {
-            Normal = new Vector3(normalX, normalY, normalZ);
-            D = d;
+            this.normal = new Vector3(normalX, normalY, normalZ);
+            this.d = d;
         }
 
         public Plane(Vector3 normal, Vector3 point)
         {
-            Normal = normal;
-            D = -normal.Dot(point);
+            this.normal = normal;
+            this.d = -normal.Dot(point);
         }
 
         public Plane(Vector3 point0, Vector3 point1, Vector3 point2) : this()
@@ -71,14 +71,14 @@ namespace Mogre
         {
             Vector3 kEdge1 = point1 - point0;
             Vector3 kEdge2 = point2 - point0;
-            Normal = kEdge1.Cross(kEdge2);
-            Normal.Normalise();
-            D = -Normal.Dot(point0);
+            this.normal = kEdge1.Cross(kEdge2);
+            this.normal.Normalise();
+            this.d = -this.normal.Dot(point0);
         }
 
         public float GetDistance(Vector3 point)
         {
-            return Normal.Dot(point) + D;
+            return normal.Dot(point) + d;
         }
 
         public Side GetSide(Vector3 point)
@@ -112,7 +112,7 @@ namespace Mogre
 
             // Calculate the maximise allows absolute distance for
             // the distance between box centre and plane
-            var maxAbsDist = Normal.AbsDotProduct(halfSize);
+            var maxAbsDist = this.normal.AbsDotProduct(halfSize);
 
             if (dist < -maxAbsDist)
                 return Side.NEGATIVE_SIDE;
@@ -155,8 +155,8 @@ namespace Mogre
         {
             unchecked
             {
-                var hashCode = Normal.GetHashCode();
-                hashCode = (hashCode * 397) ^ D.GetHashCode();
+                var hashCode = normal.GetHashCode();
+                hashCode = (hashCode * 397) ^ d.GetHashCode();
                 return hashCode;
             }
         }
@@ -172,8 +172,8 @@ namespace Mogre
         public bool Equals(ref Plane other)
         {
             return
-                Normal == other.Normal &&
-                D == other.D;
+                normal == other.normal &&
+                d == other.d;
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Mogre
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "Normal:{0} D:{1}", Normal, D);
+            return string.Format(CultureInfo.CurrentCulture, "Normal:{0} D:{1}", normal, d);
         }
     }
 }

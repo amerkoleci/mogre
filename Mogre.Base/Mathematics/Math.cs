@@ -129,6 +129,11 @@ namespace Mogre
             return new Radian((float)System.Math.Sqrt(value.ValueRadians));
         }
 
+        public static float Sqr(float value)
+        {
+            return value * value;
+        }
+
         public static float DegreesToRadians(float degrees)
         {
             return degrees * fDeg2Rad;
@@ -284,13 +289,14 @@ namespace Mogre
         public static bool Intersects(Sphere sphere, Plane plane)
         {
             Vector3 center = sphere.Center;
-            return Abs(plane.Normal.DotProduct(center)) <= sphere.Radius;
+            return Abs(plane.normal.DotProduct(center)) <= sphere.Radius;
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, IList<Plane> planes, bool normalIsOutside)
+        public static Tuple<bool, float> Intersects(Ray ray, IList<Plane> planes, bool normalIsOutside)
         {
             bool allInside = true;
-            var result = new Pair<bool, float>(false, 0.0f);
+            bool hit = false;
+            float distance = 0.0f;
 
             Plane.Side side = normalIsOutside ? Plane.Side.POSITIVE_SIDE : Plane.Side.NEGATIVE_SIDE;
 
@@ -301,28 +307,28 @@ namespace Mogre
                 if (plane.GetSide(origin) == side)
                 {
                     allInside = false;
-                    Pair<bool, float> pair = ray.Intersects(plane);
-                    if (pair.first)
+                    Tuple<bool, float> pair = ray.Intersects(plane);
+                    if (pair.Item1)
                     {
-                        result.first = true;
-                        result.second = System.Math.Max(result.second, pair.second);
+                        hit = true;
+                        distance = System.Math.Max(distance, pair.Item2);
                     }
                 }
             }
 
             if (allInside)
             {
-                result.first = true;
-                result.second = 0.0f;
+                return Tuple.Create(true, 0.0f);
             }
 
-            return result;
+            return Tuple.Create(hit, distance);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, IEnumerable<Plane> planes, bool normalIsOutside)
+        public static Tuple<bool, float> Intersects(Ray ray, IEnumerable<Plane> planes, bool normalIsOutside)
         {
             bool allInside = true;
-            var result = new Pair<bool, float>(false, 0.0f);
+            bool hit = false;
+            float distance = 0.0f;
 
             Plane.Side side = normalIsOutside ? Plane.Side.POSITIVE_SIDE : Plane.Side.NEGATIVE_SIDE;
 
@@ -332,22 +338,21 @@ namespace Mogre
                 if (plane.GetSide(origin) == side)
                 {
                     allInside = false;
-                    Pair<bool, float> pair = ray.Intersects(plane);
-                    if (pair.first)
+                    Tuple<bool, float> pair = ray.Intersects(plane);
+                    if (pair.Item1)
                     {
-                        result.first = true;
-                        result.second = System.Math.Max(result.second, pair.second);
+                        hit = true;
+                        distance = System.Math.Max(distance, pair.Item2);
                     }
                 }
             }
 
             if (allInside)
             {
-                result.first = true;
-                result.second = 0.0f;
+                return Tuple.Create(true, 0.0f);
             }
 
-            return result;
+            return Tuple.Create(hit, distance);
         }
 
         public static bool Intersects(Sphere sphere, AxisAlignedBox box)
@@ -401,28 +406,28 @@ namespace Mogre
             return true;
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c)
+        public static Tuple<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c)
         {
-            return Math.Intersects(ray, a, b, c, true, true);
+            return Intersects(ray, a, b, c, true, true);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide)
+        public static Tuple<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide)
         {
-            return Math.Intersects(ray, a, b, c, positiveSide, true);
+            return Intersects(ray, a, b, c, positiveSide, true);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide, bool negativeSide)
+        public static Tuple<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, bool positiveSide, bool negativeSide)
         {
-            Vector3 normal = Math.CalculateBasicFaceNormalWithoutNormalize(a, b, c);
-            return Math.Intersects(ray, a, b, c, normal, positiveSide, negativeSide);
+            Vector3 normal = CalculateBasicFaceNormalWithoutNormalize(a, b, c);
+            return Intersects(ray, a, b, c, normal, positiveSide, negativeSide);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal)
+        public static Tuple<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal)
         {
-            return Math.Intersects(ray, a, b, c, normal, true, true);
+            return Intersects(ray, a, b, c, normal, true, true);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal, bool positiveSide, bool negativeSide)
+        public static Tuple<bool, float> Intersects(Ray ray, Vector3 a, Vector3 b, Vector3 c, Vector3 normal, bool positiveSide, bool negativeSide)
         {
             //
             // Calculate intersection with plane.
@@ -435,18 +440,18 @@ namespace Mogre
                 if (denom > +float.Epsilon)
                 {
                     if (!negativeSide)
-                        return new Pair<bool, float>(false, 0);
+                        return Tuple.Create(false, 0.0f);
                 }
                 else if (denom < -float.Epsilon)
                 {
                     if (!positiveSide)
-                        return new Pair<bool, float>(false, 0);
+                        return Tuple.Create(false, 0.0f);
                 }
                 else
                 {
                     // Parallel or triangle area is close to zero when
                     // the plane normal not normalised.
-                    return new Pair<bool, float>(false, 0);
+                    return Tuple.Create(false, 0.0f);
                 }
 
                 t = normal.DotProduct(a - ray.Origin) / denom;
@@ -454,7 +459,7 @@ namespace Mogre
                 if (t < 0)
                 {
                     // Intersection is behind origin
-                    return new Pair<bool, float>(false, 0);
+                    return Tuple.Create(false, 0.0f);
                 }
             }
 
@@ -463,9 +468,9 @@ namespace Mogre
             //
             int i0, i1;
             {
-                float n0 = Math.Abs(normal[0]);
-                float n1 = Math.Abs(normal[1]);
-                float n2 = Math.Abs(normal[2]);
+                float n0 = Abs(normal[0]);
+                float n1 = Abs(normal[1]);
+                float n2 = Abs(normal[2]);
 
                 i0 = 1; i1 = 2;
                 if (n1 > n2)
@@ -501,25 +506,25 @@ namespace Mogre
                 if (area > 0)
                 {
                     if (alpha < tolerance || beta < tolerance || alpha + beta > area - tolerance)
-                        return new Pair<bool, float>(false, 0);
+                        return Tuple.Create(false, 0.0f);
                 }
                 else
                 {
                     if (alpha > tolerance || beta > tolerance || alpha + beta < area - tolerance)
-                        return new Pair<bool, float>(false, 0);
+                        return Tuple.Create(false, 0.0f);
                 }
             }
 
-            return new Pair<bool, float>(true, t);
+            return Tuple.Create(true, t);
         }
 
         /// <summary>Ray / sphere intersection, returns boolean result and distance. </summary>
-        public static Pair<bool, float> Intersects(Ray ray, Sphere sphere)
+        public static Tuple<bool, float> Intersects(Ray ray, Sphere sphere)
         {
-            return Math.Intersects(ray, sphere, true);
+            return Intersects(ray, sphere, true);
         }
 
-        public static Pair<bool, float> Intersects(Ray ray, Sphere sphere, bool discardInside)
+        public static Tuple<bool, float> Intersects(Ray ray, Sphere sphere, bool discardInside)
         {
             Vector3 raydir = ray.Direction;
             // Adjust ray origin relative to sphere center
@@ -529,7 +534,7 @@ namespace Mogre
             // Check origin inside first
             if (rayorig.SquaredLength <= radius * radius && discardInside)
             {
-                return new Pair<bool, float>(true, 0);
+                return Tuple.Create(true, 0.0f);
             }
 
             // Mmm, quadratics
@@ -544,24 +549,23 @@ namespace Mogre
             if (d < 0)
             {
                 // No intersection
-                return new Pair<bool, float>(false, 0);
+                return Tuple.Create(false, 0.0f);
             }
-            else
-            {
-                // BTW, if d=0 there is one intersection, if d > 0 there are 2
-                // But we only want the closest one, so that's ok, just use the 
-                // '-' version of the solver
-                float t = (-b - Math.Sqrt(d)) / (2 * a);
-                if (t < 0)
-                    t = (-b + Math.Sqrt(d)) / (2 * a);
-                return new Pair<bool, float>(true, t);
-            }
+
+            // BTW, if d=0 there is one intersection, if d > 0 there are 2
+            // But we only want the closest one, so that's ok, just use the 
+            // '-' version of the solver
+            float t = (-b - Math.Sqrt(d)) / (2 * a);
+            if (t < 0)
+                t = (-b + Math.Sqrt(d)) / (2 * a);
+
+            return Tuple.Create(true, t);
         }
 
         /// <summary>Ray / box intersection, returns boolean result and distance. </summary>
-        public static Pair<bool, float> Intersects(Ray ray, AxisAlignedBox box)
+        public static Tuple<bool, float> Intersects(Ray ray, AxisAlignedBox box)
         {
-            if (box.IsNull) return new Pair<bool, float>(false, 0);
+            if (box.IsNull) return Tuple.Create(false, 0.0f);
 
             float lowt = 0.0f;
             float t;
@@ -575,7 +579,7 @@ namespace Mogre
             // Check origin inside first
             if (rayorig > min && rayorig < max)
             {
-                return new Pair<bool, float>(true, 0);
+                return Tuple.Create(true, 0.0f);
             }
 
             // Check each face in turn, only check closest 3
@@ -682,23 +686,23 @@ namespace Mogre
                 }
             }
 
-            return new Pair<bool, float>(hit, lowt);
+            return Tuple.Create(hit, lowt);
         }
 
         /// <summary>Ray / plane intersection, returns boolean result and distance. </summary>
-        public static Pair<bool, float> Intersects(Ray ray, Plane plane)
+        public static Tuple<bool, float> Intersects(Ray ray, Plane plane)
         {
-            float denom = plane.Normal.DotProduct(ray.Direction);
-            if (Math.Abs(denom) < float.Epsilon)
+            float denom = plane.normal.DotProduct(ray.Direction);
+            if (Abs(denom) < float.Epsilon)
             {
                 // Parallel
-                return new Pair<bool, float>(false, 0);
+                return Tuple.Create(false, 0.0f);
             }
             else
             {
-                float nom = plane.Normal.DotProduct(ray.Origin) + plane.D;
+                float nom = plane.normal.DotProduct(ray.Origin) + plane.d;
                 float t = -(nom / denom);
-                return new Pair<bool, float>(t >= 0, t);
+                return Tuple.Create(t >= 0, t);
             }
         }
     }

@@ -42,6 +42,11 @@ namespace Mogre
         public static readonly ColourValue Zero = new ColourValue();
 
         /// <summary>
+        /// A <see cref="ColourValue"/> with all of its components set to zero.
+        /// </summary>
+        public static readonly ColourValue ZERO = new ColourValue();
+
+        /// <summary>
         /// A Black <see cref="ColourValue"/>.
         /// </summary>
         public static readonly ColourValue Black = new ColourValue(0.0f, 0.0f, 0.0f, 1.0f);

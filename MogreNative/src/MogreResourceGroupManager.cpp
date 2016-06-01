@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MogreResourceGroupManager.h"
 #include "MogreResource.h"
+#include "MogreDataStream.h"
 
 using namespace Mogre;
 
@@ -259,6 +260,109 @@ void ResourceGroupManager::UndeclareResource(String^ name, String^ groupName)
 
 	_native->undeclareResource(o_name, o_groupName);
 }
+
+Mogre::DataStreamPtr^ ResourceGroupManager::OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound, Mogre::Resource^ resourceBeingLoaded)
+{
+	DECLARE_NATIVE_STRING(o_resourceName, resourceName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResource(o_resourceName, o_groupName, searchGroupsIfNotFound, GetPointerOrNull(resourceBeingLoaded));
+}
+
+Mogre::DataStreamPtr^ ResourceGroupManager::OpenResource(String^ resourceName, String^ groupName, bool searchGroupsIfNotFound)
+{
+	DECLARE_NATIVE_STRING(o_resourceName, resourceName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResource(o_resourceName, o_groupName, searchGroupsIfNotFound);
+}
+Mogre::DataStreamPtr^ ResourceGroupManager::OpenResource(String^ resourceName, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_resourceName, resourceName);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResource(o_resourceName, o_groupName);
+}
+
+Mogre::DataStreamPtr^ ResourceGroupManager::OpenResource(String^ resourceName)
+{
+	DECLARE_NATIVE_STRING(o_resourceName, resourceName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResource(o_resourceName);
+}
+
+Mogre::DataStreamListPtr^ ResourceGroupManager::OpenResources(String^ pattern, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_pattern, pattern);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResources(o_pattern, o_groupName);
+}
+
+Mogre::DataStreamListPtr^ ResourceGroupManager::OpenResources(String^ pattern)
+{
+	DECLARE_NATIVE_STRING(o_pattern, pattern);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->openResources(o_pattern);
+}
+
+Mogre::StringVectorPtr^ ResourceGroupManager::ListResourceNames(String^ groupName, bool dirs)
+{
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->listResourceNames(o_groupName, dirs);
+}
+
+Mogre::StringVectorPtr^ ResourceGroupManager::ListResourceNames(String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->listResourceNames(o_groupName);
+}
+
+//Mogre::FileInfoListPtr^ ResourceGroupManager::ListResourceFileInfo(String^ groupName, bool dirs)
+//{
+//	DECLARE_NATIVE_STRING(o_groupName, groupName);
+//
+//	return static_cast<Ogre::ResourceGroupManager*>(_native)->listResourceFileInfo(o_groupName, dirs);
+//}
+//Mogre::FileInfoListPtr^ ResourceGroupManager::ListResourceFileInfo(String^ groupName)
+//{
+//	DECLARE_NATIVE_STRING(o_groupName, groupName);
+//
+//	return static_cast<Ogre::ResourceGroupManager*>(_native)->listResourceFileInfo(o_groupName);
+//}
+
+Mogre::StringVectorPtr^ ResourceGroupManager::FindResourceNames(String^ groupName, String^ pattern, bool dirs)
+{
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+	DECLARE_NATIVE_STRING(o_pattern, pattern);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->findResourceNames(o_groupName, o_pattern, dirs);
+}
+Mogre::StringVectorPtr^ ResourceGroupManager::FindResourceNames(String^ groupName, String^ pattern)
+{
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+	DECLARE_NATIVE_STRING(o_pattern, pattern);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->findResourceNames(o_groupName, o_pattern);
+}
+
+bool ResourceGroupManager::ResourceExists(String^ group, String^ filename)
+{
+	DECLARE_NATIVE_STRING(o_group, group);
+	DECLARE_NATIVE_STRING(o_filename, filename);
+
+	return static_cast<Ogre::ResourceGroupManager*>(_native)->resourceExists(o_group, o_filename);
+}
+
+String^ ResourceGroupManager::FindGroupContainingResource(String^ filename)
+{
+	DECLARE_NATIVE_STRING(o_filename, filename);
+
+	return TO_CLR_STRING(static_cast<Ogre::ResourceGroupManager*>(_native)->findGroupContainingResource(o_filename));
+}
+
 
 bool ResourceGroupManager::ResourceLocationExists(String^ name)
 {

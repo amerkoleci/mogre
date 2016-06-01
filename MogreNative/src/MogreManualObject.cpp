@@ -274,6 +274,11 @@ void ManualObject::TextureCoord(Mogre::Real u, Mogre::Real v, Mogre::Real w)
 	static_cast<Ogre::ManualObject*>(_native)->textureCoord(u, v, w);
 }
 
+void ManualObject::TextureCoord(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real w)
+{
+	static_cast<Ogre::ManualObject*>(_native)->textureCoord(x, y, z, w);
+}
+
 void ManualObject::TextureCoord(Mogre::Vector2 uv)
 {
 	static_cast<Ogre::ManualObject*>(_native)->textureCoord(FromVector2(uv));
@@ -282,6 +287,11 @@ void ManualObject::TextureCoord(Mogre::Vector2 uv)
 void ManualObject::TextureCoord(Mogre::Vector3 uvw)
 {
 	static_cast<Ogre::ManualObject*>(_native)->textureCoord(FromVector3(uvw));
+}
+
+void ManualObject::TextureCoord(Mogre::Vector4 xyzw)
+{
+	static_cast<Ogre::ManualObject*>(_native)->textureCoord(FromVector4(xyzw));
 }
 
 void ManualObject::Colour(Mogre::ColourValue col)

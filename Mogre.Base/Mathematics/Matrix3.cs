@@ -300,15 +300,17 @@ namespace Mogre
 		public static Matrix3 operator *(Matrix3 left, Matrix3 right)
         {
             Matrix3 result = new Matrix3();
-            result.m00 = left.m00 * right.m00;
-            result.m01 = left.m01 * right.m01;
-            result.m02 = left.m02 * right.m02;
-            result.m10 = left.m10 * right.m10;
-            result.m11 = left.m11 * right.m11;
-            result.m12 = left.m12 * right.m12;
-            result.m20 = left.m20 * right.m20;
-            result.m21 = left.m21 * right.m21;
-            result.m22 = left.m22 * right.m22;
+            result.m00 = left.m00 * right.m00 + left.m01 * right.m10 + left.m02 * right.m20;
+            result.m01 = left.m00 * right.m01 + left.m01 * right.m11 + left.m02 * right.m21;
+            result.m02 = left.m00 * right.m02 + left.m01 * right.m12 + left.m02 * right.m22;
+
+            result.m10 = left.m10 * right.m00 + left.m11 * right.m10 + left.m12 * right.m20;
+            result.m11 = left.m10 * right.m01 + left.m11 * right.m11 + left.m12 * right.m21;
+            result.m12 = left.m10 * right.m02 + left.m11 * right.m12 + left.m12 * right.m22;
+
+            result.m20 = left.m20 * right.m00 + left.m21 * right.m10 + left.m22 * right.m20;
+            result.m21 = left.m20 * right.m01 + left.m21 * right.m11 + left.m22 * right.m21;
+            result.m22 = left.m20 * right.m02 + left.m21 * right.m12 + left.m22 * right.m22;
             return result;
         }
 

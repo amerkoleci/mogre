@@ -21,6 +21,7 @@ namespace Mogre
 	ref class AnimationState;
 	ref class MeshPtr;
 
+	ref class SceneQuery;
 	ref class AxisAlignedBoxSceneQuery;
 	ref class SphereSceneQuery;
 	ref class PlaneBoundedVolumeListSceneQuery;
@@ -341,6 +342,7 @@ namespace Mogre
 
 		Mogre::IntersectionSceneQuery^ CreateIntersectionQuery(unsigned long mask);
 		Mogre::IntersectionSceneQuery^ CreateIntersectionQuery();
+		void DestroyQuery(Mogre::SceneQuery^ query);
 
 		void ClearScene();
 

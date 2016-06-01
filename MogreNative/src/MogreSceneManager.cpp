@@ -4,6 +4,7 @@
 #include "MogreEntity.h"
 #include "MogreAnimation.h"
 #include "MogreMeshManager.h"
+#include "MogreSceneQuery.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -617,6 +618,98 @@ Mogre::ColourValue SceneManager::ShadowColour::get()
 void SceneManager::ShadowColour::set(Mogre::ColourValue colour)
 {
 	_native->setShadowColour(FromColor4(colour));
+}
+
+Mogre::StaticGeometry^ SceneManager::CreateStaticGeometry(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->createStaticGeometry(o_name);
+}
+
+Mogre::StaticGeometry^ SceneManager::GetStaticGeometry(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->getStaticGeometry(o_name);
+}
+
+bool SceneManager::HasStaticGeometry(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->hasStaticGeometry(o_name);
+}
+
+void SceneManager::DestroyStaticGeometry(Mogre::StaticGeometry^ geom)
+{
+	_native->destroyStaticGeometry(geom);
+}
+
+void SceneManager::DestroyStaticGeometry(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	_native->destroyStaticGeometry(o_name);
+}
+
+void SceneManager::DestroyAllStaticGeometry()
+{
+	_native->destroyAllStaticGeometry();
+}
+
+Mogre::AxisAlignedBoxSceneQuery^ SceneManager::CreateAABBQuery(Mogre::AxisAlignedBox^ box, unsigned long mask)
+{
+	return _native->createAABBQuery(FromAxisAlignedBounds(box), mask);
+}
+
+Mogre::AxisAlignedBoxSceneQuery^ SceneManager::CreateAABBQuery(Mogre::AxisAlignedBox^ box)
+{
+	return _native->createAABBQuery(FromAxisAlignedBounds(box));
+}
+
+Mogre::SphereSceneQuery^ SceneManager::CreateSphereQuery(Mogre::Sphere sphere, unsigned long mask)
+{
+	return _native->createSphereQuery(FromSphere(sphere), mask);
+}
+Mogre::SphereSceneQuery^ SceneManager::CreateSphereQuery(Mogre::Sphere sphere)
+{
+	return _native->createSphereQuery(FromSphere(sphere));
+}
+
+//Mogre::PlaneBoundedVolumeListSceneQuery^ SceneManager::CreatePlaneBoundedVolumeQuery(Mogre::Const_PlaneBoundedVolumeList^ volumes, unsigned long mask)
+//{
+//	return _native->createPlaneBoundedVolumeQuery(volumes, mask);
+//}
+//
+//Mogre::PlaneBoundedVolumeListSceneQuery^ SceneManager::CreatePlaneBoundedVolumeQuery(Mogre::Const_PlaneBoundedVolumeList^ volumes)
+//{
+//	return _native->createPlaneBoundedVolumeQuery(volumes);
+//}
+
+Mogre::RaySceneQuery^ SceneManager::CreateRayQuery(Mogre::Ray ray, unsigned long mask)
+{
+	return _native->createRayQuery(FromRay(ray), mask);
+}
+
+Mogre::RaySceneQuery^ SceneManager::CreateRayQuery(Mogre::Ray ray)
+{
+	return _native->createRayQuery(FromRay(ray));
+}
+
+Mogre::IntersectionSceneQuery^ SceneManager::CreateIntersectionQuery(unsigned long mask)
+{
+	return _native->createIntersectionQuery(mask);
+}
+
+Mogre::IntersectionSceneQuery^ SceneManager::CreateIntersectionQuery()
+{
+	return _native->createIntersectionQuery();
+}
+
+void SceneManager::DestroyQuery(Mogre::SceneQuery^ query)
+{
+	_native->destroyQuery(query);
 }
 
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()

@@ -145,6 +145,59 @@ namespace Mogre
             }
         }
 
+        public Vector3 XAxis
+        {
+            get
+            {
+                float fTy = 2.0f * y;
+                float fTz = 2.0f * z;
+                float fTwy = fTy * w;
+                float fTwz = fTz * w;
+                float fTxy = fTy * x;
+                float fTxz = fTz * x;
+                float fTyy = fTy * y;
+                float fTzz = fTz * z;
+
+                return new Vector3(1.0f - (fTyy + fTzz), fTxy + fTwz, fTxz - fTwy);
+            }
+        }
+
+        public Vector3 YAxis
+        {
+            get
+            {
+                float fTx = 2.0f * x;
+                float fTy = 2.0f * y;
+                float fTz = 2.0f * z;
+                float fTwx = fTx * w;
+                float fTwz = fTz * w;
+                float fTxx = fTx * x;
+                float fTxy = fTy * x;
+                float fTyz = fTz * y;
+                float fTzz = fTz * z;
+
+                return new Vector3(fTxy - fTwz, 1.0f - (fTxx + fTzz), fTyz + fTwx);
+            }
+        }
+
+        public Vector3 ZAxis
+        {
+            get
+            {
+                float fTx = 2.0f * x;
+                float fTy = 2.0f * y;
+                float fTz = 2.0f * z;
+                float fTwx = fTx * w;
+                float fTwy = fTy * w;
+                float fTxx = fTx * x;
+                float fTxz = fTz * x;
+                float fTyy = fTy * y;
+                float fTyz = fTz * y;
+
+                return new Vector3(fTxz + fTwy, fTyz - fTwx, 1.0f - (fTxx + fTyy));
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// </summary>
@@ -400,6 +453,86 @@ namespace Mogre
             }
 
             return length;
+        }
+
+        public Quaternion Inverse()
+        {
+            float fNorm = w * w + x * x + y * y + z * z;
+            if (fNorm > 0.0f)
+            {
+                float fInvNorm = 1.0f / fNorm;
+                return new Quaternion(w * fInvNorm, -x * fInvNorm, -y * fInvNorm, -z * fInvNorm);
+            }
+            else
+            {
+                // return an invalid result to flag the error
+                return ZERO;
+            }
+        }
+
+        public Quaternion UnitInverse()
+        {
+            // assert:  'this' is unit length
+            return new Quaternion(w, -x, -y, -z);
+        }
+
+        public Quaternion Exp()
+        {
+            // If q = A*(x*i+y*j+z*k) where (x,y,z) is unit length, then
+            // exp(q) = cos(A)+sin(A)*(x*i+y*j+z*k).  If sin(A) is near zero,
+            // use exp(q) = cos(A)+A*(x*i+y*j+z*k) since A/sin(A) has limit 1.
+
+            Radian fAngle = (float)System.Math.Sqrt(x * x + y * y + z * z);
+            float fSin = Math.Sin(fAngle);
+
+            Quaternion result = new Quaternion();
+            result.w = Math.Cos(fAngle);
+
+            if (Math.Abs(fSin) >= float.Epsilon)
+            {
+                float fCoeff = fSin / (fAngle.ValueRadians);
+                result.x = fCoeff * x;
+                result.y = fCoeff * y;
+                result.z = fCoeff * z;
+            }
+            else
+            {
+                result.x = x;
+                result.y = y;
+                result.z = z;
+            }
+
+            return result;
+        }
+
+        public Quaternion Log()
+        {
+            // If q = cos(A)+sin(A)*(x*i+y*j+z*k) where (x,y,z) is unit length, then
+            // log(q) = A*(x*i+y*j+z*k).  If sin(A) is near zero, use log(q) =
+            // sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1.
+
+            Quaternion result = new Quaternion();
+            result.w = 0.0f;
+
+            if (Math.Abs(w) < 1.0f)
+            {
+                Radian fAngle = (float)System.Math.Acos(w);
+                float fSin = Math.Sin(fAngle);
+                if (Math.Abs(fSin) >= float.Epsilon)
+                {
+                    float fCoeff = fAngle.ValueRadians / fSin;
+                    result.x = fCoeff * x;
+                    result.y = fCoeff * y;
+                    result.z = fCoeff * z;
+                    return result;
+                }
+            }
+
+            result.x = x;
+            result.y = y;
+            result.z = z;
+
+            return result;
         }
 
         public static Vector3 operator *(Quaternion q, Vector3 v)

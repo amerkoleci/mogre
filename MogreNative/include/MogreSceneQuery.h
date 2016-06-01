@@ -146,14 +146,6 @@ namespace Mogre
 			void set(Ogre::uint32 mask);
 		}
 
-		property Ogre::uint32 QueryTypeMask
-		{
-		public:
-			Ogre::uint32 get();
-		public:
-			void set(Ogre::uint32 mask);
-		}
-
 		void SetWorldFragmentType(Mogre::SceneQuery::WorldFragmentType wft);
 
 		Mogre::SceneQuery::WorldFragmentType GetWorldFragmentType();
@@ -730,7 +722,7 @@ namespace Mogre
 	INC_DECLARE_STLLIST(SceneQueryResultMovableList, Mogre::MovableObject^, Ogre::MovableObject*, public, private);
 	INC_DECLARE_STLLIST(SceneQueryResultWorldFragmentList, Mogre::SceneQuery::WorldFragment^, Ogre::SceneQuery::WorldFragment*, public, private);
 	INC_DECLARE_STLVECTOR(RaySceneQueryResult, Mogre::RaySceneQueryResultEntry^, Ogre::RaySceneQueryResultEntry, public, private);
-#define STLDECL_MANAGEDTYPE NativePair<Mogre::MovableObject^, Mogre::MovableObject^>
+#define STLDECL_MANAGEDTYPE Pair<Mogre::MovableObject^, Mogre::MovableObject^>
 #define STLDECL_NATIVETYPE Ogre::SceneQueryMovableObjectPair
 	INC_DECLARE_STLLIST(SceneQueryMovableIntersectionList, STLDECL_MANAGEDTYPE, STLDECL_NATIVETYPE, public, private);
 #undef STLDECL_MANAGEDTYPE

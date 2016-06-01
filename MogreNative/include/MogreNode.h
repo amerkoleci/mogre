@@ -1,12 +1,22 @@
 #pragma once
 #include "OgreNode.h"
 #include "MogreCommon.h"
+#include "STLContainerWrappers.h"
+#include "IteratorWrapper.h"
 
 namespace Mogre
 {
-	public ref class Node
+	public ref class Node : IMogreDisposable
 	{
 	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	public:
+		ref class ChildNodeMap;
+
 		enum class TransformSpace
 		{
 			TS_LOCAL = Ogre::Node::TS_LOCAL,
@@ -17,21 +27,46 @@ namespace Mogre
 			World = Ogre::Node::TS_WORLD
 		};
 
+//#define STLDECL_MANAGEDKEY String^
+//#define STLDECL_MANAGEDVALUE Mogre::Node^
+//#define STLDECL_NATIVEKEY Ogre::String
+//#define STLDECL_NATIVEVALUE Ogre::Node*
+//		INC_DECLARE_STLHASHMAP(ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE, public:, private:);
+//#undef STLDECL_MANAGEDKEY
+//#undef STLDECL_MANAGEDVALUE
+//#undef STLDECL_NATIVEKEY
+//#undef STLDECL_NATIVEVALUE
+
+		//INC_DECLARE_MAP_ITERATOR(ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String);
+
 	internal:
 		Ogre::Node* _native;
+		bool _createdByCLR;
 
-	private:
+	public protected:
 		Node(Ogre::Node* obj) : _native(obj)
 		{
 		}
 
-	public protected:
 		Node(intptr_t ptr) : _native((Ogre::Node*)ptr)
 		{
 
 		}
 
 	public:
+		~Node();
+	protected:
+		!Node();
+
+	public:
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
 		property bool InheritOrientation
 		{
 		public:
@@ -120,6 +155,7 @@ namespace Mogre
 		void ResetOrientation();
 		void SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		void SetScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
+		void SetScale(Mogre::Vector3 scale);
 
 		void ScaleVector(Mogre::Vector3 scale);
 		void ScaleXYZ(Ogre::Real x, Ogre::Real y, Ogre::Real z);
@@ -130,11 +166,11 @@ namespace Mogre
 		void Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
 		void Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
-		//void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo);
-		//void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move);
+		void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo);
+		void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move);
 
-		//void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
-		//void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z);
+		void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
+		void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
 		void Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
 		void Roll(Mogre::Radian angle);
@@ -162,15 +198,9 @@ namespace Mogre
 
 		Mogre::Node^ GetChild(unsigned short index);
 
-		Mogre::Node^ GetChild(String^ name);
-
 		//Mogre::Node::ChildNodeIterator^ GetChildIterator();
 
-		Mogre::Node^ RemoveChild(unsigned short index);
-
-		Mogre::Node^ RemoveChild(Mogre::Node^ child);
-
-		Mogre::Node^ RemoveChild(String^ name);
+		void RemoveChild(Mogre::Node^ child);
 
 		void RemoveAllChildren();
 
@@ -182,7 +212,7 @@ namespace Mogre
 
 		Mogre::Matrix4^ _getFullTransform();
 
-		void _updateFromParent();
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Node);
 
 	internal:
 		property Ogre::Node* UnmanagedPointer

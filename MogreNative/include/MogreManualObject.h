@@ -215,14 +215,13 @@ namespace Mogre
 		void Tangent(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
 		void TextureCoord(Ogre::Real u);
-
 		void TextureCoord(Ogre::Real u, Ogre::Real v);
-
 		void TextureCoord(Ogre::Real u, Ogre::Real v, Ogre::Real w);
+		void TextureCoord(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real w);
 
 		void TextureCoord(Mogre::Vector2 uv);
-
 		void TextureCoord(Mogre::Vector3 uvw);
+		void TextureCoord(Mogre::Vector4 xyzw);
 
 		void Colour(Mogre::ColourValue col);
 
