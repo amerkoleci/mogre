@@ -73,17 +73,17 @@ namespace Mogre
 			String^ get();
 		}
 
-		/*property bool IsThrown
+		property bool IsThrown
 		{
 		public:
 			static bool get();
-		}*/
+		}
 
-		/*property Mogre::OgreException^ LastException
+		property Mogre::OgreException^ LastException
 		{
 		public:
 			static Mogre::OgreException^ get();
-		}*/
+		}
 
 		property long Line
 		{

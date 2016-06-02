@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogreViewport.h"
+#include "MogreRenderTarget.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -99,6 +100,11 @@ void Viewport::SkiesEnabled::set(bool enabled)
 	static_cast<Ogre::Viewport*>(_native)->setSkiesEnabled(enabled);
 }
 
+Mogre::RenderTarget^ Viewport::Target::get()
+{
+	return _native->getTarget();
+}
+
 Ogre::Real Viewport::Top::get()
 {
 	return static_cast<const Ogre::Viewport*>(_native)->getTop();
@@ -112,6 +118,51 @@ Ogre::uint Viewport::VisibilityMask::get()
 Ogre::Real Viewport::Width::get()
 {
 	return static_cast<const Ogre::Viewport*>(_native)->getWidth();
+}
+
+void Viewport::_updateDimensions()
+{
+	_native->_updateDimensions();
+}
+
+void Viewport::SetDimensions(Ogre::Real left, Ogre::Real top, Ogre::Real width, Ogre::Real height)
+{
+	_native->setDimensions(left, top, width, height);
+}
+
+void Viewport::GetActualDimensions([Out] int% left, [Out] int% top, [Out] int% width, [Out] int% height)
+{
+	pin_ptr<int> p_left = &left;
+	pin_ptr<int> p_top = &top;
+	pin_ptr<int> p_width = &width;
+	pin_ptr<int> p_height = &height;
+
+	_native->getActualDimensions(*p_left, *p_top, *p_width, *p_height);
+}
+
+void Viewport::Clear()
+{
+	_native->clear();
+}
+
+void Viewport::Clear(unsigned int buffers)
+{
+	_native->clear(buffers);
+}
+
+void Viewport::Clear(unsigned int buffers, Mogre::ColourValue colour)
+{
+	_native->clear(buffers, FromColor4(colour));
+}
+
+void Viewport::Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth)
+{
+	_native->clear(buffers, FromColor4(colour), depth);
+}
+
+void Viewport::Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth, unsigned short stencil)
+{
+	_native->clear(buffers, FromColor4(colour), depth, stencil);
 }
 
 Ogre::Viewport* Viewport::UnmanagedPointer::get()

@@ -13,6 +13,8 @@
 
 namespace Mogre
 {
+	ref class RenderTexture;
+
 	public ref class HardwareBuffer : IMogreDisposable
 	{
 	public:
@@ -500,8 +502,8 @@ namespace Mogre
 
 		void BlitToMemory(Mogre::PixelBox dst);
 
-		//Mogre::RenderTexture^ GetRenderTarget(size_t slice);
-		//Mogre::RenderTexture^ GetRenderTarget();
+		Mogre::RenderTexture^ GetRenderTarget(size_t slice);
+		Mogre::RenderTexture^ GetRenderTarget();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(HardwarePixelBuffer);
 	};

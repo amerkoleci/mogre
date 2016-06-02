@@ -2,7 +2,7 @@
 #include "MogreHardwareBuffer.h"
 #include "MogreRoot.h"
 #include "MogreRenderSystem.h"
-
+#include "MogreRenderTarget.h"
 using namespace Mogre;
 
 HardwareBuffer::~HardwareBuffer()
@@ -212,15 +212,15 @@ void HardwarePixelBuffer::BlitToMemory(Mogre::PixelBox dst)
 	static_cast<Ogre::HardwarePixelBuffer*>(_native)->blitToMemory(dst);
 }
 
-//Mogre::RenderTexture^ HardwarePixelBuffer::GetRenderTarget(size_t slice)
-//{
-//	return static_cast<Ogre::HardwarePixelBuffer*>(_native)->getRenderTarget(slice);
-//}
-//
-//Mogre::RenderTexture^ HardwarePixelBuffer::GetRenderTarget()
-//{
-//	return static_cast<Ogre::HardwarePixelBuffer*>(_native)->getRenderTarget();
-//}
+Mogre::RenderTexture^ HardwarePixelBuffer::GetRenderTarget(size_t slice)
+{
+	return static_cast<Ogre::HardwarePixelBuffer*>(_native)->getRenderTarget(slice);
+}
+
+Mogre::RenderTexture^ HardwarePixelBuffer::GetRenderTarget()
+{
+	return static_cast<Ogre::HardwarePixelBuffer*>(_native)->getRenderTarget();
+}
 
 
 VertexElement::VertexElement(unsigned short source, size_t offset,

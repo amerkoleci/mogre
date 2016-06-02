@@ -4,6 +4,8 @@
 
 namespace Mogre
 {
+	ref class RenderTarget;
+
 	public ref class Viewport : IMogreDisposable
 	{
 	public:
@@ -119,6 +121,12 @@ namespace Mogre
 			Ogre::Real get();
 		}
 
+		property Mogre::RenderTarget^ Target
+		{
+		public:
+			Mogre::RenderTarget^ get();
+		}
+
 		property bool IsDisposed
 		{
 			virtual bool get()
@@ -126,6 +134,16 @@ namespace Mogre
 				return _native == nullptr;
 			}
 		}
+
+		void _updateDimensions();
+		void SetDimensions(Ogre::Real left, Ogre::Real top, Ogre::Real width, Ogre::Real height);
+		void GetActualDimensions([Out] int% left, [Out] int% top, [Out] int% width, [Out] int% height);
+
+		void Clear();
+		void Clear(unsigned int buffers);
+		void Clear(unsigned int buffers, Mogre::ColourValue colour);
+		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth);
+		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth, unsigned short stencil);
 
 	internal:
 		property Ogre::Viewport* UnmanagedPointer

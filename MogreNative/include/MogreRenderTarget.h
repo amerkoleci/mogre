@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OgreRenderTarget.h"
+#include "OgreRenderTexture.h"
 #include "Marshalling.h"
 
 namespace Mogre
@@ -205,12 +206,11 @@ namespace Mogre
 	internal:
 		Ogre::RenderTarget* _native;
 
-	private:
+	public protected:
 		RenderTarget(Ogre::RenderTarget* obj) : _native(obj)
 		{
 		}
 
-	public protected:
 		RenderTarget(intptr_t ptr) : _native((Ogre::RenderTarget*)ptr)
 		{
 
@@ -501,6 +501,8 @@ namespace Mogre
 
 		bool RequiresTextureFlipping();
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderTarget);
+
 	internal:
 		property Ogre::RenderTarget* UnmanagedPointer
 		{
@@ -537,5 +539,40 @@ namespace Mogre
 		{
 			ViewportRemoved(evt);
 		}
+	};
+
+	public ref class RenderTexture : public RenderTarget
+	{
+	public protected:
+		RenderTexture(Ogre::RenderTexture* obj) : RenderTarget(obj)
+		{
+		}
+
+
+		//Public Declarations
+	public:
+		void WriteContentsToFile(String^ filename);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderTexture);
+	};
+
+	//################################################################
+	//MultiRenderTarget
+	//################################################################
+
+	public ref class MultiRenderTarget : public RenderTarget
+	{
+	public protected:
+		MultiRenderTarget(Ogre::MultiRenderTarget* obj) : RenderTarget(obj)
+		{
+		}
+
+	public:
+		void BindSurface(size_t attachment, Mogre::RenderTexture^ target);
+		void UnbindSurface(size_t attachment);
+
+		void WriteContentsToFile(String^ filename);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(MultiRenderTarget);
 	};
 }

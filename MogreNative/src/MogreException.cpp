@@ -42,17 +42,19 @@ String^ OgreException::FullDescription::get()
 	return TO_CLR_STRING(static_cast<const Ogre::Exception*>(_native)->getFullDescription());
 }
 
-//bool OgreException::IsThrown::get()
-//{
-//	return Ogre::Exception::getIsThrown();
-//}
-//
+bool OgreException::IsThrown::get()
+{
+	// TODO:
+	//return Ogre::Exception::getIsThrown();
+	return false;
+}
 
-//Mogre::OgreException^ OgreException::LastException::get()
-//{
-//	auto ptr =  std::current_exception();
-//	return Ogre::Exception::getLastException();
-//}
+
+Mogre::OgreException^ OgreException::LastException::get()
+{
+	//return Ogre::Exception::getLastException();
+	return nullptr;
+}
 
 long OgreException::Line::get()
 {
