@@ -164,4 +164,14 @@ namespace Mogre
 		pin_ptr<Ogre::Matrix4> p_val = interior_ptr<Ogre::Matrix4>(&value->m00);
 		return Ogre::Matrix4(*p_val);
 	}
+
+	Aabb ToAabb(Ogre::Aabb value)
+	{
+		return Aabb(ToVector3(value.mCenter), ToVector3(value.mHalfSize));
+	}
+
+	Ogre::Aabb FromAabb(Aabb value)
+	{
+		return Ogre::Aabb(FromVector3(value.Center), FromVector3(value.HalfSize));
+	}
 }

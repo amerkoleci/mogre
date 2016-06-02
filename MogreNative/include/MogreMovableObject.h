@@ -89,6 +89,26 @@ namespace Mogre
 			}
 		}
 
+		property Mogre::Aabb LocalAabb
+		{
+		public:
+			Mogre::Aabb get();
+		public:
+			void set(Mogre::Aabb enabled);
+		}
+
+		property Mogre::Aabb WorldAabb
+		{
+		public:
+			Mogre::Aabb get();
+		}
+
+		property Mogre::Aabb WorldAabbUpdated
+		{
+		public:
+			Mogre::Aabb get();
+		}
+
 		property Ogre::Real WorldRadius
 		{
 		public:

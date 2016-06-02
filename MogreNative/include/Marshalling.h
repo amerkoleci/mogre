@@ -61,6 +61,9 @@ namespace Mogre
 
 	Matrix4 ToMatrix4(Ogre::Matrix4 value);
 	Ogre::Matrix4 FromMatrix4(Matrix4^ value);
+
+	Aabb ToAabb(Ogre::Aabb value);
+	Ogre::Aabb FromAabb(Aabb value);
 	
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
 			static operator T^ (const Ogre::T& ptr) {							\

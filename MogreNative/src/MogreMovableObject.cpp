@@ -111,6 +111,26 @@ MovableObject::!MovableObject()
 	OnDisposed(this, nullptr);
 }
 
+Mogre::Aabb MovableObject::LocalAabb::get()
+{
+	return ToAabb(_native->getLocalAabb());
+}
+
+void MovableObject::LocalAabb::set(Mogre::Aabb value)
+{
+	_native->setLocalAabb(FromAabb(value));
+}
+
+Mogre::Aabb MovableObject::WorldAabb::get()
+{
+	return ToAabb(_native->getWorldAabb());
+}
+
+Mogre::Aabb MovableObject::WorldAabbUpdated::get()
+{
+	return ToAabb(_native->getWorldAabbUpdated());
+}
+
 Ogre::Real MovableObject::WorldRadius::get()
 {
 	return static_cast<const Ogre::MovableObject*>(_native)->getWorldRadius();
