@@ -229,6 +229,104 @@ void RenderSystem::SetConfigOption(String^ name, String^ value)
 	_native->setConfigOption(o_name, o_value);
 }
 
+void RenderSystem::SetStencilCheckEnabled(bool enabled)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilCheckEnabled(enabled);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp, Mogre::StencilOperation passOp, bool twoSidedOperation)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask, writeMask, (Ogre::StencilOperation)stencilFailOp, (Ogre::StencilOperation)depthFailOp, (Ogre::StencilOperation)passOp, twoSidedOperation);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp, Mogre::StencilOperation passOp)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask, writeMask, (Ogre::StencilOperation)stencilFailOp, (Ogre::StencilOperation)depthFailOp, (Ogre::StencilOperation)passOp);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask, writeMask, (Ogre::StencilOperation)stencilFailOp, (Ogre::StencilOperation)depthFailOp);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask, writeMask, (Ogre::StencilOperation)stencilFailOp);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask, writeMask);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue, compareMask);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func, refValue);
+}
+
+void RenderSystem::SetStencilBufferParams(Mogre::CompareFunction func)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams((Ogre::CompareFunction)func);
+}
+
+void RenderSystem::SetStencilBufferParams()
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setStencilBufferParams();
+}
+
+void RenderSystem::SetInvertVertexWinding(bool invert)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setInvertVertexWinding(invert);
+}
+
+void RenderSystem::SetScissorTest(bool enabled, size_t left, size_t top, size_t right, size_t bottom)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setScissorTest(enabled, left, top, right, bottom);
+}
+void RenderSystem::SetScissorTest(bool enabled, size_t left, size_t top, size_t right)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setScissorTest(enabled, left, top, right);
+}
+void RenderSystem::SetScissorTest(bool enabled, size_t left, size_t top)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setScissorTest(enabled, left, top);
+}
+void RenderSystem::SetScissorTest(bool enabled, size_t left)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setScissorTest(enabled, left);
+}
+void RenderSystem::SetScissorTest(bool enabled)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setScissorTest(enabled);
+}
+
+void RenderSystem::ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour, Mogre::Real depth, unsigned short stencil)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->clearFrameBuffer(buffers, FromColor4(colour), depth, stencil);
+}
+void RenderSystem::ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour, Mogre::Real depth)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->clearFrameBuffer(buffers, FromColor4(colour), depth);
+}
+void RenderSystem::ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->clearFrameBuffer(buffers, FromColor4(colour));
+}
+void RenderSystem::ClearFrameBuffer(unsigned int buffers)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->clearFrameBuffer(buffers);
+}
+
+void RenderSystem::SetCurrentPassIterationCount(size_t count)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->setCurrentPassIterationCount(count);
+}
+
 Ogre::RenderSystem* RenderSystem::UnmanagedPointer::get()
 {
 	return _native;

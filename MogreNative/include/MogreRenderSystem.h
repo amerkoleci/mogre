@@ -2,6 +2,7 @@
 
 #include "OgreRenderSystem.h"
 #include "MogreHardwareBuffer.h"
+#include "MogreCommon.h"
 #include "STLContainerWrappers.h"
 #include "Marshalling.h"
 
@@ -398,6 +399,33 @@ namespace Mogre
 
 		Mogre::ConfigOptionMap^ GetConfigOptions();
 		void SetConfigOption(String^ name, String^ value);
+
+		void SetStencilCheckEnabled(bool enabled);
+
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp, Mogre::StencilOperation passOp, bool twoSidedOperation);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp, Mogre::StencilOperation passOp);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp, Mogre::StencilOperation depthFailOp);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask, Mogre::StencilOperation stencilFailOp);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask, Ogre::uint32 writeMask);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue, Ogre::uint32 compareMask);
+		void SetStencilBufferParams(Mogre::CompareFunction func, Ogre::uint32 refValue);
+		void SetStencilBufferParams(Mogre::CompareFunction func);
+		void SetStencilBufferParams();
+
+		void SetInvertVertexWinding(bool invert);
+
+		void SetScissorTest(bool enabled, size_t left, size_t top, size_t right, size_t bottom);
+		void SetScissorTest(bool enabled, size_t left, size_t top, size_t right);
+		void SetScissorTest(bool enabled, size_t left, size_t top);
+		void SetScissorTest(bool enabled, size_t left);
+		void SetScissorTest(bool enabled);
+
+		void ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour, Mogre::Real depth, unsigned short stencil);
+		void ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour, Mogre::Real depth);
+		void ClearFrameBuffer(unsigned int buffers, Mogre::ColourValue colour);
+		void ClearFrameBuffer(unsigned int buffers);
+
+		void SetCurrentPassIterationCount(size_t count);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderSystem);
 
