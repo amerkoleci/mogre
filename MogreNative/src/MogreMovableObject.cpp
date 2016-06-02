@@ -116,6 +116,11 @@ Ogre::Real MovableObject::WorldRadius::get()
 	return static_cast<const Ogre::MovableObject*>(_native)->getWorldRadius();
 }
 
+Ogre::Real MovableObject::WorldRadiusUpdated::get()
+{
+	return static_cast<Ogre::MovableObject*>(_native)->getWorldRadiusUpdated();
+}
+
 bool MovableObject::CastShadows::get()
 {
 	return static_cast<const Ogre::MovableObject*>(_native)->getCastShadows();
@@ -207,9 +212,20 @@ Ogre::Real MovableObject::RenderingDistance::get()
 {
 	return static_cast<const Ogre::MovableObject*>(_native)->getRenderingDistance();
 }
+
 void MovableObject::RenderingDistance::set(Ogre::Real dist)
 {
 	static_cast<Ogre::MovableObject*>(_native)->setRenderingDistance(dist);
+}
+
+Ogre::Real MovableObject::RenderingMinPixelSize::get()
+{
+	return static_cast<const Ogre::MovableObject*>(_native)->getRenderingMinPixelSize();
+}
+
+void MovableObject::RenderingMinPixelSize::set(Ogre::Real dist)
+{
+	static_cast<Ogre::MovableObject*>(_native)->setRenderingMinPixelSize(dist);
 }
 
 Ogre::uint8 MovableObject::RenderQueueGroup::get()

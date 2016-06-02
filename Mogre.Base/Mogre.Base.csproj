@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IMogreDisposable.cs" />
+    <Compile Include="Mathematics\Aabb.cs" />
     <Compile Include="Mathematics\Box.cs" />
     <Compile Include="Mathematics\Matrix3.cs" />
     <Compile Include="Mathematics\Matrix4.cs" />

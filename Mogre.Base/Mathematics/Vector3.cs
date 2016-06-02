@@ -505,6 +505,16 @@ namespace Mogre
         }
 
         /// <summary>
+        /// Causes negative members to become positive
+        /// </summary>
+        public void MakeAbs()
+        {
+            x = Math.Abs(x);
+            y = Math.Abs(y);
+            z = Math.Abs(z);
+        }
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="left">The first vector to add.</param>

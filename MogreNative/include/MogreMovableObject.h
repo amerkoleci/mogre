@@ -95,6 +95,12 @@ namespace Mogre
 			Ogre::Real get();
 		}
 
+		property Ogre::Real WorldRadiusUpdated
+		{
+		public:
+			Ogre::Real get();
+		}
+
 		property bool CastShadows
 		{
 		public:
@@ -181,6 +187,14 @@ namespace Mogre
 			void set(Ogre::Real dist);
 		}
 
+		property Ogre::Real RenderingMinPixelSize
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real dist);
+		}
+
 		property Ogre::uint8 RenderQueueGroup
 		{
 		public:
@@ -204,6 +218,7 @@ namespace Mogre
 		public:
 			void set(bool visible);
 		}
+
 
 	protected:
 		Object^ _userObject;
