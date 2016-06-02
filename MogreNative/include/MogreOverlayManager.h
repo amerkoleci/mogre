@@ -7,6 +7,8 @@
 #include "Overlay/OgreOverlayContainer.h"
 #include "MogreCommon.h"
 #include "MogreStringVector.h"
+#include "STLContainerWrappers.h"
+#include "IteratorWrapper.h"
 #include "Marshalling.h"
 
 namespace Mogre
@@ -18,6 +20,8 @@ namespace Mogre
 	ref class Material;
 	ref class MaterialPtr;
 	ref class Camera;
+	ref class SceneNode;
+	ref class DataStreamPtr;
 
 	public enum class GuiVerticalAlignment
 	{
@@ -383,6 +387,11 @@ namespace Mogre
 		/// <summary>Raised once all disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposed;
 
+	public:
+		INC_DECLARE_STLLIST(OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*, public:, private:);
+		INC_DECLARE_ITERATOR(Overlay2DElementsIterator, Ogre::Overlay::Overlay2DElementsIterator, Mogre::Overlay::OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*);
+
+
 	public protected:
 		Ogre::Overlay* _native;
 		bool _createdByCLR;
@@ -403,6 +412,8 @@ namespace Mogre
 		!Overlay();
 
 	public:
+		Overlay(String^ name);
+
 		property bool IsDisposed
 		{
 			virtual bool get()
@@ -410,6 +421,97 @@ namespace Mogre
 				return _native == nullptr;
 			}
 		}
+
+		property bool IsInitialised
+		{
+		public:
+			bool get();
+		}
+
+		property bool IsVisible
+		{
+		public:
+			bool get();
+		}
+
+		property String^ Name
+		{
+		public:
+			String^ get();
+		}
+
+		property String^ Origin
+		{
+		public:
+			String^ get();
+		}
+
+		property Mogre::Real ScaleX
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::Real ScaleY
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::Real ScrollX
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::Real ScrollY
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::ushort ZOrder
+		{
+		public:
+			Mogre::ushort get();
+		public:
+			void set(Mogre::ushort zorder);
+		}
+
+		Mogre::OverlayContainer^ GetChild(String^ name);
+
+		void Show();
+
+		void Hide();
+
+		void Add2D(Mogre::OverlayContainer^ cont);
+
+		void Remove2D(Mogre::OverlayContainer^ cont);
+
+		void Add3D(Mogre::SceneNode^ node);
+
+		void Remove3D(Mogre::SceneNode^ node);
+
+		void Clear();
+
+		void SetScroll(Mogre::Real x, Mogre::Real y);
+
+		void Scroll(Mogre::Real xoff, Mogre::Real yoff);
+
+		void SetRotate(Mogre::Radian angle);
+
+		Mogre::Radian GetRotate();
+
+		void Rotate(Mogre::Radian angle);
+
+		void SetScale(Mogre::Real x, Mogre::Real y);
+
+		//void _findVisibleObjects(Mogre::Camera^ cam, Mogre::RenderQueue^ queue);
+
+		Mogre::OverlayElement^ FindElementAt(Mogre::Real x, Mogre::Real y);
+
+		Mogre::Overlay::Overlay2DElementsIterator^ Get2DElementsIterator();
+		void _notifyOrigin(String^ origin);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Overlay);
 
@@ -543,6 +645,52 @@ namespace Mogre
 		public:
 			int get();
 		}
+
+		Mogre::Const_StringVector^ GetScriptPatterns();
+
+		void ParseScript(Mogre::DataStreamPtr^ stream, String^ groupName);
+
+		Mogre::Overlay^ Create(String^ name);
+
+		Mogre::Overlay^ GetByName(String^ name);
+
+		void Destroy(String^ name);
+
+		void Destroy(Mogre::Overlay^ overlay);
+
+		void DestroyAll();
+
+		//Mogre::OverlayManager::OverlayMapIterator^ GetOverlayIterator();
+		//void _queueOverlaysForRendering(Mogre::Camera^ cam, Mogre::RenderQueue^ pQueue, Mogre::Viewport^ vp);
+
+		Mogre::OverlayElement^ CreateOverlayElement(String^ typeName, String^ instanceName, bool isTemplate);
+		Mogre::OverlayElement^ CreateOverlayElement(String^ typeName, String^ instanceName);
+
+		Mogre::OverlayElement^ GetOverlayElement(String^ name, bool isTemplate);
+		Mogre::OverlayElement^ GetOverlayElement(String^ name);
+
+		void DestroyOverlayElement(String^ instanceName, bool isTemplate);
+		void DestroyOverlayElement(String^ instanceName);
+
+		void DestroyOverlayElement(Mogre::OverlayElement^ pInstance, bool isTemplate);
+		void DestroyOverlayElement(Mogre::OverlayElement^ pInstance);
+
+		void DestroyAllOverlayElements(bool isTemplate);
+		void DestroyAllOverlayElements();
+
+		bool HasOverlayElement(String^ instanceName, bool isTemplate);
+		bool HasOverlayElement(String^ instanceName);
+
+		//void AddOverlayElementFactory(Mogre::OverlayElementFactory^ elemFactory);
+
+		Mogre::OverlayElement^ CreateOverlayElementFromTemplate(String^ templateName, String^ typeName, String^ instanceName, bool isTemplate);
+		Mogre::OverlayElement^ CreateOverlayElementFromTemplate(String^ templateName, String^ typeName, String^ instanceName);
+		Mogre::OverlayElement^ CloneOverlayElementFromTemplate(String^ templateName, String^ instanceName);
+		Mogre::OverlayElement^ CreateOverlayElementFromFactory(String^ typeName, String^ instanceName);
+
+		//Mogre::OverlayManager::TemplateIterator^ GetTemplateIterator();
+
+		bool IsTemplate(String^ strName);
 
 	internal:
 		property Ogre::OverlayManager* UnmanagedPointer

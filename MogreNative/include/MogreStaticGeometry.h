@@ -106,6 +106,14 @@ namespace Mogre
 			Mogre::Real get();
 		}
 
+		property Ogre::uint32 VisibilityFlags
+		{
+		public:
+			Ogre::uint32 get();
+		public:
+			void set(Ogre::uint32 flags);
+		}
+
 		void AddEntity(Mogre::Entity^ ent, Mogre::Vector3 position, Mogre::Quaternion orientation, Mogre::Vector3 scale);
 		void AddEntity(Mogre::Entity^ ent, Mogre::Vector3 position, Mogre::Quaternion orientation);
 		void AddEntity(Mogre::Entity^ ent, Mogre::Vector3 position);

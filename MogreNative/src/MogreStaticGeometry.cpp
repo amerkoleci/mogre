@@ -128,6 +128,16 @@ void StaticGeometry::SetVisible(bool visible)
 	static_cast<Ogre::StaticGeometry*>(_native)->setVisible(visible);
 }
 
+Ogre::uint32 StaticGeometry::VisibilityFlags::get()
+{
+	return static_cast<const Ogre::StaticGeometry*>(_native)->getVisibilityFlags();
+}
+
+void StaticGeometry::VisibilityFlags::set(Ogre::uint32 flags)
+{
+	static_cast<Ogre::StaticGeometry*>(_native)->setVisibilityFlags(flags);
+}
+
 //Mogre::StaticGeometry::RegionIterator^ StaticGeometry::GetRegionIterator()
 //{
 //	return static_cast<Ogre::StaticGeometry*>(_native)->getRegionIterator();

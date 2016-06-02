@@ -8,8 +8,6 @@ using namespace Mogre;
 CPP_DECLARE_STLVECTOR(SceneNode::, ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
 CPP_DECLARE_ITERATOR(SceneNode::, ObjectIterator, Ogre::SceneNode::ObjectIterator, Mogre::SceneNode::ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, );
 
-
-
 Mogre::SceneNode^ SceneNode::ParentSceneNode::get()
 {
 	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<const Ogre::SceneNode*>(_native)->getParentSceneNode());

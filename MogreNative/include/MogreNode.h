@@ -27,18 +27,9 @@ namespace Mogre
 			Parent = Ogre::Node::TS_PARENT,
 			World = Ogre::Node::TS_WORLD
 		};
-		/*
-#define STLDECL_MANAGEDKEY String^
-#define STLDECL_MANAGEDVALUE Mogre::Node^
-#define STLDECL_NATIVEKEY Ogre::String
-#define STLDECL_NATIVEVALUE Ogre::Node*
-	public: INC_DECLARE_STLHASHMAP(ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE, public:, private:);
-#undef STLDECL_MANAGEDKEY
-#undef STLDECL_MANAGEDVALUE
-#undef STLDECL_NATIVEKEY
-#undef STLDECL_NATIVEVALUE*/
 
-		//INC_DECLARE_MAP_ITERATOR(ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String);
+		INC_DECLARE_STLVECTOR(NodeVec, Mogre::Node^, Ogre::Node*, public:, private:);
+		INC_DECLARE_ITERATOR(ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::NodeVec, Mogre::Node^, Ogre::Node*);
 
 	internal:
 		Ogre::Node* _native;
@@ -200,7 +191,7 @@ namespace Mogre
 
 		Mogre::Node^ GetChild(unsigned short index);
 
-		//Mogre::Node::ChildNodeIterator^ GetChildIterator();
+		Mogre::Node::ChildNodeIterator^ GetChildIterator();
 
 		void RemoveChild(Mogre::Node^ child);
 

@@ -3,6 +3,8 @@
 #include "MogreSceneManager.h"
 #include "MogreCamera.h"
 #include "MogreMaterialManager.h"
+#include "MogreSceneNode.h"
+#include "MogreDataStream.h"
 
 using namespace Mogre;
 
@@ -493,6 +495,21 @@ Mogre::Vector4 OverlayElement::GetCustomParameter(size_t index)
 }
 
 // ---------------- Overlay ---------------------
+CPP_DECLARE_STLLIST(Overlay::, OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*);
+CPP_DECLARE_ITERATOR(Overlay::, Overlay2DElementsIterator, Ogre::Overlay::Overlay2DElementsIterator, Mogre::Overlay::OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*, );
+
+//Private Declarations
+
+//Internal Declarations
+
+//Public Declarations
+Overlay::Overlay(String^ name) 
+{
+	_createdByCLR = true;
+	DECLARE_NATIVE_STRING(o_name, name);
+	_native = new Ogre::Overlay(o_name);
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
 
 Overlay::~Overlay()
 {
@@ -513,6 +530,149 @@ Overlay::!Overlay()
 	}
 
 	OnDisposed(this, nullptr);
+}
+
+bool Overlay::IsInitialised::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->isInitialised();
+}
+
+bool Overlay::IsVisible::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->isVisible();
+}
+
+String^ Overlay::Name::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::Overlay*>(_native)->getName());
+}
+
+String^ Overlay::Origin::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::Overlay*>(_native)->getOrigin());
+}
+
+Mogre::Real Overlay::ScaleX::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->getScaleX();
+}
+
+Mogre::Real Overlay::ScaleY::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->getScaleY();
+}
+
+Mogre::Real Overlay::ScrollX::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->getScrollX();
+}
+
+Mogre::Real Overlay::ScrollY::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->getScrollY();
+}
+
+Mogre::ushort Overlay::ZOrder::get()
+{
+	return static_cast<const Ogre::Overlay*>(_native)->getZOrder();
+}
+void Overlay::ZOrder::set(Mogre::ushort zorder)
+{
+	static_cast<Ogre::Overlay*>(_native)->setZOrder(zorder);
+}
+
+Mogre::OverlayContainer^ Overlay::GetChild(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::Overlay*>(_native)->getChild(o_name);
+}
+
+void Overlay::Show()
+{
+	static_cast<Ogre::Overlay*>(_native)->show();
+}
+
+void Overlay::Hide()
+{
+	static_cast<Ogre::Overlay*>(_native)->hide();
+}
+
+void Overlay::Add2D(Mogre::OverlayContainer^ cont)
+{
+	static_cast<Ogre::Overlay*>(_native)->add2D(cont);
+}
+
+void Overlay::Remove2D(Mogre::OverlayContainer^ cont)
+{
+	static_cast<Ogre::Overlay*>(_native)->remove2D(cont);
+}
+
+void Overlay::Add3D(Mogre::SceneNode^ node)
+{
+	static_cast<Ogre::Overlay*>(_native)->add3D(GetPointerOrNull(node));
+}
+
+void Overlay::Remove3D(Mogre::SceneNode^ node)
+{
+	static_cast<Ogre::Overlay*>(_native)->remove3D(node);
+}
+
+void Overlay::Clear()
+{
+	static_cast<Ogre::Overlay*>(_native)->clear();
+}
+
+void Overlay::SetScroll(Mogre::Real x, Mogre::Real y)
+{
+	static_cast<Ogre::Overlay*>(_native)->setScroll(x, y);
+}
+
+void Overlay::Scroll(Mogre::Real xoff, Mogre::Real yoff)
+{
+	static_cast<Ogre::Overlay*>(_native)->scroll(xoff, yoff);
+}
+
+void Overlay::SetRotate(Mogre::Radian angle)
+{
+	static_cast<Ogre::Overlay*>(_native)->setRotate(Ogre::Radian(angle.ValueRadians));
+}
+
+Mogre::Radian Overlay::GetRotate()
+{
+	return Mogre::Radian( static_cast<const Ogre::Overlay*>(_native)->getRotate().valueRadians() );
+}
+
+void Overlay::Rotate(Mogre::Radian angle)
+{
+	static_cast<Ogre::Overlay*>(_native)->rotate(Ogre::Radian(angle.ValueRadians));
+}
+
+void Overlay::SetScale(Mogre::Real x, Mogre::Real y)
+{
+	static_cast<Ogre::Overlay*>(_native)->setScale(x, y);
+}
+
+//void Overlay::_findVisibleObjects(Mogre::Camera^ cam, Mogre::RenderQueue^ queue)
+//{
+//	static_cast<Ogre::Overlay*>(_native)->_findVisibleObjects(cam, queue);
+//}
+
+Mogre::OverlayElement^ Overlay::FindElementAt(Mogre::Real x, Mogre::Real y)
+{
+	return static_cast<Ogre::Overlay*>(_native)->findElementAt(x, y);
+}
+
+Mogre::Overlay::Overlay2DElementsIterator^ Overlay::Get2DElementsIterator()
+{
+	return static_cast<Ogre::Overlay*>(_native)->get2DElementsIterator();
+}
+
+void Overlay::_notifyOrigin(String^ origin)
+{
+	DECLARE_NATIVE_STRING(o_origin, origin);
+
+	static_cast<Ogre::Overlay*>(_native)->_notifyOrigin(o_origin);
 }
 
 // ---------------- OverlaySystem ---------------------
@@ -598,4 +758,181 @@ int OverlayManager::ViewportHeight::get()
 int OverlayManager::ViewportWidth::get()
 {
 	return _native->getViewportWidth();
+}
+
+Mogre::Const_StringVector^ OverlayManager::GetScriptPatterns()
+{
+	return static_cast<const Ogre::OverlayManager*>(_native)->getScriptPatterns();
+}
+
+void OverlayManager::ParseScript(Mogre::DataStreamPtr^ stream, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	_native->parseScript((Ogre::DataStreamPtr&)stream, o_groupName);
+}
+
+Mogre::Overlay^ OverlayManager::Create(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return _native->create(o_name);
+}
+
+Mogre::Overlay^ OverlayManager::GetByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->getByName(o_name);
+}
+
+void OverlayManager::Destroy(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::OverlayManager*>(_native)->destroy(o_name);
+}
+
+void OverlayManager::Destroy(Mogre::Overlay^ overlay)
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroy(overlay);
+}
+
+void OverlayManager::DestroyAll()
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroyAll();
+}
+
+//Mogre::OverlayManager::OverlayMapIterator^ OverlayManager::GetOverlayIterator()
+//{
+//	return static_cast<Ogre::OverlayManager*>(_native)->getOverlayIterator();
+//}
+//
+//void OverlayManager::_queueOverlaysForRendering(Mogre::Camera^ cam, Mogre::RenderQueue^ pQueue, Mogre::Viewport^ vp)
+//{
+//	static_cast<Ogre::OverlayManager*>(_native)->_queueOverlaysForRendering(cam, pQueue, vp);
+//}
+
+Mogre::OverlayElement^ OverlayManager::CreateOverlayElement(String^ typeName, String^ instanceName, bool isTemplate)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElement(o_typeName, o_instanceName, isTemplate);
+}
+Mogre::OverlayElement^ OverlayManager::CreateOverlayElement(String^ typeName, String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElement(o_typeName, o_instanceName);
+}
+
+Mogre::OverlayElement^ OverlayManager::GetOverlayElement(String^ name, bool isTemplate)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->getOverlayElement(o_name, isTemplate);
+}
+Mogre::OverlayElement^ OverlayManager::GetOverlayElement(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->getOverlayElement(o_name);
+}
+
+void OverlayManager::DestroyOverlayElement(String^ instanceName, bool isTemplate)
+{
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	static_cast<Ogre::OverlayManager*>(_native)->destroyOverlayElement(o_instanceName, isTemplate);
+}
+
+void OverlayManager::DestroyOverlayElement(String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	static_cast<Ogre::OverlayManager*>(_native)->destroyOverlayElement(o_instanceName);
+}
+
+void OverlayManager::DestroyOverlayElement(Mogre::OverlayElement^ pInstance, bool isTemplate)
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroyOverlayElement(pInstance, isTemplate);
+}
+void OverlayManager::DestroyOverlayElement(Mogre::OverlayElement^ pInstance)
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroyOverlayElement(pInstance);
+}
+
+void OverlayManager::DestroyAllOverlayElements(bool isTemplate)
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroyAllOverlayElements(isTemplate);
+}
+void OverlayManager::DestroyAllOverlayElements()
+{
+	static_cast<Ogre::OverlayManager*>(_native)->destroyAllOverlayElements();
+}
+
+bool OverlayManager::HasOverlayElement(String^ instanceName, bool isTemplate)
+{
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->hasOverlayElement(o_instanceName, isTemplate);
+}
+
+bool OverlayManager::HasOverlayElement(String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->hasOverlayElement(o_instanceName);
+}
+
+//void OverlayManager::AddOverlayElementFactory(Mogre::OverlayElementFactory^ elemFactory)
+//{
+//	static_cast<Ogre::OverlayManager*>(_native)->addOverlayElementFactory(elemFactory);
+//}
+
+Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromTemplate(String^ templateName, String^ typeName, String^ instanceName, bool isTemplate)
+{
+	DECLARE_NATIVE_STRING(o_templateName, templateName);
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName, isTemplate);
+}
+Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromTemplate(String^ templateName, String^ typeName, String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_templateName, templateName);
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName);
+}
+
+Mogre::OverlayElement^ OverlayManager::CloneOverlayElementFromTemplate(String^ templateName, String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_templateName, templateName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->cloneOverlayElementFromTemplate(o_templateName, o_instanceName);
+}
+
+Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromFactory(String^ typeName, String^ instanceName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
+
+	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromFactory(o_typeName, o_instanceName);
+}
+
+//Mogre::OverlayManager::TemplateIterator^ OverlayManager::GetTemplateIterator()
+//{
+//	return static_cast<Ogre::OverlayManager*>(_native)->getTemplateIterator();
+//}
+
+bool OverlayManager::IsTemplate(String^ strName)
+{
+	DECLARE_NATIVE_STRING(o_strName, strName);
+
+	return static_cast<const Ogre::OverlayManager*>(_native)->isTemplate(o_strName);
 }

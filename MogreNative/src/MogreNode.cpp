@@ -3,19 +3,9 @@
 #include "Marshalling.h"
 
 using namespace Mogre;
-//
-//#define STLDECL_MANAGEDKEY String^
-//#define STLDECL_MANAGEDVALUE Mogre::Node^
-//#define STLDECL_NATIVEKEY Ogre::String
-//#define STLDECL_NATIVEVALUE Ogre::Node*
-//CPP_DECLARE_STLHASHMAP(Node::, ChildNodeMap, STLDECL_MANAGEDKEY, STLDECL_MANAGEDVALUE, STLDECL_NATIVEKEY, STLDECL_NATIVEVALUE);
-//#undef STLDECL_MANAGEDKEY
-//#undef STLDECL_MANAGEDVALUE
-//#undef STLDECL_NATIVEKEY
-//#undef STLDECL_NATIVEVALUE
 
-//CPP_DECLARE_MAP_ITERATOR(Node::, ChildNodeIterator, Ogre::Node::ChildNodeIterator, Mogre::Node::ChildNodeMap, Mogre::Node^, Ogre::Node*, String^, Ogre::String, );
-
+CPP_DECLARE_STLVECTOR(Node::, NodeVec, Mogre::Node^, Ogre::Node*);
+CPP_DECLARE_ITERATOR(Node::, ChildNodeIterator, Ogre::Node::NodeVecIterator, Mogre::Node::NodeVec, Mogre::Node^, Ogre::Node*, );
 
 Node::~Node()
 {
@@ -319,10 +309,10 @@ Mogre::Node^ Node::GetChild(unsigned short index)
 	return static_cast<const Ogre::Node*>(_native)->getChild(index);
 }
 
-//Mogre::Node::ChildNodeIterator^ Node::GetChildIterator()
-//{
-//	return static_cast<Ogre::Node*>(_native)->getChildIterator();
-//}
+Mogre::Node::ChildNodeIterator^ Node::GetChildIterator()
+{
+	return _native->getChildIterator();
+}
 
 void Node::RemoveChild(Mogre::Node^ child)
 {
