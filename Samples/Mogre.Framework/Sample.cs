@@ -13,9 +13,12 @@ namespace Mogre.Framework
     {
         protected readonly FileSystemLayer _fileSystemLayer;
         protected Root _root;
+        protected OverlaySystem _overlaySystem;
         protected RenderWindow _window;
         protected SceneManager _sceneManager;
         protected Camera _camera;
+        protected CompositorWorkspace _workspace;
+        protected ColourValue _backgroundColor = ColourValue.Black;
 
         public virtual string ThumbnailUrl
         {
@@ -34,25 +37,58 @@ namespace Mogre.Framework
                 _fileSystemLayer.GetWritablePath("ogre.cfg"),
                 _fileSystemLayer.GetWritablePath("Ogre.log"));
 
+            _overlaySystem = new OverlaySystem();
+
             SetupResources();
             if (Configure() == false)
             {
                 return false;
             }
 
+            TestCapabilities(_root.RenderSystem.Capabilities);
+
             // Now we have GPU stuff setup
             ResourceGroupManager.Singleton.AddBuiltinLocations();
             CreateSceneManager();
+            //InitializeRTShaderSystem(_sceneManager);
+            _overlaySystem.SceneManager = _sceneManager;
             CreateCamera();
-            SetupCompositor();
+            _workspace = SetupCompositor();
             TextureManager.Singleton.DefaultNumMipmaps = 5;
-            InitializeRTShaderSystem(_sceneManager);
             CreateResourceListener();
             LoadResources();
             CreateScene();
-            //this.CreateFrameListener();
+
+            // Create Frame Listeners
+            _root.FrameStarted += OnFrameStarted;
+            _root.FrameRenderingQueued += OnFrameRenderingQueued;
+            _root.FrameEnded += OnFrameEnded;
+
             //this.CreateInput();
             return true;
+        }
+
+        protected virtual bool OnFrameStarted(FrameEvent evt)
+        {
+            return true;
+        }
+
+        protected virtual bool OnFrameRenderingQueued(FrameEvent evt)
+        {
+            return true;
+        }
+
+        protected virtual bool OnFrameEnded(FrameEvent evt)
+        {
+            // quit if window was closed
+            if (_window.IsClosed) return false;
+
+            return true;
+        }
+
+        protected virtual void TestCapabilities(RenderSystemCapabilities caps)
+        {
+
         }
 
         protected virtual void SetupResources()
@@ -91,9 +127,6 @@ namespace Mogre.Framework
 #endif
 
             _sceneManager = _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
-#if RTSHADER_SYSTEM
-			mShaderGenerator->addSceneManager(_sceneManager);
-#endif
         }
 
         protected virtual void CreateCamera()
@@ -111,8 +144,7 @@ namespace Mogre.Framework
             string workspaceName = GetType().Name + "Workspace";
             if (!compositorManager.HasWorkspaceDefinition(workspaceName))
             {
-                var backgroundColor = ColourValue.Black;
-                compositorManager.CreateBasicWorkspaceDef(workspaceName, backgroundColor);
+                compositorManager.CreateBasicWorkspaceDef(workspaceName, _backgroundColor);
             }
 
             return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName);
@@ -146,6 +178,16 @@ namespace Mogre.Framework
 
             _root.StartRendering();
             DestroyScene();
+
+            if (_overlaySystem != null)
+            {
+                _overlaySystem.Dispose();
+                _overlaySystem = null;
+            }
+
+            _root.FrameStarted -= OnFrameStarted;
+            _root.FrameRenderingQueued -= OnFrameRenderingQueued;
+            _root.FrameEnded -= OnFrameEnded;
             _root.Dispose();
             _root = null;
         }

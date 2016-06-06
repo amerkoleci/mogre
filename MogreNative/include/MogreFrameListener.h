@@ -13,7 +13,6 @@ namespace Mogre
 	{
 	public:
 		Ogre::Real timeSinceLastEvent;
-
 		Ogre::Real timeSinceLastFrame;
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_VALUECLASS(FrameEvent);
@@ -22,6 +21,7 @@ namespace Mogre
 	interface class IFrameListener_Receiver
 	{
 		bool FrameStarted(Mogre::FrameEvent evt);
+		bool FrameRenderingQueued(Mogre::FrameEvent evt);
 		bool FrameEnded(Mogre::FrameEvent evt);
 	};
 
@@ -29,6 +29,7 @@ namespace Mogre
 	{
 	public:
 		delegate static bool FrameStartedHandler(Mogre::FrameEvent evt);
+		delegate static bool FrameRenderingQueuedHandler(Mogre::FrameEvent evt);
 		delegate static bool FrameEndedHandler(Mogre::FrameEvent evt);
 	};
 
@@ -39,15 +40,16 @@ namespace Mogre
 
 	public:
 		FrameListener_Director(IFrameListener_Receiver^ recv)
-			: _receiver(recv), doCallForFrameStarted(false), doCallForFrameEnded(false)
+			: _receiver(recv), doCallForFrameStarted(false), doCallForFrameRenderingQueued(false), doCallForFrameEnded(false)
 		{
 		}
 
 		bool doCallForFrameStarted;
+		bool doCallForFrameRenderingQueued;
 		bool doCallForFrameEnded;
 
 		virtual bool frameStarted(const Ogre::FrameEvent& evt) override;
-
+		virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 		virtual bool frameEnded(const Ogre::FrameEvent& evt) override;
 	};
 }

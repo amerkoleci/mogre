@@ -1,6 +1,6 @@
 group "Managed"
-    	external "Mogre.Sample.SkyBox"
-		location (path.join(MOGRE_HOME, "Samples/Mogre.Sample.SkyBox"))
-		uuid "4EA2E814-D393-4DDE-B13E-B5540C3AEEEF"
+    	external "Mogre.Sample.SkyPlane"
+		location (path.join(MOGRE_HOME, "Samples/Mogre.Sample.SkyPlane"))
+		uuid "57E2D301-EABE-4774-98F9-3D55E894F567"
 		kind "SharedLib"
 		language "C#"

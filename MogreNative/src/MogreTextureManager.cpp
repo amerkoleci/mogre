@@ -629,7 +629,16 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, num_mips, (Ogre::PixelFormat)format, usage);
+	Ogre::TexturePtr nativeTexture = static_cast<Ogre::TextureManager*>(_native)->createManual(
+		o_name, 
+		o_group,
+		(Ogre::TextureType)texType,
+		width,
+		height, 
+		num_mips,
+		(Ogre::PixelFormat)format);
+
+	return nativeTexture;
 }
 Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, int num_mips, Mogre::PixelFormat format)
 {

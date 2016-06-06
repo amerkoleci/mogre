@@ -677,12 +677,11 @@ void Overlay::_notifyOrigin(String^ origin)
 
 // ---------------- OverlaySystem ---------------------
 
-OverlaySystem::OverlaySystem(SceneManager^ sceneManager)
-	: _sceneManager(sceneManager)
+OverlaySystem::OverlaySystem()
+	: _sceneManager(nullptr)
 {
 	_createdByCLR = true;
 	_native = OGRE_NEW Ogre::OverlaySystem();
-	GetPointerOrNull(sceneManager)->addRenderQueueListener(_native);
 }
 
 OverlaySystem::~OverlaySystem()
@@ -709,6 +708,29 @@ OverlaySystem::!OverlaySystem()
 	}
 
 	OnDisposed(this, nullptr);
+}
+
+Mogre::SceneManager^ OverlaySystem::SceneManager::get()
+{
+	return _sceneManager;
+}
+
+void OverlaySystem::SceneManager::set(Mogre::SceneManager^ value)
+{
+	if (value != nullptr)
+	{
+		GetPointerOrNull(value)->addRenderQueueListener(_native);
+		_sceneManager = value;
+	}
+	else
+	{
+		if (_sceneManager)
+		{
+			GetPointerOrNull(_sceneManager)->removeRenderQueueListener(_native);
+		}
+
+		_sceneManager = nullptr;
+	}
 }
 
 // ---------------- OverlayManager ---------------------

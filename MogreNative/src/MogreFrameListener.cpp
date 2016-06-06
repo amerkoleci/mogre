@@ -14,6 +14,16 @@ bool FrameListener_Director::frameStarted(const Ogre::FrameEvent& evt)
 	return true;
 }
 
+bool FrameListener_Director::frameRenderingQueued(const Ogre::FrameEvent& evt)
+{
+	if (doCallForFrameRenderingQueued)
+	{
+		return _receiver->FrameRenderingQueued(evt);
+	}
+
+	return true;
+}
+
 bool FrameListener_Director::frameEnded(const Ogre::FrameEvent& evt)
 {
 	if (doCallForFrameEnded)

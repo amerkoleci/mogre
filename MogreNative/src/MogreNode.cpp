@@ -134,6 +134,11 @@ void Node::DerivedPosition::set(Mogre::Vector3 value)
 	_native->_setDerivedPosition(FromVector3(value));
 }
 
+Ogre::IdType Node::Id::get()
+{
+	return _native->getId();
+}
+
 void Node::SetOrientation(Ogre::Real w, Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
 	_native->setOrientation(w, x, y, z);
@@ -334,14 +339,29 @@ Mogre::Vector3 Node::_getDerivedPosition()
 	return ToVector3(_native->_getDerivedPosition());
 }
 
+Mogre::Vector3 Node::_getDerivedPositionUpdated()
+{
+	return ToVector3(_native->_getDerivedPositionUpdated());
+}
+
 Mogre::Vector3 Node::_getDerivedScale()
 {
 	return ToVector3(_native->_getDerivedScale());
 }
 
+Mogre::Vector3 Node::_getDerivedScaleUpdated()
+{
+	return ToVector3(_native->_getDerivedScaleUpdated());
+}
+
 Mogre::Matrix4^ Node::_getFullTransform()
 {
 	return ToMatrix4(_native->_getFullTransform());
+}
+
+Mogre::Matrix4^ Node::_getFullTransformUpdated()
+{
+	return ToMatrix4(_native->_getFullTransformUpdated());
 }
 
 Ogre::Node* Node::UnmanagedPointer::get()

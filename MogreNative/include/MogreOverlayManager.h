@@ -548,7 +548,7 @@ namespace Mogre
 		}
 
 	public:
-		OverlaySystem(SceneManager^ sceneManager);
+		OverlaySystem();
 
 		~OverlaySystem();
 	protected:
@@ -561,6 +561,14 @@ namespace Mogre
 			{
 				return _native == nullptr;
 			}
+		}
+
+		property Mogre::SceneManager^ SceneManager
+		{
+		public:
+			Mogre::SceneManager^ get();
+		public:
+			void set(Mogre::SceneManager^ value);
 		}
 
 	internal:

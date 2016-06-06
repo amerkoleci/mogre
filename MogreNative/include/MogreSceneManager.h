@@ -11,6 +11,9 @@
 #include "MogreParticleSystem.h"
 #include "MogreManualObject.h"
 #include "MogreStaticGeometry.h"
+#include "STLContainerWrappers.h"
+#include "IteratorWrapper.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -75,6 +78,10 @@ namespace Mogre
 		virtual event EventHandler^ OnDisposing;
 		/// <summary>Raised once all disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposed;
+
+	public:
+		INC_DECLARE_STLVECTOR(MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, public:, private:);
+		INC_DECLARE_ITERATOR(MovableObjectIterator, Ogre::SceneManager::MovableObjectIterator, Mogre::SceneManager::MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
 
 	public:
 		enum class PrefabType
@@ -217,10 +224,59 @@ namespace Mogre
 			void set(Mogre::ColourValue colour);
 		}
 
+		property bool FindVisibleObjects
+		{
+		public:
+			bool get();
+		public:
+			void set(bool find);
+		}
+
+		property Mogre::ColourValue FogColour
+		{
+		public:
+			Mogre::ColourValue get();
+		}
+
+		property Mogre::Real FogDensity
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::Real FogEnd
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Mogre::FogMode FogMode
+		{
+		public:
+			Mogre::FogMode get();
+		}
+
+		property Mogre::Real FogStart
+		{
+		public:
+			Mogre::Real get();
+		}
+
+		property Ogre::uint32 VisibilityMask
+		{
+		public:
+			Ogre::uint32 get();
+		public:
+			void set(Ogre::uint32 vmask);
+		}
+
+		Mogre::SceneNode^ GetRootSceneNode();
+		Mogre::SceneNode^ GetRootSceneNode(SceneMemoryMgrTypes sceneType);
 
 		Mogre::SceneNode^ CreateSceneNode();
 		Mogre::SceneNode^ CreateSceneNode(SceneMemoryMgrTypes sceneType);
 		void DestroySceneNode(Mogre::SceneNode^ node);
+		Mogre::SceneNode^ GetSceneNode(Ogre::IdType id);
 
 		Mogre::BillboardSet^ CreateBillboardSet(unsigned int poolSize);
 		void DestroyBillboardSet(Mogre::BillboardSet^ set);
@@ -349,7 +405,14 @@ namespace Mogre
 		bool HasMovableObject(MovableObject^ movable);
 		void DestroyMovableObject(MovableObject^ movable, String^ typeName);
 		void DestroyMovableObject(MovableObject^ movable);
+		void DestroyAllMovableObjectsByType(String^ typeName);
 		void DestroyAllMovableObjects();
+
+		Mogre::SceneManager::MovableObjectIterator^ GetMovableObjectIterator(String^ typeName);
+
+		void InjectMovableObject(Mogre::MovableObject^ m);
+		void ExtractMovableObject(Mogre::MovableObject^ m);
+		void ExtractAllMovableObjectsByType(String^ typeName);
 
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer

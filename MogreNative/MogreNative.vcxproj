@@ -224,6 +224,7 @@
     <ClInclude Include="include\MogreRenderWindow.h" />
     <ClInclude Include="include\MogreResource.h" />
     <ClInclude Include="include\MogreResourceGroupManager.h" />
+    <ClInclude Include="include\MogreResourceManager.h" />
     <ClInclude Include="include\MogreRibbonTrail.h" />
     <ClInclude Include="include\MogreRTShaderSystem.h" />
     <ClInclude Include="include\MogreSceneManager.h" />

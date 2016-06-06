@@ -5,7 +5,7 @@
 #include "MogreAnimation.h"
 #include "MogreMeshManager.h"
 #include "MogreSceneQuery.h"
-#include "Marshalling.h"
+#include "MogreMovableObject.h"
 
 using namespace Mogre;
 
@@ -35,6 +35,9 @@ void RenderQueueListener_Director::renderQueueEnded(Ogre::uint8 queueGroupId, co
 		_receiver->RenderQueueEnded(queueGroupId, TO_CLR_STRING(invocation), repeatThisInvocation);
 	}
 }
+
+CPP_DECLARE_STLVECTOR(SceneManager::, MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
+CPP_DECLARE_ITERATOR(SceneManager::, MovableObjectIterator, Ogre::SceneManager::MovableObjectIterator, Mogre::SceneManager::MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, );
 
 SceneManager::~SceneManager()
 {
@@ -89,6 +92,17 @@ void SceneManager::DisplaySceneNodes::set(bool value)
 	_native->setDisplaySceneNodes(value);
 }
 
+Mogre::SceneNode^ SceneManager::GetRootSceneNode()
+{
+	return _native->getRootSceneNode();
+}
+
+Mogre::SceneNode^ SceneManager::GetRootSceneNode(SceneMemoryMgrTypes sceneType)
+{
+	return _native->getRootSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+}
+
+
 Mogre::SceneNode^ SceneManager::CreateSceneNode()
 {
 	return _native->createSceneNode();
@@ -102,6 +116,11 @@ Mogre::SceneNode^ SceneManager::CreateSceneNode(SceneMemoryMgrTypes sceneType)
 void SceneManager::DestroySceneNode(Mogre::SceneNode^ node)
 {
 	_native->destroySceneNode(node);
+}
+
+Mogre::SceneNode^ SceneManager::GetSceneNode(Ogre::IdType id)
+{
+	return _native->getSceneNode(id);
 }
 
 Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
@@ -279,27 +298,27 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, S
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
+	return _native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType);
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity((Ogre::SceneManager::PrefabType)ptype));
+	return _native->createEntity((Ogre::SceneManager::PrefabType)ptype);
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType));
+	return _native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType);
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType));
+	return _native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType);
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(mesh));
+	return _native->createEntity(mesh);
 }
 
 void SceneManager::DestroyEntity(Mogre::Entity^ ent)
@@ -620,6 +639,51 @@ void SceneManager::ShadowColour::set(Mogre::ColourValue colour)
 	_native->setShadowColour(FromColor4(colour));
 }
 
+bool SceneManager::FindVisibleObjects::get()
+{
+	return _native->getFindVisibleObjects();
+}
+void SceneManager::FindVisibleObjects::set(bool find)
+{
+	_native->setFindVisibleObjects(find);
+}
+
+Mogre::ColourValue SceneManager::FogColour::get()
+{
+	return ToColor4(_native->getFogColour());
+}
+
+Mogre::Real SceneManager::FogDensity::get()
+{
+	return _native->getFogDensity();
+}
+
+Mogre::Real SceneManager::FogEnd::get()
+{
+	return _native->getFogEnd();
+}
+
+Mogre::FogMode SceneManager::FogMode::get()
+{
+	return (Mogre::FogMode)_native->getFogMode();
+}
+
+Mogre::Real SceneManager::FogStart::get()
+{
+	return _native->getFogStart();
+}
+
+
+Ogre::uint32 SceneManager::VisibilityMask::get()
+{
+	return _native->getVisibilityMask();
+}
+
+void SceneManager::VisibilityMask::set(Ogre::uint32 vmask)
+{
+	_native->setVisibilityMask(vmask);
+}
+
 Mogre::StaticGeometry^ SceneManager::CreateStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
@@ -729,9 +793,40 @@ void SceneManager::DestroyMovableObject(MovableObject^ movable)
 	_native->destroyMovableObject(movable);
 }
 
+void SceneManager::DestroyAllMovableObjectsByType(String^ typeName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+
+	_native->destroyAllMovableObjectsByType(o_typeName);
+}
+
 void SceneManager::DestroyAllMovableObjects()
 {
 	_native->destroyAllMovableObjects();
+}
+
+Mogre::SceneManager::MovableObjectIterator^ SceneManager::GetMovableObjectIterator(String^ typeName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+
+	return _native->getMovableObjectIterator(o_typeName);
+}
+
+void SceneManager::InjectMovableObject(Mogre::MovableObject^ m)
+{
+	_native->injectMovableObject(m);
+}
+
+void SceneManager::ExtractMovableObject(Mogre::MovableObject^ m)
+{
+	_native->extractMovableObject(m);
+}
+
+void SceneManager::ExtractAllMovableObjectsByType(String^ typeName)
+{
+	DECLARE_NATIVE_STRING(o_typeName, typeName);
+
+	_native->extractAllMovableObjectsByType(o_typeName);
 }
 
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()

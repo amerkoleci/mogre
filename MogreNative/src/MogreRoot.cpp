@@ -146,7 +146,7 @@ void Root::DefaultMinPixelSize::set(Ogre::Real value)
 
 Mogre::RenderSystem^ Root::RenderSystem::get()
 {
-	return ObjectTable::TryGetObject<Mogre::RenderSystem^>((intptr_t)_native->getRenderSystem());
+	return _native->getRenderSystem();
 }
 
 void Root::RenderSystem::set(Mogre::RenderSystem^ system)

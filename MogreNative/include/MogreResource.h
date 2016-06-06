@@ -281,14 +281,16 @@ namespace Mogre
 
 		void ChangeGroupOwnership(String^ newGroup);
 
-		internal:
-			property Ogre::Resource* UnmanagedPointer
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Resource);
+
+	internal:
+		property Ogre::Resource* UnmanagedPointer
+		{
+			Ogre::Resource* get()
 			{
-				Ogre::Resource* get()
-				{
-					return _native;
-				}
+				return _native;
 			}
+		}
 
 	protected public:
 		virtual void OnLoadingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::LoadingComplete
@@ -296,12 +298,12 @@ namespace Mogre
 			LoadingComplete(param1);
 		}
 
-		virtual void OnPreparingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::PreparingComplete
+			virtual void OnPreparingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::PreparingComplete
 		{
 			PreparingComplete(param1);
 		}
 
-		virtual void OnUnloadingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::UnloadingComplete
+			virtual void OnUnloadingComplete(Mogre::Resource^ param1) = IResource_Listener_Receiver::UnloadingComplete
 		{
 			UnloadingComplete(param1);
 		}
@@ -334,7 +336,7 @@ namespace Mogre
 	public:
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(ResourcePtr);
 
-			ResourcePtr(Resource^ obj) : Resource(obj->_native)
+		ResourcePtr(Resource^ obj) : Resource(obj->_native)
 		{
 			_sharedPtr = new Ogre::ResourcePtr(static_cast<Ogre::Resource*>(obj->_native));
 		}

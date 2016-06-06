@@ -143,6 +143,12 @@ namespace Mogre
 			void set(Mogre::Vector3 value);
 		}
 
+		property Ogre::IdType Id
+		{
+		public:
+			Ogre::IdType get();
+		}
+
 		void SetOrientation(Ogre::Real w, Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		void ResetOrientation();
 		void SetPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
@@ -200,10 +206,13 @@ namespace Mogre
 		Mogre::Quaternion _getDerivedOrientation();
 
 		Mogre::Vector3 _getDerivedPosition();
+		Mogre::Vector3 _getDerivedPositionUpdated();
 
 		Mogre::Vector3 _getDerivedScale();
+		Mogre::Vector3 _getDerivedScaleUpdated();
 
 		Mogre::Matrix4^ _getFullTransform();
+		Mogre::Matrix4^ _getFullTransformUpdated();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Node);
 

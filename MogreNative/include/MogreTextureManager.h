@@ -7,6 +7,10 @@
 #include "MogrePixelFormat.h"
 #include "MogrePixelBox.h"
 
+#ifdef LoadImage
+#	undef LoadImage
+#endif
+
 namespace Mogre
 {
 	public enum class TextureMipmap
@@ -20,7 +24,9 @@ namespace Mogre
 		TEX_TYPE_1D = Ogre::TEX_TYPE_1D,
 		TEX_TYPE_2D = Ogre::TEX_TYPE_2D,
 		TEX_TYPE_3D = Ogre::TEX_TYPE_3D,
-		TEX_TYPE_CUBE_MAP = Ogre::TEX_TYPE_CUBE_MAP
+		TEX_TYPE_CUBE_MAP = Ogre::TEX_TYPE_CUBE_MAP,
+		TEX_TYPE_2D_ARRAY = Ogre::TEX_TYPE_2D_ARRAY,
+		TEX_TYPE_2D_RECT = Ogre::TEX_TYPE_2D_RECT
 	};
 
 	public enum class TextureUsage
@@ -59,15 +65,15 @@ namespace Mogre
 		typedef Mogre::Box Box;
 		typedef Mogre::Rect Rect;
 
-	public: enum class Filter
-	{
-		FILTER_NEAREST = Ogre::Image::FILTER_NEAREST,
-		FILTER_LINEAR = Ogre::Image::FILTER_LINEAR,
-		FILTER_BILINEAR = Ogre::Image::FILTER_BILINEAR,
-		FILTER_BOX = Ogre::Image::FILTER_BOX,
-		FILTER_TRIANGLE = Ogre::Image::FILTER_TRIANGLE,
-		FILTER_BICUBIC = Ogre::Image::FILTER_BICUBIC
-	};
+		enum class Filter
+		{
+			FILTER_NEAREST = Ogre::Image::FILTER_NEAREST,
+			FILTER_LINEAR = Ogre::Image::FILTER_LINEAR,
+			FILTER_BILINEAR = Ogre::Image::FILTER_BILINEAR,
+			FILTER_BOX = Ogre::Image::FILTER_BOX,
+			FILTER_TRIANGLE = Ogre::Image::FILTER_TRIANGLE,
+			FILTER_BICUBIC = Ogre::Image::FILTER_BICUBIC
+		};
 
 	private protected:
 		virtual void ClearNativePtr()
@@ -77,6 +83,10 @@ namespace Mogre
 
 	public protected:
 		Image(Ogre::Image* obj) : _native(obj), _createdByCLR(false)
+		{
+		}
+
+		Image(intptr_t obj) : _native((Ogre::Image*)obj), _createdByCLR(false)
 		{
 		}
 
@@ -212,6 +222,8 @@ namespace Mogre
 
 		static size_t CalculateSize(size_t mipmaps, size_t faces, size_t width, size_t height, size_t depth, Mogre::PixelFormat format);
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Image);
+
 	internal:
 		property Ogre::Image* UnmanagedPointer
 		{
@@ -229,11 +241,7 @@ namespace Mogre
 		{
 		}
 
-		Texture(intptr_t ptr) : Resource((Ogre::Texture*)ptr)
-		{
-		}
-
-		Texture(Ogre::Resource* obj) : Resource(obj)
+		Texture(intptr_t ptr) : Resource(ptr)
 		{
 		}
 
@@ -389,6 +397,8 @@ namespace Mogre
 		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer(size_t face);
 		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer();
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Texture);
+
 	internal:
 		property Ogre::Texture* UnmanagedPointer
 		{
@@ -506,7 +516,7 @@ namespace Mogre
 		{
 			Texture^ get()
 			{
-				return ObjectTable::GetOrCreateObject<Texture^>((intptr_t)static_cast<Ogre::Texture*>(_native));
+				return static_cast<Ogre::Texture*>(_native);
 			}
 		}
 	};

@@ -37,6 +37,8 @@ include ("Samples/Mogre.Framework")
 
 -- Now Samples
 include ("Samples/Mogre.Sample.SkyBox")
+include ("Samples/Mogre.Sample.SkyPlane")
+include ("Samples/Mogre.Sample.CubeMapping")
 
 -- Mogre.SampleBrowser
 include ("Mogre.SampleBrowser")

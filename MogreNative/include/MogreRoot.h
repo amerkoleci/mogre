@@ -121,6 +121,8 @@ namespace Mogre
 		FrameListener_Director* _frameListener;
 		Mogre::FrameListener::FrameStartedHandler^ _frameStarted;
 		array<Delegate^>^ _frameStartedDelegates;
+		Mogre::FrameListener::FrameRenderingQueuedHandler^ _frameRenderingQueued;
+		array<Delegate^>^ _frameRenderingQueuedDelegates;
 		Mogre::FrameListener::FrameEndedHandler^ _frameEnded;
 		array<Delegate^>^ _frameEndedDelegates;
 
@@ -200,6 +202,44 @@ namespace Mogre
 					for (int i = 0; i < _frameStartedDelegates->Length; i++)
 					{
 						mp_return = static_cast<Mogre::FrameListener::FrameStartedHandler^>(_frameStartedDelegates[i])(evt);
+						if (mp_return == false) break;
+					}
+					return mp_return;
+				}
+			}
+		}
+
+		event Mogre::FrameListener::FrameRenderingQueuedHandler^ FrameRenderingQueued
+		{
+			void add(Mogre::FrameListener::FrameRenderingQueuedHandler^ hnd)
+			{
+				if (_frameRenderingQueued == CLR_NULL)
+				{
+					if (_frameListener == 0)
+					{
+						_frameListener = new FrameListener_Director(this);
+						_native->addFrameListener(_frameListener);
+					}
+					_frameListener->doCallForFrameRenderingQueued = true;
+				}
+				_frameRenderingQueued += hnd;
+				_frameRenderingQueuedDelegates = _frameRenderingQueued->GetInvocationList();
+			}
+			void remove(Mogre::FrameListener::FrameRenderingQueuedHandler^ hnd)
+			{
+				_frameRenderingQueued -= hnd;
+				if (_frameRenderingQueued == CLR_NULL) _frameListener->doCallForFrameRenderingQueued = false;
+				if (_frameRenderingQueued == CLR_NULL) _frameRenderingQueuedDelegates = nullptr; else _frameRenderingQueuedDelegates = _frameRenderingQueued->GetInvocationList();
+			}
+		private:
+			bool raise(Mogre::FrameEvent evt)
+			{
+				if (_frameRenderingQueued)
+				{
+					bool mp_return;
+					for (int i = 0; i < _frameRenderingQueuedDelegates->Length; i++)
+					{
+						mp_return = static_cast<Mogre::FrameListener::FrameRenderingQueuedHandler^>(_frameRenderingQueuedDelegates[i])(evt);
 						if (mp_return == false) break;
 					}
 					return mp_return;
@@ -368,7 +408,12 @@ namespace Mogre
 			return FrameStarted(evt);
 		}
 
-			virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
+		virtual bool OnFrameRenderingQueued(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameRenderingQueued
+		{
+			return FrameRenderingQueued(evt);
+		}
+
+		virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
 		{
 			return FrameEnded(evt);
 		}

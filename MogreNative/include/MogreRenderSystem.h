@@ -159,6 +159,10 @@ namespace Mogre
 		{
 		}
 
+		RenderSystemCapabilities(intptr_t ptr) : _native((Ogre::RenderSystemCapabilities*)ptr), _createdByCLR(false)
+		{
+		}
+
 		~RenderSystemCapabilities()
 		{
 			if (_createdByCLR &&_native)

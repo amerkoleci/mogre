@@ -18,7 +18,7 @@ namespace Mogre
 	ref class IndexData;
 	ref class Mesh;
 	ref class MeshPtr;
-	
+
 	public ref class SubMesh : IMogreDisposable
 	{
 	public:
@@ -120,10 +120,6 @@ namespace Mogre
 		}
 
 		Mesh(intptr_t ptr) : Resource((Ogre::Mesh*)ptr)
-		{
-		}
-
-		Mesh(Ogre::Resource* obj) : Resource(obj)
 		{
 		}
 
