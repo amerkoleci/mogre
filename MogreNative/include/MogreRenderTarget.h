@@ -548,8 +548,10 @@ namespace Mogre
 		{
 		}
 
+		RenderTexture(intptr_t ptr) : RenderTarget(ptr)
+		{
+		}
 
-		//Public Declarations
 	public:
 		void WriteContentsToFile(String^ filename);
 
@@ -564,6 +566,10 @@ namespace Mogre
 	{
 	public protected:
 		MultiRenderTarget(Ogre::MultiRenderTarget* obj) : RenderTarget(obj)
+		{
+		}
+
+		MultiRenderTarget(intptr_t ptr) : RenderTarget(ptr)
 		{
 		}
 

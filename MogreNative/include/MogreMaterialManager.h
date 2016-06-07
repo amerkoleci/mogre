@@ -1686,6 +1686,7 @@ namespace Mogre
 		MaterialPtr(Ogre::MaterialPtr& sharedPtr) : Material(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::MaterialPtr(sharedPtr);
+			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!MaterialPtr()

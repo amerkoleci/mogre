@@ -95,6 +95,77 @@ Ogre::CompositorWorkspaceDef* CompositorWorkspaceDef::UnmanagedPointer::get()
 	return static_cast<Ogre::CompositorWorkspaceDef*>(_native);
 }
 
+// CompositorWorkspaceListener
+class CompositorWorkspaceListener_Proxy : public Ogre::CompositorWorkspaceListener
+{
+public:
+	friend ref class Mogre::CompositorWorkspaceListener;
+
+	gcroot<Mogre::CompositorWorkspaceListener^> _managed;
+
+	CompositorWorkspaceListener_Proxy(Mogre::CompositorWorkspaceListener^ managedObj) : Ogre::CompositorWorkspaceListener()
+		, _managed(managedObj)
+	{
+	}
+
+	virtual void workspacePreUpdate(Ogre::CompositorWorkspace *workspace) override;
+	virtual void passPreExecute(Ogre::CompositorPass *pass) override;
+};
+
+Ogre::CompositorWorkspaceListener* CompositorWorkspaceListener::_IListener_GetNativePtr()
+{
+	return static_cast<Ogre::CompositorWorkspaceListener*>(static_cast<CompositorWorkspaceListener_Proxy*>(_native));
+}
+
+void CompositorWorkspaceListener_Proxy::workspacePreUpdate(Ogre::CompositorWorkspace *workspace)
+{
+	_managed->WorkspacePreUpdate(workspace);
+}
+
+void CompositorWorkspaceListener_Proxy::passPreExecute(Ogre::CompositorPass *pass)
+{
+
+}
+
+CompositorWorkspaceListener::CompositorWorkspaceListener()
+{
+	_createdByCLR = true;
+	//Type^ thisType = this->GetType();
+	CompositorWorkspaceListener_Proxy* proxy = new CompositorWorkspaceListener_Proxy(this);
+	_native = proxy;
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
+}
+
+CompositorWorkspaceListener::~CompositorWorkspaceListener()
+{
+	this->!CompositorWorkspaceListener();
+}
+
+CompositorWorkspaceListener::!CompositorWorkspaceListener()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native != 0)
+	{
+		delete _native; _native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+void CompositorWorkspaceListener::WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace)
+{
+	static_cast<CompositorWorkspaceListener_Proxy*>(_native)->workspacePreUpdate(workspace);
+}
+
+/*void CompositorWorkspaceListener::PassPreExecute(Mogre::CompositorPass^ pass)
+{
+	static_cast<CompositorWorkspaceListener_Proxy*>(_native)->passPreExecute(pass);
+}*/
+
 // CompositorWorkspace
 CompositorWorkspace::~CompositorWorkspace()
 {
@@ -125,6 +196,17 @@ bool CompositorWorkspace::Enabled::get()
 void CompositorWorkspace::Enabled::set(bool enabled)
 {
 	_native->setEnabled(enabled);
+}
+
+void CompositorWorkspace::SetListener(Mogre::ICompositorWorkspaceListener^ listener)
+{
+	_listener = listener;
+	_native->setListener(listener->_GetNativePtr());
+}
+
+Mogre::ICompositorWorkspaceListener^ CompositorWorkspace::GetListener()
+{
+	return _listener;
 }
 
 void CompositorWorkspace::RecreateAllNodes()

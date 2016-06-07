@@ -417,13 +417,15 @@ namespace Mogre
 		TexturePtr(Ogre::TexturePtr& sharedPtr) : Texture(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::TexturePtr(sharedPtr);
+			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!TexturePtr()
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				_sharedPtr->setNull();
+				//delete _sharedPtr;
 				_sharedPtr = 0;
 			}
 		}
@@ -449,7 +451,7 @@ namespace Mogre
 			return gcnew TexturePtr(Ogre::TexturePtr(ptr->_sharedPtr->dynamicCast<Ogre::Texture>()));
 		}
 
-		TexturePtr(Texture^ obj) : Texture(obj->_native)
+		TexturePtr(Texture^ obj) : Texture(obj->UnmanagedPointer)
 		{
 			_sharedPtr = new Ogre::TexturePtr(static_cast<Ogre::Texture*>(obj->_native));
 		}

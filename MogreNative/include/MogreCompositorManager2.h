@@ -4,6 +4,7 @@
 #include "Compositor/OgreCompositorChannel.h"
 #include "Compositor/OgreCompositorManager2.h"
 #include "Compositor/OgreCompositorWorkspace.h"
+#include "Compositor/OgreCompositorWorkspaceListener.h"
 #include "MogreRenderTarget.h"
 #include "MogreTextureManager.h"
 #include "MogreCommon.h"
@@ -16,7 +17,8 @@ namespace Mogre
 	ref class SceneManager;
 	ref class Camera;
 	ref class RenderSystem;
-
+	ref class CompositorWorkspace;
+	ref class CompositorPass;
 
 	public ref class CompositorChannel
 	{
@@ -29,6 +31,7 @@ namespace Mogre
 
 		CompositorChannel()
 		{
+			textures = gcnew TextureVec();
 		}
 
 		property bool IsMrt
@@ -48,7 +51,7 @@ namespace Mogre
 		}
 
 	public protected:
-		static operator CompositorChannel^ (const Ogre::CompositorChannel& obj)
+		static operator CompositorChannel ^ (const Ogre::CompositorChannel& obj)
 		{
 			CompositorChannel^ clr = gcnew CompositorChannel;
 			clr->target = obj.target;
@@ -57,7 +60,7 @@ namespace Mogre
 			return clr;
 		}
 
-		static operator CompositorChannel^ (const Ogre::CompositorChannel* pObj)
+		static operator CompositorChannel ^ (const Ogre::CompositorChannel* pObj)
 		{
 			return *pObj;
 		}
@@ -141,6 +144,53 @@ namespace Mogre
 		}
 	};
 
+	public interface class ICompositorWorkspaceListener
+	{
+		virtual Ogre::CompositorWorkspaceListener* _GetNativePtr();
+	public:
+		virtual void WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace);
+		//virtual void PassPreExecute(Mogre::CompositorPass^ pass);
+	};
+
+	public ref class CompositorWorkspaceListener : public IMogreDisposable, public Mogre::ICompositorWorkspaceListener
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	internal:
+		Ogre::CompositorWorkspaceListener* _native;
+		bool _createdByCLR;
+
+	public protected:
+		CompositorWorkspaceListener(Ogre::CompositorWorkspaceListener* obj) : _native(obj)
+		{
+		}
+
+		virtual Ogre::CompositorWorkspaceListener* _IListener_GetNativePtr() = ICompositorWorkspaceListener::_GetNativePtr;
+	public:
+		CompositorWorkspaceListener();
+
+	public:
+		~CompositorWorkspaceListener();
+	protected:
+		!CompositorWorkspaceListener();
+
+	public:
+		virtual void WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace);
+		//virtual void PassPreExecute(Mogre::CompositorPass^ pass);
+
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+	};
+
 	public ref class CompositorWorkspace : IMogreDisposable
 	{
 	public:
@@ -152,14 +202,15 @@ namespace Mogre
 	internal:
 		Ogre::CompositorWorkspace* _native;
 		bool _createdByCLR;
+		Mogre::ICompositorWorkspaceListener^ _listener;
 
 	public protected:
-		CompositorWorkspace(intptr_t ptr) : _native((Ogre::CompositorWorkspace*)ptr)
+		CompositorWorkspace(intptr_t ptr) : _native((Ogre::CompositorWorkspace*)ptr), _listener(nullptr)
 		{
 
 		}
 
-		CompositorWorkspace(Ogre::CompositorWorkspace* obj) : _native(obj)
+		CompositorWorkspace(Ogre::CompositorWorkspace* obj) : _native(obj), _listener(nullptr)
 		{
 
 		}
@@ -185,6 +236,9 @@ namespace Mogre
 		public:
 			void set(bool enabled);
 		}
+
+		void SetListener(Mogre::ICompositorWorkspaceListener^ listener);
+		Mogre::ICompositorWorkspaceListener^ GetListener();
 
 		void RecreateAllNodes();
 		void ReconnectAllNodes();
@@ -220,7 +274,7 @@ namespace Mogre
 		CompositorManager2(Ogre::CompositorManager2* obj) : _native(obj)
 		{
 		}
-	
+
 		CompositorManager2(intptr_t ptr) : _native((Ogre::CompositorManager2*)ptr)
 		{
 

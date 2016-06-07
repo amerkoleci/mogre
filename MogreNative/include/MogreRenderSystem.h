@@ -2,6 +2,8 @@
 
 #include "OgreRenderSystem.h"
 #include "MogreHardwareBuffer.h"
+#include "MogreMaterialManager.h"
+#include "MogreGpuProgramManager.h"
 #include "MogreCommon.h"
 #include "STLContainerWrappers.h"
 #include "Marshalling.h"
@@ -9,6 +11,8 @@
 namespace Mogre
 {
 	ref class ConfigOptionMap;
+	ref class TexturePtr;
+	ref class RenderTarget;
 
 	public enum class StencilOperation
 	{
@@ -323,7 +327,7 @@ namespace Mogre
 		{
 			if (_listener != 0)
 			{
-				if (_native != 0) 
+				if (_native != 0)
 					_native->removeListener(_listener);
 				delete _listener; _listener = 0;
 			}
@@ -430,6 +434,46 @@ namespace Mogre
 		void ClearFrameBuffer(unsigned int buffers);
 
 		void SetCurrentPassIterationCount(size_t count);
+
+		void ConvertColourValue(Mogre::ColourValue colour, [Out] Ogre::uint32% pDest);
+
+		void BindGpuProgram(Mogre::GpuProgram^ prg);
+		void BindGpuProgramParameters(Mogre::GpuProgramType gptype, Mogre::GpuProgramParametersSharedPtr^ params, Ogre::uint16 variabilityMask);
+		void BindGpuProgramPassIterationParameters(Mogre::GpuProgramType gptype);
+		void UnbindGpuProgram(Mogre::GpuProgramType gptype);
+		bool IsGpuProgramBound(Mogre::GpuProgramType gptype);
+
+		void _convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest, bool forGpuProgram);
+		void _convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest);
+
+		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
+		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+
+		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
+		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+
+		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
+		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+
+		void _setWorldMatrix(Mogre::Matrix4^ m);
+		void _setWorldMatrices(const Mogre::Matrix4* m, unsigned short count);
+		void _setViewMatrix(Mogre::Matrix4^ m);
+		void _setProjectionMatrix(Mogre::Matrix4^ m);
+
+		void _setTextureUnitSettings(size_t texUnit, Mogre::TextureUnitState^ tl);
+		void _setBindingType(Mogre::TextureUnitState::BindingType bindigType);
+		void _disableTextureUnit(size_t texUnit);
+		void _disableTextureUnitsFrom(size_t texUnit);
+
+		void _setTexture(size_t unit, bool enabled, TexturePtr^ texPtr);
+		void _setTexture(size_t unit, bool enabled, String^ texName);
+		void _setVertexTexture(size_t unit, TexturePtr^ tex);
+		void _setGeometryTexture(size_t unit, TexturePtr^ tex);
+		void _setComputeTexture(size_t unit, TexturePtr^ tex);
+		void _setTessellationHullTexture(size_t unit, TexturePtr^ tex);
+		void _setTessellationDomainTexture(size_t unit, TexturePtr^ tex);
+
+		void _setRenderTarget(RenderTarget^ target);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderSystem);
 

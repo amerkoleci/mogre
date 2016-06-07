@@ -4,7 +4,6 @@
 
 using namespace Mogre;
 
-
 // ------------- SubMesh
 SubMesh::~SubMesh()
 {
@@ -172,7 +171,7 @@ Mogre::Mesh::IndexMap^ Mesh::sharedBlendIndexToBoneIndexMap::get()
 			static_cast<Ogre::Mesh*>(_native)->sharedBlendIndexToBoneIndexMap.end());
 		_sharedBlendIndexToBoneIndexMap = gcnew Mogre::Mesh::IndexMap(vector);*/
 	}
-	
+
 	return _sharedBlendIndexToBoneIndexMap;
 }
 
@@ -508,7 +507,8 @@ Mogre::MeshPtr^ MeshManager::CreatePlane(String^ name, String^ groupName, Mogre:
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	return static_cast<Ogre::MeshManager*>(_native)->createPlane(o_name, o_groupName, FromPlane(plane), width, height, xsegments, ysegments, normals, numTexCoordSets, uTile, vTile, FromVector3(upVector));
+	Ogre::MeshPtr ptr = static_cast<Ogre::MeshManager*>(_native)->createPlane(o_name, o_groupName, FromPlane(plane), width, height, xsegments, ysegments, normals, numTexCoordSets, uTile, vTile, FromVector3(upVector));
+	return ptr;
 }
 
 Mogre::MeshPtr^ MeshManager::CreatePlane(String^ name, String^ groupName, Mogre::Plane plane, Mogre::Real width, Mogre::Real height, int xsegments, int ysegments, bool normals, int numTexCoordSets, Mogre::Real uTile, Mogre::Real vTile)

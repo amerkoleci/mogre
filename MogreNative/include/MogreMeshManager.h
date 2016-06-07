@@ -289,6 +289,7 @@ namespace Mogre
 		MeshPtr(Ogre::MeshPtr& sharedPtr) : Mesh(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::MeshPtr(sharedPtr);
+			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!MeshPtr()
@@ -321,7 +322,7 @@ namespace Mogre
 			return gcnew MeshPtr(Ogre::MeshPtr(ptr->_sharedPtr->dynamicCast<Ogre::Mesh>()));
 		}
 
-		MeshPtr(Mesh^ obj) : Mesh(obj->_native)
+		MeshPtr(Mesh^ obj) : Mesh(obj->UnmanagedPointer)
 		{
 			_sharedPtr = new Ogre::MeshPtr(static_cast<Ogre::Mesh*>(obj->_native));
 		}

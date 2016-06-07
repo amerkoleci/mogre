@@ -899,6 +899,8 @@ namespace Mogre
 		Mogre::GpuProgramParametersSharedPtr^ GetDefaultParameters();
 
 		void ResetCompileError();
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(GpuProgram);
 	};
 
 	public ref class GpuProgramPtr : public GpuProgram
@@ -909,6 +911,7 @@ namespace Mogre
 		GpuProgramPtr(Ogre::GpuProgramPtr& sharedPtr) : GpuProgram(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::GpuProgramPtr(sharedPtr);
+			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		GpuProgramPtr(Ogre::ResourcePtr& sharedPtr) : GpuProgram(sharedPtr.getPointer())
