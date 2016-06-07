@@ -6,6 +6,7 @@
 #include "MogreMeshManager.h"
 #include "MogreSceneQuery.h"
 #include "MogreMovableObject.h"
+#include "MogreMaterialManager.h"
 
 using namespace Mogre;
 
@@ -827,6 +828,21 @@ void SceneManager::ExtractAllMovableObjectsByType(String^ typeName)
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 
 	_native->extractAllMovableObjectsByType(o_typeName);
+}
+
+Mogre::Pass^ SceneManager::_setPass(Mogre::Pass^ pass, bool evenIfSuppressed, bool shadowDerivation)
+{
+	return _native->_setPass(pass, evenIfSuppressed, shadowDerivation);
+}
+
+Mogre::Pass^ SceneManager::_setPass(Mogre::Pass^ pass, bool evenIfSuppressed)
+{
+	return _native->_setPass(pass, evenIfSuppressed);
+}
+
+Mogre::Pass^ SceneManager::_setPass(Mogre::Pass^ pass)
+{
+	return _native->_setPass(pass);
 }
 
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()

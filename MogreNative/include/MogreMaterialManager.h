@@ -156,6 +156,118 @@ namespace Mogre
 		}
 	};
 
+	public value class LayerBlendModeEx_NativePtr
+	{
+	private protected:
+		Ogre::LayerBlendModeEx* _native;
+
+	public:
+		property Mogre::LayerBlendType blendType
+		{
+		public:
+			Mogre::LayerBlendType get();
+		public:
+			void set(Mogre::LayerBlendType value);
+		}
+
+		property Mogre::LayerBlendOperationEx operation
+		{
+		public:
+			Mogre::LayerBlendOperationEx get();
+		public:
+			void set(Mogre::LayerBlendOperationEx value);
+		}
+
+		property Mogre::LayerBlendSource source1
+		{
+		public:
+			Mogre::LayerBlendSource get();
+		public:
+			void set(Mogre::LayerBlendSource value);
+		}
+
+		property Mogre::LayerBlendSource source2
+		{
+		public:
+			Mogre::LayerBlendSource get();
+		public:
+			void set(Mogre::LayerBlendSource value);
+		}
+
+		property Mogre::ColourValue colourArg1
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue value);
+		}
+
+		property Mogre::ColourValue colourArg2
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue value);
+		}
+
+		property Mogre::Real alphaArg1
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real value);
+		}
+
+		property Mogre::Real alphaArg2
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real value);
+		}
+
+		property Mogre::Real factor
+		{
+		public:
+			Mogre::Real get();
+		public:
+			void set(Mogre::Real value);
+		}
+
+		virtual bool Equals(Object^ obj) override;
+		bool Equals(LayerBlendModeEx_NativePtr obj);
+		static bool operator == (LayerBlendModeEx_NativePtr obj1, LayerBlendModeEx_NativePtr obj2);
+		static bool operator != (LayerBlendModeEx_NativePtr obj1, LayerBlendModeEx_NativePtr obj2);
+
+		void CopyTo(LayerBlendModeEx_NativePtr dest)
+		{
+			if (_native == NULL) throw gcnew Exception("The underlying native object for the caller is null.");
+			if (dest._native == NULL) throw gcnew ArgumentException("The underlying native object for parameter 'dest' is null.");
+
+			*(dest._native) = *_native;
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_NATIVEPTRVALUECLASS(LayerBlendModeEx_NativePtr, Ogre::LayerBlendModeEx);
+
+
+		property IntPtr NativePtr
+		{
+			IntPtr get() { return (IntPtr)_native; }
+		}
+
+		static LayerBlendModeEx_NativePtr Create();
+
+		void DestroyNativePtr()
+		{
+			if (_native) { delete _native; _native = 0; }
+		}
+
+		property bool IsNull
+		{
+			bool get() { return (_native == 0); }
+		}
+	};
+
 	public ref class TextureUnitState : IMogreDisposable
 	{
 	public:
@@ -370,11 +482,11 @@ namespace Mogre
 		TextureUnitState(Mogre::Pass^ parent, String^ texName, unsigned int texCoordSet);
 		TextureUnitState(Mogre::Pass^ parent, String^ texName);
 
-		/*property Mogre::LayerBlendModeEx_NativePtr AlphaBlendMode
+		property Mogre::LayerBlendModeEx_NativePtr AlphaBlendMode
 		{
 		public:
 			Mogre::LayerBlendModeEx_NativePtr get();
-		}*/
+		}
 
 		property Mogre::Real AnimationDuration
 		{
@@ -394,11 +506,11 @@ namespace Mogre
 			Mogre::SceneBlendFactor get();
 		}
 
-		/*property Mogre::LayerBlendModeEx_NativePtr ColourBlendMode
+		property Mogre::LayerBlendModeEx_NativePtr ColourBlendMode
 		{
 		public:
 			Mogre::LayerBlendModeEx_NativePtr get();
-		}*/
+		}
 
 		property unsigned int CurrentFrame
 		{

@@ -30,6 +30,7 @@ namespace Mogre
 	ref class PlaneBoundedVolumeListSceneQuery;
 	ref class RaySceneQuery;
 	ref class IntersectionSceneQuery;
+	ref class Pass;
 
 	interface class IRenderQueueListener_Receiver
 	{
@@ -413,6 +414,10 @@ namespace Mogre
 		void InjectMovableObject(Mogre::MovableObject^ m);
 		void ExtractMovableObject(Mogre::MovableObject^ m);
 		void ExtractAllMovableObjectsByType(String^ typeName);
+
+		Mogre::Pass^ _setPass(Mogre::Pass^ pass, bool evenIfSuppressed, bool shadowDerivation);
+		Mogre::Pass^ _setPass(Mogre::Pass^ pass, bool evenIfSuppressed);
+		Mogre::Pass^ _setPass(Mogre::Pass^ pass);
 
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer

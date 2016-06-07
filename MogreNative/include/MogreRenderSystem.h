@@ -13,6 +13,8 @@ namespace Mogre
 	ref class ConfigOptionMap;
 	ref class TexturePtr;
 	ref class RenderTarget;
+	ref class Frustum;
+	ref class RenderOperation;
 
 	public enum class StencilOperation
 	{
@@ -473,7 +475,33 @@ namespace Mogre
 		void _setTessellationHullTexture(size_t unit, TexturePtr^ tex);
 		void _setTessellationDomainTexture(size_t unit, TexturePtr^ tex);
 
+		void _setTextureCoordSet(size_t unit, size_t index);
+
+		void _setTextureCoordCalculation(size_t unit, Mogre::TexCoordCalcMethod m, Mogre::Frustum^ frustum);
+		void _setTextureCoordCalculation(size_t unit, Mogre::TexCoordCalcMethod m);
+
+		void _setTextureBlendMode(size_t unit, Mogre::LayerBlendModeEx_NativePtr bm);
+
+		void _setTextureUnitFiltering(size_t unit, Mogre::FilterOptions minFilter, Mogre::FilterOptions magFilter, Mogre::FilterOptions mipFilter);
+
+		void _setTextureUnitFiltering(size_t unit, Mogre::FilterType ftype, Mogre::FilterOptions filter);
+
+		void _setTextureLayerAnisotropy(size_t unit, unsigned int maxAnisotropy);
+
+		void _setTextureAddressingMode(size_t unit, Mogre::TextureUnitState::UVWAddressingMode uvw);
+
+		void _setTextureBorderColour(size_t unit, Mogre::ColourValue colour);
+
+		void _setTextureMipmapBias(size_t unit, float bias);
+
+		void _setTextureMatrix(size_t unit, Mogre::Matrix4^ xform);
+
+		void _setSceneBlending(Mogre::SceneBlendFactor sourceFactor, Mogre::SceneBlendFactor destFactor);
+
+		void _setAlphaRejectSettings(Mogre::CompareFunction func, unsigned char value, bool alphaToCoverage);
+
 		void _setRenderTarget(RenderTarget^ target);
+		void _render(Mogre::RenderOperation^ op);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderSystem);
 

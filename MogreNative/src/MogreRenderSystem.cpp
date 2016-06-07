@@ -4,6 +4,8 @@
 #include "MogreConfigFile.h"
 #include "MogreTextureManager.h"
 #include "MogreRenderTarget.h"
+#include "MogreFrustum.h"
+#include "MogreRenderOperation.h"
 
 using namespace Mogre;
 
@@ -497,9 +499,80 @@ void RenderSystem::_setTessellationDomainTexture(size_t unit, TexturePtr^ tex)
 	_native->_setTessellationDomainTexture(unit, tex);
 }
 
+void RenderSystem::_setTextureCoordSet(size_t unit, size_t index)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureCoordSet(unit, index);
+}
+
+void RenderSystem::_setTextureCoordCalculation(size_t unit, Mogre::TexCoordCalcMethod m, Mogre::Frustum^ frustum)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureCoordCalculation(unit, (Ogre::TexCoordCalcMethod)m, frustum);
+}
+void RenderSystem::_setTextureCoordCalculation(size_t unit, Mogre::TexCoordCalcMethod m)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureCoordCalculation(unit, (Ogre::TexCoordCalcMethod)m);
+}
+
+void RenderSystem::_setTextureBlendMode(size_t unit, Mogre::LayerBlendModeEx_NativePtr bm)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureBlendMode(unit, bm);
+}
+
+void RenderSystem::_setTextureUnitFiltering(size_t unit, Mogre::FilterOptions minFilter, Mogre::FilterOptions magFilter, Mogre::FilterOptions mipFilter)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureUnitFiltering(unit, (Ogre::FilterOptions)minFilter, (Ogre::FilterOptions)magFilter, (Ogre::FilterOptions)mipFilter);
+}
+
+void RenderSystem::_setTextureUnitFiltering(size_t unit, Mogre::FilterType ftype, Mogre::FilterOptions filter)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureUnitFiltering(unit, (Ogre::FilterType)ftype, (Ogre::FilterOptions)filter);
+}
+
+void RenderSystem::_setTextureLayerAnisotropy(size_t unit, unsigned int maxAnisotropy)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureLayerAnisotropy(unit, maxAnisotropy);
+}
+
+void RenderSystem::_setTextureAddressingMode(size_t unit, Mogre::TextureUnitState::UVWAddressingMode uvw)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureAddressingMode(unit, uvw);
+}
+
+void RenderSystem::_setTextureBorderColour(size_t unit, Mogre::ColourValue colour)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureBorderColour(unit, FromColor4(colour));
+}
+
+void RenderSystem::_setTextureMipmapBias(size_t unit, float bias)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureMipmapBias(unit, bias);
+}
+
+void RenderSystem::_setTextureMatrix(size_t unit, Mogre::Matrix4^ xform)
+{
+	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform->m00);
+
+	static_cast<Ogre::RenderSystem*>(_native)->_setTextureMatrix(unit, *p_xform);
+}
+
+void RenderSystem::_setSceneBlending(Mogre::SceneBlendFactor sourceFactor, Mogre::SceneBlendFactor destFactor)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setSceneBlending((Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor);
+}
+
+void RenderSystem::_setAlphaRejectSettings(Mogre::CompareFunction func, unsigned char value, bool alphaToCoverage)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->_setAlphaRejectSettings((Ogre::CompareFunction)func, value, alphaToCoverage);
+}
+
 void RenderSystem::_setRenderTarget(RenderTarget^ target)
 {
 	_native->_setRenderTarget(target);
+}
+
+void RenderSystem::_render(Mogre::RenderOperation^ op)
+{
+	_native->_render(op);
 }
 
 Ogre::RenderSystem* RenderSystem::UnmanagedPointer::get()
