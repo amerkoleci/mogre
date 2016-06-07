@@ -39,6 +39,7 @@ include ("Samples/Mogre.Framework")
 include ("Samples/Mogre.Sample.SkyBox")
 include ("Samples/Mogre.Sample.SkyPlane")
 include ("Samples/Mogre.Sample.CubeMapping")
+include ("Samples/Mogre.Sample.CameraTrack")
 
 -- Mogre.SampleBrowser
 include ("Mogre.SampleBrowser")
