@@ -3,13 +3,15 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using Mogre.RTShader;
+using System;
+using System.Windows.Forms;
 
 namespace Mogre.Framework
 {
 	/// <summary>
 	/// Base class for samples
 	/// </summary>
-	public abstract class Sample
+	public abstract class Sample : Form
 	{
 		protected readonly FileSystemLayer _fileSystemLayer;
 		protected Root _root;
@@ -19,36 +21,56 @@ namespace Mogre.Framework
 		protected Camera _camera;
 		protected CompositorWorkspace _workspace;
 		protected ColourValue _backgroundColor = ColourValue.Black;
+		
 
-		public virtual string ThumbnailUrl
+		public Camera Camera
 		{
-			get { return string.Empty; }
+			get { return _camera; }
 		}
 
 		protected Sample()
 		{
 			_fileSystemLayer = new FileSystemLayer();
+			base.SuspendLayout();
+			ClientSize = new System.Drawing.Size(800, 600);
+			FormBorderStyle = FormBorderStyle.Fixed3D;
+			MaximizeBox = false;
+			Name = "OgreWindow";
+			StartPosition = FormStartPosition.CenterScreen;
+			Text = "Mogre Render Window";
+			ResumeLayout(false);
 		}
 
 		public virtual bool Setup()
 		{
+			// Create root
 			var pluginFileName = _fileSystemLayer.GetConfigFilePath("plugins.cfg");
 			_root = new Root(pluginFileName,
 				_fileSystemLayer.GetWritablePath("ogre.cfg"),
 				_fileSystemLayer.GetWritablePath("Ogre.log"));
 
+			// Create OverlaySystem
 			_overlaySystem = new OverlaySystem();
 
+			// 
 			SetupResources();
-			if (Configure() == false)
-			{
-				return false;
-			}
+			//if (Configure() == false)
+			//{
+			//	return false;
+			//}
+			SetupDirectX();
+
+			// Create RenderWindow
+			_root.Initialise(false);
+			var nameValuePairList = new NameValuePairList();
+			nameValuePairList["externalWindowHandle"] = Handle.ToString();
+			_window = _root.CreateRenderWindow("Mogre RenderWindow", 800, 600, false, nameValuePairList);
 
 			TestCapabilities(_root.RenderSystem.Capabilities);
 
 			// Now we have GPU stuff setup
 			ResourceGroupManager.Singleton.AddBuiltinLocations();
+
 			CreateSceneManager();
 			//InitializeRTShaderSystem(_sceneManager);
 			_overlaySystem.SceneManager = _sceneManager;
@@ -57,6 +79,8 @@ namespace Mogre.Framework
 			TextureManager.Singleton.DefaultNumMipmaps = 5;
 			CreateResourceListener();
 			LoadResources();
+			CreateInputHandler();
+			Disposed += OgreWindow_Disposed;
 			CreateScene();
 
 			// Create Frame Listeners
@@ -67,6 +91,7 @@ namespace Mogre.Framework
 			//this.CreateInput();
 			return true;
 		}
+
 
 		protected virtual bool OnFrameStarted(FrameEvent evt)
 		{
@@ -106,6 +131,11 @@ namespace Mogre.Framework
 					}
 				}
 			}
+		}
+
+		protected virtual void CreateInputHandler()
+		{
+			new DefaultInputHandler(this);
 		}
 
 		protected virtual void CreateSceneManager()
@@ -175,8 +205,16 @@ namespace Mogre.Framework
 			{
 				return;
 			}
+			Show();
 
-			_root.StartRendering();
+			while (_root != null && _root.RenderOneFrame())
+			{
+				Application.DoEvents();
+			}
+		}
+
+		void Shutdown()
+		{
 			DestroyScene();
 
 			if (_overlaySystem != null)
@@ -190,13 +228,30 @@ namespace Mogre.Framework
 			_root.FrameEnded -= OnFrameEnded;
 			_root.Dispose();
 			_root = null;
+
+			_window = null;
+			_camera = null;
+			_workspace = null;
+			_sceneManager = null;
+		}
+
+		private void OgreWindow_Disposed(object sender, EventArgs e)
+		{
+			Shutdown();
+		}
+
+		private void SetupDirectX()
+		{
+			RenderSystem renderSystemByName = _root.GetRenderSystemByName("Direct3D9 Rendering Subsystem");
+			_root.RenderSystem = renderSystemByName;
+			renderSystemByName.SetConfigOption("Full Screen", "No");
+			renderSystemByName.SetConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
 		}
 
 		protected virtual bool Configure()
 		{
 			if (_root.RestoreConfig() || _root.ShowConfigDialog())
 			{
-				_window = _root.Initialise(true);
 				return true;
 			}
 
@@ -207,6 +262,19 @@ namespace Mogre.Framework
 
 		protected virtual void DestroyScene()
 		{
+		}
+
+		protected void TakeScreenshot()
+		{
+			string[] temp = System.IO.Directory.GetFiles(Environment.CurrentDirectory, "screenshot*.jpg");
+			string fileName = string.Format("screenshot{0}.jpg", temp.Length + 1);
+
+			TakeScreenshot(fileName);
+		}
+
+		protected void TakeScreenshot(string fileName)
+		{
+			_window.WriteContentsToFile(fileName);
 		}
 	}
 }
