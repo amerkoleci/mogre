@@ -264,7 +264,7 @@ namespace Mogre.Framework
 		{
 		}
 
-		protected void TakeScreenshot()
+		public void TakeScreenshot()
 		{
 			string[] temp = System.IO.Directory.GetFiles(Environment.CurrentDirectory, "screenshot*.jpg");
 			string fileName = string.Format("screenshot{0}.jpg", temp.Length + 1);
@@ -272,7 +272,7 @@ namespace Mogre.Framework
 			TakeScreenshot(fileName);
 		}
 
-		protected void TakeScreenshot(string fileName)
+		public void TakeScreenshot(string fileName)
 		{
 			_window.WriteContentsToFile(fileName);
 		}

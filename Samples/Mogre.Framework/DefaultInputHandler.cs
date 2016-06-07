@@ -72,6 +72,10 @@ namespace Mogre.Framework
 				case Keys.E:
 					_translate.y = -amount;
 					break;
+
+				case Keys.Space:
+					_sample.TakeScreenshot();
+					break;
 			}
 		}
 
