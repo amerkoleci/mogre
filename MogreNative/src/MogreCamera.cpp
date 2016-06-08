@@ -206,7 +206,7 @@ const Mogre::Vector3* Camera::WorldSpaceCorners::get()
 	return reinterpret_cast<const Mogre::Vector3*>(static_cast<const Ogre::Camera*>(_native)->getWorldSpaceCorners());
 }
 
-Mogre::Matrix4^ Camera::ViewMatrix::get()
+Mogre::Matrix4 Camera::ViewMatrix::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Camera*>(_native)->getViewMatrix());
 }
@@ -360,7 +360,7 @@ bool Camera::ProjectSphere(Mogre::Sphere sphere, [Out] Mogre::Real% left, [Out] 
 	return static_cast<const Ogre::Camera*>(_native)->projectSphere(FromSphere(sphere), p_left, p_top, p_right, p_bottom);
 }
 
-Mogre::Matrix4^ Camera::GetViewMatrix(bool ownFrustumOnly)
+Mogre::Matrix4 Camera::GetViewMatrix(bool ownFrustumOnly)
 {
 	return ToMatrix4(static_cast<const Ogre::Camera*>(_native)->getViewMatrix(ownFrustumOnly));
 }

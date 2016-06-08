@@ -445,22 +445,22 @@ namespace Mogre
 		void UnbindGpuProgram(Mogre::GpuProgramType gptype);
 		bool IsGpuProgramBound(Mogre::GpuProgramType gptype);
 
-		void _convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest, bool forGpuProgram);
-		void _convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest);
+		void _convertProjectionMatrix(Mogre::Matrix4 matrix, Mogre::Matrix4 dest, bool forGpuProgram);
+		void _convertProjectionMatrix(Mogre::Matrix4 matrix, Mogre::Matrix4 dest);
 
-		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
-		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram);
+		void _makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest);
 
-		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
-		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram);
+		void _makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest);
 
-		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram);
-		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest);
+		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram);
+		void _makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest);
 
-		void _setWorldMatrix(Mogre::Matrix4^ m);
+		void _setWorldMatrix(Mogre::Matrix4 m);
 		void _setWorldMatrices(const Mogre::Matrix4* m, unsigned short count);
-		void _setViewMatrix(Mogre::Matrix4^ m);
-		void _setProjectionMatrix(Mogre::Matrix4^ m);
+		void _setViewMatrix(Mogre::Matrix4 m);
+		void _setProjectionMatrix(Mogre::Matrix4 m);
 
 		void _setTextureUnitSettings(size_t texUnit, Mogre::TextureUnitState^ tl);
 		void _setBindingType(Mogre::TextureUnitState::BindingType bindigType);
@@ -494,9 +494,29 @@ namespace Mogre
 
 		void _setTextureMipmapBias(size_t unit, float bias);
 
-		void _setTextureMatrix(size_t unit, Mogre::Matrix4^ xform);
+		void _setTextureMatrix(size_t unit, Mogre::Matrix4 xform);
 
 		void _setSceneBlending(Mogre::SceneBlendFactor sourceFactor, Mogre::SceneBlendFactor destFactor);
+		void _setSeparateSceneBlending(
+			Mogre::SceneBlendFactor sourceFactor,
+			Mogre::SceneBlendFactor destFactor, 
+			Mogre::SceneBlendFactor sourceFactorAlpha,
+			Mogre::SceneBlendFactor destFactorAlpha,
+			Mogre::SceneBlendOperation op, 
+			Mogre::SceneBlendOperation alphaOp);
+
+		void _setSeparateSceneBlending(
+			Mogre::SceneBlendFactor sourceFactor,
+			Mogre::SceneBlendFactor destFactor,
+			Mogre::SceneBlendFactor sourceFactorAlpha,
+			Mogre::SceneBlendFactor destFactorAlpha,
+			Mogre::SceneBlendOperation op);
+
+		void _setSeparateSceneBlending(
+			Mogre::SceneBlendFactor sourceFactor,
+			Mogre::SceneBlendFactor destFactor,
+			Mogre::SceneBlendFactor sourceFactorAlpha,
+			Mogre::SceneBlendFactor destFactorAlpha);
 
 		void _setAlphaRejectSettings(Mogre::CompareFunction func, unsigned char value, bool alphaToCoverage);
 

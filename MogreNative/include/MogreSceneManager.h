@@ -2,6 +2,7 @@
 
 #include "OgreSceneManager.h"
 #include "OgreRenderQueueListener.h"
+#include "OgreSceneManagerEnumerator.h"
 #include "MogreCommon.h"
 #include "MogreCamera.h"
 #include "MogreLight.h"
@@ -54,9 +55,6 @@ namespace Mogre
 	private:
 		gcroot<IRenderQueueListener_Receiver^> _receiver;
 
-		//Internal Declarations
-
-		//Public Declarations
 	public:
 		RenderQueueListener_Director(IRenderQueueListener_Receiver^ recv)
 			: _receiver(recv), doCallForRenderQueueStarted(false), doCallForRenderQueueEnded(false)
@@ -101,15 +99,24 @@ namespace Mogre
 		Mogre::RenderQueueListener::RenderQueueStartedHandler^ _renderQueueStarted;
 		Mogre::RenderQueueListener::RenderQueueEndedHandler^ _renderQueueEnded;
 
+		System::Collections::Generic::Dictionary<String^, SceneNode^>^ _sceneNodes;
+		System::Collections::Generic::Dictionary<String^, Entity^>^ _entities;
+		System::Collections::Generic::Dictionary<String^, ManualObject^>^ _manualObjects;
+
 	private:
 		SceneManager(Ogre::SceneManager* obj) : _native(obj)
 		{
+			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
+			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();
+			_manualObjects = gcnew System::Collections::Generic::Dictionary<String^, ManualObject^>();
 		}
 
 	public protected:
 		SceneManager(intptr_t ptr) : _native((Ogre::SceneManager*)ptr)
 		{
-
+			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
+			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();
+			_manualObjects = gcnew System::Collections::Generic::Dictionary<String^, ManualObject^>();
 		}
 
 	public:
@@ -276,8 +283,14 @@ namespace Mogre
 
 		Mogre::SceneNode^ CreateSceneNode();
 		Mogre::SceneNode^ CreateSceneNode(SceneMemoryMgrTypes sceneType);
+		Mogre::SceneNode^ CreateSceneNode(String^ name);
+		Mogre::SceneNode^ CreateSceneNode(String^ name, SceneMemoryMgrTypes sceneType);
+
 		void DestroySceneNode(Mogre::SceneNode^ node);
 		Mogre::SceneNode^ GetSceneNode(Ogre::IdType id);
+		Mogre::SceneNode^ GetSceneNode(String^ name);
+		bool HasSceneNode(String^ name);
+		void DestroySceneNode(String^ name);
 
 		Mogre::BillboardSet^ CreateBillboardSet(unsigned int poolSize);
 		void DestroyBillboardSet(Mogre::BillboardSet^ set);
@@ -291,6 +304,12 @@ namespace Mogre
 		Mogre::ManualObject^ CreateManualObject();
 		void DestroyManualObject(Mogre::ManualObject^ obj);
 		void DestroyAllManualObjects();
+
+		Mogre::ManualObject^ CreateManualObject(String^ name);
+		Mogre::ManualObject^ CreateManualObject(String^ name, SceneMemoryMgrTypes sceneType);
+		Mogre::ManualObject^ GetManualObject(String^ name);
+		bool HasManualObject(String^ name);
+		void DestroyManualObject(String^ name);
 
 		Mogre::RibbonTrail^ CreateRibbonTrail();
 		void DestroyRibbonTrail(Mogre::RibbonTrail^ obj);
@@ -312,7 +331,10 @@ namespace Mogre
 		Mogre::Camera^ CreateCamera(String^ name, bool notShadowCaster, bool forCubemapping);
 		Mogre::Camera^ FindCamera(String^ name);
 		Mogre::Camera^ FindCameraNoThrow(String^ name);
+		Mogre::Camera^ GetCamera(String^ name);
+		bool HasCamera(String^ name);
 		void DestroyCamera(Mogre::Camera^ camera);
+		void DestroyCamera(String^ name);
 		void DestroyAllCameras();
 
 		Mogre::Entity^ CreateEntity(String^ meshName);
@@ -322,7 +344,18 @@ namespace Mogre
 		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(MeshPtr^ mesh);
+
+		Mogre::Entity^ CreateEntity(String^ name, String^ meshName, String^ groupName);
+		Mogre::Entity^ CreateEntity(String^ name, String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(String^ name, Mogre::SceneManager::PrefabType ptype);
+		Mogre::Entity^ CreateEntity(String^ name, Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(String^ name, MeshPtr^ mesh, SceneMemoryMgrTypes sceneType);
+		Mogre::Entity^ CreateEntity(String^ name, MeshPtr^ mesh);
+
 		void DestroyEntity(Mogre::Entity^ ent);
+		Mogre::Entity^ GetEntity(String^ name);
+		bool HasEntity(String^ name);
+		void DestroyEntity(String^ name);
 		void DestroyAllEntities();
 
 		void SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName);
@@ -419,6 +452,8 @@ namespace Mogre
 		Mogre::Pass^ _setPass(Mogre::Pass^ pass, bool evenIfSuppressed);
 		Mogre::Pass^ _setPass(Mogre::Pass^ pass);
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneManager);
+
 	internal:
 		property Ogre::SceneManager* UnmanagedPointer
 		{
@@ -435,5 +470,12 @@ namespace Mogre
 		{
 			RenderQueueEnded(queueGroupId, invocation, repeatThisInvocation);
 		}
+	};
+
+	public ref class SceneManagerEnumerator
+	{
+	public:
+		INC_DECLARE_STLMAP(Instances, String^, Mogre::SceneManager^, Ogre::String, Ogre::SceneManager*, public:, private:);
+		INC_DECLARE_MAP_ITERATOR(SceneManagerIterator, Ogre::SceneManagerEnumerator::SceneManagerIterator, Mogre::SceneManagerEnumerator::Instances, Mogre::SceneManager^, Ogre::SceneManager*, String^, Ogre::String);
 	};
 }

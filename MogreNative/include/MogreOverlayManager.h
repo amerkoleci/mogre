@@ -276,7 +276,7 @@ namespace Mogre
 
 		void _notifyZOrder(Mogre::ushort newZOrder);
 
-		void _notifyWorldTransforms(Mogre::Matrix4^ xform);
+		void _notifyWorldTransforms(Mogre::Matrix4 xform);
 
 		void _notifyViewport();
 

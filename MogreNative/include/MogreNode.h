@@ -165,11 +165,11 @@ namespace Mogre
 		void Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
 		void Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
-		void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo);
-		void Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move);
+		void Translate(Mogre::Matrix3 axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo);
+		void Translate(Mogre::Matrix3 axes, Mogre::Vector3 move);
 
-		void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
-		void Translate(Mogre::Matrix3^ axes, Ogre::Real x, Ogre::Real y, Ogre::Real z);
+		void Translate(Mogre::Matrix3 axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Mogre::Node::TransformSpace relativeTo);
+		void Translate(Mogre::Matrix3 axes, Ogre::Real x, Ogre::Real y, Ogre::Real z);
 
 		void Roll(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo);
 		void Roll(Mogre::Radian angle);
@@ -211,8 +211,8 @@ namespace Mogre
 		Mogre::Vector3 _getDerivedScale();
 		Mogre::Vector3 _getDerivedScaleUpdated();
 
-		Mogre::Matrix4^ _getFullTransform();
-		Mogre::Matrix4^ _getFullTransformUpdated();
+		Mogre::Matrix4 _getFullTransform();
+		Mogre::Matrix4 _getFullTransformUpdated();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Node);
 

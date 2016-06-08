@@ -3,8 +3,11 @@
 #include "OgreRoot.h"
 #include "OgreFrameStats.h"
 #include "MogreFrameListener.h"
+#include "MogreSceneManager.h"
 #include "MogreCommon.h"
 #include "STLContainerWrappers.h"
+#include "IteratorWrapper.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -14,7 +17,6 @@ namespace Mogre
 
 	ref class RenderTarget;
 	ref class RenderWindow;
-	ref class SceneManager;
 	ref class CompositorManager2;
 
 	public enum class InstancingThreadedCullingMethod
@@ -369,6 +371,7 @@ namespace Mogre
 
 		void DestroySceneManager(Mogre::SceneManager^ sceneManager);
 		Mogre::SceneManager^ GetSceneManager(String^ instanceName);
+		Mogre::SceneManagerEnumerator::SceneManagerIterator^ GetSceneManagerIterator();
 
 		String^ GetErrorDescription(long errorNumber);
 

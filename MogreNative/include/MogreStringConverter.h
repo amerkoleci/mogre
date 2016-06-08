@@ -80,9 +80,9 @@ namespace Mogre
 
 		static String^ ToString(Mogre::Vector4 val);
 
-		static String^ ToString(Mogre::Matrix3^ val);
+		static String^ ToString(Mogre::Matrix3 val);
 
-		static String^ ToString(Mogre::Matrix4^ val);
+		static String^ ToString(Mogre::Matrix4 val);
 
 		static String^ ToString(Mogre::Quaternion val);
 
@@ -106,9 +106,9 @@ namespace Mogre
 
 		static Mogre::Vector3 ParseVector3(String^ val);
 
-		static Mogre::Matrix3^ ParseMatrix3(String^ val);
+		static Mogre::Matrix3 ParseMatrix3(String^ val);
 
-		static Mogre::Matrix4^ ParseMatrix4(String^ val);
+		static Mogre::Matrix4 ParseMatrix4(String^ val);
 
 		static Mogre::Quaternion ParseQuaternion(String^ val);
 

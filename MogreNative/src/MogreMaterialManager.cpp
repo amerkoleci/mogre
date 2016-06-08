@@ -454,14 +454,14 @@ void TextureUnitState::TextureRotate::set(Mogre::Radian angle)
 	static_cast<Ogre::TextureUnitState*>(_native)->setTextureRotate(Ogre::Radian(angle.ValueRadians));
 }
 
-Mogre::Matrix4^ TextureUnitState::TextureTransform::get()
+Mogre::Matrix4 TextureUnitState::TextureTransform::get()
 {
 	return ToMatrix4(static_cast<const Ogre::TextureUnitState*>(_native)->getTextureTransform());
 }
 
-void TextureUnitState::TextureTransform::set(Mogre::Matrix4^ xform)
+void TextureUnitState::TextureTransform::set(Mogre::Matrix4 xform)
 {
-	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform->m00);
+	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform.m00);
 
 	static_cast<Ogre::TextureUnitState*>(_native)->setTextureTransform(*p_xform);
 }

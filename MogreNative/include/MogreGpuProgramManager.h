@@ -691,7 +691,7 @@ namespace Mogre
 
 		void SetConstant(size_t index, Mogre::Vector3 vec);
 
-		void SetConstant(size_t index, Mogre::Matrix4^ m);
+		void SetConstant(size_t index, Mogre::Matrix4 m);
 
 		void SetConstant(size_t index, const Mogre::Matrix4* m, size_t numEntries);
 
@@ -786,7 +786,7 @@ namespace Mogre
 
 		void SetNamedConstant(String^ name, Mogre::Vector3 vec);
 
-		void SetNamedConstant(String^ name, Mogre::Matrix4^ m);
+		void SetNamedConstant(String^ name, Mogre::Matrix4 m);
 
 		void SetNamedConstant(String^ name, const Mogre::Matrix4* m, size_t numEntries);
 
@@ -835,7 +835,7 @@ namespace Mogre
 		{
 		}
 
-		GpuProgram(Ogre::Resource* obj) : Resource(obj)
+		GpuProgram(intptr_t ptr) : Resource(ptr)
 		{
 		}
 
@@ -962,11 +962,6 @@ namespace Mogre
 			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
-		GpuProgramPtr(Ogre::ResourcePtr& sharedPtr) : GpuProgram(sharedPtr.getPointer())
-		{
-			_sharedPtr = new Ogre::GpuProgramPtr(static_cast<Ogre::GpuProgram*>(sharedPtr.getPointer()));
-		}
-
 		!GpuProgramPtr()
 		{
 			if (_sharedPtr != 0)
@@ -997,7 +992,7 @@ namespace Mogre
 			return gcnew GpuProgramPtr(Ogre::GpuProgramPtr(ptr->_sharedPtr->dynamicCast<Ogre::GpuProgram>()));
 		}
 
-		GpuProgramPtr(GpuProgram^ obj) : GpuProgram(obj->_native)
+		GpuProgramPtr(GpuProgram^ obj) : GpuProgram(static_cast<Ogre::GpuProgram*>(obj->_native))
 		{
 			_sharedPtr = new Ogre::GpuProgramPtr(static_cast<Ogre::GpuProgram*>(obj->_native));
 		}

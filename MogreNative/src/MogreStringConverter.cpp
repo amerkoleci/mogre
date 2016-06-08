@@ -188,16 +188,16 @@ String^ StringConverter::ToString(Mogre::Vector4 val)
 	return TO_CLR_STRING(Ogre::StringConverter::toString(FromVector4(val)));
 }
 
-String^ StringConverter::ToString(Mogre::Matrix3^ val)
+String^ StringConverter::ToString(Mogre::Matrix3 val)
 {
-	pin_ptr<Ogre::Matrix3> p_val = interior_ptr<Ogre::Matrix3>(&val->m00);
+	pin_ptr<Ogre::Matrix3> p_val = interior_ptr<Ogre::Matrix3>(&val.m00);
 
 	return TO_CLR_STRING(Ogre::StringConverter::toString(*p_val));
 }
 
-String^ StringConverter::ToString(Mogre::Matrix4^ val)
+String^ StringConverter::ToString(Mogre::Matrix4 val)
 {
-	pin_ptr<Ogre::Matrix4> p_val = interior_ptr<Ogre::Matrix4>(&val->m00);
+	pin_ptr<Ogre::Matrix4> p_val = interior_ptr<Ogre::Matrix4>(&val.m00);
 
 	return TO_CLR_STRING(Ogre::StringConverter::toString(*p_val));
 }
@@ -273,14 +273,14 @@ Mogre::Vector3 StringConverter::ParseVector3(String^ val)
 	return ToVector3(Ogre::StringConverter::parseVector3(o_val));
 }
 
-Mogre::Matrix3^ StringConverter::ParseMatrix3(String^ val)
+Mogre::Matrix3 StringConverter::ParseMatrix3(String^ val)
 {
 	DECLARE_NATIVE_STRING(o_val, val);
 
 	return ToMatrix3(Ogre::StringConverter::parseMatrix3(o_val));
 }
 
-Mogre::Matrix4^ StringConverter::ParseMatrix4(String^ val)
+Mogre::Matrix4 StringConverter::ParseMatrix4(String^ val)
 {
 	DECLARE_NATIVE_STRING(o_val, val);
 

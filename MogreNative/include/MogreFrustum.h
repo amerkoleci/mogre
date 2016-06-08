@@ -129,22 +129,22 @@ namespace Mogre
 			void set(Ogre::Real nearDist);
 		}
 
-		property Mogre::Matrix4^ ProjectionMatrix
+		property Mogre::Matrix4 ProjectionMatrix
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 
-		property Mogre::Matrix4^ ProjectionMatrixRS
+		property Mogre::Matrix4 ProjectionMatrixRS
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 
-		property Mogre::Matrix4^ ProjectionMatrixWithRSDepth
+		property Mogre::Matrix4 ProjectionMatrixWithRSDepth
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 
 		property Mogre::ProjectionType ProjectionType
@@ -155,10 +155,10 @@ namespace Mogre
 			void set(Mogre::ProjectionType pt);
 		}
 
-		property Mogre::Matrix4^ ReflectionMatrix
+		property Mogre::Matrix4 ReflectionMatrix
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 
 		property Mogre::Plane ReflectionPlane
@@ -167,10 +167,10 @@ namespace Mogre
 			Mogre::Plane get();
 		}
 
-		property Mogre::Matrix4^ ViewMatrix
+		property Mogre::Matrix4 ViewMatrix
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 
 		property const Mogre::Vector3* WorldSpaceCorners
@@ -183,10 +183,10 @@ namespace Mogre
 		void SetFrustumOffset(Ogre::Real horizontal);
 		void SetFrustumOffset();
 
-		void SetCustomViewMatrix(bool enable, Mogre::Matrix4^ viewMatrix);
+		void SetCustomViewMatrix(bool enable, Mogre::Matrix4 viewMatrix);
 		void SetCustomViewMatrix(bool enable);
 
-		void SetCustomProjectionMatrix(bool enable, Mogre::Matrix4^ projectionMatrix);
+		void SetCustomProjectionMatrix(bool enable, Mogre::Matrix4 projectionMatrix);
 		void SetCustomProjectionMatrix(bool enable);
 
 		Mogre::Plane GetFrustumPlane(unsigned short plane);

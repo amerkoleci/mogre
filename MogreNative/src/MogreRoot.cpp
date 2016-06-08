@@ -213,6 +213,11 @@ Mogre::SceneManager^ Root::GetSceneManager(String^ instanceName)
 	return ObjectTable::GetOrCreateObject<Mogre::SceneManager^>((intptr_t)_native->getSceneManager(o_instanceName));
 }
 
+Mogre::SceneManagerEnumerator::SceneManagerIterator^ Root::GetSceneManagerIterator()
+{
+	return _native->getSceneManagerIterator();
+}
+
 String^ Root::GetErrorDescription(long errorNumber)
 {
 	return TO_CLR_STRING(_native->getErrorDescription(errorNumber));

@@ -363,64 +363,65 @@ bool RenderSystem::IsGpuProgramBound(Mogre::GpuProgramType gptype)
 	return static_cast<Ogre::RenderSystem*>(_native)->isGpuProgramBound((Ogre::GpuProgramType)gptype);
 }
 
-void RenderSystem::_convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest, bool forGpuProgram)
+void RenderSystem::_convertProjectionMatrix(Mogre::Matrix4 matrix, Mogre::Matrix4 dest, bool forGpuProgram)
 {
-	pin_ptr<Ogre::Matrix4> p_matrix = interior_ptr<Ogre::Matrix4>(&matrix->m00);
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_matrix = interior_ptr<Ogre::Matrix4>(&matrix.m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_convertProjectionMatrix(*p_matrix, *p_dest, forGpuProgram);
 }
-void RenderSystem::_convertProjectionMatrix(Mogre::Matrix4^ matrix, Mogre::Matrix4^ dest)
+void RenderSystem::_convertProjectionMatrix(Mogre::Matrix4 matrix, Mogre::Matrix4 dest)
 {
-	pin_ptr<Ogre::Matrix4> p_matrix = interior_ptr<Ogre::Matrix4>(&matrix->m00);
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_matrix = interior_ptr<Ogre::Matrix4>(&matrix.m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_convertProjectionMatrix(*p_matrix, *p_dest);
 }
 
-void RenderSystem::_makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram)
+void RenderSystem::_makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeProjectionMatrix(Ogre::Radian(fovy.ValueRadians), aspect, nearPlane, farPlane, *p_dest, forGpuProgram);
 }
 
-void RenderSystem::_makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest)
+void RenderSystem::_makeProjectionMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeProjectionMatrix(Ogre::Radian(fovy.ValueRadians), aspect, nearPlane, farPlane, *p_dest);
 }
 
-void RenderSystem::_makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram)
+void RenderSystem::_makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeProjectionMatrix(left, right, bottom, top, nearPlane, farPlane, *p_dest, forGpuProgram);
 }
-void RenderSystem::_makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest)
+void RenderSystem::_makeProjectionMatrix(Mogre::Real left, Mogre::Real right, Mogre::Real bottom, Mogre::Real top, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeProjectionMatrix(left, right, bottom, top, nearPlane, farPlane, *p_dest);
 }
 
-void RenderSystem::_makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest, bool forGpuProgram)
+void RenderSystem::_makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest, bool forGpuProgram)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeOrthoMatrix(Ogre::Radian(fovy.ValueRadians), aspect, nearPlane, farPlane, *p_dest, forGpuProgram);
 }
-void RenderSystem::_makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4^ dest)
+
+void RenderSystem::_makeOrthoMatrix(Mogre::Radian fovy, Mogre::Real aspect, Mogre::Real nearPlane, Mogre::Real farPlane, Mogre::Matrix4 dest)
 {
-	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest->m00);
+	pin_ptr<Ogre::Matrix4> p_dest = interior_ptr<Ogre::Matrix4>(&dest.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_makeOrthoMatrix(Ogre::Radian(fovy.ValueRadians), aspect, nearPlane, farPlane, *p_dest);
 }
 
-void RenderSystem::_setWorldMatrix(Mogre::Matrix4^ m)
+void RenderSystem::_setWorldMatrix(Mogre::Matrix4 m)
 {
-	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m->m00);
+	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_setWorldMatrix(*p_m);
 }
@@ -432,16 +433,16 @@ void RenderSystem::_setWorldMatrices(const Mogre::Matrix4* m, unsigned short cou
 	_native->_setWorldMatrices(o_m, count);
 }
 
-void RenderSystem::_setViewMatrix(Mogre::Matrix4^ m)
+void RenderSystem::_setViewMatrix(Mogre::Matrix4 m)
 {
-	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m->m00);
+	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m.m00);
 
 	_native->_setViewMatrix(*p_m);
 }
 
-void RenderSystem::_setProjectionMatrix(Mogre::Matrix4^ m)
+void RenderSystem::_setProjectionMatrix(Mogre::Matrix4 m)
 {
-	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m->m00);
+	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m.m00);
 
 	_native->_setProjectionMatrix(*p_m);
 }
@@ -548,16 +549,57 @@ void RenderSystem::_setTextureMipmapBias(size_t unit, float bias)
 	static_cast<Ogre::RenderSystem*>(_native)->_setTextureMipmapBias(unit, bias);
 }
 
-void RenderSystem::_setTextureMatrix(size_t unit, Mogre::Matrix4^ xform)
+void RenderSystem::_setTextureMatrix(size_t unit, Mogre::Matrix4 xform)
 {
-	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform->m00);
+	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform.m00);
 
 	static_cast<Ogre::RenderSystem*>(_native)->_setTextureMatrix(unit, *p_xform);
 }
 
 void RenderSystem::_setSceneBlending(Mogre::SceneBlendFactor sourceFactor, Mogre::SceneBlendFactor destFactor)
 {
-	static_cast<Ogre::RenderSystem*>(_native)->_setSceneBlending((Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor);
+	_native->_setSceneBlending((Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor);
+}
+
+void RenderSystem::_setSeparateSceneBlending(
+	Mogre::SceneBlendFactor sourceFactor,
+	Mogre::SceneBlendFactor destFactor,
+	Mogre::SceneBlendFactor sourceFactorAlpha,
+	Mogre::SceneBlendFactor destFactorAlpha,
+	Mogre::SceneBlendOperation op,
+	Mogre::SceneBlendOperation alphaOp)
+{
+	_native->_setSeparateSceneBlending(
+		(Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor,
+		(Ogre::SceneBlendFactor)sourceFactorAlpha, (Ogre::SceneBlendFactor)destFactorAlpha,
+		(Ogre::SceneBlendOperation)op, (Ogre::SceneBlendOperation)alphaOp
+	);
+}
+
+void RenderSystem::_setSeparateSceneBlending(
+	Mogre::SceneBlendFactor sourceFactor,
+	Mogre::SceneBlendFactor destFactor,
+	Mogre::SceneBlendFactor sourceFactorAlpha,
+	Mogre::SceneBlendFactor destFactorAlpha,
+	Mogre::SceneBlendOperation op)
+{
+	_native->_setSeparateSceneBlending(
+		(Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor,
+		(Ogre::SceneBlendFactor)sourceFactorAlpha, (Ogre::SceneBlendFactor)destFactorAlpha,
+		(Ogre::SceneBlendOperation)op
+	);
+}
+
+void RenderSystem::_setSeparateSceneBlending(
+	Mogre::SceneBlendFactor sourceFactor,
+	Mogre::SceneBlendFactor destFactor,
+	Mogre::SceneBlendFactor sourceFactorAlpha,
+	Mogre::SceneBlendFactor destFactorAlpha)
+{
+	_native->_setSeparateSceneBlending(
+		(Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor, 
+		(Ogre::SceneBlendFactor)sourceFactorAlpha, (Ogre::SceneBlendFactor)destFactorAlpha
+	);
 }
 
 void RenderSystem::_setAlphaRejectSettings(Mogre::CompareFunction func, unsigned char value, bool alphaToCoverage)

@@ -330,9 +330,9 @@ void OverlayElement::_notifyZOrder(Mogre::ushort newZOrder)
 	static_cast<Ogre::OverlayElement*>(_native)->_notifyZOrder(newZOrder);
 }
 
-void OverlayElement::_notifyWorldTransforms(Mogre::Matrix4^ xform)
+void OverlayElement::_notifyWorldTransforms(Mogre::Matrix4 xform)
 {
-	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform->m00);
+	pin_ptr<Ogre::Matrix4> p_xform = interior_ptr<Ogre::Matrix4>(&xform.m00);
 
 	static_cast<Ogre::OverlayElement*>(_native)->_notifyWorldTransforms(*p_xform);
 }

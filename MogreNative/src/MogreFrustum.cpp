@@ -102,17 +102,17 @@ void Frustum::NearClipDistance::set(Mogre::Real nearDist)
 	static_cast<Ogre::Frustum*>(_native)->setNearClipDistance(nearDist);
 }
 
-Mogre::Matrix4^ Frustum::ProjectionMatrix::get()
+Mogre::Matrix4 Frustum::ProjectionMatrix::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Frustum*>(_native)->getProjectionMatrix());
 }
 
-Mogre::Matrix4^ Frustum::ProjectionMatrixRS::get()
+Mogre::Matrix4 Frustum::ProjectionMatrixRS::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Frustum*>(_native)->getProjectionMatrixRS());
 }
 
-Mogre::Matrix4^ Frustum::ProjectionMatrixWithRSDepth::get()
+Mogre::Matrix4 Frustum::ProjectionMatrixWithRSDepth::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Frustum*>(_native)->getProjectionMatrixWithRSDepth());
 }
@@ -127,7 +127,7 @@ void Frustum::ProjectionType::set(Mogre::ProjectionType pt)
 	static_cast<Ogre::Frustum*>(_native)->setProjectionType((Ogre::ProjectionType)pt);
 }
 
-Mogre::Matrix4^ Frustum::ReflectionMatrix::get()
+Mogre::Matrix4 Frustum::ReflectionMatrix::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Frustum*>(_native)->getReflectionMatrix());
 }
@@ -137,7 +137,7 @@ Mogre::Plane Frustum::ReflectionPlane::get()
 	return ToPlane(static_cast<const Ogre::Frustum*>(_native)->getReflectionPlane());
 }
 
-Mogre::Matrix4^ Frustum::ViewMatrix::get()
+Mogre::Matrix4 Frustum::ViewMatrix::get()
 {
 	return ToMatrix4(static_cast<const Ogre::Frustum*>(_native)->getViewMatrix());
 }
@@ -160,9 +160,9 @@ void Frustum::SetFrustumOffset()
 	static_cast<Ogre::Frustum*>(_native)->setFrustumOffset();
 }
 
-void Frustum::SetCustomViewMatrix(bool enable, Mogre::Matrix4^ viewMatrix)
+void Frustum::SetCustomViewMatrix(bool enable, Mogre::Matrix4 viewMatrix)
 {
-	pin_ptr<Ogre::Matrix4> p_viewMatrix = interior_ptr<Ogre::Matrix4>(&viewMatrix->m00);
+	pin_ptr<Ogre::Matrix4> p_viewMatrix = interior_ptr<Ogre::Matrix4>(&viewMatrix.m00);
 
 	static_cast<Ogre::Frustum*>(_native)->setCustomViewMatrix(enable, *p_viewMatrix);
 }
@@ -171,9 +171,9 @@ void Frustum::SetCustomViewMatrix(bool enable)
 	static_cast<Ogre::Frustum*>(_native)->setCustomViewMatrix(enable);
 }
 
-void Frustum::SetCustomProjectionMatrix(bool enable, Mogre::Matrix4^ projectionMatrix)
+void Frustum::SetCustomProjectionMatrix(bool enable, Mogre::Matrix4 projectionMatrix)
 {
-	pin_ptr<Ogre::Matrix4> p_projectionMatrix = interior_ptr<Ogre::Matrix4>(&projectionMatrix->m00);
+	pin_ptr<Ogre::Matrix4> p_projectionMatrix = interior_ptr<Ogre::Matrix4>(&projectionMatrix.m00);
 
 	static_cast<Ogre::Frustum*>(_native)->setCustomProjectionMatrix(enable, *p_projectionMatrix);
 }

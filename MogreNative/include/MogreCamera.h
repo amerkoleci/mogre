@@ -214,10 +214,10 @@ namespace Mogre
 		}
 
 
-		property Mogre::Matrix4^ ViewMatrix
+		property Mogre::Matrix4 ViewMatrix
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		}
 		
 		property const Mogre::Vector3* WorldSpaceCorners
@@ -273,7 +273,7 @@ namespace Mogre
 
 		bool ProjectSphere(Mogre::Sphere sphere, [Out] Mogre::Real% left, [Out] Mogre::Real% top, [Out] Mogre::Real% right, [Out] Mogre::Real% bottom);
 
-		Mogre::Matrix4^ GetViewMatrix(bool ownFrustumOnly);
+		Mogre::Matrix4 GetViewMatrix(bool ownFrustumOnly);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Camera);
 

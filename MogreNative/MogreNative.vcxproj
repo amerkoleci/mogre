@@ -204,6 +204,7 @@
     <ClInclude Include="include\MogreFrustum.h" />
     <ClInclude Include="include\MogreGpuProgramManager.h" />
     <ClInclude Include="include\MogreHardwareBuffer.h" />
+    <ClInclude Include="include\MogreHighLevelGpuProgramManager.h" />
     <ClInclude Include="include\MogreLight.h" />
     <ClInclude Include="include\MogreLog.h" />
     <ClInclude Include="include\MogreLogManager.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="src\MogreFrustum.cpp" />
     <ClCompile Include="src\MogreGpuProgramManager.cpp" />
     <ClCompile Include="src\MogreHardwareBuffer.cpp" />
+    <ClCompile Include="src\MogreHighLevelGpuProgramManager.cpp" />
     <ClCompile Include="src\MogreLight.cpp" />
     <ClCompile Include="src\MogreLog.cpp" />
     <ClCompile Include="src\MogreLogManager.cpp" />

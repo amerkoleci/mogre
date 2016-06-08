@@ -30,6 +30,15 @@ namespace Mogre
 		SBF_ONE_MINUS_SOURCE_ALPHA = Ogre::SBF_ONE_MINUS_SOURCE_ALPHA
 	};
 
+	public enum class SceneBlendOperation
+	{
+		SBO_ADD = Ogre::SBO_ADD,
+		SBO_SUBTRACT = Ogre::SBO_SUBTRACT,
+		SBO_REVERSE_SUBTRACT = Ogre::SBO_REVERSE_SUBTRACT,
+		SBO_MIN = Ogre::SBO_MIN,
+		SBO_MAX = Ogre::SBO_MAX
+	};
+
 	public enum class SceneBlendType
 	{
 		SBT_TRANSPARENT_ALPHA = Ogre::SBT_TRANSPARENT_ALPHA,
@@ -648,12 +657,12 @@ namespace Mogre
 			void set(Mogre::Radian angle);
 		}
 
-		property Mogre::Matrix4^ TextureTransform
+		property Mogre::Matrix4 TextureTransform
 		{
 		public:
-			Mogre::Matrix4^ get();
+			Mogre::Matrix4 get();
 		public:
-			void set(Mogre::Matrix4^ xform);
+			void set(Mogre::Matrix4 xform);
 		}
 
 		property Mogre::TextureType TextureType

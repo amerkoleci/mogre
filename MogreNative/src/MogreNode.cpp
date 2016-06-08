@@ -47,7 +47,7 @@ void Node::InheritScale::set(bool inherit)
 	_native->setInheritScale(inherit);
 }
 
-/*Mogre::Matrix3^ Node::LocalAxes::get()
+/*Mogre::Matrix3 Node::LocalAxes::get()
 {
 	return static_cast<const Ogre::Node*>(_native)->getLocalAxes();
 }*/
@@ -199,30 +199,30 @@ void Node::Translate(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 	_native->translate(x, y, z);
 }
 
-void Node::Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo)
+void Node::Translate(Mogre::Matrix3 axes, Mogre::Vector3 move, Mogre::Node::TransformSpace relativeTo)
 {
-	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
+	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes.m00);
 
 	_native->translate(*p_axes, FromVector3(move), (Ogre::Node::TransformSpace)relativeTo);
 }
 
-void Node::Translate(Mogre::Matrix3^ axes, Mogre::Vector3 move)
+void Node::Translate(Mogre::Matrix3 axes, Mogre::Vector3 move)
 {
-	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
+	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes.m00);
 
 	_native->translate(*p_axes, FromVector3(move));
 }
 
-void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::Real z, Mogre::Node::TransformSpace relativeTo)
+void Node::Translate(Mogre::Matrix3 axes, Mogre::Real x, Mogre::Real y, Mogre::Real z, Mogre::Node::TransformSpace relativeTo)
 {
-	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
+	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes.m00);
 
 	_native->translate(*p_axes, x, y, z, (Ogre::Node::TransformSpace)relativeTo);
 }
 
-void Node::Translate(Mogre::Matrix3^ axes, Mogre::Real x, Mogre::Real y, Mogre::Real z)
+void Node::Translate(Mogre::Matrix3 axes, Mogre::Real x, Mogre::Real y, Mogre::Real z)
 {
-	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes->m00);
+	pin_ptr<Ogre::Matrix3> p_axes = interior_ptr<Ogre::Matrix3>(&axes.m00);
 
 	_native->translate(*p_axes, x, y, z);
 }
@@ -354,12 +354,12 @@ Mogre::Vector3 Node::_getDerivedScaleUpdated()
 	return ToVector3(_native->_getDerivedScaleUpdated());
 }
 
-Mogre::Matrix4^ Node::_getFullTransform()
+Mogre::Matrix4 Node::_getFullTransform()
 {
 	return ToMatrix4(_native->_getFullTransform());
 }
 
-Mogre::Matrix4^ Node::_getFullTransformUpdated()
+Mogre::Matrix4 Node::_getFullTransformUpdated()
 {
 	return ToMatrix4(_native->_getFullTransformUpdated());
 }

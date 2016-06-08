@@ -387,9 +387,9 @@ void GpuProgramParameters::SetConstant(size_t index, Mogre::Vector3 vec)
 	static_cast<Ogre::GpuProgramParameters*>(_native)->setConstant(index, FromVector3(vec));
 }
 
-void GpuProgramParameters::SetConstant(size_t index, Mogre::Matrix4^ m)
+void GpuProgramParameters::SetConstant(size_t index, Mogre::Matrix4 m)
 {
-	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m->m00);
+	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m.m00);
 
 	static_cast<Ogre::GpuProgramParameters*>(_native)->setConstant(index, *p_m);
 }
@@ -656,10 +656,10 @@ void GpuProgramParameters::SetNamedConstant(String^ name, Mogre::Vector3 vec)
 	static_cast<Ogre::GpuProgramParameters*>(_native)->setNamedConstant(o_name, FromVector3(vec));
 }
 
-void GpuProgramParameters::SetNamedConstant(String^ name, Mogre::Matrix4^ m)
+void GpuProgramParameters::SetNamedConstant(String^ name, Mogre::Matrix4 m)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m->m00);
+	pin_ptr<Ogre::Matrix4> p_m = interior_ptr<Ogre::Matrix4>(&m.m00);
 
 	static_cast<Ogre::GpuProgramParameters*>(_native)->setNamedConstant(o_name, *p_m);
 }
