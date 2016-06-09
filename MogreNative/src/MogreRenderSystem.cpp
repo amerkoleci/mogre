@@ -338,6 +338,58 @@ void RenderSystem::ConvertColourValue(Mogre::ColourValue colour, [Out] Ogre::uin
 	_native->convertColourValue(FromColor4(colour), p_pDest);
 }
 
+Mogre::MultiRenderTarget^ RenderSystem::CreateMultiRenderTarget(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::RenderSystem*>(_native)->createMultiRenderTarget(o_name);
+}
+
+void RenderSystem::DestroyRenderWindow(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::RenderSystem*>(_native)->destroyRenderWindow(o_name);
+}
+
+void RenderSystem::DestroyRenderTexture(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::RenderSystem*>(_native)->destroyRenderTexture(o_name);
+}
+
+void RenderSystem::DestroyRenderTarget(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::RenderSystem*>(_native)->destroyRenderTarget(o_name);
+}
+
+void RenderSystem::AttachRenderTarget(Mogre::RenderTarget^ target)
+{
+	static_cast<Ogre::RenderSystem*>(_native)->attachRenderTarget(target);
+}
+
+Mogre::RenderTarget^ RenderSystem::GetRenderTarget(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::RenderSystem*>(_native)->getRenderTarget(o_name);
+}
+
+Mogre::RenderTarget^ RenderSystem::DetachRenderTarget(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::RenderSystem*>(_native)->detachRenderTarget(o_name);
+}
+
+//Mogre::RenderSystem::RenderTargetIterator^ RenderSystem::GetRenderTargetIterator()
+//{
+//	return static_cast<Ogre::RenderSystem*>(_native)->getRenderTargetIterator();
+//}
+
 void RenderSystem::BindGpuProgram(Mogre::GpuProgram^ prg)
 {
 	static_cast<Ogre::RenderSystem*>(_native)->bindGpuProgram(prg);

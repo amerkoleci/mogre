@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OgreViewport.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -144,6 +145,8 @@ namespace Mogre
 		void Clear(unsigned int buffers, Mogre::ColourValue colour);
 		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth);
 		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth, unsigned short stencil);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Viewport);
 
 	internal:
 		property Ogre::Viewport* UnmanagedPointer

@@ -129,3 +129,29 @@ void Resource::ChangeGroupOwnership(String^ newGroup)
 
 	static_cast<Ogre::Resource*>(_native)->changeGroupOwnership(o_newGroup);
 }
+
+
+//Mogre::Const_ParameterList^ Resource::GetParameters()
+//{
+//	return static_cast<const Ogre::Resource*>(_native)->getParameters();
+//}
+
+bool Resource::SetParameter(String^ name, String^ value)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_value, value);
+
+	return static_cast<Ogre::Resource*>(_native)->setParameter(o_name, o_value);
+}
+
+void Resource::SetParameterList(Mogre::Const_NameValuePairList^ paramList)
+{
+	static_cast<Ogre::Resource*>(_native)->setParameterList(paramList);
+}
+
+String^ Resource::GetParameter(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return TO_CLR_STRING(static_cast<const Ogre::Resource*>(_native)->getParameter(o_name));
+}

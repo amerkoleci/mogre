@@ -281,6 +281,11 @@ namespace Mogre
 
 		void ChangeGroupOwnership(String^ newGroup);
 
+		//Mogre::Const_ParameterList^ GetParameters();
+		virtual bool SetParameter(String^ name, String^ value);
+		virtual void SetParameterList(Mogre::Const_NameValuePairList^ paramList);
+		virtual String^ GetParameter(String^ name);
+
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Resource);
 
 	internal:

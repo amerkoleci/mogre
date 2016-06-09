@@ -7,6 +7,7 @@
 #include "MogreSceneQuery.h"
 #include "MogreMovableObject.h"
 #include "MogreMaterialManager.h"
+#include "MogreViewport.h"
 
 using namespace Mogre;
 
@@ -81,6 +82,16 @@ Mogre::ColourValue SceneManager::AmbientLight::get()
 void SceneManager::AmbientLight::set(Mogre::ColourValue value)
 {
 	_native->setAmbientLight(FromColor4(value));
+}
+
+Mogre::Viewport^ SceneManager::CurrentViewport::get()
+{
+	return _native->getCurrentViewport();
+}
+
+Mogre::Camera^ SceneManager::CameraInProgress::get()
+{
+	return _native->getCameraInProgress();
 }
 
 bool SceneManager::DisplaySceneNodes::get()

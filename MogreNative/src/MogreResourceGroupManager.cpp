@@ -5,6 +5,86 @@
 
 using namespace Mogre;
 
+void ResourceGroupListener_Director::resourceGroupScriptingStarted(const Ogre::String& groupName, size_t scriptCount)
+{
+	if (doCallForResourceGroupScriptingStarted)
+	{
+		_receiver->ResourceGroupScriptingStarted(TO_CLR_STRING(groupName), scriptCount);
+	}
+}
+
+void ResourceGroupListener_Director::scriptParseStarted(const Ogre::String& scriptName, bool& skipThisScript)
+{
+	if (doCallForScriptParseStarted)
+	{
+		_receiver->ScriptParseStarted(TO_CLR_STRING(scriptName));
+	}
+}
+
+void ResourceGroupListener_Director::scriptParseEnded(const Ogre::String& scriptName, bool skipped)
+{
+	if (doCallForScriptParseEnded)
+	{
+		_receiver->ScriptParseEnded(TO_CLR_STRING(scriptName));
+	}
+}
+
+void ResourceGroupListener_Director::resourceGroupScriptingEnded(const Ogre::String& groupName)
+{
+	if (doCallForResourceGroupScriptingEnded)
+	{
+		_receiver->ResourceGroupScriptingEnded(TO_CLR_STRING(groupName));
+	}
+}
+
+void ResourceGroupListener_Director::resourceGroupLoadStarted(const Ogre::String& groupName, size_t resourceCount)
+{
+	if (doCallForResourceGroupLoadStarted)
+	{
+		_receiver->ResourceGroupLoadStarted(TO_CLR_STRING(groupName), resourceCount);
+	}
+}
+
+void ResourceGroupListener_Director::resourceLoadStarted(const Ogre::ResourcePtr& resource)
+{
+	if (doCallForResourceLoadStarted)
+	{
+		_receiver->ResourceLoadStarted(resource);
+	}
+}
+
+void ResourceGroupListener_Director::resourceLoadEnded()
+{
+	if (doCallForResourceLoadEnded)
+	{
+		_receiver->ResourceLoadEnded();
+	}
+}
+
+void ResourceGroupListener_Director::worldGeometryStageStarted(const Ogre::String& description)
+{
+	if (doCallForWorldGeometryStageStarted)
+	{
+		_receiver->WorldGeometryStageStarted(TO_CLR_STRING(description));
+	}
+}
+
+void ResourceGroupListener_Director::worldGeometryStageEnded()
+{
+	if (doCallForWorldGeometryStageEnded)
+	{
+		_receiver->WorldGeometryStageEnded();
+	}
+}
+
+void ResourceGroupListener_Director::resourceGroupLoadEnded(const Ogre::String& groupName)
+{
+	if (doCallForResourceGroupLoadEnded)
+	{
+		_receiver->ResourceGroupLoadEnded(TO_CLR_STRING(groupName));
+	}
+}
+
 ResourceGroupManager::ResourceGroupManager()
 {
 	_createdByCLR = true;

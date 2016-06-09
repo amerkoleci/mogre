@@ -32,6 +32,7 @@ namespace Mogre
 	ref class RaySceneQuery;
 	ref class IntersectionSceneQuery;
 	ref class Pass;
+	ref class Viewport;
 
 	interface class IRenderQueueListener_Receiver
 	{
@@ -192,6 +193,18 @@ namespace Mogre
 			Mogre::ColourValue get();
 		public:
 			void set(Mogre::ColourValue value);
+		}
+
+		property Mogre::Viewport^ CurrentViewport
+		{
+		public:
+			Mogre::Viewport^ get();
+		}
+
+		property Mogre::Camera^ CameraInProgress
+		{
+		public:
+			Mogre::Camera^ get();
 		}
 
 		property bool DisplaySceneNodes

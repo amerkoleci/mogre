@@ -13,6 +13,7 @@ namespace Mogre
 	ref class ConfigOptionMap;
 	ref class TexturePtr;
 	ref class RenderTarget;
+	ref class MultiRenderTarget;
 	ref class Frustum;
 	ref class RenderOperation;
 
@@ -438,6 +439,17 @@ namespace Mogre
 		void SetCurrentPassIterationCount(size_t count);
 
 		void ConvertColourValue(Mogre::ColourValue colour, [Out] Ogre::uint32% pDest);
+
+		Mogre::MultiRenderTarget^ CreateMultiRenderTarget(String^ name);
+
+		void DestroyRenderWindow(String^ name);
+		void DestroyRenderTexture(String^ name);
+		void DestroyRenderTarget(String^ name);
+
+		void AttachRenderTarget(Mogre::RenderTarget^ target);
+		Mogre::RenderTarget^ GetRenderTarget(String^ name);
+		Mogre::RenderTarget^ DetachRenderTarget(String^ name);
+		//Mogre::RenderSystem::RenderTargetIterator^ GetRenderTargetIterator();
 
 		void BindGpuProgram(Mogre::GpuProgram^ prg);
 		void BindGpuProgramParameters(Mogre::GpuProgramType gptype, Mogre::GpuProgramParametersSharedPtr^ params, Ogre::uint16 variabilityMask);
