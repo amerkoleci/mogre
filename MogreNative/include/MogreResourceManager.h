@@ -103,8 +103,8 @@ namespace Mogre
 
 		void RemoveAll();
 
-		Mogre::ResourcePtr^ GetByName(String^ name);
 		Mogre::ResourcePtr^ GetResourceByName(String^ name);
+		Mogre::ResourcePtr^ GetResourceByName(String^ name, String^ groupName);
 		Mogre::ResourcePtr^ GetByHandle(Mogre::ResourceHandle handle);
 
 		bool ResourceExists(String^ name);

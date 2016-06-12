@@ -41,6 +41,10 @@ void RenderQueueListener_Director::renderQueueEnded(Ogre::uint8 queueGroupId, co
 CPP_DECLARE_STLVECTOR(SceneManager::, MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
 CPP_DECLARE_ITERATOR(SceneManager::, MovableObjectIterator, Ogre::SceneManager::MovableObjectIterator, Mogre::SceneManager::MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, );
 
+CPP_DECLARE_STLVECTOR(SceneManager::, CameraList, Mogre::Camera^, Ogre::Camera*);
+CPP_DECLARE_ITERATOR_NOCONSTRUCTOR(SceneManager::, CameraIterator, Ogre::SceneManager::CameraIterator, Mogre::SceneManager::CameraList, Mogre::Camera^, Ogre::Camera*);
+
+
 SceneManager::~SceneManager()
 {
 	this->!SceneManager();
@@ -984,6 +988,11 @@ Mogre::IntersectionSceneQuery^ SceneManager::CreateIntersectionQuery()
 void SceneManager::DestroyQuery(Mogre::SceneQuery^ query)
 {
 	_native->destroyQuery(query);
+}
+
+Mogre::SceneManager::CameraIterator^ SceneManager::GetCameraIterator()
+{
+	return _native->getCameraIterator();
 }
 
 bool SceneManager::HasMovableObject(MovableObject^ movable)

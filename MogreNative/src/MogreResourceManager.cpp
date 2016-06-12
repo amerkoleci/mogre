@@ -84,8 +84,9 @@ Pair<Mogre::ResourcePtr^, bool> ResourceManager::CreateOrRetrieve(String^ name, 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	auto pair = _native->createOrRetrieve(o_name, o_group, isManual);
-	return Pair<Mogre::ResourcePtr^, bool>(pair.first, pair.second);
+	return ToManaged<Pair<Mogre::ResourcePtr^, bool>, Ogre::ResourceManager::ResourceCreateOrRetrieveResult>(
+		_native->createOrRetrieve(o_name, o_group, isManual)
+		);
 }
 
 Pair<Mogre::ResourcePtr^, bool> ResourceManager::CreateOrRetrieve(String^ name, String^ group)
@@ -93,8 +94,9 @@ Pair<Mogre::ResourcePtr^, bool> ResourceManager::CreateOrRetrieve(String^ name, 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	auto pair = _native->createOrRetrieve(o_name, o_group);
-	return Pair<Mogre::ResourcePtr^, bool>(pair.first, pair.second);
+	return ToManaged<Pair<Mogre::ResourcePtr^, bool>, Ogre::ResourceManager::ResourceCreateOrRetrieveResult>(
+		_native->createOrRetrieve(o_name, o_group)
+		);
 }
 
 void ResourceManager::Unload(String^ name)
@@ -167,18 +169,19 @@ void ResourceManager::RemoveAll()
 	static_cast<Ogre::ResourceManager*>(_native)->removeAll();
 }
 
-Mogre::ResourcePtr^ ResourceManager::GetByName(String^ name)
+Mogre::ResourcePtr^ ResourceManager::GetResourceByName(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	return _native->getResourceByName(o_name);
 }
 
-Mogre::ResourcePtr^ ResourceManager::GetResourceByName(String^ name)
+Mogre::ResourcePtr^ ResourceManager::GetResourceByName(String^ name, String^ groupName)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	return _native->getResourceByName(o_name);
+	return _native->getResourceByName(o_name, o_groupName);
 }
 
 Mogre::ResourcePtr^ ResourceManager::GetByHandle(Mogre::ResourceHandle handle)

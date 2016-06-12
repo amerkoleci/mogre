@@ -2088,7 +2088,6 @@ Material::Material(Mogre::ResourceManager^ creator, String^ name, Mogre::Resourc
 	DECLARE_NATIVE_STRING(o_group, group);
 
 	_native = new Ogre::Material(creator, o_name, handle, o_group, isManual);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Material::Material(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group) : Resource((Ogre::Resource*)0)
@@ -2098,7 +2097,6 @@ Material::Material(Mogre::ResourceManager^ creator, String^ name, Mogre::Resourc
 	DECLARE_NATIVE_STRING(o_group, group);
 
 	_native = new Ogre::Material(creator, o_name, handle, o_group);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 bool Material::CompilationRequired::get()
@@ -2454,6 +2452,21 @@ unsigned int MaterialManager::DefaultAnisotropy::get()
 void MaterialManager::DefaultAnisotropy::set(unsigned int maxAniso)
 {
 	static_cast<Ogre::MaterialManager*>(_native)->setDefaultAnisotropy(maxAniso);
+}
+
+Mogre::MaterialPtr^ MaterialManager::GetByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::MaterialManager*>(_native)->getByName(o_name);
+}
+
+Mogre::MaterialPtr^ MaterialManager::GetByName(String^ name, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::MaterialManager*>(_native)->getByName(o_name, o_groupName);
 }
 
 void MaterialManager::Initialise()

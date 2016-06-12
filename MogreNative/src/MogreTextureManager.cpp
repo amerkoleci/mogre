@@ -458,6 +458,21 @@ Ogre::ushort TextureManager::PreferredIntegerBitDepth::get()
 	return static_cast<const Ogre::TextureManager*>(_native)->getPreferredIntegerBitDepth();
 }
 
+Mogre::TexturePtr^ TextureManager::GetByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::TextureManager*>(_native)->getByName(o_name);
+}
+
+Mogre::TexturePtr^ TextureManager::GetByName(String^ name, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::TextureManager*>(_native)->getByName(o_name, o_groupName);
+}
+
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha, Mogre::PixelFormat desiredFormat)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
@@ -629,7 +644,7 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	Ogre::TexturePtr nativeTexture = static_cast<Ogre::TextureManager*>(_native)->createManual(
+	return static_cast<Ogre::TextureManager*>(_native)->createManual(
 		o_name,
 		o_group,
 		(Ogre::TextureType)texType,
@@ -638,8 +653,6 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 		num_mips,
 		(Ogre::PixelFormat)format,
 		usage);
-
-	return nativeTexture;
 }
 
 Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, int num_mips, Mogre::PixelFormat format)

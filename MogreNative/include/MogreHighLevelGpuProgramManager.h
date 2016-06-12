@@ -48,7 +48,6 @@ namespace Mogre
 		HighLevelGpuProgramPtr(Ogre::HighLevelGpuProgramPtr& sharedPtr) : HighLevelGpuProgram(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::HighLevelGpuProgramPtr(sharedPtr);
-			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!HighLevelGpuProgramPtr()
@@ -66,7 +65,40 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(HighLevelGpuProgramPtr);
+		static operator HighLevelGpuProgramPtr ^ (const Ogre::HighLevelGpuProgramPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew HighLevelGpuProgramPtr(*(new Ogre::HighLevelGpuProgramPtr(ptr)));
+		}
+
+		static operator Ogre::HighLevelGpuProgramPtr& (HighLevelGpuProgramPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::HighLevelGpuProgramPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::HighLevelGpuProgramPtr* (HighLevelGpuProgramPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		static HighLevelGpuProgramPtr^ FromResourcePtr(ResourcePtr^ ptr)
+		{
+			if (CLR_NULL == ptr) return nullptr;
+			void* castptr = dynamic_cast<Ogre::HighLevelGpuProgram*>(ptr->_native);
+			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type HighLevelGpuProgram.");
+			Ogre::HighLevelGpuProgramPtr highLevelGpuProgramPtr = ptr->_sharedPtr->staticCast<Ogre::HighLevelGpuProgram>();
+			return gcnew HighLevelGpuProgramPtr(highLevelGpuProgramPtr);
+		}
+
+		static operator HighLevelGpuProgramPtr ^ (ResourcePtr^ ptr)
+		{
+			HighLevelGpuProgramPtr^ res = FromResourcePtr(ptr);
+			// invalidate previous pointer and return converted pointer
+			delete ptr;
+			return res;
+		}
 
 		HighLevelGpuProgramPtr(HighLevelGpuProgram^ obj) : HighLevelGpuProgram(static_cast<Ogre::HighLevelGpuProgram*>(obj->_native))
 		{

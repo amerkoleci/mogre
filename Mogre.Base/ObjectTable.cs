@@ -128,7 +128,7 @@ namespace Mogre
 			object @object = _objectTable[pointer];
 
 			// Unbind the OnDisposing event
-			var disposableObject = @object as Mogre.IMogreDisposable;
+			var disposableObject = @object as IMogreDisposable;
 			if (disposableObject != null)
 			{
 				disposableObject.OnDisposing -= disposableObject_OnDisposing;
@@ -138,7 +138,8 @@ namespace Mogre
 			bool result = _objectTable.Remove(pointer);
 
 			// Remove the from owner-type dictionary
-			if (disposableObject != null)
+			if (disposableObject != null &&
+				_ownership.ContainsKey(disposableObject))
 			{
 				IMogreDisposable owner = _ownership[disposableObject];
 
@@ -151,11 +152,8 @@ namespace Mogre
 					if (_ownerTypeLookup[ownerTypeKey].Count == 0)
 						_ownerTypeLookup.Remove(ownerTypeKey);
 				}
-			}
 
-			// Remove from the ownership dictionary
-			if (disposableObject != null)
-			{
+				// Remove from the ownership dictionary
 				_ownership.Remove(disposableObject);
 			}
 

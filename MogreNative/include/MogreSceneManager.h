@@ -83,6 +83,9 @@ namespace Mogre
 		INC_DECLARE_STLVECTOR(MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*, public:, private:);
 		INC_DECLARE_ITERATOR(MovableObjectIterator, Ogre::SceneManager::MovableObjectIterator, Mogre::SceneManager::MovableObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
 
+		INC_DECLARE_STLVECTOR(CameraList, Mogre::Camera^, Ogre::Camera*, public:, private:);
+		INC_DECLARE_ITERATOR_NOCONSTRUCTOR(CameraIterator, Ogre::SceneManager::CameraIterator, Mogre::SceneManager::CameraList, Mogre::Camera^, Ogre::Camera*);
+
 	public:
 		enum class PrefabType
 		{
@@ -447,6 +450,8 @@ namespace Mogre
 		Mogre::IntersectionSceneQuery^ CreateIntersectionQuery();
 		void DestroyQuery(Mogre::SceneQuery^ query);
 
+		Mogre::SceneManager::CameraIterator^ GetCameraIterator();
+
 		void ClearScene();
 
 		bool HasMovableObject(MovableObject^ movable);
@@ -479,7 +484,7 @@ namespace Mogre
 			RenderQueueStarted(queueGroupId, invocation, skipThisInvocation);
 		}
 
-		virtual void OnRenderQueueEnded(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation) = IRenderQueueListener_Receiver::RenderQueueEnded
+			virtual void OnRenderQueueEnded(Ogre::uint8 queueGroupId, String^ invocation, [Out] bool% repeatThisInvocation) = IRenderQueueListener_Receiver::RenderQueueEnded
 		{
 			RenderQueueEnded(queueGroupId, invocation, repeatThisInvocation);
 		}

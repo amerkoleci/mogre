@@ -178,7 +178,7 @@ Mogre::Vector3 Camera::Right::get()
 
 Mogre::SceneManager^ Camera::SceneManager::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneManager^>((intptr_t)static_cast<const Ogre::Camera*>(_native)->getSceneManager());
+	return static_cast<const Ogre::Camera*>(_native)->getSceneManager();
 }
 
 Mogre::Vector3 Camera::Up::get()

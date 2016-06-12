@@ -73,15 +73,17 @@ namespace Mogre.Framework
 			node.AttachObject(fish);
 
 			// create a floor mesh resource
-			var mesh = MeshManager.Singleton.CreatePlane("floor",
-				ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
-				new Plane(Vector3.UNIT_Y, -30), 1000, 1000, 10, 10, true, 1, 8, 8, Vector3.UNIT_Z);
+			//MeshManager.Singleton.CreatePlane("floor",
+			//	ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+			//	new Plane(Vector3.UNIT_Y, -30), 1000, 1000, 10, 10, true, 1, 8, 8, Vector3.UNIT_Z);
 
-			// create a floor entity, give it a material, and place it at the origin
-			Entity floor = _sceneManager.CreateEntity(mesh, SceneMemoryMgrTypes.SCENE_STATIC);
-			floor.Name = "Floor";
-			floor.SetMaterialName("Examples/BumpyMetal");
-			_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
+			//	// create a floor entity, give it a material, and place it at the origin
+			//	Entity floor = _sceneManager.CreateEntity("floor",
+			//	ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+			//	SceneMemoryMgrTypes.SCENE_STATIC);
+			//	floor.Name = "Floor";
+			//	floor.SetMaterialName("Examples/BumpyMetal");
+			//	_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
 		}
 
 		protected override void DestroyScene()
@@ -104,24 +106,25 @@ namespace Mogre.Framework
 			_cubeCamera.NearClipDistance = 5.0f;
 			_cubeCamera.FarClipDistance = /*100*/10000;
 
-			TexturePtr tex = TextureManager.Singleton.CreateManual("dyncubemap", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME, TextureType.TEX_TYPE_CUBE_MAP, 512, 512, 0, PixelFormat.PF_R8G8B8, (int)TextureUsage.TU_RENDERTARGET);
-
-			CompositorManager2 compositorManager = _root.CompositorManager2;
-			const string workspaceName = "CompositorSampleCubemap_cubemap";
-			if (!compositorManager.HasWorkspaceDefinition(workspaceName))
+			using (TexturePtr tex = TextureManager.Singleton.CreateManual("dyncubemap", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME, TextureType.TEX_TYPE_CUBE_MAP, 512, 512, 0, PixelFormat.PF_R8G8B8, (int)TextureUsage.TU_RENDERTARGET))
 			{
-				CompositorWorkspaceDef workspaceDef = compositorManager.AddWorkspaceDefinition(workspaceName);
-				//"CubemapRendererNode" has been defined in scripts.
-				//Very handy (as it 99% the same for everything)
-				workspaceDef.ConnectOutput("CubemapRendererNode", 0);
+				CompositorManager2 compositorManager = _root.CompositorManager2;
+				const string workspaceName = "CompositorSampleCubemap_cubemap";
+				if (!compositorManager.HasWorkspaceDefinition(workspaceName))
+				{
+					CompositorWorkspaceDef workspaceDef = compositorManager.AddWorkspaceDefinition(workspaceName);
+					//"CubemapRendererNode" has been defined in scripts.
+					//Very handy (as it 99% the same for everything)
+					workspaceDef.ConnectOutput("CubemapRendererNode", 0);
+				}
+
+				CompositorChannel channel = new CompositorChannel
+				{
+					target = tex.GetBuffer(0).GetRenderTarget()
+				};
+				channel.textures.Add(tex);
+				_cubemapWorkspace = compositorManager.AddWorkspace(_sceneManager, channel, _cubeCamera, workspaceName, false);
 			}
-
-			CompositorChannel channel = new CompositorChannel
-			{
-				target = tex.GetBuffer(0).GetRenderTarget()
-			};
-			channel.textures.Add(tex);
-			_cubemapWorkspace = compositorManager.AddWorkspace(_sceneManager, channel, _cubeCamera, workspaceName, false);
 		}
 
 		class CubeMapCompositorWorkspaceListener : CompositorWorkspaceListener

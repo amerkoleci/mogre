@@ -141,7 +141,7 @@ Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 	_native = new Ogre::Mesh(creator, o_name, handle, o_group, isManual);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	//ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group) : Resource((Ogre::Resource*)0)
@@ -150,7 +150,7 @@ Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 	_native = new Ogre::Mesh(creator, o_name, handle, o_group);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	//ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Mogre::VertexData^ Mesh::sharedVertexData::get()
@@ -413,6 +413,21 @@ void MeshManager::PrepareAllMeshesForShadowVolumes::set(bool enable)
 //
 //	return static_cast<Ogre::MeshManager*>(_native)->createBezierPatch(o_name, o_groupName, buf, declaration, width, height, uMaxSubdivisionLevel, vMaxSubdivisionLevel, (Ogre::PatchSurface::VisibleSide)visibleSide, (Ogre::HardwareBuffer::Usage)vbUsage, (Ogre::HardwareBuffer::Usage)ibUsage, vbUseShadow, ibUseShadow);
 //}
+
+Mogre::MeshPtr^ MeshManager::GetByName(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	return static_cast<Ogre::MeshManager*>(_native)->getByName(o_name);
+}
+
+Mogre::MeshPtr^ MeshManager::GetByName(String^ name, String^ groupName)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	DECLARE_NATIVE_STRING(o_groupName, groupName);
+
+	return static_cast<Ogre::MeshManager*>(_native)->getByName(o_name, o_groupName);
+}
 
 Mogre::MeshPtr^ MeshManager::Load(String^ filename, String^ groupName, Mogre::HardwareBuffer::Usage vertexBufferUsage, Mogre::HardwareBuffer::Usage indexBufferUsage, bool vertexBufferShadowed, bool indexBufferShadowed)
 {

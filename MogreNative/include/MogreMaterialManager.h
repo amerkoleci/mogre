@@ -1807,7 +1807,6 @@ namespace Mogre
 		MaterialPtr(Ogre::MaterialPtr& sharedPtr) : Material(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::MaterialPtr(sharedPtr);
-			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!MaterialPtr()
@@ -1825,20 +1824,39 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(MaterialPtr);
-
-		static MaterialPtr^ FromResourcePtr(ResourcePtr^ ptr)
+		static operator MaterialPtr ^ (const Ogre::MaterialPtr& ptr)
 		{
-			return (MaterialPtr^)ptr;
+			if (ptr.isNull()) return nullptr;
+			return gcnew MaterialPtr(*(new Ogre::MaterialPtr(ptr)));
 		}
 
-		static operator MaterialPtr ^ (ResourcePtr^ ptr)
+		static operator Ogre::MaterialPtr& (MaterialPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::MaterialPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::MaterialPtr* (MaterialPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		static MaterialPtr^ FromResourcePtr(ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
 			void* castptr = dynamic_cast<Ogre::Material*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Material.");
-			auto materialPtr = Ogre::MaterialPtr(ptr->_sharedPtr->dynamicCast<Ogre::Material>());
+			Ogre::MaterialPtr materialPtr = ptr->_sharedPtr->staticCast<Ogre::Material>();
 			return gcnew MaterialPtr(materialPtr);
+		}
+
+		static operator MaterialPtr ^ (ResourcePtr^ ptr)
+		{
+			MaterialPtr^ res = FromResourcePtr(ptr);
+			// invalidate previous pointer and return converted pointer
+			delete ptr;
+			return res;
 		}
 
 		MaterialPtr(Material^ obj) : Material(obj->_native)
@@ -1962,6 +1980,9 @@ namespace Mogre
 		public:
 			void set(unsigned int maxAniso);
 		}
+
+		Mogre::MaterialPtr^ GetByName(String^ name);
+		Mogre::MaterialPtr^ GetByName(String^ name, String^ groupName);
 
 		void Initialise();
 

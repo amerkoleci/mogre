@@ -414,18 +414,17 @@ namespace Mogre
 	public protected:
 		Ogre::TexturePtr* _sharedPtr;
 
-		TexturePtr(Ogre::TexturePtr& sharedPtr) : Texture(sharedPtr.getPointer())
+		TexturePtr(Ogre::TexturePtr& sharedPtr)
+			: Texture(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::TexturePtr(sharedPtr);
-			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!TexturePtr()
 		{
 			if (_sharedPtr != 0)
 			{
-				_sharedPtr->setNull();
-				//delete _sharedPtr;
+				delete _sharedPtr;
 				_sharedPtr = 0;
 			}
 		}
@@ -436,19 +435,39 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(TexturePtr);
-
-		static TexturePtr^ FromResourcePtr(ResourcePtr^ ptr)
+		static operator TexturePtr^ (const Ogre::TexturePtr& ptr)
 		{
-			return (TexturePtr^)ptr;
+			if (ptr.isNull()) return nullptr;
+			return gcnew TexturePtr(*(new Ogre::TexturePtr(ptr)));
 		}
 
-		static operator TexturePtr ^ (ResourcePtr^ ptr)
+		static operator Ogre::TexturePtr& (TexturePtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::TexturePtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::TexturePtr* (TexturePtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		static TexturePtr^ FromResourcePtr(ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
 			void* castptr = dynamic_cast<Ogre::Texture*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Texture.");
-			return gcnew TexturePtr(Ogre::TexturePtr(ptr->_sharedPtr->dynamicCast<Ogre::Texture>()));
+			Ogre::TexturePtr texturePtr = ptr->_sharedPtr->staticCast<Ogre::Texture>();
+			return gcnew TexturePtr(texturePtr);
+		}
+
+		static operator TexturePtr^ (ResourcePtr^ ptr)
+		{
+			TexturePtr^ res = FromResourcePtr(ptr);
+			// invalidate previous pointer and return converted pointer
+			delete ptr;                          
+			return res;
 		}
 
 		TexturePtr(Texture^ obj) : Texture(obj->UnmanagedPointer)
@@ -567,6 +586,9 @@ namespace Mogre
 		public:
 			Ogre::ushort get();
 		}
+
+		Mogre::TexturePtr^ GetByName(String^ name);
+		Mogre::TexturePtr^ GetByName(String^ name, String^ groupName);
 
 		Mogre::TexturePtr^ Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha, Mogre::PixelFormat desiredFormat);
 		Mogre::TexturePtr^ Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha);

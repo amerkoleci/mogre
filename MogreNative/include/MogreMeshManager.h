@@ -289,7 +289,6 @@ namespace Mogre
 		MeshPtr(Ogre::MeshPtr& sharedPtr) : Mesh(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::MeshPtr(sharedPtr);
-			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!MeshPtr()
@@ -307,19 +306,39 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(MeshPtr);
-
-		static MeshPtr^ FromResourcePtr(ResourcePtr^ ptr)
+		static operator MeshPtr ^ (const Ogre::MeshPtr& ptr)
 		{
-			return (MeshPtr^)ptr;
+			if (ptr.isNull()) return nullptr;
+			return gcnew MeshPtr(const_cast<Ogre::MeshPtr&>(ptr));
 		}
 
-		static operator MeshPtr ^ (ResourcePtr^ ptr)
+		static operator Ogre::MeshPtr& (MeshPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::MeshPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::MeshPtr* (MeshPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		static MeshPtr^ FromResourcePtr(ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
 			void* castptr = dynamic_cast<Ogre::Mesh*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Mesh.");
-			return gcnew MeshPtr(Ogre::MeshPtr(ptr->_sharedPtr->dynamicCast<Ogre::Mesh>()));
+			Ogre::MeshPtr meshPtr = ptr->_sharedPtr->staticCast<Ogre::Mesh>();
+			return gcnew MeshPtr(meshPtr);
+		}
+
+		static operator MeshPtr ^ (ResourcePtr^ ptr)
+		{
+			MeshPtr^ res = FromResourcePtr(ptr);
+			// invalidate previous pointer and return converted pointer
+			delete ptr;
+			return res;
 		}
 
 		MeshPtr(Mesh^ obj) : Mesh(obj->UnmanagedPointer)
@@ -487,6 +506,9 @@ namespace Mogre
 		public:
 			void set(bool enable);
 		}
+
+		Mogre::MeshPtr^ GetByName(String^ name);
+		Mogre::MeshPtr^ GetByName(String^ name, String^ groupName);
 
 		Mogre::MeshPtr^ Load(String^ filename, String^ groupName, Mogre::HardwareBuffer::Usage vertexBufferUsage, Mogre::HardwareBuffer::Usage indexBufferUsage, bool vertexBufferShadowed, bool indexBufferShadowed);
 		Mogre::MeshPtr^ Load(String^ filename, String^ groupName, Mogre::HardwareBuffer::Usage vertexBufferUsage, Mogre::HardwareBuffer::Usage indexBufferUsage, bool vertexBufferShadowed);

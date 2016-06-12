@@ -959,7 +959,6 @@ namespace Mogre
 		GpuProgramPtr(Ogre::GpuProgramPtr& sharedPtr) : GpuProgram(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::GpuProgramPtr(sharedPtr);
-			ObjectTable::Add((intptr_t)_native, this, nullptr);
 		}
 
 		!GpuProgramPtr()
@@ -977,19 +976,39 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(GpuProgramPtr);
-
-		static GpuProgramPtr^ FromResourcePtr(ResourcePtr^ ptr)
+		static operator GpuProgramPtr ^ (const Ogre::GpuProgramPtr& ptr)
 		{
-			return (GpuProgramPtr^)ptr;
+			if (ptr.isNull()) return nullptr;
+			return gcnew GpuProgramPtr(*(new Ogre::GpuProgramPtr(ptr)));
 		}
 
-		static operator GpuProgramPtr ^ (ResourcePtr^ ptr)
+		static operator Ogre::GpuProgramPtr& (GpuProgramPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::GpuProgramPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::GpuProgramPtr* (GpuProgramPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		static GpuProgramPtr^ FromResourcePtr(ResourcePtr^ ptr)
 		{
 			if (CLR_NULL == ptr) return nullptr;
 			void* castptr = dynamic_cast<Ogre::GpuProgram*>(ptr->_native);
 			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type GpuProgram.");
-			return gcnew GpuProgramPtr(Ogre::GpuProgramPtr(ptr->_sharedPtr->dynamicCast<Ogre::GpuProgram>()));
+			Ogre::GpuProgramPtr gpuProgramPtr = ptr->_sharedPtr->staticCast<Ogre::GpuProgram>();
+			return gcnew GpuProgramPtr(gpuProgramPtr);
+		}
+
+		static operator GpuProgramPtr ^ (ResourcePtr^ ptr)
+		{
+			GpuProgramPtr^ res = FromResourcePtr(ptr);
+			// invalidate previous pointer and return converted pointer
+			delete ptr;
+			return res;
 		}
 
 		GpuProgramPtr(GpuProgram^ obj) : GpuProgram(static_cast<Ogre::GpuProgram*>(obj->_native))
@@ -1092,9 +1111,9 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(GpuProgramParametersSharedPtr)
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(GpuProgramParametersSharedPtr);
 
-			GpuProgramParametersSharedPtr(GpuProgramParameters^ obj) : GpuProgramParameters(obj->_native)
+		GpuProgramParametersSharedPtr(GpuProgramParameters^ obj) : GpuProgramParameters(obj->_native)
 		{
 			_sharedPtr = new Ogre::GpuProgramParametersSharedPtr(static_cast<Ogre::GpuProgramParameters*>(obj->_native));
 		}

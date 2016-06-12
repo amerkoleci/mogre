@@ -36,14 +36,8 @@ namespace Mogre
 		virtual void unloadingComplete(Ogre::Resource* param1) override;
 	};
 
-	public ref class Resource : IMogreDisposable, /*public IStringInterface,*/ public IResource_Listener_Receiver
+	public ref class Resource : /*IMogreDisposable, /*public IStringInterface,*/ public IResource_Listener_Receiver
 	{
-	public:
-		/// <summary>Raised before any disposing is performed.</summary>
-		virtual event EventHandler^ OnDisposing;
-		/// <summary>Raised once all disposing is performed.</summary>
-		virtual event EventHandler^ OnDisposed;
-
 	public:
 		ref class Listener;
 
@@ -88,34 +82,19 @@ namespace Mogre
 
 		~Resource()
 		{
-			this->!Resource();
-		}
-
-		!Resource()
-		{
-			OnDisposing(this, nullptr);
-
-			if (IsDisposed)
-				return;
-
 			if (_listener != 0)
 			{
-				if (_native != 0)
-					_native->removeListener(_listener);
-
-				delete _listener;
-				_listener = 0;
+				if (_native != 0) static_cast<Ogre::Resource*>(_native)->removeListener(_listener);
+				delete _listener; _listener = 0;
 			}
-
-			OnDisposed(this, nullptr);
 		}
 
 		//virtual Ogre::StringInterface* _IStringInterface_GetNativePtr() = IStringInterface::_GetNativePtr;
 
 	public:
-		property bool IsDisposed
+		property IntPtr NativePtr
 		{
-			virtual bool get() { return _native == nullptr; }
+			IntPtr get() { return (IntPtr)_native; }
 		}
 
 		event Mogre::Resource::Listener::LoadingCompleteHandler^ LoadingComplete
@@ -319,7 +298,8 @@ namespace Mogre
 	public protected:
 		Ogre::ResourcePtr* _sharedPtr;
 
-		ResourcePtr(Ogre::ResourcePtr& sharedPtr) : Resource(sharedPtr.getPointer())
+		ResourcePtr(Ogre::ResourcePtr& sharedPtr)
+			: ResourcePtr(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::ResourcePtr(sharedPtr);
 		}
@@ -339,7 +319,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(ResourcePtr);
+		static operator ResourcePtr^ (const Ogre::ResourcePtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew ResourcePtr(*(new Ogre::ResourcePtr(ptr)));
+		}
+
+		static operator Ogre::ResourcePtr& (ResourcePtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::ResourcePtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::ResourcePtr* (ResourcePtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		ResourcePtr(Resource^ obj) : Resource(obj->_native)
 		{
