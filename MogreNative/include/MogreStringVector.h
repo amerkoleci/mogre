@@ -32,9 +32,26 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(StringVectorPtr)
+		static operator StringVectorPtr ^ (const Ogre::StringVectorPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew StringVectorPtr(*(new Ogre::StringVectorPtr(ptr)));
+		}
 
-			StringVectorPtr(StringVector^ obj) : StringVector(obj->_native)
+		static operator Ogre::StringVectorPtr& (StringVectorPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::StringVectorPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::StringVectorPtr* (StringVectorPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+
+		StringVectorPtr(StringVector^ obj) : StringVector(obj->_native)
 		{
 			_sharedPtr = new Ogre::StringVectorPtr(static_cast<Ogre::StringVector*>(obj->_native));
 		}

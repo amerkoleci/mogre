@@ -96,7 +96,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(ShadowCameraSetupPtr);
+		static operator ShadowCameraSetupPtr ^ (const Ogre::ShadowCameraSetupPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew ShadowCameraSetupPtr(*(new Ogre::ShadowCameraSetupPtr(ptr)));
+		}
+
+		static operator Ogre::ShadowCameraSetupPtr& (ShadowCameraSetupPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::ShadowCameraSetupPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::ShadowCameraSetupPtr* (ShadowCameraSetupPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		ShadowCameraSetupPtr(ShadowCameraSetup^ obj) : ShadowCameraSetup(obj->_native)
 		{

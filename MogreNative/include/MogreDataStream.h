@@ -146,7 +146,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(DataStreamPtr);
+		static operator DataStreamPtr ^ (const Ogre::DataStreamPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew DataStreamPtr(*(new Ogre::DataStreamPtr(ptr)));
+		}
+
+		static operator Ogre::DataStreamPtr& (DataStreamPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::DataStreamPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::DataStreamPtr* (DataStreamPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		DataStreamPtr(DataStream^ obj) : DataStream(obj->_native)
 		{
@@ -247,9 +263,25 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(DataStreamListPtr)
+		static operator DataStreamListPtr ^ (const Ogre::DataStreamListPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew DataStreamListPtr(*(new Ogre::DataStreamListPtr(ptr)));
+		}
 
-			DataStreamListPtr(DataStreamList^ obj) : DataStreamList(obj->_native)
+		static operator Ogre::DataStreamListPtr& (DataStreamListPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::DataStreamListPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::DataStreamListPtr* (DataStreamListPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		DataStreamListPtr(DataStreamList^ obj) : DataStreamList(obj->_native)
 		{
 			_sharedPtr = new Ogre::DataStreamListPtr(static_cast<Ogre::DataStreamList*>(obj->_native));
 		}
@@ -347,9 +379,25 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(MemoryDataStreamPtr)
+		static operator MemoryDataStreamPtr ^ (const Ogre::MemoryDataStreamPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew MemoryDataStreamPtr(*(new Ogre::MemoryDataStreamPtr(ptr)));
+		}
 
-			MemoryDataStreamPtr(MemoryDataStream^ obj) : MemoryDataStream(obj->_native)
+		static operator Ogre::MemoryDataStreamPtr& (MemoryDataStreamPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::MemoryDataStreamPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::MemoryDataStreamPtr* (MemoryDataStreamPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
+
+		MemoryDataStreamPtr(MemoryDataStream^ obj) : MemoryDataStream(obj->_native)
 		{
 			_sharedPtr = new Ogre::MemoryDataStreamPtr(static_cast<Ogre::MemoryDataStream*>(obj->_native));
 		}

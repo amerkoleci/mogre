@@ -1813,7 +1813,10 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
 				_sharedPtr = 0;
 			}
 		}
@@ -1827,7 +1830,9 @@ namespace Mogre
 		static operator MaterialPtr ^ (const Ogre::MaterialPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew MaterialPtr(*(new Ogre::MaterialPtr(ptr)));
+			Ogre::MaterialPtr wrapperPtr = Ogre::MaterialPtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew MaterialPtr(wrapperPtr);
 		}
 
 		static operator Ogre::MaterialPtr& (MaterialPtr^ t)

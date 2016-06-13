@@ -54,7 +54,10 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
 				_sharedPtr = 0;
 			}
 		}
@@ -68,7 +71,9 @@ namespace Mogre
 		static operator HighLevelGpuProgramPtr ^ (const Ogre::HighLevelGpuProgramPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew HighLevelGpuProgramPtr(*(new Ogre::HighLevelGpuProgramPtr(ptr)));
+			Ogre::HighLevelGpuProgramPtr wrapperPtr = Ogre::HighLevelGpuProgramPtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew HighLevelGpuProgramPtr(wrapperPtr);
 		}
 
 		static operator Ogre::HighLevelGpuProgramPtr& (HighLevelGpuProgramPtr^ t)

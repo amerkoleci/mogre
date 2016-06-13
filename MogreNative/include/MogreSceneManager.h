@@ -190,6 +190,18 @@ namespace Mogre
 			virtual bool get();
 		}
 
+		property String^ Name
+		{
+		public:
+			String^ get();
+		}
+
+		property String^ TypeName
+		{
+		public:
+			String^ get();
+		}
+
 		property Mogre::ColourValue AmbientLight
 		{
 		public:

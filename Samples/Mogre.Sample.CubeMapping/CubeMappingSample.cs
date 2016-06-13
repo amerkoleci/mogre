@@ -73,17 +73,16 @@ namespace Mogre.Framework
 			node.AttachObject(fish);
 
 			// create a floor mesh resource
-			//MeshManager.Singleton.CreatePlane("floor",
-			//	ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
-			//	new Plane(Vector3.UNIT_Y, -30), 1000, 1000, 10, 10, true, 1, 8, 8, Vector3.UNIT_Z);
-
-			//	// create a floor entity, give it a material, and place it at the origin
-			//	Entity floor = _sceneManager.CreateEntity("floor",
-			//	ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
-			//	SceneMemoryMgrTypes.SCENE_STATIC);
-			//	floor.Name = "Floor";
-			//	floor.SetMaterialName("Examples/BumpyMetal");
-			//	_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
+			using (var mesh = MeshManager.Singleton.CreatePlane("floor",
+				ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+				new Plane(Vector3.UNIT_Y, -30), 1000, 1000, 10, 10, true, 1, 8, 8, Vector3.UNIT_Z))
+			{
+				// create a floor entity, give it a material, and place it at the origin
+				Entity floor = _sceneManager.CreateEntity(mesh, SceneMemoryMgrTypes.SCENE_STATIC);
+				floor.Name = "Floor";
+				floor.SetMaterialName("Examples/BumpyMetal");
+				_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
+			}
 		}
 
 		protected override void DestroyScene()

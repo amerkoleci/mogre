@@ -965,7 +965,10 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
 				_sharedPtr = 0;
 			}
 		}
@@ -979,7 +982,9 @@ namespace Mogre
 		static operator GpuProgramPtr ^ (const Ogre::GpuProgramPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew GpuProgramPtr(*(new Ogre::GpuProgramPtr(ptr)));
+			Ogre::GpuProgramPtr wrapperPtr = Ogre::GpuProgramPtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew GpuProgramPtr(wrapperPtr);
 		}
 
 		static operator Ogre::GpuProgramPtr& (GpuProgramPtr^ t)
@@ -1111,7 +1116,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(GpuProgramParametersSharedPtr);
+		static operator GpuProgramParametersSharedPtr ^ (const Ogre::GpuProgramParametersSharedPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew GpuProgramParametersSharedPtr(*(new Ogre::GpuProgramParametersSharedPtr(ptr)));
+		}
+
+		static operator Ogre::GpuProgramParametersSharedPtr& (GpuProgramParametersSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::GpuProgramParametersSharedPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::GpuProgramParametersSharedPtr* (GpuProgramParametersSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		GpuProgramParametersSharedPtr(GpuProgramParameters^ obj) : GpuProgramParameters(obj->_native)
 		{

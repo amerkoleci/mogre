@@ -78,6 +78,16 @@ bool SceneManager::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+String^ SceneManager::Name::get()
+{
+	return TO_CLR_STRING(_native->getName());
+}
+
+String^ SceneManager::TypeName::get()
+{
+	return TO_CLR_STRING(_native->getTypeName());
+}
+
 Mogre::ColourValue SceneManager::AmbientLight::get()
 {
 	return ToColor4(_native->getAmbientLight());

@@ -308,7 +308,11 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
+
 				_sharedPtr = 0;
 			}
 		}
@@ -319,10 +323,12 @@ namespace Mogre
 		}
 
 	public:
-		static operator ResourcePtr^ (const Ogre::ResourcePtr& ptr)
+		static operator ResourcePtr ^ (const Ogre::ResourcePtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew ResourcePtr(*(new Ogre::ResourcePtr(ptr)));
+			Ogre::ResourcePtr wrapperPtr = Ogre::ResourcePtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew ResourcePtr(wrapperPtr);
 		}
 
 		static operator Ogre::ResourcePtr& (ResourcePtr^ t)

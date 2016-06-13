@@ -65,20 +65,6 @@ namespace Mogre
 	Aabb ToAabb(Ogre::Aabb value);
 	Ogre::Aabb FromAabb(Aabb value);
 
-#define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(T)					\
-			static operator T^ (const Ogre::T& ptr) {							\
-				if (ptr.isNull()) return nullptr;								\
-				return gcnew T(*(new Ogre::T(ptr)));						\
-			}																	\
-			static operator Ogre::T& (T^ t) {									\
-				if (CLR_NULL == t) return *((gcnew T(Ogre::T()))->_sharedPtr);	\
-				return *(t->_sharedPtr);										\
-			}																	\
-			static operator Ogre::T* (T^ t) {									\
-				if (CLR_NULL == t) return (gcnew T(Ogre::T()))->_sharedPtr;		\
-				return t->_sharedPtr;											\
-			}
-
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_VALUECLASS(T)			\
 			inline static operator Ogre::T& (T& obj)					\
 			{															\

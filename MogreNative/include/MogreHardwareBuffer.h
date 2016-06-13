@@ -193,7 +193,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(HardwareIndexBufferSharedPtr);
+		static operator HardwareIndexBufferSharedPtr ^ (const Ogre::HardwareIndexBufferSharedPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew HardwareIndexBufferSharedPtr(*(new Ogre::HardwareIndexBufferSharedPtr(ptr)));
+		}
+
+		static operator Ogre::HardwareIndexBufferSharedPtr& (HardwareIndexBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::HardwareIndexBufferSharedPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::HardwareIndexBufferSharedPtr* (HardwareIndexBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		HardwareIndexBufferSharedPtr(HardwareIndexBuffer^ obj) : HardwareIndexBuffer(obj->_native)
 		{
@@ -357,7 +373,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(HardwareVertexBufferSharedPtr);
+		static operator HardwareVertexBufferSharedPtr ^ (const Ogre::HardwareVertexBufferSharedPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew HardwareVertexBufferSharedPtr(*(new Ogre::HardwareVertexBufferSharedPtr(ptr)));
+		}
+
+		static operator Ogre::HardwareVertexBufferSharedPtr& (HardwareVertexBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::HardwareVertexBufferSharedPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::HardwareVertexBufferSharedPtr* (HardwareVertexBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		HardwareVertexBufferSharedPtr(HardwareVertexBuffer^ obj) : HardwareVertexBuffer(obj->_native)
 		{
@@ -533,7 +565,23 @@ namespace Mogre
 		}
 
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_SHAREDPTR(HardwarePixelBufferSharedPtr);
+		static operator HardwarePixelBufferSharedPtr ^ (const Ogre::HardwarePixelBufferSharedPtr& ptr)
+		{
+			if (ptr.isNull()) return nullptr;
+			return gcnew HardwarePixelBufferSharedPtr(*(new Ogre::HardwarePixelBufferSharedPtr(ptr)));
+		}
+
+		static operator Ogre::HardwarePixelBufferSharedPtr& (HardwarePixelBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return Ogre::HardwarePixelBufferSharedPtr();
+			return *(t->_sharedPtr);
+		}
+
+		static operator Ogre::HardwarePixelBufferSharedPtr* (HardwarePixelBufferSharedPtr^ t)
+		{
+			if (CLR_NULL == t) return nullptr;
+			return t->_sharedPtr;
+		}
 
 		HardwarePixelBufferSharedPtr(HardwarePixelBuffer^ obj) : HardwarePixelBuffer(obj->_native)
 		{

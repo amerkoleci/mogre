@@ -522,8 +522,7 @@ Mogre::MeshPtr^ MeshManager::CreatePlane(String^ name, String^ groupName, Mogre:
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	Ogre::MeshPtr ptr = static_cast<Ogre::MeshManager*>(_native)->createPlane(o_name, o_groupName, FromPlane(plane), width, height, xsegments, ysegments, normals, numTexCoordSets, uTile, vTile, FromVector3(upVector));
-	return ptr;
+	return static_cast<Ogre::MeshManager*>(_native)->createPlane(o_name, o_groupName, FromPlane(plane), width, height, xsegments, ysegments, normals, numTexCoordSets, uTile, vTile, FromVector3(upVector));
 }
 
 Mogre::MeshPtr^ MeshManager::CreatePlane(String^ name, String^ groupName, Mogre::Plane plane, Mogre::Real width, Mogre::Real height, int xsegments, int ysegments, bool normals, int numTexCoordSets, Mogre::Real uTile, Mogre::Real vTile)

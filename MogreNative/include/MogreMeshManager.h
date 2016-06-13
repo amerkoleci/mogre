@@ -295,7 +295,11 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
+
 				_sharedPtr = 0;
 			}
 		}
@@ -309,7 +313,9 @@ namespace Mogre
 		static operator MeshPtr ^ (const Ogre::MeshPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew MeshPtr(const_cast<Ogre::MeshPtr&>(ptr));
+			Ogre::MeshPtr wrapperPtr = Ogre::MeshPtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew MeshPtr(wrapperPtr);
 		}
 
 		static operator Ogre::MeshPtr& (MeshPtr^ t)

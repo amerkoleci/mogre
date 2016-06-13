@@ -424,7 +424,11 @@ namespace Mogre
 		{
 			if (_sharedPtr != 0)
 			{
-				delete _sharedPtr;
+				if (_sharedPtr->useCount() > 1)
+				{
+					delete _sharedPtr;
+				}
+
 				_sharedPtr = 0;
 			}
 		}
@@ -435,10 +439,12 @@ namespace Mogre
 		}
 
 	public:
-		static operator TexturePtr^ (const Ogre::TexturePtr& ptr)
+		static operator TexturePtr ^ (const Ogre::TexturePtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew TexturePtr(*(new Ogre::TexturePtr(ptr)));
+			Ogre::TexturePtr wrapperPtr = Ogre::TexturePtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew TexturePtr(wrapperPtr);
 		}
 
 		static operator Ogre::TexturePtr& (TexturePtr^ t)
@@ -462,11 +468,11 @@ namespace Mogre
 			return gcnew TexturePtr(texturePtr);
 		}
 
-		static operator TexturePtr^ (ResourcePtr^ ptr)
+		static operator TexturePtr ^ (ResourcePtr^ ptr)
 		{
 			TexturePtr^ res = FromResourcePtr(ptr);
 			// invalidate previous pointer and return converted pointer
-			delete ptr;                          
+			delete ptr;
 			return res;
 		}
 
