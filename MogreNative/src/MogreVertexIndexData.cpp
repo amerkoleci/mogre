@@ -27,7 +27,10 @@ VertexData::VertexData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexData();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	if (!ObjectTable::Contains((intptr_t)_native))
+	{
+		ObjectTable::Add((intptr_t)_native, this, nullptr);
+	}
 }
 
 VertexData::~VertexData()
@@ -172,7 +175,10 @@ IndexData::IndexData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::IndexData();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	if (!ObjectTable::Contains((intptr_t)_native))
+	{
+		ObjectTable::Add((intptr_t)_native, this, nullptr);
+	}
 }
 
 IndexData::~IndexData()

@@ -366,13 +366,13 @@ namespace Mogre
 		void DestroyAllCameras();
 
 		Mogre::Entity^ CreateEntity(String^ meshName);
-		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName);
 		Mogre::Entity^ CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype);
 		Mogre::Entity^ CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(MeshPtr^ mesh);
 
+		Mogre::Entity^ CreateEntity(String^ name, String^ meshName);
 		Mogre::Entity^ CreateEntity(String^ name, String^ meshName, String^ groupName);
 		Mogre::Entity^ CreateEntity(String^ name, String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType);
 		Mogre::Entity^ CreateEntity(String^ name, Mogre::SceneManager::PrefabType ptype);

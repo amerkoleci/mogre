@@ -232,9 +232,12 @@ namespace Mogre
 		Mogre::SceneQueryResultMovableList^ _movables;
 		Mogre::SceneQueryResultWorldFragmentList^ _worldFragments;
 
-		//Internal Declarations
 	public protected:
 		SceneQueryResult(Ogre::SceneQueryResult* obj) : _native(obj), _createdByCLR(false)
+		{
+		}
+
+		SceneQueryResult(intptr_t ptr) : _native((Ogre::SceneQueryResult*)ptr), _createdByCLR(false)
 		{
 		}
 
@@ -254,12 +257,9 @@ namespace Mogre
 
 		Ogre::SceneQueryResult* _native;
 		bool _createdByCLR;
-
-
-		//Public Declarations
+		
 	public:
 		SceneQueryResult();
-
 
 		property Mogre::SceneQueryResultMovableList^ movables
 		{
@@ -284,6 +284,10 @@ namespace Mogre
 	{
 	public protected:
 		RegionSceneQuery(Ogre::RegionSceneQuery* obj) : SceneQuery(obj)
+		{
+		}
+
+		RegionSceneQuery(intptr_t ptr) : SceneQuery(ptr)
 		{
 		}
 
@@ -326,6 +330,10 @@ namespace Mogre
 		{
 		}
 
+		AxisAlignedBoxSceneQuery(intptr_t ptr) : RegionSceneQuery(ptr)
+		{
+		}
+
 	public:
 		property Mogre::AxisAlignedBox^ Box
 		{
@@ -349,8 +357,10 @@ namespace Mogre
 		{
 		}
 
+		SphereSceneQuery(intptr_t ptr) : RegionSceneQuery(ptr)
+		{
+		}
 
-		//Public Declarations
 	public:
 		property Mogre::Sphere Sphere
 		{
@@ -369,14 +379,15 @@ namespace Mogre
 
 	public ref class PlaneBoundedVolumeListSceneQuery : public RegionSceneQuery
 	{
-		//Internal Declarations
 	public protected:
 		PlaneBoundedVolumeListSceneQuery(Ogre::PlaneBoundedVolumeListSceneQuery* obj) : RegionSceneQuery(obj)
 		{
 		}
 
+		PlaneBoundedVolumeListSceneQuery(intptr_t ptr) : RegionSceneQuery(ptr)
+		{
+		}
 
-		//Public Declarations
 	public:
 		//void SetVolumes(Mogre::Const_PlaneBoundedVolumeList^ volumes);
 		//Mogre::Const_PlaneBoundedVolumeList^ GetVolumes();
@@ -458,6 +469,11 @@ namespace Mogre
 		{
 		}
 
+		RaySceneQueryResultEntry(intptr_t ptr) : _native((Ogre::RaySceneQueryResultEntry*)ptr), _createdByCLR(false)
+		{
+
+		}
+
 		~RaySceneQueryResultEntry()
 		{
 			this->!RaySceneQueryResultEntry();
@@ -515,6 +531,11 @@ namespace Mogre
 	public protected:
 		RaySceneQuery(Ogre::RaySceneQuery* obj) : SceneQuery(obj)
 		{
+		}
+
+		RaySceneQuery(intptr_t ptr) : SceneQuery(ptr)
+		{
+
 		}
 
 		virtual Ogre::RaySceneQueryListener* _IRaySceneQueryListener_GetNativePtr() = IRaySceneQueryListener::_GetNativePtr;
@@ -644,6 +665,10 @@ namespace Mogre
 		{
 		}
 
+		IntersectionSceneQueryResult(intptr_t ptr) : _native((Ogre::IntersectionSceneQueryResult*)ptr), _createdByCLR(false)
+		{
+		}
+
 		~IntersectionSceneQueryResult()
 		{
 			this->!IntersectionSceneQueryResult();
@@ -690,6 +715,10 @@ namespace Mogre
 		//Internal Declarations
 	public protected:
 		IntersectionSceneQuery(Ogre::IntersectionSceneQuery* obj) : SceneQuery(obj)
+		{
+		}
+
+		IntersectionSceneQuery(intptr_t ptr) : SceneQuery(ptr)
 		{
 		}
 

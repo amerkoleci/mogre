@@ -415,14 +415,6 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName)
 	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName));
 }
 
-Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName)
-{
-	DECLARE_NATIVE_STRING(o_meshName, meshName);
-	DECLARE_NATIVE_STRING(o_groupName, groupName);
-
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName, o_groupName));
-}
-
 Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType)
 {
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
@@ -449,6 +441,18 @@ Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sce
 Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh)
 {
 	return _native->createEntity(mesh);
+}
+
+Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName)
+{
+	DECLARE_NATIVE_STRING(o_meshName, meshName);
+	Mogre::Entity^ result = _native->createEntity(o_meshName);
+	result->Name = name;
+	if (!String::IsNullOrEmpty(name))
+	{
+		_entities[name] = result;
+	}
+	return result;
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName, String^ groupName)
