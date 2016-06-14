@@ -8,11 +8,11 @@ Mogre::Real VertexData::HardwareAnimationData_NativePtr::parametric::get()
 {
 	return _native->parametric;
 }
+
 void VertexData::HardwareAnimationData_NativePtr::parametric::set(Mogre::Real value)
 {
 	_native->parametric = value;
 }
-
 
 Mogre::VertexData::HardwareAnimationData_NativePtr VertexData::HardwareAnimationData_NativePtr::Create()
 {
@@ -24,13 +24,12 @@ Mogre::VertexData::HardwareAnimationData_NativePtr VertexData::HardwareAnimation
 CPP_DECLARE_STLVECTOR(VertexData::, HardwareAnimationDataList, Mogre::VertexData::HardwareAnimationData_NativePtr, Ogre::VertexData::HardwareAnimationData);
 
 VertexData::VertexData()
+	: _vertexBufferBinding(nullptr)
+	, _vertexDeclaration(nullptr)
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexData();
-	if (!ObjectTable::Contains((intptr_t)_native))
-	{
-		ObjectTable::Add((intptr_t)_native, this, nullptr);
-	}
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 VertexData::~VertexData()
@@ -45,8 +44,21 @@ VertexData::!VertexData()
 	if (IsDisposed)
 		return;
 
+	if (_vertexBufferBinding != nullptr)
+	{
+		delete _vertexBufferBinding;
+		_vertexBufferBinding = nullptr;
+	}
+
+	if(_vertexDeclaration != nullptr)
+	{
+		delete _vertexDeclaration;
+		_vertexDeclaration = nullptr;
+	}
+
 	if (_createdByCLR &&_native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -61,21 +73,33 @@ bool VertexData::IsDisposed::get()
 
 Mogre::VertexDeclaration^ VertexData::vertexDeclaration::get()
 {
-	return _native->vertexDeclaration;
+	if (_vertexDeclaration == nullptr)
+	{
+		_vertexDeclaration = gcnew Mogre::VertexDeclaration(_native->vertexDeclaration);
+	}
+
+	return _vertexDeclaration;
 }
 
 void VertexData::vertexDeclaration::set(Mogre::VertexDeclaration^ value)
 {
+	_vertexDeclaration = value;
 	_native->vertexDeclaration = value;
 }
 
 Mogre::VertexBufferBinding^ VertexData::vertexBufferBinding::get()
 {
-	return _native->vertexBufferBinding;
+	if (_vertexBufferBinding == nullptr)
+	{
+		_vertexBufferBinding = gcnew Mogre::VertexBufferBinding(_native->vertexBufferBinding);
+	}
+
+	return _vertexBufferBinding;
 }
 
 void VertexData::vertexBufferBinding::set(Mogre::VertexBufferBinding^ value)
 {
+	_vertexBufferBinding = value;
 	_native->vertexBufferBinding = value;
 }
 
@@ -175,10 +199,7 @@ IndexData::IndexData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::IndexData();
-	if (!ObjectTable::Contains((intptr_t)_native))
-	{
-		ObjectTable::Add((intptr_t)_native, this, nullptr);
-	}
+	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 IndexData::~IndexData()
@@ -195,6 +216,7 @@ IndexData::!IndexData()
 
 	if (_createdByCLR &&_native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

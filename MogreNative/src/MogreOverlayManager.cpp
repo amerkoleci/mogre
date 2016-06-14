@@ -491,7 +491,7 @@ void OverlayElement::SetCustomParameter(size_t index, Mogre::Vector4 value)
 
 Mogre::Vector4 OverlayElement::GetCustomParameter(size_t index)
 {
-	return ToVector4( static_cast<const Ogre::OverlayElement*>(_native)->getCustomParameter(index) );
+	return ToVector4(static_cast<const Ogre::OverlayElement*>(_native)->getCustomParameter(index));
 }
 
 // ---------------- Overlay ---------------------
@@ -503,7 +503,7 @@ CPP_DECLARE_ITERATOR(Overlay::, Overlay2DElementsIterator, Ogre::Overlay::Overla
 //Internal Declarations
 
 //Public Declarations
-Overlay::Overlay(String^ name) 
+Overlay::Overlay(String^ name)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_name, name);
@@ -525,6 +525,7 @@ Overlay::!Overlay()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		OGRE_DELETE _native;
 		_native = 0;
 	}
@@ -640,7 +641,7 @@ void Overlay::SetRotate(Mogre::Radian angle)
 
 Mogre::Radian Overlay::GetRotate()
 {
-	return Mogre::Radian( static_cast<const Ogre::Overlay*>(_native)->getRotate().valueRadians() );
+	return Mogre::Radian(static_cast<const Ogre::Overlay*>(_native)->getRotate().valueRadians());
 }
 
 void Overlay::Rotate(Mogre::Radian angle)

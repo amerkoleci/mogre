@@ -112,7 +112,7 @@ Ogre::SceneQueryListener* SceneQueryListener::_ISceneQueryListener_GetNativePtr(
 //ISceneQueryListener
 //################################################################
 
-SceneQueryListener::SceneQueryListener() 
+SceneQueryListener::SceneQueryListener()
 {
 	_createdByCLR = true;
 	Type^ thisType = this->GetType();
@@ -136,6 +136,7 @@ SceneQueryListener::!SceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -221,7 +222,7 @@ void AxisAlignedBoxSceneQuery::Box::set(Mogre::AxisAlignedBox^ box)
 
 Mogre::Sphere SphereSceneQuery::Sphere::get()
 {
-	return ToSphere( static_cast<const Ogre::SphereSceneQuery*>(_native)->getSphere() );
+	return ToSphere(static_cast<const Ogre::SphereSceneQuery*>(_native)->getSphere());
 }
 
 void SphereSceneQuery::Sphere::set(Mogre::Sphere sphere)
@@ -251,7 +252,7 @@ Ogre::RaySceneQueryListener* RaySceneQueryListener::_IRaySceneQueryListener_GetN
 	return static_cast<Ogre::RaySceneQueryListener*>(static_cast<RaySceneQueryListener_Proxy*>(_native));
 }
 
-RaySceneQueryListener::RaySceneQueryListener() 
+RaySceneQueryListener::RaySceneQueryListener()
 {
 	_createdByCLR = true;
 	Type^ thisType = this->GetType();
@@ -275,6 +276,7 @@ RaySceneQueryListener::!RaySceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -397,7 +399,7 @@ Ogre::IntersectionSceneQueryListener* IntersectionSceneQueryListener::_IIntersec
 	return static_cast<Ogre::IntersectionSceneQueryListener*>(static_cast<IntersectionSceneQueryListener_Proxy*>(_native));
 }
 
-IntersectionSceneQueryListener::IntersectionSceneQueryListener() 
+IntersectionSceneQueryListener::IntersectionSceneQueryListener()
 {
 	_createdByCLR = true;
 	Type^ thisType = this->GetType();
@@ -421,6 +423,7 @@ IntersectionSceneQueryListener::!IntersectionSceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

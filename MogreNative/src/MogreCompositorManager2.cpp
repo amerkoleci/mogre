@@ -150,7 +150,9 @@ CompositorWorkspaceListener::!CompositorWorkspaceListener()
 
 	if (_createdByCLR && _native != 0)
 	{
-		delete _native; _native = 0;
+		ObjectTable::Remove((intptr_t)_native);
+		delete _native;
+		_native = 0;
 	}
 
 	OnDisposed(this, nullptr);
@@ -271,6 +273,7 @@ CompositorManager2::!CompositorManager2()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

@@ -207,6 +207,11 @@ namespace Mogre
 				}
 				object @object = Activator.CreateInstance(typeof(T), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, args, null);
 				_objectTable.Add(pointer, @object);
+				var mogreDisposable = @object as IMogreDisposable;
+				if (mogreDisposable != null)
+				{
+					mogreDisposable.OnDisposing += disposableObject_OnDisposing;
+				}
 				result = @object;
 			}
 			else

@@ -45,7 +45,7 @@ Ogre::MovableObject::Listener* MovableObject::Listener::_IListener_GetNativePtr(
 	return static_cast<Ogre::MovableObject::Listener*>(static_cast<MovableObject_Listener_Proxy*>(_native));
 }
 
-MovableObject::Listener::Listener() 
+MovableObject::Listener::Listener()
 {
 	_createdByCLR = true;
 	Type^ thisType = this->GetType();
@@ -68,6 +68,7 @@ MovableObject::Listener::!Listener()
 
 	if (_createdByCLR && _native != 0)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native; _native = 0;
 	}
 

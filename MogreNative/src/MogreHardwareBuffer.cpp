@@ -441,7 +441,9 @@ VertexDeclaration::!VertexDeclaration()
 
 	if (_createdByCLR && _native != 0)
 	{
-		delete _native; _native = 0;
+		ObjectTable::Remove((intptr_t)_native);
+		delete _native;
+		_native = 0;
 	}
 
 	OnDisposed(this, nullptr);
@@ -605,7 +607,7 @@ bool VertexDeclaration::VertexElementLess(Mogre::VertexElement^ e1, Mogre::Verte
 CPP_DECLARE_STLMAP(VertexBufferBinding::, VertexBufferBindingMap, unsigned short, Mogre::HardwareVertexBufferSharedPtr^, unsigned short, Ogre::HardwareVertexBufferSharedPtr);
 CPP_DECLARE_STLMAP(VertexBufferBinding::, BindingIndexMap, Mogre::ushort, Mogre::ushort, Ogre::ushort, Ogre::ushort);
 
-VertexBufferBinding::VertexBufferBinding() 
+VertexBufferBinding::VertexBufferBinding()
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexBufferBinding();
@@ -626,6 +628,7 @@ VertexBufferBinding::!VertexBufferBinding()
 
 	if (_createdByCLR && _native != 0)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native; _native = 0;
 	}
 

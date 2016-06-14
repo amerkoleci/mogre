@@ -9,7 +9,7 @@ Ogre::WindowEventListener* WindowEventListener::_IWindowEventListener_GetNativeP
 	return static_cast<Ogre::WindowEventListener*>(static_cast<WindowEventListener_Proxy*>(_native));
 }
 
-WindowEventListener::WindowEventListener() 
+WindowEventListener::WindowEventListener()
 {
 	_createdByCLR = true;
 	Type^ thisType = this->GetType();
@@ -33,6 +33,7 @@ WindowEventListener::!WindowEventListener()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

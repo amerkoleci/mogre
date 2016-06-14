@@ -2,10 +2,16 @@
 -- Copyright 2016 Amer Koleci. All rights reserved.
 --
 
+newoption {
+	trigger = "with-ogre",
+	description = "Compile with Ogre",
+}
+
 MOGRE_HOME		= path.getabsolute(os.getcwd())
 MOGRE_BUILD_DIR   	= MOGRE_HOME .. "/.build/" .. _ACTION .. "/"
 MOGRE_BIN_DIR   	= MOGRE_HOME .. "/bin"
 OGRE_HOME   		= MOGRE_HOME .. "/ogre"
+OGRE_HOME_SRC   	= MOGRE_HOME .. "/ogre_src"
 
 printf("Premake home " .. MOGRE_HOME)
 printf("Build directory " .. MOGRE_BUILD_DIR)
@@ -25,6 +31,10 @@ solution "Mogre"
 	}
 	
 	startproject "Mogre.SampleBrowser"
+
+if _OPTIONS["with-ogre"] then
+	include ("ogre_src/OgreMain")
+end
 
 -- MogreNative
 include ("MogreNative")

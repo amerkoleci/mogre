@@ -149,6 +149,7 @@ EdgeData::!EdgeData()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

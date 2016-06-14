@@ -83,6 +83,74 @@ namespace Mogre.Framework
 				floor.SetMaterialName("Examples/BumpyMetal");
 				_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
 			}
+
+			TestRenderOp(256);
+			TestRenderOp(264);
+			TestRenderOp(284);
+
+			if (_renderOp != null)
+			{
+				_renderOp.vertexData.Dispose();
+				_renderOp.Dispose();
+				_renderOp = null;
+
+				_vertexBuffer.Dispose();
+				_vertexBuffer = null;
+			}
+		}
+
+		RenderOperation _renderOp;
+		HardwareVertexBufferSharedPtr _vertexBuffer;
+
+		private void TestRenderOp(int size)
+		{
+			if (_renderOp != null)
+			{
+				_renderOp.vertexData.Dispose();
+				_renderOp.Dispose();
+				_renderOp = null;
+
+				_vertexBuffer.Dispose();
+				_vertexBuffer = null;
+			}
+
+			_renderOp = new RenderOperation
+			{
+				vertexData = new VertexData
+				{
+					vertexStart = 0
+				}
+			};
+
+			VertexDeclaration vd = _renderOp.vertexData.vertexDeclaration;
+			vd.AddElement(
+				0,
+				0,
+				VertexElementType.VET_FLOAT3,
+				VertexElementSemantic.VES_POSITION);
+
+			vd.AddElement(
+				0,
+				VertexElement.GetTypeSize(VertexElementType.VET_FLOAT3),
+				VertexElementType.VET_FLOAT2,
+				VertexElementSemantic.VES_TEXTURE_COORDINATES);
+
+			vd.AddElement(
+				0,
+				VertexElement.GetTypeSize(VertexElementType.VET_FLOAT3) + VertexElement.GetTypeSize(VertexElementType.VET_FLOAT2),
+				VertexElementType.VET_COLOUR,
+				VertexElementSemantic.VES_DIFFUSE);
+
+			_vertexBuffer = HardwareBufferManager.Singleton.CreateVertexBuffer(
+				vd.GetVertexSize(0),
+				(uint)size,
+				HardwareBuffer.Usage.HBU_DYNAMIC_WRITE_ONLY,
+				false);
+
+			_renderOp.vertexData.vertexBufferBinding.SetBinding(0, _vertexBuffer);
+
+			_renderOp.operationType = RenderOperation.OperationTypes.OT_TRIANGLE_LIST;
+			_renderOp.useIndexes = false;
 		}
 
 		protected override void DestroyScene()

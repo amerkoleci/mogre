@@ -67,7 +67,13 @@ Root::!Root()
 		delete _frameListener; _frameListener = 0;
 	}
 
-	if (_createdByCLR && _native) { delete _native; _native = 0; }
+	if (_createdByCLR && _native)
+	{
+		ObjectTable::Remove((intptr_t)_native);
+		delete _native;
+		_native = 0;
+	}
+
 	_singleton = nullptr;
 
 	OnDisposed(this, nullptr);

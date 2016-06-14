@@ -33,6 +33,7 @@ TimeIndex::!TimeIndex()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -66,7 +67,7 @@ Ogre::TimeIndex* TimeIndex::UnmanagedPointer::get()
 }
 
 // Keyrame
-KeyFrame::KeyFrame(Mogre::AnimationTrack^ parent, Ogre::Real time) 
+KeyFrame::KeyFrame(Mogre::AnimationTrack^ parent, Ogre::Real time)
 {
 	_createdByCLR = true;
 	_native = new Ogre::KeyFrame(GetPointerOrNull(parent), time);
@@ -378,7 +379,7 @@ void NodeAnimationTrack::Optimise()
 }
 
 // ------------------- AnimationState -----
-AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight, bool enabled) 
+AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight, bool enabled)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_animName, animName);
@@ -402,7 +403,7 @@ AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ paren
 	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
-AnimationState::AnimationState(Mogre::AnimationStateSet^ parent, Mogre::AnimationState^ rhs) 
+AnimationState::AnimationState(Mogre::AnimationStateSet^ parent, Mogre::AnimationState^ rhs)
 {
 	_createdByCLR = true;
 	_native = new Ogre::AnimationState(GetPointerOrNull(parent), *rhs->UnmanagedPointer);
@@ -426,9 +427,9 @@ AnimationState::!AnimationState()
 	if (IsDisposed)
 		return;
 
-	if (_createdByCLR && _native != 0) 
+	if (_createdByCLR && _native != 0)
 	{
-		delete _native; _native = 0; 
+		delete _native; _native = 0;
 	}
 
 	OnDisposed(this, nullptr);
@@ -687,7 +688,7 @@ Animation::!Animation()
 	OnDisposed(this, nullptr);
 }
 
-Animation::Animation(String^ name, Mogre::Real length) 
+Animation::Animation(String^ name, Mogre::Real length)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_name, name);

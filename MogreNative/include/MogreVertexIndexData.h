@@ -58,8 +58,22 @@ namespace Mogre
 
 	public protected:
 		Mogre::VertexData::HardwareAnimationDataList^ _hwAnimationDataList;
+		Mogre::VertexBufferBinding^ _vertexBufferBinding;
+		Mogre::VertexDeclaration^ _vertexDeclaration;
 
-		VertexData(Ogre::VertexData* obj) : _native(obj), _createdByCLR(false)
+		VertexData(Ogre::VertexData* obj) 
+			: _native(obj)
+			, _createdByCLR(false)
+			, _vertexBufferBinding(nullptr)
+			, _vertexDeclaration(nullptr)
+		{
+		}
+
+		VertexData(intptr_t ptr) 
+			: _native((Ogre::VertexData*)ptr)
+			, _createdByCLR(false)
+			, _vertexBufferBinding(nullptr)
+			, _vertexDeclaration(nullptr)
 		{
 		}
 
@@ -71,9 +85,7 @@ namespace Mogre
 	protected:
 		!VertexData();
 	public:
-
 		VertexData();
-
 
 		property Mogre::VertexDeclaration^ vertexDeclaration
 		{
@@ -164,6 +176,10 @@ namespace Mogre
 
 	public protected:
 		IndexData(Ogre::IndexData* obj) : _native(obj), _createdByCLR(false)
+		{
+		}
+
+		IndexData(intptr_t ptr) : _native((Ogre::IndexData*)ptr), _createdByCLR(false)
 		{
 		}
 

@@ -8,7 +8,7 @@
 
 using namespace Mogre;
 
-ManualObject::ManualObjectSection::ManualObjectSection(Mogre::ManualObject^ parent, String^ materialName, Mogre::RenderOperation::OperationTypes opType) 
+ManualObject::ManualObjectSection::ManualObjectSection(Mogre::ManualObject^ parent, String^ materialName, Mogre::RenderOperation::OperationTypes opType)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_materialName, materialName);
@@ -30,6 +30,7 @@ ManualObject::ManualObjectSection::!ManualObjectSection()
 
 	if (_createdByCLR && _native)
 	{
+		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -142,7 +143,7 @@ Mogre::Vector4 ManualObject::ManualObjectSection::GetCustomParameter(size_t inde
 {
 	return ToVector4(
 		static_cast<const Ogre::ManualObject::ManualObjectSection*>(_native)->getCustomParameter(index)
-		);
+	);
 }
 
 //void ManualObject::ManualObjectSection::_updateCustomGpuParameter(Mogre::GpuProgramParameters::AutoConstantEntry_NativePtr constantEntry, Mogre::GpuProgramParameters^ params)
