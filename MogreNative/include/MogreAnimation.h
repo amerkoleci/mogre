@@ -619,6 +619,10 @@ namespace Mogre
 		{
 		}
 
+		AnimationStateSet(intptr_t obj) : _native((Ogre::AnimationStateSet*)obj), _createdByCLR(false)
+		{
+		}
+
 		Ogre::AnimationStateSet* _native;
 		bool _createdByCLR;
 
