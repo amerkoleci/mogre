@@ -42,6 +42,11 @@ namespace Mogre
 			{
 			}
 
+			ManualObjectSection(intptr_t ptr) : _native((Ogre::ManualObject::ManualObjectSection*)ptr)
+			{
+
+			}
+
 		public:
 			~ManualObjectSection();
 		protected:
