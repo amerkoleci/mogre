@@ -116,7 +116,7 @@ void Node::Scale::set(Mogre::Vector3 value)
 
 Mogre::Quaternion Node::DerivedOrientation::get()
 {
-	return ToQuaternion(_native->_getDerivedOrientation());
+	return ToQuaternion(_native->_getDerivedOrientationUpdated());
 }
 
 void Node::DerivedOrientation::set(Mogre::Quaternion value)
@@ -126,7 +126,7 @@ void Node::DerivedOrientation::set(Mogre::Quaternion value)
 
 Mogre::Vector3 Node::DerivedPosition::get()
 {
-	return ToVector3(_native->_getDerivedPosition());
+	return ToVector3(_native->_getDerivedPositionUpdated());
 }
 
 void Node::DerivedPosition::set(Mogre::Vector3 value)
@@ -332,6 +332,11 @@ void Node::RemoveAllChildren()
 Mogre::Quaternion Node::_getDerivedOrientation()
 {
 	return ToQuaternion(_native->_getDerivedOrientation());
+}
+
+Mogre::Quaternion Node::_getDerivedOrientationUpdated()
+{
+	return ToQuaternion(_native->_getDerivedOrientationUpdated());
 }
 
 Mogre::Vector3 Node::_getDerivedPosition()

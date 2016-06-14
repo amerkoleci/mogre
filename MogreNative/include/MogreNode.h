@@ -59,6 +59,17 @@ namespace Mogre
 			}
 		}
 
+#ifndef NDEBUG
+		property bool IsCachedTransformOutOfDate
+		{
+		public:
+			bool get()
+			{
+				return _native->isCachedTransformOutOfDate();
+			}
+		}
+#endif
+
 		property bool InheritOrientation
 		{
 		public:
@@ -204,6 +215,7 @@ namespace Mogre
 		void RemoveAllChildren();
 
 		Mogre::Quaternion _getDerivedOrientation();
+		Mogre::Quaternion _getDerivedOrientationUpdated();
 
 		Mogre::Vector3 _getDerivedPosition();
 		Mogre::Vector3 _getDerivedPositionUpdated();
