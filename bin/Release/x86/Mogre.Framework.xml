@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mogre.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Mogre.Framework.Sample">
+            <summary>
+            Base class for samples
+            </summary>
+        </member>
+    </members>
+</doc>

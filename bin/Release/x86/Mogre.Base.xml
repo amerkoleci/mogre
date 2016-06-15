@@ -1,0 +1,2661 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mogre.Base</name>
+    </assembly>
+    <members>
+        <member name="M:Mogre.Aabb.SetExtents(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Sets both minimum and maximum extents at once.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Mogre.Aabb.Equals(Mogre.Aabb@)">
+            <summary>
+            Returns a boolean indicating whether the given Box is equal to this Box instance.
+            </summary>
+            <param name="other">The Box to compare this instance to.</param>
+            <returns>True if the other Box is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Aabb.Equals(Mogre.Aabb)">
+            <summary>
+            Returns a boolean indicating whether the given Box is equal to this Box instance.
+            </summary>
+            <param name="other">The Box to compare this instance to.</param>
+            <returns>True if the other Box is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Aabb.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Box instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Box; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Aabb.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Aabb.op_Equality(Mogre.Aabb,Mogre.Aabb)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Aabb.op_Inequality(Mogre.Aabb,Mogre.Aabb)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Box.Equals(Mogre.Box@)">
+            <summary>
+            Returns a boolean indicating whether the given Box is equal to this Box instance.
+            </summary>
+            <param name="other">The Box to compare this instance to.</param>
+            <returns>True if the other Box is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Box.Equals(Mogre.Box)">
+            <summary>
+            Returns a boolean indicating whether the given Box is equal to this Box instance.
+            </summary>
+            <param name="other">The Box to compare this instance to.</param>
+            <returns>True if the other Box is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Box.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Box instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Box; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Box.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Box.op_Equality(Mogre.Box,Mogre.Box)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Box.op_Inequality(Mogre.Box,Mogre.Box)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="F:Mogre.Matrix3.Zero">
+            <summary>
+            A <see cref="T:Mogre.Matrix3"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Matrix3.Identity">
+            <summary>
+            The identity <see cref="T:Mogre.Matrix3"/>.
+            </summary>
+        </member>
+        <member name="P:Mogre.Matrix3.Scale">
+            <summary>
+            Gets or sets the scale of the Matrix3; that is M11, M22, and M33.
+            </summary>
+        </member>
+        <member name="P:Mogre.Matrix3.IsIdentity">
+            <summary>
+            Gets a value indicating whether this instance is an identity Matrix3.
+            </summary>
+            <value>
+            <c>true</c> if this instance is an identity Matrix3; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Mogre.Matrix3.Item(System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the Matrix3 component, depending on the index.</value>
+            <param name="index">The zero-based index of the component to access.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 15].</exception>
+        </member>
+        <member name="P:Mogre.Matrix3.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the Matrix4x4 component, depending on the index.</value>
+            <param name="row">The row of the Matrix4x4 to access.</param>
+            <param name="column">The column of the Matrix4x4 to access.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
+        </member>
+        <member name="M:Mogre.Matrix3.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Matrix3"/> struct.
+            </summary>
+            <param name="value">The value that will be assigned to all components.</param>
+        </member>
+        <member name="M:Mogre.Matrix3.Equals(Mogre.Matrix3@)">
+            <summary>
+            Returns a boolean indicating whether the given Matrix3 is equal to this Matrix3 instance.
+            </summary>
+            <param name="other">The Matrix3 to compare this instance to.</param>
+            <returns>True if the other Matrix3 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.Equals(Mogre.Matrix3)">
+            <summary>
+            Returns a boolean indicating whether the given Matrix3 is equal to this Matrix3 instance.
+            </summary>
+            <param name="other">The Matrix3 to compare this instance to.</param>
+            <returns>True if the other Matrix3 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Matrix3 instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Matrix3; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Equality(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Inequality(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Addition(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Adds two matricies.
+            </summary>
+            <param name="left">The first Matrix3 to add.</param>
+            <param name="right">The second Matrix3 to add.</param>
+            <returns>The sum of the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Subtraction(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Subtracts two matricies.
+            </summary>
+            <param name="left">The first Matrix3 to subtract.</param>
+            <param name="right">The second Matrix3 to subtract.</param>
+            <returns>The difference between the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Multiply(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Multiplies two matricies.
+            </summary>
+            <param name="left">The first Matrix3 to multiply.</param>
+            <param name="right">The second Matrix3 to multiply.</param>
+            <returns>The product of the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix3.op_Division(Mogre.Matrix3,Mogre.Matrix3)">
+            <summary>
+            Divides two matricies.
+            </summary>
+            <param name="left">The first Matrix3 to divide.</param>
+            <param name="right">The second Matrix4x4 to divide.</param>
+            <returns>The quotient of the two matricies.</returns>
+        </member>
+        <member name="F:Mogre.Matrix4.SizeInBytes">
+            <summary>
+            The size of the <see cref="T:Mogre.Matrix4"/> type, in bytes.
+            </summary>
+        </member>
+        <member name="F:Mogre.Matrix4.Zero">
+            <summary>
+            A <see cref="T:Mogre.Matrix4"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Matrix4.Identity">
+            <summary>
+            The identity <see cref="T:Mogre.Matrix4"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.Matrix4.ZERO">
+            <summary>
+            A <see cref="T:Mogre.Matrix4"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Matrix4.IDENTITY">
+            <summary>
+            The identity <see cref="T:Mogre.Matrix4"/>.
+            </summary>
+        </member>
+        <member name="P:Mogre.Matrix4.Translation">
+            <summary>
+            Gets or sets the translation of the Matrix4x4; that is M41, M42, and M43.
+            </summary>
+        </member>
+        <member name="P:Mogre.Matrix4.Scale">
+            <summary>
+            Gets or sets the scale of the Matrix4x4; that is M11, M22, and M33.
+            </summary>
+        </member>
+        <member name="P:Mogre.Matrix4.IsIdentity">
+            <summary>
+            Gets a value indicating whether this instance is an identity Matrix4x4.
+            </summary>
+            <value>
+            <c>true</c> if this instance is an identity Matrix4x4; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Mogre.Matrix4.Item(System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the Matrix4x4 component, depending on the index.</value>
+            <param name="index">The zero-based index of the component to access.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 15].</exception>
+        </member>
+        <member name="P:Mogre.Matrix4.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the Matrix4x4 component, depending on the index.</value>
+            <param name="row">The row of the Matrix4x4 to access.</param>
+            <param name="column">The column of the Matrix4x4 to access.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
+        </member>
+        <member name="M:Mogre.Matrix4.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Matrix4"/> struct.
+            </summary>
+            <param name="value">The value that will be assigned to all components.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Add(Mogre.Matrix4@,Mogre.Matrix4@,Mogre.Matrix4@)">
+            <summary>
+            Determines the sum of two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to add.</param>
+            <param name="right">The second Matrix4x4 to add.</param>
+            <param name="result">When the method completes, contains the sum of the two matrices.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Add(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Determines the sum of two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to add.</param>
+            <param name="right">The second Matrix4x4 to add.</param>
+            <returns>The sum of the two matrices.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Subtract(Mogre.Matrix4@,Mogre.Matrix4@,Mogre.Matrix4@)">
+            <summary>
+            Determines the difference between two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to subtract.</param>
+            <param name="right">The second Matrix4x4 to subtract.</param>
+            <param name="result">When the method completes, contains the difference between the two matrices.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Subtract(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Determines the difference between two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to subtract.</param>
+            <param name="right">The second Matrix4x4 to subtract.</param>
+            <returns>The difference between the two matrices.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Multiply(Mogre.Matrix4@,System.Single,Mogre.Matrix4@)">
+            <summary>
+            Scales a Matrix4x4 by the given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <param name="result">When the method completes, contains the scaled Matrix4x4.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Multiply(Mogre.Matrix4,System.Single)">
+            <summary>
+            Scales a Matrix4x4 by the given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <returns>The scaled Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Multiply(Mogre.Matrix4@,Mogre.Matrix4@,Mogre.Matrix4@)">
+            <summary>
+            Determines the product of two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to multiply.</param>
+            <param name="right">The second Matrix4x4 to multiply.</param>
+            <param name="result">The product of the two matrices.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Divide(Mogre.Matrix4@,System.Single,Mogre.Matrix4@)">
+            <summary>
+            Scales a Matrix4x4 by the given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <param name="result">When the method completes, contains the scaled Matrix4x4.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Divide(Mogre.Matrix4,System.Single)">
+            <summary>
+            Scales a Matrix4x4 by the given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <returns>The scaled Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Divide(Mogre.Matrix4@,Mogre.Matrix4@,Mogre.Matrix4@)">
+            <summary>
+            Determines the quotient of two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to divide.</param>
+            <param name="right">The second Matrix4x4 to divide.</param>
+            <param name="result">When the method completes, contains the quotient of the two matrices.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.Divide(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Determines the quotient of two matrices.
+            </summary>
+            <param name="left">The first Matrix4x4 to divide.</param>
+            <param name="right">The second Matrix4x4 to divide.</param>
+            <returns>The quotient of the two matrices.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Negate(Mogre.Matrix4@,Mogre.Matrix4@)">
+            <summary>
+            Negates a Matrix4x4.
+            </summary>
+            <param name="value">The Matrix4x4 to be negated.</param>
+            <param name="result">When the method completes, contains the negated Matrix4x4.</param>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Addition(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Adds two matricies.
+            </summary>
+            <param name="left">The first Matrix4x4 to add.</param>
+            <param name="right">The second Matrix4x4 to add.</param>
+            <returns>The sum of the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_UnaryPlus(Mogre.Matrix4)">
+            <summary>
+            Assert a Matrix4x4 (return it unchanged).
+            </summary>
+            <param name="value">The Matrix4x4 to assert (unchange).</param>
+            <returns>The asserted (unchanged) Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Subtraction(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Subtracts two matricies.
+            </summary>
+            <param name="left">The first Matrix4x4 to subtract.</param>
+            <param name="right">The second Matrix4x4 to subtract.</param>
+            <returns>The difference between the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_UnaryNegation(Mogre.Matrix4)">
+            <summary>
+            Negates a Matrix4x4.
+            </summary>
+            <param name="value">The Matrix4x4 to negate.</param>
+            <returns>The negated Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Multiply(System.Single,Mogre.Matrix4)">
+            <summary>
+            Scales a Matrix4x4 by a given value.
+            </summary>
+            <param name="right">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <returns>The scaled Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Multiply(Mogre.Matrix4,System.Single)">
+            <summary>
+            Scales a Matrix4x4 by a given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <returns>The scaled Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Multiply(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Multiplies two matricies.
+            </summary>
+            <param name="left">The first Matrix4x4 to multiply.</param>
+            <param name="right">The second Matrix4x4 to multiply.</param>
+            <returns>The product of the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Division(Mogre.Matrix4,System.Single)">
+            <summary>
+            Scales a Matrix4x4 by a given value.
+            </summary>
+            <param name="left">The Matrix4x4 to scale.</param>
+            <param name="scalar">The amount by which to scale.</param>
+            <returns>The scaled Matrix4x4.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Division(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Divides two matricies.
+            </summary>
+            <param name="left">The first Matrix4x4 to divide.</param>
+            <param name="right">The second Matrix4x4 to divide.</param>
+            <returns>The quotient of the two matricies.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Multiply(Mogre.Matrix4,Mogre.Vector3)">
+            <summary>
+            Multiplies with vector.
+            </summary>
+            <param name="left">The first Matrix4x4 to multiply.</param>
+            <param name="right">The second Vector3 to multiply.</param>
+            <returns>The product.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Multiply(Mogre.Matrix4,Mogre.Vector4)">
+            <summary>
+            Multiplies with vector.
+            </summary>
+            <param name="left">The first Matrix4x4 to multiply.</param>
+            <param name="right">The second Vector3 to multiply.</param>
+            <returns>The product.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Equals(Mogre.Matrix4@)">
+            <summary>
+            Returns a boolean indicating whether the given Matrix4 is equal to this Matrix4 instance.
+            </summary>
+            <param name="other">The Matrix4 to compare this instance to.</param>
+            <returns>True if the other Matrix4 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Equals(Mogre.Matrix4)">
+            <summary>
+            Returns a boolean indicating whether the given Matrix4 is equal to this Matrix4 instance.
+            </summary>
+            <param name="other">The Matrix4 to compare this instance to.</param>
+            <returns>True if the other Matrix4 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Matrix4 instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Matrix4; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Equality(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.op_Inequality(Mogre.Matrix4,Mogre.Matrix4)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Matrix4.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.Equals(Mogre.FloatRect@)">
+            <summary>
+            Returns a boolean indicating whether the given FloatRect is equal to this FloatRect instance.
+            </summary>
+            <param name="other">The FloatRect to compare this instance to.</param>
+            <returns>True if the other FloatRect is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.Equals(Mogre.FloatRect)">
+            <summary>
+            Returns a boolean indicating whether the given FloatRect is equal to this FloatRect instance.
+            </summary>
+            <param name="other">The FloatRect to compare this instance to.</param>
+            <returns>True if the other FloatRect is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this FloatRect instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this FloatRect; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.op_Equality(Mogre.FloatRect,Mogre.FloatRect)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.FloatRect.op_Inequality(Mogre.FloatRect,Mogre.FloatRect)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:Mogre.Sphere">
+            <summary>
+            A sphere primitive, mostly used for bounds checking. 
+            </summary>
+        </member>
+        <member name="M:Mogre.Sphere.#ctor(Mogre.Vector3,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Sphere"/> struct.
+            </summary>
+        </member>
+        <member name="M:Mogre.Sphere.Equals(Mogre.Sphere@)">
+            <summary>
+            Returns a boolean indicating whether the given Sphere is equal to this Sphere instance.
+            </summary>
+            <param name="other">The Sphere to compare this instance to.</param>
+            <returns>True if the other Sphere is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.Equals(Mogre.Sphere)">
+            <summary>
+            Returns a boolean indicating whether the given Sphere is equal to this Sphere instance.
+            </summary>
+            <param name="other">The Sphere to compare this instance to.</param>
+            <returns>True if the other Sphere is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.ToString">
+            <summary>
+            Returns a String representing this Sphere instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.ToString(System.String)">
+            <summary>
+            Returns a String representing this Sphere instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a String representing this Sphere instance, using the specified format to format individual elements 
+            and the given IFormatProvider.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <param name="formatProvider">The format provider to use when formatting elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Sphere instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Sphere; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.op_Equality(Mogre.Sphere,Mogre.Sphere)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Sphere.op_Inequality(Mogre.Sphere,Mogre.Sphere)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:Mogre.Ray">
+            <summary>
+            Representation of a ray in space, ie a line with an origin and direction.
+            </summary>
+        </member>
+        <member name="M:Mogre.Ray.#ctor(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Ray"/> struct.
+            </summary>
+        </member>
+        <member name="M:Mogre.Ray.Intersects(Mogre.AxisAlignedBox)">
+            <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        </member>
+        <member name="M:Mogre.Ray.Intersects(Mogre.Sphere)">
+            <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        </member>
+        <member name="M:Mogre.Ray.Intersects(Mogre.Plane)">
+            <summary>Tests whether this ray intersects the given plane. A pair structure where the first element indicates whether an intersection occurs, and if true, the second element will indicate the distance along the ray at which it intersects. This can be converted to a point in space by calling getPoint(). </summary>
+        </member>
+        <member name="M:Mogre.Ray.Equals(Mogre.Ray@)">
+            <summary>
+            Returns a boolean indicating whether the given Ray is equal to this Ray instance.
+            </summary>
+            <param name="other">The Ray to compare this instance to.</param>
+            <returns>True if the other Ray is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Ray.Equals(Mogre.Ray)">
+            <summary>
+            Returns a boolean indicating whether the given Ray is equal to this Ray instance.
+            </summary>
+            <param name="other">The Ray to compare this instance to.</param>
+            <returns>True if the other Ray is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Ray.ToString">
+            <summary>
+            Returns a String representing this Ray instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Ray.ToString(System.String)">
+            <summary>
+            Returns a String representing this Ray instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Ray.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a String representing this Ray instance, using the specified format to format individual elements 
+            and the given IFormatProvider.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <param name="formatProvider">The format provider to use when formatting elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Ray.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Ray.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Ray instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Ray; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Ray.op_Equality(Mogre.Ray,Mogre.Ray)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Ray.op_Inequality(Mogre.Ray,Mogre.Ray)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Rect.Equals(Mogre.Rect@)">
+            <summary>
+            Returns a boolean indicating whether the given Rect is equal to this Rect instance.
+            </summary>
+            <param name="other">The Rect to compare this instance to.</param>
+            <returns>True if the other Rect is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Rect.Equals(Mogre.Rect)">
+            <summary>
+            Returns a boolean indicating whether the given Rect is equal to this Rect instance.
+            </summary>
+            <param name="other">The Rect to compare this instance to.</param>
+            <returns>True if the other Rect is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Rect.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Rect instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Rect; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Rect.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Rect.op_Equality(Mogre.Rect,Mogre.Rect)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Rect.op_Inequality(Mogre.Rect,Mogre.Rect)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.HalfSize">
+            <summary>
+            Gets the half-size of the box.
+            </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.Size">
+            <summary>
+            Gets the size of the box.
+            </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.Center">
+            <summary>Gets the centre of the box. </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.IsInfinite">
+            <summary>Returns true if the box is infinite. </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.IsFinite">
+            <summary>Returns true if the box is finite. </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.Minimum">
+            <summary>
+            Gets the minimum corner of the box.
+            </summary>
+        </member>
+        <member name="P:Mogre.AxisAlignedBox.Maximum">
+            <summary>
+            Gets the maximum corner of the box.
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetMinimum(Mogre.Vector3)">
+            <summary>Sets the minimum corner of the box. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetMinimumX(System.Single)">
+            <summary>Changes one of the components of the minimum corner of the box used to resize only one dimension of the box </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetMaximum(Mogre.Vector3)">
+            <summary>Sets the maximum corner of the box. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetMaximumX(System.Single)">
+            <summary>Changes one of the components of the maximum corner of the box used to resize only one dimension of the box </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetExtents(Mogre.Vector3,Mogre.Vector3)">
+            <summary>Sets both minimum and maximum extents at once. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Merge(Mogre.Vector3)">
+            <summary>Extends the box to encompass the specified point (if needed). </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Merge(Mogre.AxisAlignedBox)">
+            <summary>
+            Merges the passed in box into the current box. The result is the box which encompasses both.
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetNull">
+            <summary>Sets the box to a 'null' value i.e. not a box. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.SetInfinite">
+            <summary>Sets the box to 'infinite' </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Intersects(Mogre.Vector3)">
+            <summary>Returns whether or not this box intersects another. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Intersects(Mogre.Plane)">
+            <summary>
+            Returns whether or not this box intersects another.</summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Intersects(Mogre.AxisAlignedBox)">
+            <summary>
+            Returns whether or not this box intersects another.
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Intersection(Mogre.AxisAlignedBox)">
+            <summary>
+            Calculate the area of intersection of this box and another.
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Volume">
+            <summary>
+            Calculate the volume of this box.
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Scale(Mogre.Vector3)">
+            <summary>Scales the AABB by the vector given. </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Contains(Mogre.AxisAlignedBox)">
+            <summary>
+            Tests whether the given point contained by this box. 
+            </summary>
+        </member>
+        <member name="M:Mogre.AxisAlignedBox.Contains(Mogre.Vector3)">
+            <summary>Tests whether the given point contained by this box. </summary>
+        </member>
+        <member name="M:Mogre.Angle.Equals(Mogre.Angle@)">
+            <summary>
+            Returns a boolean indicating whether the given Angle is equal to this Angle instance.
+            </summary>
+            <param name="other">The Angle to compare this instance to.</param>
+            <returns>True if the other Angle is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Angle.Equals(Mogre.Angle)">
+            <summary>
+            Returns a boolean indicating whether the given Angle is equal to this Angle instance.
+            </summary>
+            <param name="other">The Angle to compare this instance to.</param>
+            <returns>True if the other Angle is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Angle.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Angle instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Angle; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Angle.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="T:Mogre.Plane">
+            <summary>
+            Defines a plane in 3D space.
+            </summary>
+        </member>
+        <member name="T:Mogre.Plane.Side">
+            <summary>
+            The "positive side" of the plane is the half space to which the
+            plane normal points.The "negative side" is the other half
+            space.The flag "no side" indicates the plane itself.
+            </summary>
+        </member>
+        <member name="F:Mogre.Plane.normal">
+            <summary>
+            The normal of the plane.
+            </summary>
+        </member>
+        <member name="F:Mogre.Plane.d">
+            <summary>
+            The distance of the plane.
+            </summary>
+        </member>
+        <member name="M:Mogre.Plane.Redefine(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Redefine this plane based on 3 points.
+            </summary>
+            <param name="point0"></param>
+            <param name="point1"></param>
+            <param name="point2"></param>
+        </member>
+        <member name="M:Mogre.Plane.op_Equality(Mogre.Plane,Mogre.Plane)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Plane.op_Inequality(Mogre.Plane,Mogre.Plane)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Plane.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Mogre.Plane.Equals(Mogre.Plane@)">
+            <summary>
+            Determines whether the specified <see cref="T:Mogre.Plane"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:Mogre.Plane"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Mogre.Plane"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Plane.Equals(Mogre.Plane)">
+            <summary>
+            Determines whether the specified <see cref="T:Mogre.Plane"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:Mogre.Plane"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Mogre.Plane"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Plane.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Plane.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="F:Mogre.Math.ZeroTolerance">
+            <summary>
+            The value for which all absolute numbers smaller than are considered equal to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Math.Pi">
+            <summary>
+            A value specifying the approximation of π which is 180 degrees.
+            </summary>
+        </member>
+        <member name="F:Mogre.Math.TwoPi">
+            <summary>
+            A value specifying the approximation of 2π which is 360 degrees.
+            </summary>
+        </member>
+        <member name="F:Mogre.Math.PiOverTwo">
+            <summary>
+            A value specifying the approximation of π/2 which is 90 degrees.
+            </summary>
+        </member>
+        <member name="F:Mogre.Math.PiOverFour">
+            <summary>
+            A value specifying the approximation of π/4 which is 45 degrees.
+            </summary>
+        </member>
+        <member name="M:Mogre.Math.Sin(Mogre.Radian)">
+            <summary>Sine function. </summary>
+            <param name="radians">Angle in radians </param>
+        </member>
+        <member name="M:Mogre.Math.IsZero(System.Single)">
+            <summary>
+            Determines whether the specified value is close to zero (0.0f).
+            </summary>
+            <param name="a">The floating value.</param>
+            <returns><c>true</c> if the specified value is close to zero (0.0f); otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Math.IsOne(System.Single)">
+            <summary>
+            Determines whether the specified value is close to one (1.0f).
+            </summary>
+            <param name="a">The floating value.</param>
+            <returns><c>true</c> if the specified value is close to one (1.0f); otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Math.CalculateBasicFaceNormal(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>Calculate a face normal, no w-information. </summary>
+        </member>
+        <member name="M:Mogre.Math.CalculateBasicFaceNormalWithoutNormalize(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>Calculate a face normal without normalize, no w-information. </summary>
+        </member>
+        <member name="M:Mogre.Math.CalculateFaceNormal(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>Calculate a face normal, including the w component which is the offset from the origin. </summary>
+        </member>
+        <member name="M:Mogre.Math.CalculateFaceNormalWithoutNormalize(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>Calculate a face normal without normalize, including the w component which is the offset from the origin. </summary>
+        </member>
+        <member name="M:Mogre.Math.Intersects(Mogre.Ray,Mogre.Sphere)">
+            <summary>Ray / sphere intersection, returns boolean result and distance. </summary>
+        </member>
+        <member name="M:Mogre.Math.Intersects(Mogre.Ray,Mogre.AxisAlignedBox)">
+            <summary>Ray / box intersection, returns boolean result and distance. </summary>
+        </member>
+        <member name="M:Mogre.Math.Intersects(Mogre.Ray,Mogre.Plane)">
+            <summary>Ray / plane intersection, returns boolean result and distance. </summary>
+        </member>
+        <member name="M:Mogre.Degree.Equals(Mogre.Degree@)">
+            <summary>
+            Returns a boolean indicating whether the given Degree is equal to this Degree instance.
+            </summary>
+            <param name="other">The Degree to compare this instance to.</param>
+            <returns>True if the other Degree is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Degree.Equals(Mogre.Degree)">
+            <summary>
+            Returns a boolean indicating whether the given Degree is equal to this Degree instance.
+            </summary>
+            <param name="other">The Degree to compare this instance to.</param>
+            <returns>True if the other Degree is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Degree.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Degree instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Degree; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Degree.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Radian.Equals(Mogre.Radian@)">
+            <summary>
+            Returns a boolean indicating whether the given Radian is equal to this Radian instance.
+            </summary>
+            <param name="other">The Radian to compare this instance to.</param>
+            <returns>True if the other Radian is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Radian.Equals(Mogre.Radian)">
+            <summary>
+            Returns a boolean indicating whether the given Radian is equal to this Radian instance.
+            </summary>
+            <param name="other">The Radian to compare this instance to.</param>
+            <returns>True if the other Radian is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Radian.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Radian instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Radian; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Radian.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="T:Mogre.Vector2">
+            <summary>
+            Represents a two dimensional mathematical vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.SizeInBytes">
+            <summary>
+            The size of the <see cref="T:Mogre.Vector2"/> type, in bytes.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.Zero">
+            <summary>
+            A <see cref="T:Mogre.Vector2"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.UnitX">
+            <summary>
+            The X unit <see cref="T:Mogre.Vector2"/> (1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.UnitY">
+            <summary>
+            The Y unit <see cref="T:Mogre.Vector2"/> (0, 1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.One">
+            <summary>
+            A <see cref="T:Mogre.Vector2"/> with all of its components set to one.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.X">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector2.Y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector2.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector2.y">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector2.IsZeroLength">
+            <summary>Returns true if this vector is zero length. </summary>
+        </member>
+        <member name="P:Mogre.Vector2.Length">
+            <summary>
+            Returns the length (magnitude) of the vector. This operation requires a square root and is expensive in terms of CPU operations. 
+            If you don't need to know the exact length (e.g. for just comparing lengths) use squaredLength() instead. 
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector2.SquaredLength">
+            <summary>
+            Returns the square of the length(magnitude) of the vector. 
+            This method is for efficiency - calculating the actual length of a vector requires a square root, which is expensive in terms of the operations required. 
+            This method returns the square of the length of the vector, i.e. the same as the length but before the square root is taken. 
+            Use this if you want to find the longest / shortest vector without incurring the square root. 
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector2.NormalisedCopy">
+            <summary>
+            As normalise, except that this vector is unaffected and the normalised vector is returned as a copy. 
+            </summary>
+        </member>
+        <member name="M:Mogre.Vector2.#ctor(System.Single)">
+            <summary>
+            Constructs a vector whose elements are all the single specified value.
+            </summary>
+            <param name="value">The element to fill the vector with.</param>
+        </member>
+        <member name="M:Mogre.Vector2.#ctor(System.Single,System.Single)">
+            <summary>
+            Constructs a vector with the given individual elements.
+            </summary>
+            <param name="x">The X component.</param>
+            <param name="y">The Y component.</param>
+        </member>
+        <member name="M:Mogre.Vector2.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector2"/> struct.
+            </summary>
+            <param name="values">The values to assign to the X and Y components of the vector. This must be an array with two elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than two elements.</exception>
+        </member>
+        <member name="M:Mogre.Vector2.#ctor(System.Int32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector2"/> struct.
+            </summary>
+            <param name="values">The values to assign to the X and Y components of the vector. This must be an array with two elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than two elements.</exception>
+        </member>
+        <member name="M:Mogre.Vector2.ToString">
+            <summary>
+            Returns a String representing this Vector2 instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.ToString(System.String)">
+            <summary>
+            Returns a String representing this Vector2 instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a String representing this Vector2 instance, using the specified format to format individual elements 
+            and the given IFormatProvider.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <param name="formatProvider">The format provider to use when formatting elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.Equals(Mogre.Vector2@)">
+            <summary>
+            Returns a boolean indicating whether the given Vector2 is equal to this Vector2 instance.
+            </summary>
+            <param name="other">The Vector2 to compare this instance to.</param>
+            <returns>True if the other Vector2 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.Equals(Mogre.Vector2)">
+            <summary>
+            Returns a boolean indicating whether the given Vector2 is equal to this Vector2 instance.
+            </summary>
+            <param name="other">The Vector2 to compare this instance to.</param>
+            <returns>True if the other Vector2 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Vector2 instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Vector2; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Equality(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Returns a boolean indicating whether the two given vectors are equal.
+            </summary>
+            <param name="left">The first vector to compare.</param>
+            <param name="right">The second vector to compare.</param>
+            <returns>True if the vectors are equal; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Inequality(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Returns a boolean indicating whether the two given vectors are not equal.
+            </summary>
+            <param name="left">The first vector to compare.</param>
+            <param name="right">The second vector to compare.</param>
+            <returns>True if the vectors are not equal; False if they are equal.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Addition(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="left">The first vector to add.</param>
+            <param name="right">The second vector to add.</param>
+            <returns>The sum of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Subtraction(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Subtracts two vectors.
+            </summary>
+            <param name="left">The first vector to subtract.</param>
+            <param name="right">The second vector to subtract.</param>
+            <returns>The difference of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_UnaryNegation(Mogre.Vector2)">
+            <summary>
+            Negates a given vector.
+            </summary>
+            <param name="value">The source vector.</param>
+            <returns>The negated vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Multiply(System.Single,Mogre.Vector2)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Multiply(Mogre.Vector2,System.Single)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Multiply(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Modulates a vector with another by performing component-wise multiplication.
+            </summary>
+            <param name="left">The first vector to modulate.</param>
+            <param name="right">The second vector to modulate.</param>
+            <returns>The modulated vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Division(Mogre.Vector2,Mogre.Vector2)">
+            <summary>
+            Divides the first vector by the second.
+            </summary>
+            <param name="left">The first source vector.</param>
+            <param name="right">The second source vector.</param>
+            <returns>The vector resulting from the division.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Division(Mogre.Vector2,System.Single)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Explicit(Mogre.Vector2)~Mogre.Vector3">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector2"/> to <see cref="T:Mogre.Vector3"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.op_Explicit(Mogre.Vector2)~Mogre.Vector4">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector2"/> to <see cref="T:Mogre.Vector4"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Mogre.Vector2.Normalise">
+            <summary>Normalises the vector. This method normalises the vector such that it's length / magnitude is 1. The result is called a unit vector. This function will not crash for zero-sized vectors, but there will be no changes made to their components. The previous length of the vector. </summary>
+        </member>
+        <member name="M:Mogre.Vector2.Reflect(Mogre.Vector2)">
+            <summary>Calculates a reflection vector to the plane with the given normal . NB assumes 'this' is pointing AWAY FROM the plane, invert if it is not. </summary>
+        </member>
+        <member name="M:Mogre.Vector2.MakeCeil(Mogre.Vector2)">
+            <summary>Sets this vector's components to the maximum of its own and the ones of the passed in vector. 'Maximum' in this case means the combination of the highest value of x, y and z from both vectors. Highest is taken just numerically, not magnitude, so 1 &gt; -3. </summary>
+        </member>
+        <member name="M:Mogre.Vector2.MakeFloor(Mogre.Vector2)">
+            <summary>Sets this vector's components to the minimum of its own and the ones of the passed in vector. 'Minimum' in this case means the combination of the lowest value of x, y and z from both vectors. Lowest is taken just numerically, not magnitude, so -1 &lt; 0. </summary>
+        </member>
+        <member name="M:Mogre.Vector2.MidPoint(Mogre.Vector2)">
+            <summary>
+            Returns a vector at a point half way between this and the passed in vector.
+            </summary>
+        </member>
+        <member name="T:Mogre.Vector3">
+            <summary>
+            Represents a three dimensional mathematical vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.SizeInBytes">
+            <summary>
+            The size of the <see cref="T:Mogre.Vector3"/> type, in bytes.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Zero">
+            <summary>
+            A <see cref="T:Mogre.Vector3"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.UnitX">
+            <summary>
+            The X unit <see cref="T:Mogre.Vector3"/> (1, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.UnitY">
+            <summary>
+            The Y unit <see cref="T:Mogre.Vector3"/> (0, 1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.UnitZ">
+            <summary>
+            The Z unit <see cref="T:Mogre.Vector3"/> (0, 0, 1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Up">
+            <summary>
+            Returns a unit vector designating up (0, 1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Down">
+            <summary>
+            Returns a unit Vector3 designating down (0, -1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Forward">
+            <summary>
+            Returns a unit Vector3 designating forward in a right-handed coordinate system(0, 0, -1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Backward">
+            <summary>
+            Returns a unit Vector3 designating backward in a right-handed coordinate system (0, 0, 1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Right">
+            <summary>
+            Returns a unit Vector3 pointing to the right (1, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Left">
+            <summary>
+            Returns a unit Vector3 designating left (-1, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.One">
+            <summary>
+            A <see cref="T:Mogre.Vector3"/> with all of its components set to one.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.NegativeUnitX">
+            <summary>
+            The Negative X unit <see cref="T:Mogre.Vector3"/> (-1, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.NegativeUnitY">
+            <summary>
+            The Negative Y unit <see cref="T:Mogre.Vector3"/> (0, -1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.NegativeUnitZ">
+            <summary>
+            The Negative Z unit <see cref="T:Mogre.Vector3"/> (0, 0, -1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.PositiveInfinity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.NegativeInfinity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.X">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector3.Z">
+            <summary>
+            The Z component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector3.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector3.y">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector3.z">
+            <summary>
+            The Z component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector3.Item(System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the X, Y, or Z component, depending on the index.</value>
+            <param name="index">The index of the component to access. Use 0 for the X component, 1 for the Y component, and 2 for the Z component.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 2].</exception>
+        </member>
+        <member name="M:Mogre.Vector3.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector3"/> struct.
+            </summary>
+            <param name="value">The value that will be assigned to all components.</param>
+        </member>
+        <member name="M:Mogre.Vector3.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector3"/> struct.
+            </summary>
+            <param name="x">Initial value for the X component of the vector.</param>
+            <param name="y">Initial value for the Y component of the vector.</param>
+            <param name="z">Initial value for the Z component of the vector.</param>
+        </member>
+        <member name="M:Mogre.Vector3.#ctor(Mogre.Vector2,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector3"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
+            <param name="z">Initial value for the Z component of the vector.</param>
+        </member>
+        <member name="M:Mogre.Vector3.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector3"/> struct.
+            </summary>
+            <param name="values">The values to assign to the X, Y, and Z components of the vector. This must be an array with three elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than three elements.</exception>
+        </member>
+        <member name="P:Mogre.Vector3.Length">
+            <summary>
+            Calculates the length of the vector.
+            </summary>
+            <returns>The length of the vector.</returns>
+            <remarks>
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="P:Mogre.Vector3.SquaredLength">
+            <summary>
+            Calculates the squared length of the vector.
+            </summary>
+            <returns>The squared length of the vector.</returns>
+            <remarks>
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.Dot(Mogre.Vector3)">
+            <summary>
+            Calculates the dot Product operation on two vectors.
+            <remarks>
+            A dot product of two vectors v1 and v2 equals to |v1|*|v2|*cos(fi)
+            where fi is the angle between the vectors and |v1| and |v2| are the vector lengths.
+            For unit vectors (whose length is one) the dot product will obviously be just cos(fi).
+            For example, if the unit vectors are parallel the result is cos(0) = 1.0f,
+            if they are perpendicular the result is cos(PI/2) = 0.0f.
+            The dot product may be calculated on vectors with any length however.
+            A zero vector is treated as perpendicular to any vector (result is 0.0f).
+            </remarks>
+            </summary>
+            <param name="vec">The vector to perform the Dot Product against.</param>
+            <returns>Products of vector lengths and cosine of the angle between them. </returns>
+        </member>
+        <member name="M:Mogre.Vector3.Dot(Mogre.Vector3@,Mogre.Vector3@,System.Single@)">
+            <summary>
+            Calculates the dot product of two vectors.
+            </summary>
+            <param name="left">First source vector.</param>
+            <param name="right">Second source vector.</param>
+            <param name="result">When the method completes, contains the dot product of the two vectors.</param>
+        </member>
+        <member name="M:Mogre.Vector3.Dot(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Calculates the dot product of two vectors.
+            </summary>
+            <param name="left">First source vector.</param>
+            <param name="right">Second source vector.</param>
+            <returns>The dot product of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.Normalise">
+            <summary>
+            Turns the current vector into a unit vector.
+            </summary>
+            <remarks>
+            The result is a vector one unit in length pointing in the same direction as the original vector.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.Normalise(Mogre.Vector3@,Mogre.Vector3@)">
+            <summary>
+            Converts the vector into a unit vector.
+            </summary>
+            <param name="value">The vector to normalize.</param>
+            <param name="result">When the method completes, contains the normalized vector.</param>
+        </member>
+        <member name="M:Mogre.Vector3.Normalise(Mogre.Vector3)">
+            <summary>
+            Converts the vector into a unit vector.
+            </summary>
+            <param name="value">The vector to normalize.</param>
+            <returns>The normalized vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.Cross(Mogre.Vector3)">
+            <summary>
+            Calculates the cross product of two vectors.
+            </summary>
+            <param name="vector">A vector to perform the Cross Product against.</param>
+            <returns>When the method completes, contains he cross product of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.Cross(Mogre.Vector3@,Mogre.Vector3@,Mogre.Vector3@)">
+            <summary>
+            Calculates the cross product of two vectors.
+            </summary>
+            <param name="left">First source vector.</param>
+            <param name="right">Second source vector.</param>
+            <param name="result">When the method completes, contains he cross product of the two vectors.</param>
+        </member>
+        <member name="M:Mogre.Vector3.Cross(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Calculates the cross product of two vectors.
+            </summary>
+            <param name="left">First source vector.</param>
+            <param name="right">Second source vector.</param>
+            <returns>The cross product of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.Distance(Mogre.Vector3@,Mogre.Vector3@,System.Single@)">
+            <summary>
+            Calculates the distance between two vectors.
+            </summary>
+            <param name="value1">The first vector.</param>
+            <param name="value2">The second vector.</param>
+            <param name="result">When the method completes, contains the distance between the two vectors.</param>
+            <remarks>
+            <see cref="M:Mogre.Vector3.DistanceSquared(Mogre.Vector3@,Mogre.Vector3@,System.Single@)"/> may be preferred when only the relative distance is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.Distance(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Calculates the distance between two vectors.
+            </summary>
+            <param name="value1">The first vector.</param>
+            <param name="value2">The second vector.</param>
+            <returns>The distance between the two vectors.</returns>
+            <remarks>
+            <see cref="M:Mogre.Vector3.DistanceSquared(Mogre.Vector3,Mogre.Vector3)"/> may be preferred when only the relative distance is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.DistanceSquared(Mogre.Vector3@,Mogre.Vector3@,System.Single@)">
+            <summary>
+            Calculates the squared distance between two vectors.
+            </summary>
+            <param name="value1">The first vector.</param>
+            <param name="value2">The second vector.</param>
+            <param name="result">When the method completes, contains the squared distance between the two vectors.</param>
+            <remarks>Distance squared is the value before taking the square root. 
+            Distance squared can often be used in place of distance if relative comparisons are being made. 
+            For example, consider three points A, B, and C. To determine whether B or C is further from A, 
+            compare the distance between A and B to the distance between A and C. Calculating the two distances 
+            involves two square roots, which are computationally expensive. However, using distance squared 
+            provides the same information and avoids calculating two square roots.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.DistanceSquared(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Calculates the squared distance between two vectors.
+            </summary>
+            <param name="value1">The first vector.</param>
+            <param name="value2">The second vector.</param>
+            <returns>The squared distance between the two vectors.</returns>
+            <remarks>Distance squared is the value before taking the square root. 
+            Distance squared can often be used in place of distance if relative comparisons are being made. 
+            For example, consider three points A, B, and C. To determine whether B or C is further from A, 
+            compare the distance between A and B to the distance between A and C. Calculating the two distances 
+            involves two square roots, which are computationally expensive. However, using distance squared 
+            provides the same information and avoids calculating two square roots.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector3.MakeAbs">
+            <summary>
+            Causes negative members to become positive
+            </summary>
+        </member>
+        <member name="M:Mogre.Vector3.op_Addition(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="left">The first vector to add.</param>
+            <param name="right">The second vector to add.</param>
+            <returns>The sum of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_UnaryPlus(Mogre.Vector3)">
+            <summary>
+            Assert a vector (return it unchanged).
+            </summary>
+            <param name="value">The vector to assert (unchange).</param>
+            <returns>The asserted (unchanged) vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Subtraction(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Subtracts two vectors.
+            </summary>
+            <param name="left">The first vector to subtract.</param>
+            <param name="right">The second vector to subtract.</param>
+            <returns>The difference of the two vectors.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_UnaryNegation(Mogre.Vector3)">
+            <summary>
+            Reverses the direction of a given vector.
+            </summary>
+            <param name="value">The vector to negate.</param>
+            <returns>A vector facing in the opposite direction.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Multiply(System.Single,Mogre.Vector3)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Multiply(Mogre.Vector3,System.Single)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Multiply(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Scales a Vector3 by another vector.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Division(Mogre.Vector3,System.Single)">
+            <summary>
+            Scales a vector by the given value.
+            </summary>
+            <param name="value">The vector to scale.</param>
+            <param name="scalar">The amount by which to scale the vector.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Division(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            	Used when a Vector3 is divided by another vector.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mogre.Vector3.Equals(Mogre.Vector3@)">
+            <summary>
+            Returns a boolean indicating whether the given Vector3 is equal to this Vector3 instance.
+            </summary>
+            <param name="other">The Vector3 to compare this instance to.</param>
+            <returns>True if the other Vector3 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.Equals(Mogre.Vector3)">
+            <summary>
+            Returns a boolean indicating whether the given Vector3 is equal to this Vector3 instance.
+            </summary>
+            <param name="other">The Vector3 to compare this instance to.</param>
+            <returns>True if the other Vector3 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Equality(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Inequality(Mogre.Vector3,Mogre.Vector3)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Explicit(Mogre.Vector3)~Mogre.Vector2">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector3"/> to <see cref="T:Mogre.Vector2"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.op_Explicit(Mogre.Vector3)~Mogre.Vector4">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector3"/> to <see cref="T:Mogre.Vector4"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.ToString">
+            <summary>
+            Returns a String representing this Vector3 instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.ToString(System.String)">
+            <summary>
+            Returns a String representing this Vector3 instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector3.ToString(System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.Vector3.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.Vector3.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Mogre.Vector3.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Vector3 instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Vector3; False otherwise.</returns>
+        </member>
+        <member name="T:Mogre.Quaternion">
+            <summary>
+            Represents a four dimensional mathematical quaternion in Ogre3D format (w, x, y, z).
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.SizeInBytes">
+            <summary>
+            The size of the <see cref="T:Mogre.Quaternion"/> type, in bytes.
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.Zero">
+            <summary>
+            A <see cref="T:Mogre.Quaternion"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.Identity">
+            <summary>
+            The identity <see cref="T:Mogre.Quaternion"/> (1, 0, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.W">
+            <summary>
+            The W component of the quaternion.
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.X">
+            <summary>
+            The X component of the quaternion.
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.Y">
+            <summary>
+            The Y component of the quaternion.
+            </summary>
+        </member>
+        <member name="F:Mogre.Quaternion.Z">
+            <summary>
+            The Z component of the quaternion.
+            </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.w">
+            <summary>
+            The W component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.y">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.z">
+            <summary>
+            The Z component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.Item(System.Int32)">
+            <summary>
+            Gets or sets the component at the specified index.
+            </summary>
+            <value>The value of the X, Y, Z, or W component, depending on the index.</value>
+            <param name="index">The index of the component to access. Use 0 for the X component, 1 for the Y component, 2 for the Z component, and 3 for the W component.</param>
+            <returns>The value of the component at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 3].</exception>
+        </member>
+        <member name="P:Mogre.Quaternion.Pitch">
+            <summary>Calculate the local pitch element of this quaternion </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.Roll">
+            <summary>Calculate the local roll element of this quaternion. </summary>
+        </member>
+        <member name="P:Mogre.Quaternion.Yaw">
+            <summary>Calculate the local yaw element of this quaternion </summary>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="w">The w that will be assigned to w-component.</param>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(Mogre.Vector4)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the components.</param>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(Mogre.Vector3,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
+            <param name="w">Initial value for the W component of the quaternion.</param>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(Mogre.Vector2,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
+            <param name="z">Initial value for the Z component of the quaternion.</param>
+            <param name="w">Initial value for the W component of the quaternion.</param>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="w">Initial value for the X component of the quaternion.</param>
+            <param name="x">Initial value for the Y component of the quaternion.</param>
+            <param name="y">Initial value for the Z component of the quaternion.</param>
+            <param name="z">Initial value for the W component of the quaternion.</param>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Quaternion"/> struct.
+            </summary>
+            <param name="values">The values to assign to the X, Y, Z, and W components of the quaternion. This must be an array with four elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(Mogre.Vector3,Mogre.Vector3,Mogre.Vector3)">
+            <summary>Construct a quaternion from 3 orthonormal local axes. </summary>
+        </member>
+        <member name="M:Mogre.Quaternion.#ctor(Mogre.Matrix3)">
+            <summary>Construct a quaternion from a rotation matrix. </summary>
+        </member>
+        <member name="M:Mogre.Quaternion.Length">
+            <summary>
+            Calculates the length of the vector.
+            </summary>
+            <returns>The length of the vector.</returns>
+            <remarks>
+            <see cref="M:Mogre.Quaternion.LengthSquared"/> may be preferred when only the relative length is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Quaternion.LengthSquared">
+            <summary>
+            Calculates the squared length of the vector.
+            </summary>
+            <returns>The squared length of the vector.</returns>
+            <remarks>
+            This method may be preferred to <see cref="M:Mogre.Quaternion.Length"/> when only a relative length is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Quaternion.Equals(Mogre.Quaternion@)">
+            <summary>
+            Returns a boolean indicating whether the given Quaternion is equal to this Quaternion instance.
+            </summary>
+            <param name="other">The Quaternion to compare this instance to.</param>
+            <returns>True if the other Quaternion is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.Equals(Mogre.Quaternion)">
+            <summary>
+            Returns a boolean indicating whether the given Quaternion is equal to this Quaternion instance.
+            </summary>
+            <param name="other">The Quaternion to compare this instance to.</param>
+            <returns>True if the other Quaternion is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.ToString">
+            <summary>
+            Returns a String representing this Quaternion instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.ToString(System.String)">
+            <summary>
+            Returns a String representing this Quaternion instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a String representing this Quaternion instance, using the specified format to format individual elements 
+            and the given IFormatProvider.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <param name="formatProvider">The format provider to use when formatting elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Quaternion instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Quaternion; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.op_Equality(Mogre.Quaternion,Mogre.Quaternion)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.op_Inequality(Mogre.Quaternion,Mogre.Quaternion)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Quaternion.Normalise">
+            <summary>
+            Converts the quaternion into a unit quaternion.
+            </summary>
+        </member>
+        <member name="T:Mogre.Vector4">
+            <summary>
+            Represents a four dimensional mathematical vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.SizeInBytes">
+            <summary>
+            The size of the <see cref="T:Mogre.Vector4"/> type, in bytes.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.Zero">
+            <summary>
+            A <see cref="T:Mogre.Vector4"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.UnitX">
+            <summary>
+            The X unit <see cref="T:Mogre.Vector4"/> (1, 0, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.UnitY">
+            <summary>
+            The Y unit <see cref="T:Mogre.Vector4"/> (0, 1, 0, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.UnitZ">
+            <summary>
+            The Z unit <see cref="T:Mogre.Vector4"/> (0, 0, 1, 0).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.UnitW">
+            <summary>
+            The W unit <see cref="T:Mogre.Vector4"/> (0, 0, 0, 1).
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.One">
+            <summary>
+            A <see cref="T:Mogre.Vector4"/> with all of its components set to one.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.X">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.Y">
+            <summary>
+            The Y component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.Z">
+            <summary>
+            The Z component of the vector.
+            </summary>
+        </member>
+        <member name="F:Mogre.Vector4.W">
+            <summary>
+            The W component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector4.x">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector4.y">
+            <summary>
+            The X component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector4.z">
+            <summary>
+            The Z component of the vector.
+            </summary>
+        </member>
+        <member name="P:Mogre.Vector4.w">
+            <summary>
+            The W component of the vector.
+            </summary>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector4"/> struct.
+            </summary>
+            <param name="value">The value that will be assigned to all components.</param>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector4"/> struct.
+            </summary>
+            <param name="x">Initial value for the X component of the vector.</param>
+            <param name="y">Initial value for the Y component of the vector.</param>
+            <param name="z">Initial value for the Z component of the vector.</param>
+            <param name="w">Initial value for the W component of the vector.</param>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(Mogre.Vector3,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector4"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
+            <param name="w">Initial value for the W component of the vector.</param>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(Mogre.Vector3)">
+            <summary>Creates a new instance of Vector4.</summary>
+            <param name="value">Value to initialize X,Y,Z.</param>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(Mogre.Vector2,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector4"/> struct.
+            </summary>
+            <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
+            <param name="z">Initial value for the Z component of the vector.</param>
+            <param name="w">Initial value for the W component of the vector.</param>
+        </member>
+        <member name="M:Mogre.Vector4.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.Vector4"/> struct.
+            </summary>
+            <param name="values">The values to assign to the X, Y, Z, and W components of the vector. This must be an array with four elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
+        </member>
+        <member name="M:Mogre.Vector4.Length">
+            <summary>
+            Calculates the length of the vector.
+            </summary>
+            <returns>The length of the vector.</returns>
+            <remarks>
+            <see cref="M:Mogre.Vector4.LengthSquared"/> may be preferred when only the relative length is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector4.LengthSquared">
+            <summary>
+            Calculates the squared length of the vector.
+            </summary>
+            <returns>The squared length of the vector.</returns>
+            <remarks>
+            This method may be preferred to <see cref="M:Mogre.Vector4.Length"/> when only a relative length is needed
+            and speed is of the essence.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Vector4.Equals(Mogre.Vector4@)">
+            <summary>
+            Returns a boolean indicating whether the given Vector4 is equal to this Vector4 instance.
+            </summary>
+            <param name="other">The Vector4 to compare this instance to.</param>
+            <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.Equals(Mogre.Vector4)">
+            <summary>
+            Returns a boolean indicating whether the given Vector4 is equal to this Vector4 instance.
+            </summary>
+            <param name="other">The Vector4 to compare this instance to.</param>
+            <returns>True if the other Vector4 is equal to this instance; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.ToString">
+            <summary>
+            Returns a String representing this Vector4 instance.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.ToString(System.String)">
+            <summary>
+            Returns a String representing this Vector4 instance, using the specified format to format individual elements.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a String representing this Vector4 instance, using the specified format to format individual elements 
+            and the given IFormatProvider.
+            </summary>
+            <param name="format">The format of individual elements.</param>
+            <param name="formatProvider">The format provider to use when formatting elements.</param>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.Equals(System.Object)">
+            <summary>
+            Returns a boolean indicating whether the given Object is equal to this Vector4 instance.
+            </summary>
+            <param name="obj">The Object to compare against.</param>
+            <returns>True if the Object is equal to this Vector4; False otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.op_Equality(Mogre.Vector4,Mogre.Vector4)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.op_Inequality(Mogre.Vector4,Mogre.Vector4)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.op_Explicit(Mogre.Vector4)~Mogre.Vector2">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector4"/> to <see cref="T:Mogre.Vector2"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Mogre.Vector4.op_Explicit(Mogre.Vector4)~Mogre.Vector3">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Mogre.Vector4"/> to <see cref="T:Mogre.Vector3"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="T:Mogre.ColourValue">
+            <summary>
+            Represents a color using Red, Green, Blue, and Alpha stored as four float
+            values.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.R">
+            <summary>
+            The red component of the color.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.G">
+            <summary>
+            The green component of the color.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.B">
+            <summary>
+            The blue component of the color.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.A">
+            <summary>
+            The alpha component of the color.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.Zero">
+            <summary>
+            A <see cref="T:Mogre.ColourValue"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.ZERO">
+            <summary>
+            A <see cref="T:Mogre.ColourValue"/> with all of its components set to zero.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.Black">
+            <summary>
+            A Black <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.TransparentBlack">
+            <summary>
+            A TransparentBlack <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.White">
+            <summary>
+            A White <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.Red">
+            <summary>
+            A Red <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.Green">
+            <summary>
+            A Green <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="F:Mogre.ColourValue.Blue">
+            <summary>
+            A Blue <see cref="T:Mogre.ColourValue"/>.
+            </summary>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.ColourValue"/> struct.
+            </summary>
+            <param name="value">The value that will be assigned to all components.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="!:Alir.Color4"/> struct.
+            </summary>
+            <param name="red">The red component of the color.</param>
+            <param name="green">The green component of the color.</param>
+            <param name="blue">The blue component of the color.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="!:Alimer.Color4"/> struct.
+            </summary>
+            <param name="red">The red component of the color.</param>
+            <param name="green">The green component of the color.</param>
+            <param name="blue">The blue component of the color.</param>
+            <param name="alpha">The alpha component of the color.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="!:Alimer.Color4"/> struct.
+            </summary>
+            <param name="argb">A packed integer containing all four color components.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="!:Alimer.Color4"/> struct.
+            </summary>
+            <param name="red">The red component of the color.</param>
+            <param name="green">The green component of the color.</param>
+            <param name="blue">The blue component of the color.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="!:Alimer.Color4"/> struct.
+            </summary>
+            <param name="red">The red component of the color.</param>
+            <param name="green">The green component of the color.</param>
+            <param name="blue">The blue component of the color.</param>
+            <param name="alpha">The alpha component of the color.</param>
+        </member>
+        <member name="M:Mogre.ColourValue.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Mogre.ColourValue"/> struct.
+            </summary>
+            <param name="values">The values to assign to the red, green, blue, and alpha components of the color. This must be an array with four elements.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
+        </member>
+        <member name="M:Mogre.ColourValue.op_Equality(Mogre.ColourValue,Mogre.ColourValue)">
+            <summary>
+            Tests for equality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.ColourValue.op_Inequality(Mogre.ColourValue,Mogre.ColourValue)">
+            <summary>
+            Tests for inequality between two objects.
+            </summary>
+            <param name="left">The first value to compare.</param>
+            <param name="right">The second value to compare.</param>
+            <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.ColourValue.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.Equals(Mogre.ColourValue@)">
+            <summary>
+            Determines whether the specified <see cref="T:Mogre.ColourValue"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:Mogre.ColourValue"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Mogre.ColourValue"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.Equals(Mogre.ColourValue)">
+            <summary>
+            Determines whether the specified <see cref="T:Mogre.ColourValue"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:Mogre.ColourValue"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:Mogre.ColourValue"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+            <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.ToString(System.String)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="format">The format.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.ToString(System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.ColourValue.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Mogre.Utilities.Swap``1(``0@,``0@)">
+            <summary>
+            Swaps the value between two references.
+            </summary>
+            <typeparam name="T">Type of a data to swap.</typeparam>
+            <param name="left">The left value.</param>
+            <param name="right">The right value.</param>
+        </member>
+        <member name="M:Mogre.Utilities.Dispose``1(``0@)">
+            <summary>
+            Safely dispose a reference if not null, and set it to null after dispose.
+            </summary>
+            <typeparam name="T">The type of COM interface to dispose.</typeparam>
+            <param name="disposable">Object to dispose.</param>
+            <remarks>
+            The reference will be set to null after dispose.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Utilities.ToArray``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Transforms an <see cref="T:System.Collections.Generic.IEnumerable`1"/> to an array of T.
+            </summary>
+            <typeparam name="T">Type of the element</typeparam>
+            <param name="source">The enumerable source.</param>
+            <returns>an array of T</returns>
+        </member>
+        <member name="M:Mogre.Utilities.ReadStream(System.IO.Stream)">
+            <summary>
+            Read stream to a byte[] buffer.
+            </summary>
+            <param name="stream">Input stream.</param>
+            <returns>A byte[] buffer.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.ReadStream(System.IO.Stream,System.Int32@)">
+            <summary>
+            Read stream to a byte[] buffer.
+            </summary>
+            <param name="stream">Input stream.</param>
+            <param name="readLength">Length to read.</param>
+            <returns>A byte[] buffer.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.Compare(System.Collections.IEnumerable,System.Collections.IEnumerable)">
+            <summary>
+            Compares two collection, element by elements.
+            </summary>
+            <param name="left">A "from" enumerator.</param>
+            <param name="right">A "to" enumerator.</param>
+            <returns><c>true</c> if lists are identical, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.Compare(System.Collections.IEnumerator,System.Collections.IEnumerator)">
+            <summary>
+            Compares two collection, element by elements.
+            </summary>
+            <param name="leftIt">A "from" enumerator.</param>
+            <param name="rightIt">A "to" enumerator.</param>
+            <returns><c>true</c> if lists are identical; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.Compare(System.Collections.ICollection,System.Collections.ICollection)">
+            <summary>
+            Compares two collection, element by elements.
+            </summary>
+            <param name="left">The collection to compare from.</param>
+            <param name="right">The collection to compare to.</param>
+            <returns><c>true</c> if lists are identical (but not necessarily of the same time); otherwise , <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.ComputeHashFNVModified(System.Byte[])">
+            <summary>
+            Compute a FNV1-modified Hash from <a href="http://bretm.home.comcast.net/~bretm/hash/6.html">Fowler/Noll/Vo Hash</a> improved version.
+            </summary>
+            <param name="data">Data to compute the hash from.</param>
+            <returns>A hash value.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.GetCustomAttribute``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Gets the custom attribute.
+            </summary>
+            <typeparam name="T">Type of the custom attribute.</typeparam>
+            <param name="memberInfo">The member info.</param>
+            <param name="inherited">if set to <c>true</c> [inherited].</param>
+            <returns>The custom attribute or null if not found.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.GetCustomAttributes``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Gets the custom attributes.
+            </summary>
+            <typeparam name="T">Type of the custom attribute.</typeparam>
+            <param name="memberInfo">The member info.</param>
+            <param name="inherited">if set to <c>true</c> [inherited].</param>
+            <returns>The custom attribute or null if not found.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.IsAssignableFrom(System.Type,System.Type)">
+            <summary>
+            Determines whether fromType can be assigned to toType.
+            </summary>
+            <param name="toType">To type.</param>
+            <param name="fromType">From type.</param>
+            <returns>
+            <c>true</c> if [is assignable from] [the specified to type]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Utilities.IsEnum(System.Type)">
+            <summary>
+            Determines whether the specified type to test is an enum.
+            </summary>
+            <param name="typeToTest">The type to test.</param>
+            <returns>
+            <c>true</c> if the specified type to test is an enum; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Utilities.IsValueType(System.Type)">
+            <summary>
+            Determines whether the specified type to test is a value type.
+            </summary>
+            <param name="typeToTest">The type to test.</param>
+            <returns>
+            <c>true</c> if the specified type to test is a value type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Mogre.Utilities.AllocateMemory(System.Int32,System.Int32)">
+            <summary>
+            Allocate an aligned memory buffer.
+            </summary>
+            <param name="sizeInBytes">Size of the buffer to allocate.</param>
+            <param name="align">Alignment, 16 bytes by default.</param>
+            <returns>A pointer to a buffer aligned.</returns>
+            <remarks>
+            To free this buffer, call <see cref="M:Mogre.Utilities.FreeMemory(System.IntPtr)"/>.
+            </remarks>
+        </member>
+        <member name="M:Mogre.Utilities.IsMemoryAligned(System.IntPtr,System.Int32)">
+            <summary>
+            Determines whether the specified memory pointer is aligned in memory.
+            </summary>
+            <param name="memoryPtr">The memory pointer.</param>
+            <param name="align">The align.</param>
+            <returns><c>true</c> if the specified memory pointer is aligned in memory; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Mogre.Utilities.FreeMemory(System.IntPtr)">
+            <summary>
+            Allocate an aligned memory buffer.
+            </summary>
+            <returns>A pointer to a buffer aligned.</returns>
+            <remarks>
+            The buffer must have been allocated with <see cref="M:Mogre.Utilities.AllocateMemory(System.Int32,System.Int32)"/>.
+            </remarks>
+        </member>
+        <member name="T:Mogre.Contract">
+            <summary>
+            Helper class for validation condition and throwing exceptions.
+            </summary>
+        </member>
+        <member name="M:Mogre.Contract.Requires``1(System.Boolean)">
+            <summary>
+            If <paramref name="condition"/> is false, throw the exception type specified by the generic T</summary>
+            <typeparam name="TException">The <see cref="T:System.Exception"/> derived type to throw if <paramref name = "condition"/> is false</typeparam>
+            <param name="condition">The 'condition' to evaluate</param>
+        </member>
+        <member name="M:Mogre.Contract.Requires``1(System.Boolean,System.String)">
+            <summary>
+            If <paramref name="condition"/> is false, throw the exception type specified by the generic T</summary>
+            <typeparam name="TException">The <see cref="T:System.Exception"/> derived type to throw if <paramref name = "condition"/> is false</typeparam>
+            <param name="condition">The 'condition' to evaluate</param>
+            <param name="message">The <see cref="P:System.Exception.Message"/> if <paramref name="condition"/> is false</param>
+        </member>
+        <member name="M:Mogre.Contract.NotNull(System.Object,System.String)">
+            <summary>
+            Throws an <see cref="T:System.ArgumentNullException"/> if the
+            provided object is null</summary>
+            <param name="obj">The object to test for null</param>
+            <param name="message">The exception message</param>
+        </member>
+        <member name="M:Mogre.Contract.NotNullOrEmpty(System.String,System.String)">
+            <summary>
+            Throws an <see cref="T:System.ArgumentNullException"/> if the provided string is null.
+            Throws an <see cref="T:System.ArgumentOutOfRangeException"/> if the provided string is empty.</summary>
+            <param name="stringParameter">The object to test for null and empty</param>
+            <param name="message">The exception message</param>
+        </member>
+        <member name="M:Mogre.Contract.ArgumentNotNull(System.Object,System.String)">
+            <summary>
+            Checks an argument to ensure it isn't null.
+            </summary>
+            <param name="argumentValue">The argument value to check.</param>
+            <param name="argumentName">The name of the argument.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="argumentValue"/> is a null reference.</exception>
+        </member>
+        <member name="T:Mogre.HashCodeHelper">
+            <summary>
+            Helper class for hashing.
+            </summary>
+        </member>
+        <member name="M:Mogre.HashCodeHelper.CombineHashCodes(System.Int32,System.Int32)">
+            <summary>
+            Combines two hash codes, useful for combining hash codes of individual vector elements
+            </summary>
+        </member>
+    </members>
+</doc>
