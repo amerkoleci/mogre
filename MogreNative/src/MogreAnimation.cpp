@@ -9,14 +9,12 @@ TimeIndex::TimeIndex(Ogre::Real timePos)
 {
 	_createdByCLR = true;
 	_native = new Ogre::TimeIndex(timePos);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 TimeIndex::TimeIndex(Ogre::Real timePos, Mogre::uint keyIndex)
 {
 	_createdByCLR = true;
 	_native = new Ogre::TimeIndex(timePos, keyIndex);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 TimeIndex::~TimeIndex()
@@ -33,7 +31,6 @@ TimeIndex::!TimeIndex()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -71,7 +68,6 @@ KeyFrame::KeyFrame(Mogre::AnimationTrack^ parent, Ogre::Real time)
 {
 	_createdByCLR = true;
 	_native = new Ogre::KeyFrame(GetPointerOrNull(parent), time);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 KeyFrame::~KeyFrame()
@@ -102,14 +98,12 @@ bool KeyFrame::IsDisposed::get()
 
 Mogre::Real KeyFrame::Time::get()
 {
-	return static_cast<const Ogre::KeyFrame*>(_native)->getTime();
+	return _native->getTime();
 }
 
 Mogre::KeyFrame^ KeyFrame::_clone(Mogre::AnimationTrack^ newParent)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)
-		static_cast<const Ogre::KeyFrame*>(_native)->_clone(GetPointerOrNull(newParent))
-		);
+	return gcnew Mogre::KeyFrame(_native->_clone(GetPointerOrNull(newParent)));
 }
 
 // NumericKeyFrame
@@ -117,14 +111,13 @@ NumericKeyFrame::NumericKeyFrame(Mogre::AnimationTrack^ parent, Mogre::Real time
 {
 	_createdByCLR = true;
 	_native = new Ogre::NumericKeyFrame(GetPointerOrNull(parent), time);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Mogre::KeyFrame^ NumericKeyFrame::_clone(Mogre::AnimationTrack^ newParent)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)
+	return gcnew Mogre::KeyFrame(
 		static_cast<const Ogre::NumericKeyFrame*>(_native)->_clone(GetPointerOrNull(newParent))
-		);
+	);
 }
 
 // TransformKeyFrame
@@ -132,7 +125,6 @@ TransformKeyFrame::TransformKeyFrame(Mogre::AnimationTrack^ parent, Mogre::Real 
 {
 	_createdByCLR = true;
 	_native = new Ogre::TransformKeyFrame(GetPointerOrNull(parent), time);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Mogre::Quaternion TransformKeyFrame::Rotation::get()
@@ -167,9 +159,9 @@ void TransformKeyFrame::Translate::set(Mogre::Vector3 trans)
 
 Mogre::KeyFrame^ TransformKeyFrame::_clone(Mogre::AnimationTrack^ newParent)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)
+	return gcnew Mogre::KeyFrame(
 		static_cast<const Ogre::TransformKeyFrame*>(_native)->_clone(GetPointerOrNull(newParent))
-		);
+	);
 }
 
 // AnimationTrack
@@ -211,9 +203,9 @@ unsigned short AnimationTrack::NumKeyFrames::get()
 
 Mogre::KeyFrame^ AnimationTrack::GetKeyFrame(unsigned short index)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)
+	return gcnew Mogre::KeyFrame(
 		static_cast<const Ogre::AnimationTrack*>(_native)->getKeyFrame(index)
-		);
+	);
 }
 
 Mogre::Real AnimationTrack::GetKeyFramesAtTime(Mogre::TimeIndex^ timeIndex, [Out] Mogre::KeyFrame^% keyFrame1, [Out] Mogre::KeyFrame^% keyFrame2, [Out] unsigned short% firstKeyIndex)
@@ -222,9 +214,9 @@ Mogre::Real AnimationTrack::GetKeyFramesAtTime(Mogre::TimeIndex^ timeIndex, [Out
 	Ogre::KeyFrame* out_keyFrame2;
 	pin_ptr<unsigned short> p_firstKeyIndex = &firstKeyIndex;
 
-	Mogre::Real retres = static_cast<const Ogre::AnimationTrack*>(_native)->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2, p_firstKeyIndex);
-	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)out_keyFrame1);
-	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)out_keyFrame2);
+	Mogre::Real retres = _native->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2, p_firstKeyIndex);
+	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame1);
+	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame2);
 
 	return retres;
 }
@@ -234,53 +226,53 @@ Mogre::Real AnimationTrack::GetKeyFramesAtTime(Mogre::TimeIndex^ timeIndex, [Out
 	Ogre::KeyFrame* out_keyFrame1;
 	Ogre::KeyFrame* out_keyFrame2;
 
-	Mogre::Real retres = static_cast<const Ogre::AnimationTrack*>(_native)->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2);
-	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)out_keyFrame1);
-	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)out_keyFrame2);
+	Mogre::Real retres = _native->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2);
+	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame1);
+	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame2);
 
 	return retres;
 }
 
 Mogre::KeyFrame^ AnimationTrack::CreateKeyFrame(Mogre::Real timePos)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((intptr_t)
+	return gcnew Mogre::KeyFrame(
 		static_cast<Ogre::AnimationTrack*>(_native)->createKeyFrame(timePos)
-		);
+	);
 }
 
 void AnimationTrack::RemoveKeyFrame(unsigned short index)
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->removeKeyFrame(index);
+	_native->removeKeyFrame(index);
 }
 
 void AnimationTrack::RemoveAllKeyFrames()
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->removeAllKeyFrames();
+	_native->removeAllKeyFrames();
 }
 
 void AnimationTrack::GetInterpolatedKeyFrame(Mogre::TimeIndex^ timeIndex, Mogre::KeyFrame^ kf)
 {
-	static_cast<const Ogre::AnimationTrack*>(_native)->getInterpolatedKeyFrame(*timeIndex->UnmanagedPointer, GetPointerOrNull(kf));
+	_native->getInterpolatedKeyFrame(*timeIndex->UnmanagedPointer, GetPointerOrNull(kf));
 }
 
 void AnimationTrack::Apply(Mogre::TimeIndex^ timeIndex, Mogre::Real weight, Mogre::Real scale)
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->apply(*timeIndex->UnmanagedPointer, weight, scale);
+	_native->apply(*timeIndex->UnmanagedPointer, weight, scale);
 }
 
 void AnimationTrack::Apply(Mogre::TimeIndex^ timeIndex, Mogre::Real weight)
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->apply(*timeIndex->UnmanagedPointer, weight);
+	_native->apply(*timeIndex->UnmanagedPointer, weight);
 }
 
 void AnimationTrack::Apply(Mogre::TimeIndex^ timeIndex)
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->apply(*timeIndex->UnmanagedPointer);
+	_native->apply(*timeIndex->UnmanagedPointer);
 }
 
 void AnimationTrack::Optimise()
 {
-	static_cast<Ogre::AnimationTrack*>(_native)->optimise();
+	_native->optimise();
 }
 
 Ogre::AnimationTrack* AnimationTrack::UnmanagedPointer::get()
@@ -293,19 +285,17 @@ NodeAnimationTrack::NodeAnimationTrack(Mogre::Animation^ parent, unsigned short 
 {
 	_createdByCLR = true;
 	_native = new Ogre::NodeAnimationTrack(parent, handle);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 NodeAnimationTrack::NodeAnimationTrack(Mogre::Animation^ parent, unsigned short handle, Mogre::Node^ targetNode) : AnimationTrack((Ogre::AnimationTrack*)0)
 {
 	_createdByCLR = true;
 	_native = new Ogre::NodeAnimationTrack(parent, handle, GetPointerOrNull(targetNode));
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Mogre::Node^ NodeAnimationTrack::AssociatedNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)
 		static_cast<const Ogre::NodeAnimationTrack*>(_native)->getAssociatedNode()
 		);
 }
@@ -384,7 +374,6 @@ AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ paren
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_animName, animName);
 	_native = new Ogre::AnimationState(o_animName, GetPointerOrNull(parent), timePos, length, weight, enabled);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length, Mogre::Real weight)
@@ -392,7 +381,6 @@ AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ paren
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_animName, animName);
 	_native = new Ogre::AnimationState(o_animName, GetPointerOrNull(parent), timePos, length, weight);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ parent, Mogre::Real timePos, Mogre::Real length)
@@ -400,14 +388,12 @@ AnimationState::AnimationState(String^ animName, Mogre::AnimationStateSet^ paren
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_animName, animName);
 	_native = new Ogre::AnimationState(o_animName, GetPointerOrNull(parent), timePos, length);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 AnimationState::AnimationState(Mogre::AnimationStateSet^ parent, Mogre::AnimationState^ rhs)
 {
 	_createdByCLR = true;
 	_native = new Ogre::AnimationState(GetPointerOrNull(parent), *rhs->UnmanagedPointer);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 String^ AnimationState::AnimationName::get()
@@ -469,7 +455,7 @@ void AnimationState::Loop::set(bool loop)
 
 Mogre::AnimationStateSet^ AnimationState::Parent::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::AnimationStateSet^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::AnimationStateSet^>((IntPtr)
 		static_cast<const Ogre::AnimationState*>(_native)->getParent()
 		);
 }
@@ -574,14 +560,12 @@ AnimationStateSet::AnimationStateSet()
 {
 	_createdByCLR = true;
 	_native = new Ogre::AnimationStateSet();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 AnimationStateSet::AnimationStateSet(Mogre::AnimationStateSet^ rhs)
 {
 	_createdByCLR = true;
 	_native = new Ogre::AnimationStateSet(*rhs->UnmanagedPointer);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 unsigned long AnimationStateSet::DirtyFrameNumber::get()
@@ -693,7 +677,6 @@ Animation::Animation(String^ name, Mogre::Real length)
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_name, name);
 	_native = new Ogre::Animation(o_name, length);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 bool Animation::IsDisposed::get()
@@ -851,7 +834,7 @@ void Animation::Apply(Mogre::Real timePos)
 
 void Animation::Apply(Mogre::Entity^ entity, Mogre::Real timePos, Mogre::Real weight, bool software, bool hardware)
 {
-	static_cast<Ogre::Animation*>(_native)->apply(GetPointerOrNull(entity), timePos, weight, software, hardware);
+	static_cast<Ogre::Animation*>(_native)->apply(entity, timePos, weight, software, hardware);
 }
 
 void Animation::SetInterpolationMode(Mogre::Animation::InterpolationMode im)
@@ -913,9 +896,9 @@ Mogre::Animation^ Animation::Clone(String^ newName)
 
 Mogre::TimeIndex^ Animation::_getTimeIndex(Mogre::Real timePos)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::TimeIndex^>((intptr_t)
+	return gcnew Mogre::TimeIndex(
 		&static_cast<const Ogre::Animation*>(_native)->_getTimeIndex(timePos)
-		);
+	);
 }
 
 CPP_DECLARE_STLMAP(Animation::, NodeTrackList, unsigned short, Mogre::NodeAnimationTrack^, unsigned short, Ogre::NodeAnimationTrack*);

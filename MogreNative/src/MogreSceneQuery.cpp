@@ -58,7 +58,7 @@ void SceneQuery::WorldFragment::renderOp::set(Mogre::RenderOperation^ value)
 //{
 //	_createdByCLR = true;
 //	_native = new Ogre::SceneQuery(mgr);
-//ObjectTable:Add((intptr_t)_native, this, nullptr);
+//ObjectTable:Add((IntPtr)_native, this, nullptr);
 //}
 
 SceneQuery::~SceneQuery()
@@ -119,7 +119,7 @@ SceneQueryListener::SceneQueryListener()
 	SceneQueryListener_Proxy* proxy = new SceneQueryListener_Proxy(this);
 	//proxy->_overriden = Implementation::SubclassingManager::Instance->GetOverridenMethodsArrayPointer(thisType, SceneQueryListener::typeid, 0);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 SceneQueryListener::~SceneQueryListener()
@@ -136,7 +136,7 @@ SceneQueryListener::!SceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
+		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -259,7 +259,7 @@ RaySceneQueryListener::RaySceneQueryListener()
 	RaySceneQueryListener_Proxy* proxy = new RaySceneQueryListener_Proxy(this);
 	//proxy->_overriden = Implementation::SubclassingManager::Instance->GetOverridenMethodsArrayPointer(thisType, RaySceneQueryListener::typeid, 0);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 RaySceneQueryListener::~RaySceneQueryListener()
@@ -276,7 +276,7 @@ RaySceneQueryListener::!RaySceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
+		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -406,7 +406,7 @@ IntersectionSceneQueryListener::IntersectionSceneQueryListener()
 	IntersectionSceneQueryListener_Proxy* proxy = new IntersectionSceneQueryListener_Proxy(this);
 	//proxy->_overriden = Implementation::SubclassingManager::Instance->GetOverridenMethodsArrayPointer(thisType, IntersectionSceneQueryListener::typeid, 0);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 IntersectionSceneQueryListener::~IntersectionSceneQueryListener()
@@ -423,7 +423,7 @@ IntersectionSceneQueryListener::!IntersectionSceneQueryListener()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
+		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}

@@ -25,7 +25,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		SubEntity(intptr_t ptr) : _native((Ogre::SubEntity*)ptr)
+		SubEntity(IntPtr ptr) : _native((Ogre::SubEntity*)ptr.ToPointer())
 		{
 
 		}
@@ -130,7 +130,7 @@ namespace Mogre
 	public ref class Entity : public MovableObject
 	{
 	public protected:
-		Entity(intptr_t ptr) : MovableObject(ptr)
+		Entity(IntPtr ptr) : MovableObject(ptr)
 		{
 
 		}
@@ -256,11 +256,5 @@ namespace Mogre
 		void SetPolygonModeOverrideable(bool PolygonModeOverrideable);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Entity);
-
-	internal:
-		property Ogre::Entity* UnmanagedPointer
-		{
-			Ogre::Entity* get();
-		}
 	};
 }

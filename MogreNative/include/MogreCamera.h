@@ -13,7 +13,12 @@ namespace Mogre
 	public ref class Camera : public Frustum
 	{
 	public protected:
-		Camera(intptr_t ptr) : Frustum(ptr)
+		Camera(Ogre::Camera* obj) : Frustum(obj)
+		{
+
+		}
+
+		Camera(IntPtr ptr) : Frustum(ptr)
 		{
 
 		}
@@ -219,7 +224,7 @@ namespace Mogre
 		public:
 			Mogre::Matrix4 get();
 		}
-		
+
 		property const Mogre::Vector3* WorldSpaceCorners
 		{
 		public:
@@ -275,12 +280,6 @@ namespace Mogre
 
 		Mogre::Matrix4 GetViewMatrix(bool ownFrustumOnly);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Camera);
-
-	internal:
-		property Ogre::Camera* UnmanagedPointer
-		{
-			Ogre::Camera* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Camera);
 	};
 }

@@ -51,7 +51,6 @@ MovableObject::Listener::Listener()
 	Type^ thisType = this->GetType();
 	MovableObject_Listener_Proxy* proxy = new MovableObject_Listener_Proxy(this);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 MovableObject::Listener::~Listener()
@@ -68,7 +67,6 @@ MovableObject::Listener::!Listener()
 
 	if (_createdByCLR && _native != 0)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native; _native = 0;
 	}
 
@@ -104,10 +102,18 @@ MovableObject::!MovableObject()
 	if (IsDisposed)
 		return;
 
-	if (_createdByCLR && _native != 0)
+	if (!_preventDelete)
 	{
-		delete _native; _native = 0;
+		const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+		if (!userObj.isEmpty())
+		{
+			void* obj = userObj.get<void*>();
+			VoidPtrToGCHandle(obj).Free();
+		}
+
+		delete _native;
 	}
+	_isDisposed = true;
 
 	OnDisposed(this, nullptr);
 }
@@ -211,12 +217,12 @@ void MovableObject::Name::set(String^ name)
 
 Mogre::Node^ MovableObject::ParentNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)static_cast<const Ogre::MovableObject*>(_native)->getParentNode());
+	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)static_cast<const Ogre::MovableObject*>(_native)->getParentNode());
 }
 
 Mogre::SceneNode^ MovableObject::ParentSceneNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<const Ogre::MovableObject*>(_native)->getParentSceneNode());
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<const Ogre::MovableObject*>(_native)->getParentSceneNode());
 }
 
 Ogre::uint32 MovableObject::QueryFlags::get()
@@ -319,7 +325,40 @@ bool MovableObject::IsVisible()
 	return _native->isVisible();
 }
 
+MovableObject^ MovableObject::GetManaged(Ogre::MovableObject* native)
+{
+	if (native == 0)
+		return nullptr;
+
+	const Ogre::Any& userObj = native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (!userObj.isEmpty())
+	{
+		void* obj = userObj.get<void*>();
+		return static_cast<MovableObject^>(VoidPtrToGCHandle(obj).Target);
+	}
+
+	throw gcnew InvalidOperationException("Unknown collision object!");
+}
+
 Ogre::MovableObject* MovableObject::UnmanagedPointer::get()
 {
 	return _native;
+}
+
+void MovableObject::UnmanagedPointer::set(Ogre::MovableObject* value)
+{
+	// Inheriting classes such as SoftBody may pass 0 and then do
+	// additional processing before storing the native pointer.
+	if (value == 0) {
+		return;
+	}
+
+	_native = value;
+	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (userObj.isEmpty())
+	{
+		GCHandle handle = GCHandle::Alloc(this, GCHandleType::Weak);
+		Ogre::Any anyObj = Ogre::Any(GCHandleToVoidPtr(handle));
+		_native->getUserObjectBindings().setUserAny(MOGRE_HANDLE, anyObj);
+	}
 }

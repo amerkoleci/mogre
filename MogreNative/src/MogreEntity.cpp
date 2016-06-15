@@ -33,7 +33,7 @@ unsigned short SubEntity::NumWorldTransforms::get()
 
 Mogre::Entity^ SubEntity::Parent::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((IntPtr)
 		static_cast<const Ogre::SubEntity*>(_native)->getParent()
 		);
 }
@@ -45,18 +45,14 @@ Ogre::SubEntity* SubEntity::UnmanagedPointer::get()
 
 Mogre::SubEntity^ Entity::GetSubEntity(size_t index)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SubEntity^>((intptr_t)
-		static_cast<const Ogre::Entity*>(_native)->getSubEntity(index)
-		);
+	return static_cast<const Ogre::Entity*>(_native)->getSubEntity(index);
 }
 
 Mogre::SubEntity^ Entity::GetSubEntity(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::SubEntity^>((intptr_t)
-		static_cast<const Ogre::Entity*>(_native)->getSubEntity(o_name)
-		);
+	return static_cast<const Ogre::Entity*>(_native)->getSubEntity(o_name);
 }
 
 Mogre::SubMesh^ SubEntity::SubMesh::get()
@@ -246,7 +242,7 @@ Mogre::MeshPtr^ Entity::GetMesh()
 
 Mogre::Entity^ Entity::Clone()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t) static_cast<const Ogre::Entity*>(_native)->clone());
+	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((IntPtr) static_cast<const Ogre::Entity*>(_native)->clone());
 }
 
 void Entity::SetMaterialName(String^ name)
@@ -271,10 +267,4 @@ Mogre::Entity^ Entity::GetManualLodLevel(size_t index)
 void Entity::SetPolygonModeOverrideable(bool PolygonModeOverrideable)
 {
 	static_cast<Ogre::Entity*>(_native)->setPolygonModeOverrideable(PolygonModeOverrideable);
-}
-
-
-Ogre::Entity* Entity::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::Entity*>(_native);
 }

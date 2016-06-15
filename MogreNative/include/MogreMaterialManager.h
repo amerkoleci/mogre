@@ -477,7 +477,7 @@ namespace Mogre
 		{
 		}
 
-		TextureUnitState(intptr_t obj) : _native((Ogre::TextureUnitState*)obj)
+		TextureUnitState(IntPtr obj) : _native((Ogre::TextureUnitState*)obj.ToPointer())
 		{
 		}
 
@@ -862,7 +862,7 @@ namespace Mogre
 		{
 		}
 
-		Pass(intptr_t obj) : _native((Ogre::Pass*)obj)
+		Pass(IntPtr obj) : _native((Ogre::Pass*)obj.ToPointer())
 		{
 		}
 
@@ -1423,7 +1423,7 @@ namespace Mogre
 		{
 		}
 
-		Technique(intptr_t obj) : _native((Ogre::Technique*)obj)
+		Technique(IntPtr obj) : _native((Ogre::Technique*)obj.ToPointer())
 		{
 		}
 
@@ -1626,7 +1626,7 @@ namespace Mogre
 		{
 		}
 
-		Material(intptr_t ptr) : Resource((Ogre::Material*)ptr)
+		Material(IntPtr ptr) : Resource((Ogre::Material*)ptr.ToPointer())
 		{
 		}
 

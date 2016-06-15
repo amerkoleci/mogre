@@ -56,7 +56,7 @@ namespace Mogre
 		Ogre::OverlayElement* _native;
 		bool _createdByCLR;
 
-		OverlayElement(intptr_t ptr) : _native((Ogre::OverlayElement*)ptr)
+		OverlayElement(IntPtr ptr) : _native((Ogre::OverlayElement*)ptr.ToPointer())
 		{
 
 		}
@@ -366,7 +366,7 @@ namespace Mogre
 		{
 		}
 
-		OverlayContainer(intptr_t ptr) : OverlayElement(ptr)
+		OverlayContainer(IntPtr ptr) : OverlayElement(ptr)
 		{
 		}
 
@@ -396,7 +396,7 @@ namespace Mogre
 		Ogre::Overlay* _native;
 		bool _createdByCLR;
 
-		Overlay(intptr_t ptr) : _native((Ogre::Overlay*)ptr)
+		Overlay(IntPtr ptr) : _native((Ogre::Overlay*)ptr.ToPointer())
 		{
 
 		}
@@ -537,7 +537,7 @@ namespace Mogre
 		Ogre::OverlaySystem* _native;
 		bool _createdByCLR;
 
-		OverlaySystem(intptr_t ptr) : _native((Ogre::OverlaySystem*)ptr)
+		OverlaySystem(IntPtr ptr) : _native((Ogre::OverlaySystem*)ptr.ToPointer())
 		{
 
 		}
@@ -591,7 +591,7 @@ namespace Mogre
 		Ogre::OverlayManager* _native;
 		bool _createdByCLR;
 
-		OverlayManager(intptr_t ptr) : _native((Ogre::OverlayManager*)ptr)
+		OverlayManager(IntPtr ptr) : _native((Ogre::OverlayManager*)ptr.ToPointer())
 		{
 
 		}

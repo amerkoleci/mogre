@@ -20,15 +20,17 @@ namespace Mogre
 
 
 	public protected:
-		BillboardChain(intptr_t ptr) : MovableObject(ptr)
+		BillboardChain(Ogre::BillboardChain* obj) : MovableObject(obj)
 		{
 
 		}
 
-	internal:
-		property Ogre::BillboardChain* UnmanagedPointer
+		BillboardChain(IntPtr ptr) : MovableObject(ptr)
 		{
-			Ogre::BillboardChain* get();
+
 		}
+
+	public:
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(BillboardChain);
 	};
 }

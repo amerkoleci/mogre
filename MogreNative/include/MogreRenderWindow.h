@@ -10,7 +10,12 @@ namespace Mogre
 	public ref class RenderWindow : public RenderTarget
 	{
 	public protected:
-		RenderWindow(intptr_t ptr) : RenderTarget(ptr)
+		RenderWindow(Ogre::RenderWindow* obj) : RenderTarget(obj)
+		{
+
+		}
+
+		RenderWindow(IntPtr ptr) : RenderTarget(ptr)
 		{
 
 		}

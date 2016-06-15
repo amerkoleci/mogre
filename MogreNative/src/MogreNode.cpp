@@ -86,7 +86,7 @@ void Node::Orientation::set(Mogre::Quaternion q)
 
 Mogre::Node^ Node::Parent::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)_native->getParent());
+	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)_native->getParent());
 }
 
 Ogre::uint16 Node::DepthLevel::get()
@@ -279,24 +279,24 @@ void Node::Rotate(Mogre::Quaternion q)
 
 Mogre::Node^ Node::CreateChild(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate, Mogre::Quaternion rotate)
 {
-	auto native = (intptr_t)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate), FromQuaternion(rotate));
+	auto native = (IntPtr)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate), FromQuaternion(rotate));
 	return ObjectTable::GetOrCreateObject<Mogre::Node^>(native);
 }
 
 Mogre::Node^ Node::CreateChild(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate)
 {
-	auto native = (intptr_t)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate));
+	auto native = (IntPtr)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate));
 	return ObjectTable::GetOrCreateObject<Mogre::Node^>(native);
 }
 
 Mogre::Node^ Node::CreateChild(SceneMemoryMgrTypes sceneType)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType));
+	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)_native->createChild((Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::Node^ Node::CreateChild()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((intptr_t)_native->createChild());
+	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)_native->createChild());
 }
 
 void Node::AddChild(Mogre::Node^ child)

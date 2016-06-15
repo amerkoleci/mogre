@@ -30,17 +30,16 @@ ShadowCameraSetup::!ShadowCameraSetup()
 
 void ShadowCameraSetup::GetShadowCamera(Mogre::SceneManager^ sm, Mogre::Camera^ cam, Mogre::Light^ light, Mogre::Camera^ texCam, size_t iteration)
 {
-	_native->getShadowCamera(GetPointerOrNull(sm), cam, GetPointerOrNull(light), texCam, iteration);
+	_native->getShadowCamera(sm, cam, light, texCam, iteration);
 }
 
 DefaultShadowCameraSetup::DefaultShadowCameraSetup() : ShadowCameraSetup((Ogre::ShadowCameraSetup*)0)
 {
 	_createdByCLR = true;
 	_native = new Ogre::DefaultShadowCameraSetup();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 void DefaultShadowCameraSetup::GetShadowCamera(Mogre::SceneManager^ sm, Mogre::Camera^ cam, Mogre::Light^ light, Mogre::Camera^ texCam, size_t iteration)
 {
-	static_cast<const Ogre::DefaultShadowCameraSetup*>(_native)->getShadowCamera(GetPointerOrNull(sm), cam, GetPointerOrNull(light), texCam, iteration);
+	static_cast<const Ogre::DefaultShadowCameraSetup*>(_native)->getShadowCamera(sm, cam, light, texCam, iteration);
 }

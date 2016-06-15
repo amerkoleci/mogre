@@ -42,7 +42,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		RenderQueue(intptr_t ptr) : _native((Ogre::RenderQueue*)ptr)
+		RenderQueue(IntPtr ptr) : _native((Ogre::RenderQueue*)ptr.ToPointer())
 		{
 
 		}
@@ -65,7 +65,6 @@ namespace Mogre
 				return _native == nullptr;
 			}
 		}
-
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderQueue);
 

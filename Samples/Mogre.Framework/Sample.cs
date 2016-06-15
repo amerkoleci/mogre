@@ -21,7 +21,7 @@ namespace Mogre.Framework
 		protected Camera _camera;
 		protected CompositorWorkspace _workspace;
 		protected ColourValue _backgroundColor = ColourValue.Black;
-		
+
 
 		public Camera Camera
 		{
@@ -217,22 +217,16 @@ namespace Mogre.Framework
 		{
 			DestroyScene();
 
-			if (_overlaySystem != null)
-			{
-				_overlaySystem.Dispose();
-				_overlaySystem = null;
-			}
+			Utilities.Dispose(ref _overlaySystem);
+			Utilities.Dispose(ref _window);
+			Utilities.Dispose(ref _camera);
+			Utilities.Dispose(ref _workspace);
+			Utilities.Dispose(ref _sceneManager);
 
 			_root.FrameStarted -= OnFrameStarted;
 			_root.FrameRenderingQueued -= OnFrameRenderingQueued;
 			_root.FrameEnded -= OnFrameEnded;
-			_root.Dispose();
-			_root = null;
-
-			_window = null;
-			_camera = null;
-			_workspace = null;
-			_sceneManager = null;
+			Utilities.Dispose(ref _root);
 		}
 
 		private void OgreWindow_Disposed(object sender, EventArgs e)

@@ -13,41 +13,41 @@ LogManager::LogManager()
 
 Mogre::Log^ LogManager::DefaultLog::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->getDefaultLog());
+	ReturnCachedObjectGcnew(Mogre::Log, _defaultLog, _native->getDefaultLog());
 }
 
 Mogre::Log^ LogManager::CreateLog(String^ name, bool defaultLog, bool debuggerOutput, bool suppressFileOutput)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->createLog(o_name, defaultLog, debuggerOutput, suppressFileOutput));
+	return gcnew Log(_native->createLog(o_name, defaultLog, debuggerOutput, suppressFileOutput));
 }
 
 Mogre::Log^ LogManager::CreateLog(String^ name, bool defaultLog, bool debuggerOutput)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->createLog(o_name, defaultLog, debuggerOutput));
+	return gcnew Log(_native->createLog(o_name, defaultLog, debuggerOutput));
 }
 
 Mogre::Log^ LogManager::CreateLog(String^ name, bool defaultLog)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->createLog(o_name, defaultLog));
+	return gcnew Log(_native->createLog(o_name, defaultLog));
 }
 
 Mogre::Log^ LogManager::CreateLog(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->createLog(o_name));
+	return gcnew Log(_native->createLog(o_name));
 }
 
 Mogre::Log^ LogManager::GetLog(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->getLog(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::Log^>((IntPtr)_native->getLog(o_name));
 }
 
 void LogManager::DestroyLog(String^ name)
@@ -64,7 +64,9 @@ void LogManager::DestroyLog(Mogre::Log^ log)
 
 Mogre::Log^ LogManager::SetDefaultLog(Mogre::Log^ newLog)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((intptr_t)_native->setDefaultLog(GetPointerOrNull(newLog)));
+	_defaultLog = newLog;
+	auto oldLog = _native->setDefaultLog(GetUnmanagedNullable(newLog));
+	ReturnCachedObjectGcnewNullable(Mogre::Log, _oldDefaultLog, oldLog);
 }
 
 void LogManager::LogMessage(String^ message, Mogre::LogMessageLevel lml, bool maskDebug)

@@ -198,8 +198,3 @@ void Light::ShadowFarClipDistance::set(Ogre::Real power)
 {
 	static_cast<Ogre::Light*>(_native)->setShadowFarClipDistance(power);
 }
-
-Ogre::Light* Light::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::Light*>(_native);
-}

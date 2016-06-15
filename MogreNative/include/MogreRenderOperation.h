@@ -54,12 +54,16 @@ namespace Mogre
 			OT_PATCH_32_CONTROL_POINT = Ogre::RenderOperation::OT_PATCH_32_CONTROL_POINT
 		};
 
+	private:
+		Mogre::VertexData^ _vertexData;
+		Mogre::IndexData^ _indexData;
+
 	public protected:
 		RenderOperation(Ogre::RenderOperation* obj) : _native(obj), _createdByCLR(false)
 		{
 		}
 
-		RenderOperation(intptr_t ptr) : _native((Ogre::RenderOperation*)ptr), _createdByCLR(false)
+		RenderOperation(IntPtr ptr) : _native((Ogre::RenderOperation*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 

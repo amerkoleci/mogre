@@ -21,7 +21,12 @@ namespace Mogre
 		INC_DECLARE_ITERATOR(ObjectIterator, Ogre::SceneNode::ObjectIterator, Mogre::SceneNode::ObjectVec, Mogre::MovableObject^, Ogre::MovableObject*);
 
 	public protected:
-		SceneNode(intptr_t ptr) : Node(ptr)
+		SceneNode(Ogre::SceneNode* obj) : Node(obj)
+		{
+
+		}
+
+		SceneNode(IntPtr ptr) : Node(ptr)
 		{
 
 		}

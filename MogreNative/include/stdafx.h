@@ -84,10 +84,61 @@ using namespace System::Runtime::InteropServices;
 }
 #define ThrowIfThisDisposed() { if (this->Disposed) throw gcnew InvalidOperationException("The instance has been disposed of, no further operations should be performed."); }
 
+inline void* GCHandleToVoidPtr(GCHandle handle)
+{
+	return GCHandle::ToIntPtr(handle).ToPointer();
+}
+
+inline GCHandle VoidPtrToGCHandle(void* pointer)
+{
+	return GCHandle::FromIntPtr(System::IntPtr(pointer));
+}
+
+#define GetPointerOrNull(obj) (obj == nullptr ? NULL : obj->UnmanagedPointer)
+#define GetUnmanagedNullable(value) (value != nullptr ? value->_native : 0)
+#define ReturnCachedObject(type, managedObj, unmanagedPtr) { \
+	if (managedObj != nullptr && managedObj->_native == unmanagedPtr) \
+		return managedObj; \
+	managedObj = type::GetManaged(unmanagedPtr); \
+	return managedObj; }
+
+#define ReturnCachedObjectGcnew(type, managedObj, unmanagedPtr) { \
+	if (managedObj != nullptr && managedObj->_native == unmanagedPtr) \
+		return managedObj; \
+	managedObj = gcnew type(unmanagedPtr); \
+	return managedObj; }
+
+#define ReturnCachedObjectGcnewNullable(type, managedObj, unmanagedPtr) { \
+	if (managedObj != nullptr && managedObj->_native == unmanagedPtr) \
+		return managedObj; \
+	if (unmanagedPtr == 0) \
+		return nullptr; \
+	managedObj = gcnew type(unmanagedPtr); \
+	return managedObj; }
+
+#define MOGRE_HANDLE "MOGRE_HANDLE"
+
 template <class T, class U>
 bool IsInstanceOf(U u)
 {
 	return dynamic_cast<T>(u) != nullptr;
 }
 
-#define GetPointerOrNull(obj) (obj == nullptr ? NULL : obj->UnmanagedPointer)
+template <typename T, unsigned int N>
+inline unsigned int ArraySize(T(&)[N])
+{
+	return N;
+}
+
+template <typename T>
+void SafeDelete(T*& resource)
+{
+	delete resource;
+	resource = nullptr;
+}
+template <typename T>
+void SafeDeleteArray(T*& resource)
+{
+	delete[] resource;
+	resource = nullptr;
+}

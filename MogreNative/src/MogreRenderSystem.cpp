@@ -187,7 +187,7 @@ void RenderSystemCapabilities::Log(Mogre::Log^ pLog)
 
 Mogre::RenderSystemCapabilities^ RenderSystem::Capabilities::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderSystemCapabilities^>((intptr_t)_native->getCapabilities());
+	ReturnCachedObjectGcnew(Mogre::RenderSystemCapabilities, _capabilities, const_cast<Ogre::RenderSystemCapabilities*>(_native->getCapabilities()));
 }
 
 Mogre::VertexElementType RenderSystem::ColourVertexElementType::get()
@@ -649,7 +649,7 @@ void RenderSystem::_setSeparateSceneBlending(
 	Mogre::SceneBlendFactor destFactorAlpha)
 {
 	_native->_setSeparateSceneBlending(
-		(Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor, 
+		(Ogre::SceneBlendFactor)sourceFactor, (Ogre::SceneBlendFactor)destFactor,
 		(Ogre::SceneBlendFactor)sourceFactorAlpha, (Ogre::SceneBlendFactor)destFactorAlpha
 	);
 }

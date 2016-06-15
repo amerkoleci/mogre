@@ -16,7 +16,6 @@ WindowEventListener::WindowEventListener()
 	WindowEventListener_Proxy* proxy = new WindowEventListener_Proxy(this);
 	//proxy->_overriden = Implementation::SubclassingManager::Instance->GetOverridenMethodsArrayPointer(thisType, WindowEventListener::typeid, 4);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 WindowEventListener::~WindowEventListener()
@@ -33,7 +32,6 @@ WindowEventListener::!WindowEventListener()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

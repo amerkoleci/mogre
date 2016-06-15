@@ -36,15 +36,17 @@ namespace Mogre
 	public ref class BillboardSet : public MovableObject
 	{
 	public protected:
-		BillboardSet(intptr_t ptr) : MovableObject(ptr)
+		BillboardSet(Ogre::BillboardSet* obj) : MovableObject(obj)
 		{
 
 		}
 
-	internal:
-		property Ogre::BillboardSet* UnmanagedPointer
+		BillboardSet(IntPtr ptr) : MovableObject(ptr)
 		{
-			Ogre::BillboardSet* get();
+
 		}
+
+	public:
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(BillboardSet);
 	};
 }

@@ -23,7 +23,7 @@ Mogre::Vector3 Camera::AutoTrackOffset::get()
 
 Mogre::SceneNode^ Camera::AutoTrackTarget::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<const Ogre::Camera*>(_native)->getAutoTrackTarget());
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<const Ogre::Camera*>(_native)->getAutoTrackTarget());
 }
 
 Mogre::Frustum^ Camera::CullingFrustum::get()
@@ -198,7 +198,7 @@ void Camera::UseRenderingDistance::set(bool use)
 
 Mogre::Viewport^ Camera::LastViewport::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((intptr_t)static_cast<const Ogre::Camera*>(_native)->getLastViewport());
+	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)static_cast<const Ogre::Camera*>(_native)->getLastViewport());
 }
 
 const Mogre::Vector3* Camera::WorldSpaceCorners::get()
@@ -363,9 +363,4 @@ bool Camera::ProjectSphere(Mogre::Sphere sphere, [Out] Mogre::Real% left, [Out] 
 Mogre::Matrix4 Camera::GetViewMatrix(bool ownFrustumOnly)
 {
 	return ToMatrix4(static_cast<const Ogre::Camera*>(_native)->getViewMatrix(ownFrustumOnly));
-}
-
-Ogre::Camera* Camera::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::Camera*>(_native);
 }

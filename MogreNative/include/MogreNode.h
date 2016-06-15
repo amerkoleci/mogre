@@ -40,7 +40,7 @@ namespace Mogre
 		{
 		}
 
-		Node(intptr_t ptr) : _native((Ogre::Node*)ptr)
+		Node(IntPtr ptr) : _native((Ogre::Node*)ptr.ToPointer())
 		{
 
 		}

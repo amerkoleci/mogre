@@ -72,7 +72,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		Resource(intptr_t ptr) : _native((Ogre::Resource*)ptr)
+		Resource(IntPtr ptr) : _native((Ogre::Resource*)ptr.ToPointer())
 		{
 		}
 
@@ -410,7 +410,7 @@ namespace Mogre
 		{
 			Resource^ get()
 			{
-				return ObjectTable::GetOrCreateObject<Mogre::Resource^>((intptr_t)static_cast<Ogre::Resource*>(_native));
+				return ObjectTable::GetOrCreateObject<Mogre::Resource^>((IntPtr)static_cast<Ogre::Resource*>(_native));
 			}
 		}
 	};

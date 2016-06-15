@@ -9,14 +9,12 @@ Image::Image()
 {
 	_createdByCLR = true;
 	_native = new Ogre::Image();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Image::Image(Mogre::Image^ img)
 {
 	_createdByCLR = true;
 	_native = new Ogre::Image(*img->UnmanagedPointer);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Image::~Image()
@@ -33,7 +31,6 @@ Image::!Image()
 
 	if (_createdByCLR &&_native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -48,17 +45,17 @@ bool Image::IsDisposed::get()
 
 Mogre::uchar Image::BPP::get()
 {
-	return static_cast<const Ogre::Image*>(_native)->getBPP();
+	return _native->getBPP();
 }
 
 Mogre::uchar* Image::Data::get()
 {
-	return static_cast<Ogre::Image*>(_native)->getData();
+	return _native->getData();
 }
 
 size_t Image::Depth::get()
 {
-	return static_cast<const Ogre::Image*>(_native)->getDepth();
+	return _native->getDepth();
 }
 
 Mogre::PixelFormat Image::Format::get()
@@ -105,67 +102,67 @@ size_t Image::Width::get()
 Mogre::Image^ Image::FlipAroundY()
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->flipAroundY());
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::FlipAroundX()
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->flipAroundX());
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadDynamicImage(Mogre::uchar* pData, size_t uWidth, size_t uHeight, size_t depth, Mogre::PixelFormat eFormat, bool autoDelete, size_t numFaces, size_t numMipMaps)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadDynamicImage(pData, uWidth, uHeight, depth, (Ogre::PixelFormat)eFormat, autoDelete, numFaces, numMipMaps));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadDynamicImage(Mogre::uchar* pData, size_t uWidth, size_t uHeight, size_t depth, Mogre::PixelFormat eFormat, bool autoDelete, size_t numFaces)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadDynamicImage(pData, uWidth, uHeight, depth, (Ogre::PixelFormat)eFormat, autoDelete, numFaces));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadDynamicImage(Mogre::uchar* pData, size_t uWidth, size_t uHeight, size_t depth, Mogre::PixelFormat eFormat, bool autoDelete)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadDynamicImage(pData, uWidth, uHeight, depth, (Ogre::PixelFormat)eFormat, autoDelete));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadDynamicImage(Mogre::uchar* pData, size_t uWidth, size_t uHeight, size_t depth, Mogre::PixelFormat eFormat)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadDynamicImage(pData, uWidth, uHeight, depth, (Ogre::PixelFormat)eFormat));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadDynamicImage(Mogre::uchar* pData, size_t uWidth, size_t uHeight, Mogre::PixelFormat eFormat)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadDynamicImage(pData, uWidth, uHeight, (Ogre::PixelFormat)eFormat));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadRawData(Mogre::DataStreamPtr^ stream, size_t uWidth, size_t uHeight, size_t uDepth, Mogre::PixelFormat eFormat, size_t numFaces, size_t numMipMaps)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, uDepth, (Ogre::PixelFormat)eFormat, numFaces, numMipMaps));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadRawData(Mogre::DataStreamPtr^ stream, size_t uWidth, size_t uHeight, size_t uDepth, Mogre::PixelFormat eFormat, size_t numFaces)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, uDepth, (Ogre::PixelFormat)eFormat, numFaces));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadRawData(Mogre::DataStreamPtr^ stream, size_t uWidth, size_t uHeight, size_t uDepth, Mogre::PixelFormat eFormat)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, uDepth, (Ogre::PixelFormat)eFormat));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::LoadRawData(Mogre::DataStreamPtr^ stream, size_t uWidth, size_t uHeight, Mogre::PixelFormat eFormat)
 {
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)eFormat));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::Load(String^ strFileName, String^ groupName)
@@ -174,7 +171,7 @@ Mogre::Image^ Image::Load(String^ strFileName, String^ groupName)
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->load(o_strFileName, o_groupName));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 Mogre::Image^ Image::Load(Mogre::DataStreamPtr^ stream, String^ type)
@@ -182,7 +179,7 @@ Mogre::Image^ Image::Load(Mogre::DataStreamPtr^ stream, String^ type)
 	DECLARE_NATIVE_STRING(o_type, type);
 
 	Ogre::Image* ptr = &const_cast<Ogre::Image&>(_native->load((Ogre::DataStreamPtr&)stream, o_type));
-	return ObjectTable::GetOrCreateObject<Mogre::Image^>((intptr_t)ptr);
+	return gcnew Mogre::Image(ptr);
 }
 
 void Image::Save(String^ filename)

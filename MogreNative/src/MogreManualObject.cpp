@@ -13,7 +13,7 @@ ManualObject::ManualObjectSection::ManualObjectSection(Mogre::ManualObject^ pare
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_materialName, materialName);
 	_native = new Ogre::ManualObject::ManualObjectSection(parent, o_materialName, (Ogre::RenderOperation::OperationType)opType);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 ManualObject::ManualObjectSection::~ManualObjectSection()
@@ -30,7 +30,7 @@ ManualObject::ManualObjectSection::!ManualObjectSection()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
+		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -337,7 +337,7 @@ void ManualObject::Quad(Ogre::uint32 i1, Ogre::uint32 i2, Ogre::uint32 i3, Ogre:
 
 Mogre::ManualObject::ManualObjectSection^ ManualObject::End()
 {
-	return static_cast<Ogre::ManualObject*>(_native)->end();
+	return gcnew Mogre::ManualObject::ManualObjectSection(static_cast<Ogre::ManualObject*>(_native)->end());
 }
 
 Mogre::ManualObject::ManualObjectSection^ ManualObject::GetSection(unsigned int index)
@@ -365,9 +365,4 @@ Mogre::MeshPtr^ ManualObject::ConvertToMesh(String^ meshName)
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 
 	return static_cast<Ogre::ManualObject*>(_native)->convertToMesh(o_meshName);
-}
-
-Ogre::ManualObject* ManualObject::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::ManualObject*>(_native);
 }

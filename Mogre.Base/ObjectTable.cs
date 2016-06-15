@@ -15,7 +15,7 @@ namespace Mogre
 		public static event EventHandler<ObjectTableEventArgs> ObjectRemoved;
 
 		// A collection of native objects to their managed version
-		static readonly Dictionary<long, object> _objectTable = new Dictionary<long, object>();
+		static readonly Dictionary<IntPtr, object> _objectTable = new Dictionary<IntPtr, object>();
 		// A collection of managed objects to their managed owner
 		static readonly Dictionary<IMogreDisposable, IMogreDisposable> _ownership = new Dictionary<IMogreDisposable, IMogreDisposable>();
 		// A collection of ownership-type pairs to a collection of objects
@@ -24,7 +24,12 @@ namespace Mogre
 
 		static bool _performingDisposal;
 
-		public static void Add<T>(long pointer, T @object, IMogreDisposable owner = null) where T : IMogreDisposable
+		public static void Add<T>(IntPtr pointer, T @object) where T : class, IMogreDisposable
+		{
+			Add(pointer, @object, null);
+		}
+
+		public static void Add<T>(IntPtr pointer, T @object, IMogreDisposable owner) where T : class, IMogreDisposable
 		{
 			if (@object == null)
 			{
@@ -93,12 +98,12 @@ namespace Mogre
 			return _objectTable.ContainsValue(@object);
 		}
 
-		public static bool Contains(long pointer)
+		public static bool Contains(IntPtr pointer)
 		{
 			return _objectTable.ContainsKey(pointer);
 		}
 
-		public static void EnsureUnmanagedObjectIsOnlyWrappedOnce(long unmanaged, Type managedType)
+		public static void EnsureUnmanagedObjectIsOnlyWrappedOnce(IntPtr unmanaged, Type managedType)
 		{
 			if (_objectTable.ContainsKey(unmanaged))
 			{
@@ -123,7 +128,7 @@ namespace Mogre
 			return false;
 		}
 
-		public static bool Remove(long pointer)
+		public static bool Remove(IntPtr pointer)
 		{
 			object @object = _objectTable[pointer];
 
@@ -166,7 +171,7 @@ namespace Mogre
 			return result;
 		}
 
-		public static T TryGetObject<T>(long pointer)
+		public static T TryGetObject<T>(IntPtr pointer)
 		{
 			if (_objectTable.ContainsKey(pointer) == false)
 			{
@@ -176,19 +181,19 @@ namespace Mogre
 			return (T)(_objectTable[pointer]);
 		}
 
-		public static object TryGetObject(long pointer)
+		public static object TryGetObject(IntPtr pointer)
 		{
 			return TryGetObject<object>(pointer);
 		}
 
-		public static object GetOrCreateObject(long pointer)
+		public static object GetOrCreateObject(IntPtr pointer)
 		{
 			return GetOrCreateObject<object>(pointer);
 		}
 
-		public static T GetOrCreateObject<T>(long pointer)
+		public static T GetOrCreateObject<T>(IntPtr pointer)
 		{
-			if (pointer == 0L)
+			if (pointer == IntPtr.Zero)
 			{
 				return default(T);
 			}
@@ -196,15 +201,7 @@ namespace Mogre
 			object result;
 			if (!_objectTable.TryGetValue(pointer, out result))
 			{
-				object[] args;
-				if (IntPtr.Size == 8)
-				{
-					args = new object[] { pointer };
-				}
-				else
-				{
-					args = new object[] { (int)pointer };
-				}
+				object[] args = { pointer };
 				object @object = Activator.CreateInstance(typeof(T), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, args, null);
 				_objectTable.Add(pointer, @object);
 				var mogreDisposable = @object as IMogreDisposable;
@@ -222,7 +219,7 @@ namespace Mogre
 			return (T)result;
 		}
 
-		public static long GetObject(object @object)
+		public static IntPtr GetObject(object @object)
 		{
 			foreach (var pair in _objectTable)
 			{
@@ -235,9 +232,9 @@ namespace Mogre
 			throw new ArgumentException("Cannot find the unmanaged object");
 		}
 
-		public static T GetObject<T>(long pointer)
+		public static T GetObject<T>(IntPtr pointer)
 		{
-			if (pointer == 0L)
+			if (pointer == IntPtr.Zero)
 			{
 				return default(T);
 			}
@@ -250,7 +247,7 @@ namespace Mogre
 			return (T)(_objectTable[pointer]);
 		}
 
-		public static object GetObject(long pointer)
+		public static object GetObject(IntPtr pointer)
 		{
 			return GetObject<object>(pointer);
 		}

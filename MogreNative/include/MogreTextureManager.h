@@ -86,7 +86,7 @@ namespace Mogre
 		{
 		}
 
-		Image(intptr_t obj) : _native((Ogre::Image*)obj), _createdByCLR(false)
+		Image(IntPtr obj) : _native((Ogre::Image*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -241,7 +241,7 @@ namespace Mogre
 		{
 		}
 
-		Texture(intptr_t ptr) : Resource(ptr)
+		Texture(IntPtr ptr) : Resource(ptr)
 		{
 		}
 

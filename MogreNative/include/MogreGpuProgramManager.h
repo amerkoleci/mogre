@@ -835,7 +835,7 @@ namespace Mogre
 		{
 		}
 
-		GpuProgram(intptr_t ptr) : Resource(ptr)
+		GpuProgram(IntPtr ptr) : Resource(ptr)
 		{
 		}
 
@@ -1083,7 +1083,7 @@ namespace Mogre
 		{
 			GpuProgram^ get()
 			{
-				return ObjectTable::GetOrCreateObject<GpuProgram^>((intptr_t)static_cast<Ogre::GpuProgram*>(_native));
+				return ObjectTable::GetOrCreateObject<GpuProgram^>((IntPtr)static_cast<Ogre::GpuProgram*>(_native));
 			}
 		}
 	};
@@ -1201,7 +1201,7 @@ namespace Mogre
 		{
 			GpuProgramParameters^ get()
 			{
-				return ObjectTable::GetOrCreateObject<GpuProgramParameters^>((intptr_t) static_cast<Ogre::GpuProgramParameters*>(_native));
+				return ObjectTable::GetOrCreateObject<GpuProgramParameters^>((IntPtr) static_cast<Ogre::GpuProgramParameters*>(_native));
 			}
 		}
 	};

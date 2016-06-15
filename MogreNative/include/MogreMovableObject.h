@@ -57,35 +57,41 @@ namespace Mogre
 			{
 				virtual bool get()
 				{
-					return _native == nullptr;
+					return _native;
 				}
 			}
 		};
 
 	internal:
 		Ogre::MovableObject* _native;
-		bool _createdByCLR;
+		bool _preventDelete;
+
+	private:
+		bool _isDisposed;
 
 	public protected:
-		MovableObject(intptr_t ptr) : _native((Ogre::MovableObject*)ptr)
+		MovableObject(IntPtr ptr)
 		{
-
+			UnmanagedPointer = (Ogre::MovableObject*)ptr.ToPointer();
 		}
 
-		MovableObject(Ogre::MovableObject* ptr) : _native(ptr)
+		MovableObject(Ogre::MovableObject* native)
 		{
-
+			UnmanagedPointer = native;
 		}
 
 		~MovableObject();
 		!MovableObject();
+
+	internal:
+		static MovableObject^ GetManaged(Ogre::MovableObject* native);
 
 	public:
 		property bool IsDisposed
 		{
 			virtual bool get()
 			{
-				return _native == nullptr;
+				return _isDisposed;
 			}
 		}
 
@@ -262,18 +268,19 @@ namespace Mogre
 
 		bool IsVisible();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(MovableObject);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(MovableObject);
 
 	public:
 		property Ogre::MovableObject* NativePtr
 		{
-			Ogre::MovableObject* get() { return _native; }
+			Ogre::MovableObject* get() { return UnmanagedPointer; }
 		}
 
 	internal:
 		property Ogre::MovableObject* UnmanagedPointer
 		{
-			Ogre::MovableObject* get();
+			virtual Ogre::MovableObject* get();
+			void set(Ogre::MovableObject* value);
 		}
 	};
 }

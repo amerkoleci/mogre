@@ -8,7 +8,7 @@ void Resource_Listener_Director::loadingComplete(Ogre::Resource* param1)
 {
 	if (doCallForLoadingComplete)
 	{
-		_receiver->LoadingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((intptr_t)param1));
+		_receiver->LoadingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((IntPtr)param1));
 	}
 }
 
@@ -16,7 +16,7 @@ void Resource_Listener_Director::preparingComplete(Ogre::Resource* param1)
 {
 	if (doCallForPreparingComplete)
 	{
-		_receiver->PreparingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((intptr_t)param1));
+		_receiver->PreparingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((IntPtr)param1));
 	}
 }
 
@@ -24,13 +24,13 @@ void Resource_Listener_Director::unloadingComplete(Ogre::Resource* param1)
 {
 	if (doCallForUnloadingComplete)
 	{
-		_receiver->UnloadingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((intptr_t)param1));
+		_receiver->UnloadingComplete(ObjectTable::GetOrCreateObject<Mogre::Resource^>((IntPtr)param1));
 	}
 }
 
 Mogre::ResourceManager^ Resource::Creator::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ResourceManager^>((intptr_t)static_cast<Ogre::Resource*>(_native)->getCreator());
+	return ObjectTable::GetOrCreateObject<Mogre::ResourceManager^>((IntPtr)static_cast<Ogre::Resource*>(_native)->getCreator());
 }
 
 String^ Resource::Group::get()

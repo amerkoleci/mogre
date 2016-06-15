@@ -31,7 +31,7 @@ namespace Mogre
 			}
 
 		public protected:
-			ShaderGenerator(intptr_t ptr) : _native((Ogre::RTShader::ShaderGenerator*)ptr)
+			ShaderGenerator(IntPtr ptr) : _native((Ogre::RTShader::ShaderGenerator*)ptr.ToPointer())
 			{
 
 			}

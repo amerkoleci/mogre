@@ -132,7 +132,6 @@ EdgeData::EdgeData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::EdgeData();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 EdgeData::~EdgeData()
@@ -149,7 +148,6 @@ EdgeData::!EdgeData()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

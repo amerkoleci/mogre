@@ -10,7 +10,7 @@ CPP_DECLARE_ITERATOR(SceneNode::, ObjectIterator, Ogre::SceneNode::ObjectIterato
 
 Mogre::SceneNode^ SceneNode::ParentSceneNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<const Ogre::SceneNode*>(_native)->getParentSceneNode());
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<const Ogre::SceneNode*>(_native)->getParentSceneNode());
 }
 
 void SceneNode::AttachObject(Mogre::MovableObject^ obj)
@@ -26,7 +26,7 @@ unsigned short SceneNode::NumAttachedObjects()
 Mogre::MovableObject^ SceneNode::GetAttachedObject(unsigned short index)
 {
 	return ObjectTable::GetOrCreateObject<Mogre::MovableObject^>(
-		(intptr_t)static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(index)
+		(IntPtr)static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(index)
 		);
 }
 
@@ -35,7 +35,7 @@ Mogre::MovableObject^ SceneNode::GetAttachedObject(String^ name)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	return ObjectTable::GetOrCreateObject<Mogre::MovableObject^>(
-		(intptr_t)static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(o_name)
+		(IntPtr)static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(o_name)
 		);
 }
 
@@ -51,7 +51,7 @@ void SceneNode::DetachAllObjects()
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate, Mogre::Quaternion rotate)
 {
-	auto native = (intptr_t)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode(
+	auto native = (IntPtr)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode(
 		(Ogre::SceneMemoryMgrTypes)sceneType,
 		FromVector3(translate),
 		FromQuaternion(rotate)
@@ -62,18 +62,18 @@ Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType,
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate)
 {
-	auto native = (intptr_t)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate));
+	auto native = (IntPtr)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate));
 	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>(native);
 }
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType));
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode());
+	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode());
 }
 
 void SceneNode::Yaw(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)

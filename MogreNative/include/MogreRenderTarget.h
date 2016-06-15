@@ -211,7 +211,7 @@ namespace Mogre
 		{
 		}
 
-		RenderTarget(intptr_t ptr) : _native((Ogre::RenderTarget*)ptr)
+		RenderTarget(IntPtr ptr) : _native((Ogre::RenderTarget*)ptr.ToPointer())
 		{
 
 		}
@@ -548,7 +548,7 @@ namespace Mogre
 		{
 		}
 
-		RenderTexture(intptr_t ptr) : RenderTarget(ptr)
+		RenderTexture(IntPtr ptr) : RenderTarget(ptr)
 		{
 		}
 
@@ -569,7 +569,7 @@ namespace Mogre
 		{
 		}
 
-		MultiRenderTarget(intptr_t ptr) : RenderTarget(ptr)
+		MultiRenderTarget(IntPtr ptr) : RenderTarget(ptr)
 		{
 		}
 

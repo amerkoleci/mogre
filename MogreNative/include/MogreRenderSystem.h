@@ -166,7 +166,7 @@ namespace Mogre
 		{
 		}
 
-		RenderSystemCapabilities(intptr_t ptr) : _native((Ogre::RenderSystemCapabilities*)ptr), _createdByCLR(false)
+		RenderSystemCapabilities(IntPtr ptr) : _native((Ogre::RenderSystemCapabilities*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -306,6 +306,8 @@ namespace Mogre
 
 	public ref class RenderSystem : public IRenderSystem_Listener_Receiver
 	{
+		Mogre::RenderSystemCapabilities^ _capabilities;
+
 	public:
 		ref class Listener abstract sealed
 		{
@@ -321,7 +323,7 @@ namespace Mogre
 		Mogre::RenderSystem::Listener::EventOccurredHandler^ _eventOccurred;
 
 	public protected:
-		RenderSystem(intptr_t ptr) : _native((Ogre::RenderSystem*)ptr)
+		RenderSystem(IntPtr ptr) : _native((Ogre::RenderSystem*)ptr.ToPointer())
 		{
 
 		}
@@ -511,10 +513,10 @@ namespace Mogre
 		void _setSceneBlending(Mogre::SceneBlendFactor sourceFactor, Mogre::SceneBlendFactor destFactor);
 		void _setSeparateSceneBlending(
 			Mogre::SceneBlendFactor sourceFactor,
-			Mogre::SceneBlendFactor destFactor, 
+			Mogre::SceneBlendFactor destFactor,
 			Mogre::SceneBlendFactor sourceFactorAlpha,
 			Mogre::SceneBlendFactor destFactorAlpha,
-			Mogre::SceneBlendOperation op, 
+			Mogre::SceneBlendOperation op,
 			Mogre::SceneBlendOperation alphaOp);
 
 		void _setSeparateSceneBlending(

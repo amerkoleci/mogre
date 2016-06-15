@@ -132,7 +132,7 @@ CPP_DECLARE_STLVECTOR(Mesh::, IndexMap, unsigned short, unsigned short);
 //	DECLARE_NATIVE_STRING(o_group, group);
 //
 //	_native = new Ogre::Mesh(creator, o_name, handle, o_group, isManual, loader);
-//	ObjectTable::Add((intptr_t)_native, this, nullptr);
+//	ObjectTable::Add((IntPtr)_native, this, nullptr);
 //}
 
 Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual) : Resource((Ogre::Resource*)0)
@@ -141,7 +141,7 @@ Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 	_native = new Ogre::Mesh(creator, o_name, handle, o_group, isManual);
-	//ObjectTable::Add((intptr_t)_native, this, nullptr);
+	//ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group) : Resource((Ogre::Resource*)0)
@@ -150,7 +150,7 @@ Mesh::Mesh(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle 
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 	_native = new Ogre::Mesh(creator, o_name, handle, o_group);
-	//ObjectTable::Add((intptr_t)_native, this, nullptr);
+	//ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Mogre::VertexData^ Mesh::sharedVertexData::get()

@@ -17,7 +17,6 @@ Log::Log(String^ name, bool debugOutput, bool suppressFileOutput)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	_native = new Ogre::Log(o_name, debugOutput, suppressFileOutput);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Log::Log(String^ name, bool debugOutput)
@@ -26,7 +25,6 @@ Log::Log(String^ name, bool debugOutput)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	_native = new Ogre::Log(o_name, debugOutput);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Log::Log(String^ name)
@@ -35,7 +33,6 @@ Log::Log(String^ name)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	_native = new Ogre::Log(o_name);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Log::~Log()
@@ -57,7 +54,6 @@ Log::!Log()
 	}
 	if (_createdByCLR &&_native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}

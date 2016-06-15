@@ -29,7 +29,6 @@ VertexData::VertexData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexData();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 VertexData::~VertexData()
@@ -50,7 +49,7 @@ VertexData::!VertexData()
 		_vertexBufferBinding = nullptr;
 	}
 
-	if(_vertexDeclaration != nullptr)
+	if (_vertexDeclaration != nullptr)
 	{
 		delete _vertexDeclaration;
 		_vertexDeclaration = nullptr;
@@ -58,7 +57,6 @@ VertexData::!VertexData()
 
 	if (_createdByCLR &&_native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -73,12 +71,7 @@ bool VertexData::IsDisposed::get()
 
 Mogre::VertexDeclaration^ VertexData::vertexDeclaration::get()
 {
-	if (_vertexDeclaration == nullptr)
-	{
-		_vertexDeclaration = gcnew Mogre::VertexDeclaration(_native->vertexDeclaration);
-	}
-
-	return _vertexDeclaration;
+	ReturnCachedObjectGcnew(Mogre::VertexDeclaration, _vertexDeclaration, _native->vertexDeclaration);
 }
 
 void VertexData::vertexDeclaration::set(Mogre::VertexDeclaration^ value)
@@ -89,12 +82,7 @@ void VertexData::vertexDeclaration::set(Mogre::VertexDeclaration^ value)
 
 Mogre::VertexBufferBinding^ VertexData::vertexBufferBinding::get()
 {
-	if (_vertexBufferBinding == nullptr)
-	{
-		_vertexBufferBinding = gcnew Mogre::VertexBufferBinding(_native->vertexBufferBinding);
-	}
-
-	return _vertexBufferBinding;
+	ReturnCachedObjectGcnew(Mogre::VertexBufferBinding, _vertexBufferBinding, _native->vertexBufferBinding);
 }
 
 void VertexData::vertexBufferBinding::set(Mogre::VertexBufferBinding^ value)
@@ -150,12 +138,12 @@ void VertexData::hardwareShadowVolWBuffer::set(Mogre::HardwareVertexBufferShared
 
 Mogre::VertexData^ VertexData::Clone(bool copyData)
 {
-	return _native->clone(copyData);
+	return gcnew Mogre::VertexData(_native->clone(copyData));
 }
 
 Mogre::VertexData^ VertexData::Clone()
 {
-	return _native->clone();
+	return gcnew Mogre::VertexData(_native->clone());
 }
 
 void VertexData::PrepareForShadowVolume()
@@ -199,7 +187,6 @@ IndexData::IndexData()
 {
 	_createdByCLR = true;
 	_native = new Ogre::IndexData();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 IndexData::~IndexData()
@@ -216,7 +203,6 @@ IndexData::!IndexData()
 
 	if (_createdByCLR &&_native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -260,11 +246,12 @@ void IndexData::indexCount::set(size_t value)
 
 Mogre::IndexData^ IndexData::Clone(bool copyData)
 {
-	return _native->clone(copyData);
+	return gcnew Mogre::IndexData(_native->clone(copyData));
 }
+
 Mogre::IndexData^ IndexData::Clone()
 {
-	return _native->clone();
+	return gcnew Mogre::IndexData(_native->clone());
 }
 
 void IndexData::OptimiseVertexCacheTriList()

@@ -15,7 +15,6 @@ Root::Root(String^ pluginFileName, String^ configFileName, String^ logFileName)
 	DECLARE_NATIVE_STRING(o_configFileName, configFileName);
 	DECLARE_NATIVE_STRING(o_logFileName, logFileName);
 	_native = new Ogre::Root(o_pluginFileName, o_configFileName, o_logFileName);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Root::Root(String^ pluginFileName, String^ configFileName)
@@ -24,7 +23,6 @@ Root::Root(String^ pluginFileName, String^ configFileName)
 	DECLARE_NATIVE_STRING(o_pluginFileName, pluginFileName);
 	DECLARE_NATIVE_STRING(o_configFileName, configFileName);
 	_native = new Ogre::Root(o_pluginFileName, o_configFileName);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Root::Root(String^ pluginFileName)
@@ -32,14 +30,12 @@ Root::Root(String^ pluginFileName)
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_pluginFileName, pluginFileName);
 	_native = new Ogre::Root(o_pluginFileName);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Root::Root()
 {
 	_createdByCLR = true;
 	_native = new Ogre::Root();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 Root::~Root()
@@ -69,7 +65,6 @@ Root::!Root()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -92,12 +87,12 @@ Mogre::FrameStats^ Root::GetFrameStats()
 
 Mogre::CompositorManager2^ Root::CompositorManager2::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorManager2^>((intptr_t)_native->getCompositorManager2());
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorManager2^>((IntPtr)_native->getCompositorManager2());
 }
 
 Mogre::RenderWindow^ Root::AutoCreatedWindow::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->getAutoCreatedWindow());
+	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->getAutoCreatedWindow());
 }
 
 unsigned int Root::DisplayMonitorCount::get()
@@ -253,19 +248,19 @@ Mogre::RenderSystem^ Root::GetRenderSystemByName(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderSystem^>((intptr_t)_native->getRenderSystemByName(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::RenderSystem^>((IntPtr)_native->getRenderSystemByName(o_name));
 }
 
 Mogre::RenderWindow^ Root::Initialise(bool autoCreateWindow, String^ windowTitle)
 {
 	DECLARE_NATIVE_STRING(o_windowTitle, windowTitle);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->initialise(autoCreateWindow, o_windowTitle));
+	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->initialise(autoCreateWindow, o_windowTitle));
 }
 
 Mogre::RenderWindow^ Root::Initialise(bool autoCreateWindow)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->initialise(autoCreateWindow));
+	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->initialise(autoCreateWindow));
 }
 
 void Root::Shutdown()
@@ -325,14 +320,14 @@ Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, 
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->createRenderWindow(o_name, width, height, fullScreen));
+	return gcnew Mogre::RenderWindow(_native->createRenderWindow(o_name, width, height, fullScreen));
 }
 
 Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, unsigned int height)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->createRenderWindow(o_name, width, height, false));
+	return gcnew Mogre::RenderWindow(_native->createRenderWindow(o_name, width, height, false));
 }
 
 Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, IntPtr handle, unsigned int width, unsigned int height, bool fullScreen)
@@ -341,7 +336,7 @@ Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, IntPtr handle, unsig
 	Ogre::NameValuePairList params;
 	params["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)handle.ToInt64());
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->createRenderWindow(o_name, width, height, fullScreen, &params));
+	return gcnew Mogre::RenderWindow(_native->createRenderWindow(o_name, width, height, fullScreen, &params));
 }
 
 Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, IntPtr handle, unsigned int width, unsigned int height)
@@ -350,12 +345,12 @@ Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, IntPtr handle, unsig
 	Ogre::NameValuePairList params;
 	params["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)handle.ToInt64());
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((intptr_t)_native->createRenderWindow(o_name, width, height, false, &params));
+	return gcnew Mogre::RenderWindow(_native->createRenderWindow(o_name, width, height, false, &params));
 }
 
 void Root::DetachRenderTarget(Mogre::RenderTarget^ target)
 {
-	_native->detachRenderTarget(GetPointerOrNull(target));
+	_native->detachRenderTarget(GetUnmanagedNullable(target));
 }
 
 void Root::DetachRenderTarget(String^ name)
@@ -369,7 +364,7 @@ Mogre::RenderTarget^ Root::GetRenderTarget(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderTarget^>((intptr_t)_native->getRenderTarget(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::RenderTarget^>((IntPtr)_native->getRenderTarget(o_name));
 }
 
 void Root::LoadPlugin(String^ pluginName)

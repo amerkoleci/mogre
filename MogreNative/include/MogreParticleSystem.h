@@ -15,7 +15,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		ParticleEmitter(intptr_t ptr) : _native((Ogre::ParticleEmitter*)ptr)
+		ParticleEmitter(IntPtr ptr) : _native((Ogre::ParticleEmitter*)ptr.ToPointer())
 		{
 
 		}
@@ -255,7 +255,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		ParticleSystemRenderer(intptr_t ptr) : _native((Ogre::ParticleSystemRenderer*)ptr)
+		ParticleSystemRenderer(IntPtr ptr) : _native((Ogre::ParticleSystemRenderer*)ptr.ToPointer())
 		{
 
 		}
@@ -291,7 +291,7 @@ namespace Mogre
 	public ref class ParticleSystem : public MovableObject
 	{
 	public protected:
-		ParticleSystem(intptr_t ptr) : MovableObject(ptr)
+		ParticleSystem(IntPtr ptr) : MovableObject(ptr)
 		{
 
 		}
@@ -486,10 +486,6 @@ namespace Mogre
 		virtual void SetParameterList(Mogre::Const_NameValuePairList^ paramList);
 		virtual String^ GetParameter(String^ name);
 
-	internal:
-		property Ogre::ParticleSystem* UnmanagedPointer
-		{
-			Ogre::ParticleSystem* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(ParticleSystem);
 	};
 }

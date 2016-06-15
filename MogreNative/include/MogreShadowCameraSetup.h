@@ -29,7 +29,7 @@ namespace Mogre
 		{
 		}
 
-		ShadowCameraSetup(intptr_t obj) : _native((Ogre::ShadowCameraSetup*)obj), _createdByCLR(false)
+		ShadowCameraSetup(IntPtr obj) : _native((Ogre::ShadowCameraSetup*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 

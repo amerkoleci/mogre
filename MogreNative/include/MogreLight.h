@@ -19,7 +19,12 @@ namespace Mogre
 		};
 
 	public protected:
-		Light(intptr_t ptr) : MovableObject(ptr)
+		Light(Ogre::Light* obj) : MovableObject(obj)
+		{
+
+		}
+
+		Light(IntPtr ptr) : MovableObject(ptr)
 		{
 
 		}
@@ -177,10 +182,6 @@ namespace Mogre
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle, Ogre::Real falloff);
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle);
 
-	internal:
-		property Ogre::Light* UnmanagedPointer
-		{
-			Ogre::Light* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Light);
 	};
 }

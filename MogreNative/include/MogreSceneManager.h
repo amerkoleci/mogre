@@ -73,6 +73,9 @@ namespace Mogre
 
 	public ref class SceneManager : IMogreDisposable, public IRenderQueueListener_Receiver
 	{
+		Mogre::SceneNode^ _sceneRootDynamic;
+		Mogre::SceneNode^ _sceneRootStatic;
+
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposing;
@@ -116,7 +119,7 @@ namespace Mogre
 		}
 
 	public protected:
-		SceneManager(intptr_t ptr) : _native((Ogre::SceneManager*)ptr)
+		SceneManager(IntPtr ptr) : _native((Ogre::SceneManager*)ptr.ToPointer())
 		{
 			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
 			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();

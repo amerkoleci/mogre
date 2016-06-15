@@ -21,13 +21,20 @@ namespace Mogre
 	public enum class ProjectionType
 	{
 		PT_ORTHOGRAPHIC = Ogre::PT_ORTHOGRAPHIC,
-		PT_PERSPECTIVE = Ogre::PT_PERSPECTIVE
+		PT_PERSPECTIVE = Ogre::PT_PERSPECTIVE,
+		Orthographic = Ogre::PT_ORTHOGRAPHIC,
+		Perspective = Ogre::PT_PERSPECTIVE
 	};
 
 	public ref class Frustum : public MovableObject
 	{
 	public protected:
-		Frustum(intptr_t ptr) : MovableObject(ptr)
+		Frustum(Ogre::Frustum* obj) : MovableObject(obj)
+		{
+
+		}
+
+		Frustum(IntPtr ptr) : MovableObject(ptr)
 		{
 
 		}
@@ -281,12 +288,6 @@ namespace Mogre
 	public:
 		//virtual void _updateCustomGpuParameter(Mogre::GpuProgramParameters::AutoConstantEntry_NativePtr constantEntry, Mogre::GpuProgramParameters^ params);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Frustum);
-
-	internal:
-		property Ogre::Frustum* UnmanagedPointer
-		{
-			Ogre::Frustum* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Frustum);
 	};
 }

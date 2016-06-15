@@ -7,6 +7,9 @@ namespace Mogre
 {
 	public ref class LogManager
 	{
+		Mogre::Log^ _defaultLog;
+		Mogre::Log^ _oldDefaultLog;
+
 	private protected:
 		static LogManager^ _singleton;
 		Ogre::LogManager* _native;

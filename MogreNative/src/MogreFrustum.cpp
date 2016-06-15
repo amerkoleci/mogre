@@ -45,7 +45,7 @@ void Frustum::FocalLength::set(Mogre::Real focalLength)
 
 Mogre::Radian Frustum::FOVy::get()
 {
-	return Mogre::Radian(static_cast<const Ogre::Frustum*>(_native)->getFOVy().valueRadians() );
+	return Mogre::Radian(static_cast<const Ogre::Frustum*>(_native)->getFOVy().valueRadians());
 }
 
 void Frustum::FOVy::set(Mogre::Radian fovy)
@@ -55,7 +55,7 @@ void Frustum::FOVy::set(Mogre::Radian fovy)
 
 Mogre::Vector2 Frustum::FrustumOffset::get()
 {
-	return ToVector2( static_cast<const Ogre::Frustum*>(_native)->getFrustumOffset() );
+	return ToVector2(static_cast<const Ogre::Frustum*>(_native)->getFrustumOffset());
 }
 
 void Frustum::FrustumOffset::set(Mogre::Vector2 offset)
@@ -365,8 +365,3 @@ Mogre::Vector4 Frustum::GetCustomParameter(size_t index)
 //{
 //	static_cast<const Ogre::Frustum*>(_native)->_updateCustomGpuParameter(constantEntry, params);
 //}
-
-Ogre::Frustum* Frustum::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::Frustum*>(_native);
-}

@@ -4,24 +4,24 @@
 
 namespace Mogre
 {
-    using System;
+	using System;
 
-    public class ObjectTableEventArgs : EventArgs
-    {
-        public object ManagedObject
-        {
-            get; set;
-        }
+	public class ObjectTableEventArgs : EventArgs
+	{
+		public object ManagedObject
+		{
+			get; set;
+		}
 
-        public long UnmanagedObject
-        {
-            get; set;
-        }
+		public IntPtr UnmanagedObject
+		{
+			get; set;
+		}
 
-        public ObjectTableEventArgs(long unmanagedObject, object managedObject)
-        {
-            UnmanagedObject = unmanagedObject;
-            ManagedObject = managedObject;
-        }
-    }
+		public ObjectTableEventArgs(IntPtr unmanagedObject, object managedObject)
+		{
+			UnmanagedObject = unmanagedObject;
+			ManagedObject = managedObject;
+		}
+	}
 }

@@ -35,7 +35,7 @@ namespace Mogre
 		virtual event EventHandler^ OnDisposed;
 
 	public protected:
-		TimeIndex(intptr_t obj) : _native((Ogre::TimeIndex*)obj), _createdByCLR(false)
+		TimeIndex(IntPtr obj) : _native((Ogre::TimeIndex*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -105,7 +105,7 @@ namespace Mogre
 		{
 		}
 
-		KeyFrame(intptr_t obj) : _native((Ogre::KeyFrame*)obj)
+		KeyFrame(IntPtr obj) : _native((Ogre::KeyFrame*)obj.ToPointer())
 		{
 		}
 
@@ -151,7 +151,7 @@ namespace Mogre
 		{
 		}
 
-		NumericKeyFrame(intptr_t ptr) : KeyFrame(ptr)
+		NumericKeyFrame(IntPtr ptr) : KeyFrame(ptr)
 		{
 		}
 
@@ -183,7 +183,7 @@ namespace Mogre
 		{
 		}
 
-		TransformKeyFrame(intptr_t ptr) : KeyFrame(ptr)
+		TransformKeyFrame(IntPtr ptr) : KeyFrame(ptr)
 		{
 		}
 
@@ -248,7 +248,7 @@ namespace Mogre
 		{
 		}
 
-		AnimationTrack(intptr_t ptr) : _native((Ogre::AnimationTrack*)ptr)
+		AnimationTrack(IntPtr ptr) : _native((Ogre::AnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -322,7 +322,7 @@ namespace Mogre
 		{
 		}
 
-		NumericAnimationTrack(intptr_t ptr) : AnimationTrack((Ogre::NumericAnimationTrack*)ptr)
+		NumericAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::NumericAnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -373,7 +373,7 @@ namespace Mogre
 		{
 		}
 
-		NodeAnimationTrack(intptr_t ptr) : AnimationTrack((Ogre::NodeAnimationTrack*)ptr)
+		NodeAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::NodeAnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -446,7 +446,7 @@ namespace Mogre
 		{
 		}
 
-		VertexAnimationTrack(intptr_t ptr) : AnimationTrack((Ogre::VertexAnimationTrack*)ptr)
+		VertexAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::VertexAnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -486,7 +486,7 @@ namespace Mogre
 		{
 		}
 
-		AnimationState(intptr_t ptr) : _native((Ogre::AnimationState*)ptr)
+		AnimationState(IntPtr ptr) : _native((Ogre::AnimationState*)ptr.ToPointer())
 		{
 		}
 
@@ -619,7 +619,7 @@ namespace Mogre
 		{
 		}
 
-		AnimationStateSet(intptr_t obj) : _native((Ogre::AnimationStateSet*)obj), _createdByCLR(false)
+		AnimationStateSet(IntPtr obj) : _native((Ogre::AnimationStateSet*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -735,7 +735,7 @@ namespace Mogre
 
 
 	public protected:
-		Animation(intptr_t obj) : _native((Ogre::Animation*)obj), _createdByCLR(false)
+		Animation(IntPtr obj) : _native((Ogre::Animation*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 

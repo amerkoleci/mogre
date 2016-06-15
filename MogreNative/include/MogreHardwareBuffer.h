@@ -48,7 +48,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		HardwareBuffer(intptr_t ptr) : _native((Ogre::HardwareBuffer*)ptr)
+		HardwareBuffer(IntPtr ptr) : _native((Ogre::HardwareBuffer*)ptr.ToPointer())
 		{
 
 		}
@@ -141,7 +141,7 @@ namespace Mogre
 		{
 		}
 
-		HardwareIndexBuffer(intptr_t ptr) : HardwareBuffer(ptr)
+		HardwareIndexBuffer(IntPtr ptr) : HardwareBuffer(ptr)
 		{
 
 		}
@@ -327,7 +327,7 @@ namespace Mogre
 		{
 		}
 
-		HardwareVertexBuffer(intptr_t ptr) : HardwareBuffer(ptr)
+		HardwareVertexBuffer(IntPtr ptr) : HardwareBuffer(ptr)
 		{
 
 		}
@@ -476,7 +476,7 @@ namespace Mogre
 		{
 		}
 
-		HardwarePixelBuffer(intptr_t ptr) : HardwareBuffer(ptr)
+		HardwarePixelBuffer(IntPtr ptr) : HardwareBuffer(ptr)
 		{
 
 		}
@@ -907,7 +907,7 @@ namespace Mogre
 		{
 		}
 
-		VertexDeclaration(intptr_t ptr) : _native((Ogre::VertexDeclaration*)ptr)
+		VertexDeclaration(IntPtr ptr) : _native((Ogre::VertexDeclaration*)ptr.ToPointer())
 		{
 
 		}
@@ -1015,7 +1015,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		VertexBufferBinding(intptr_t ptr) : _native((Ogre::VertexBufferBinding*)ptr)
+		VertexBufferBinding(IntPtr ptr) : _native((Ogre::VertexBufferBinding*)ptr.ToPointer())
 		{
 
 		}

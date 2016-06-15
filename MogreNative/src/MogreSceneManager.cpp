@@ -120,28 +120,31 @@ void SceneManager::DisplaySceneNodes::set(bool value)
 
 Mogre::SceneNode^ SceneManager::GetRootSceneNode()
 {
-	return _native->getRootSceneNode();
+	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode());
 }
 
 Mogre::SceneNode^ SceneManager::GetRootSceneNode(SceneMemoryMgrTypes sceneType)
 {
-	return _native->getRootSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+	if (sceneType == SceneMemoryMgrTypes::Dynamic)
+		ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode(Ogre::SCENE_DYNAMIC));
+
+	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootStatic, _native->getRootSceneNode(Ogre::SCENE_STATIC));
 }
 
 
 Mogre::SceneNode^ SceneManager::CreateSceneNode()
 {
-	return _native->createSceneNode();
+	return gcnew Mogre::SceneNode(_native->createSceneNode());
 }
 
 Mogre::SceneNode^ SceneManager::CreateSceneNode(SceneMemoryMgrTypes sceneType)
 {
-	return _native->createSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+	return gcnew Mogre::SceneNode(_native->createSceneNode((Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::SceneNode^ SceneManager::CreateSceneNode(String^ name)
 {
-	Mogre::SceneNode^ result = _native->createSceneNode();
+	Mogre::SceneNode^ result = gcnew Mogre::SceneNode(_native->createSceneNode());
 	result->Name = name;
 	_sceneNodes[name] = result;
 	return result;
@@ -149,7 +152,7 @@ Mogre::SceneNode^ SceneManager::CreateSceneNode(String^ name)
 
 Mogre::SceneNode^ SceneManager::CreateSceneNode(String^ name, SceneMemoryMgrTypes sceneType)
 {
-	Mogre::SceneNode^ result = _native->createSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+	Mogre::SceneNode^ result = gcnew Mogre::SceneNode(_native->createSceneNode((Ogre::SceneMemoryMgrTypes)sceneType));
 	result->Name = name;
 	_sceneNodes[name] = result;
 	return result;
@@ -189,12 +192,12 @@ bool SceneManager::HasSceneNode(String^ name)
 
 Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::BillboardSet^>((intptr_t)_native->createBillboardSet(poolSize));
+	return gcnew Mogre::BillboardSet(_native->createBillboardSet(poolSize));
 }
 
 void SceneManager::DestroyBillboardSet(Mogre::BillboardSet^ set)
 {
-	_native->destroyBillboardSet(GetPointerOrNull(set));
+	_native->destroyBillboardSet(set);
 }
 
 void SceneManager::DestroyAllBillboardSets()
@@ -204,12 +207,12 @@ void SceneManager::DestroyAllBillboardSets()
 
 Mogre::BillboardChain^ SceneManager::CreateBillboardChain()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::BillboardChain^>((intptr_t)_native->createBillboardChain());
+	return gcnew Mogre::BillboardChain(_native->createBillboardChain());
 }
 
 void SceneManager::DestroyBillboardChain(Mogre::BillboardChain^ obj)
 {
-	_native->destroyBillboardChain(GetPointerOrNull(obj));
+	_native->destroyBillboardChain(obj);
 }
 
 void SceneManager::DestroyAllBillboardChains()
@@ -219,19 +222,17 @@ void SceneManager::DestroyAllBillboardChains()
 
 Mogre::ManualObject^ SceneManager::CreateManualObject(SceneMemoryMgrTypes sceneType)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)
-		_native->createManualObject((Ogre::SceneMemoryMgrTypes)sceneType)
-		);
+	return gcnew Mogre::ManualObject(_native->createManualObject((Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::ManualObject^ SceneManager::CreateManualObject()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)_native->createManualObject());
+	return gcnew Mogre::ManualObject(_native->createManualObject());
 }
 
 Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name)
 {
-	Mogre::ManualObject^ result = ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)_native->createManualObject());
+	Mogre::ManualObject^ result = gcnew Mogre::ManualObject(_native->createManualObject());
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -242,7 +243,7 @@ Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name)
 
 Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name, SceneMemoryMgrTypes sceneType)
 {
-	Mogre::ManualObject^ result = ObjectTable::GetOrCreateObject<Mogre::ManualObject^>((intptr_t)_native->createManualObject((Ogre::SceneMemoryMgrTypes)sceneType));
+	Mogre::ManualObject^ result = gcnew Mogre::ManualObject(_native->createManualObject((Ogre::SceneMemoryMgrTypes)sceneType));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -253,7 +254,7 @@ Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name, SceneMemoryM
 
 void SceneManager::DestroyManualObject(Mogre::ManualObject^ obj)
 {
-	_native->destroyManualObject(GetPointerOrNull(obj));
+	_native->destroyManualObject(obj);
 }
 
 void SceneManager::DestroyAllManualObjects()
@@ -285,12 +286,12 @@ void SceneManager::DestroyManualObject(String^ name)
 
 Mogre::RibbonTrail^ SceneManager::CreateRibbonTrail()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RibbonTrail^>((intptr_t)_native->createRibbonTrail());
+	return gcnew Mogre::RibbonTrail(_native->createRibbonTrail());
 }
 
 void SceneManager::DestroyRibbonTrail(Mogre::RibbonTrail^ obj)
 {
-	_native->destroyRibbonTrail(GetPointerOrNull(obj));
+	_native->destroyRibbonTrail(obj);
 }
 
 void SceneManager::DestroyAllRibbonTrails()
@@ -302,25 +303,24 @@ Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(String^ templateName)
 {
 	DECLARE_NATIVE_STRING(o_templateName, templateName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(o_templateName));
+	return gcnew Mogre::ParticleSystem(_native->createParticleSystem(o_templateName));
 }
 
 Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota, String^ resourceGroup)
 {
 	DECLARE_NATIVE_STRING(o_resourceGroup, resourceGroup);
 
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)_native->createParticleSystem(quota, o_resourceGroup));
+	return gcnew Mogre::ParticleSystem(_native->createParticleSystem(quota, o_resourceGroup));
 }
 
 Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota)
 {
-	auto native = _native->createParticleSystem(quota);
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystem^>((intptr_t)native);
+	return gcnew Mogre::ParticleSystem(_native->createParticleSystem(quota));
 }
 
 void SceneManager::DestroyParticleSystem(Mogre::ParticleSystem^ obj)
 {
-	_native->destroyParticleSystem(GetPointerOrNull(obj));
+	_native->destroyParticleSystem(obj);
 }
 
 void SceneManager::DestroyAllParticleSystems()
@@ -330,12 +330,12 @@ void SceneManager::DestroyAllParticleSystems()
 
 Mogre::Light^ SceneManager::CreateLight()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Light^>((intptr_t)_native->createLight());
+	return gcnew Mogre::Light(_native->createLight());
 }
 
 void SceneManager::DestroyLight(Mogre::Light^ light)
 {
-	static_cast<Ogre::SceneManager*>(_native)->destroyLight(GetPointerOrNull(light));
+	static_cast<Ogre::SceneManager*>(_native)->destroyLight(light);
 }
 
 void SceneManager::DestroyAllLights()
@@ -357,28 +357,28 @@ Mogre::Camera^ SceneManager::CreateCamera(String^ name, bool notShadowCaster, bo
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->createCamera(o_name, notShadowCaster, forCubemapping));
+	return gcnew Mogre::Camera(_native->createCamera(o_name, notShadowCaster, forCubemapping));
 }
 
 Mogre::Camera^ SceneManager::FindCamera(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->findCamera(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCamera(o_name));
 }
 
 Mogre::Camera^ SceneManager::FindCameraNoThrow(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->findCameraNoThrow(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCameraNoThrow(o_name));
 }
 
 Mogre::Camera^ SceneManager::GetCamera(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((intptr_t)_native->findCamera(o_name));
+	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCamera(o_name));
 }
 
 bool SceneManager::HasCamera(String^ name)
@@ -390,7 +390,7 @@ bool SceneManager::HasCamera(String^ name)
 
 void SceneManager::DestroyCamera(Mogre::Camera^ camera)
 {
-	_native->destroyCamera(GetPointerOrNull(camera));
+	_native->destroyCamera(camera);
 }
 
 void SceneManager::DestroyCamera(String^ name)
@@ -412,7 +412,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName)
 {
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((intptr_t)_native->createEntity(o_meshName));
+	return gcnew Mogre::Entity(_native->createEntity(o_meshName));
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, SceneMemoryMgrTypes sceneType)
@@ -420,22 +420,22 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ meshName, String^ groupName, S
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	return _native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType);
+	return gcnew Mogre::Entity(_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype)
 {
-	return _native->createEntity((Ogre::SceneManager::PrefabType)ptype);
+	return gcnew Mogre::Entity(_native->createEntity((Ogre::SceneManager::PrefabType)ptype));
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType)
 {
-	return _native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType);
+	return gcnew Mogre::Entity(_native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh, SceneMemoryMgrTypes sceneType)
 {
-	return _native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType);
+	return gcnew Mogre::Entity(_native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType));
 }
 
 Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh)
@@ -446,7 +446,7 @@ Mogre::Entity^ SceneManager::CreateEntity(MeshPtr^ mesh)
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName)
 {
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
-	Mogre::Entity^ result = _native->createEntity(o_meshName);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity(o_meshName));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -460,7 +460,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName, String
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	Mogre::Entity^ result = _native->createEntity(o_meshName, o_groupName);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity(o_meshName, o_groupName));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -474,7 +474,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName, String
 	DECLARE_NATIVE_STRING(o_meshName, meshName);
 	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	Mogre::Entity^ result = _native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity(o_meshName, o_groupName, (Ogre::SceneMemoryMgrTypes)sceneType));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -485,7 +485,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, String^ meshName, String
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, Mogre::SceneManager::PrefabType ptype)
 {
-	Mogre::Entity^ result = _native->createEntity((Ogre::SceneManager::PrefabType)ptype);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity((Ogre::SceneManager::PrefabType)ptype));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -496,7 +496,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, Mogre::SceneManager::Pre
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, Mogre::SceneManager::PrefabType ptype, SceneMemoryMgrTypes sceneType)
 {
-	Mogre::Entity^ result = _native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity((Ogre::SceneManager::PrefabType)ptype, (Ogre::SceneMemoryMgrTypes)sceneType));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -507,7 +507,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, Mogre::SceneManager::Pre
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh, SceneMemoryMgrTypes sceneType)
 {
-	Mogre::Entity^ result = _native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity(mesh, (Ogre::SceneMemoryMgrTypes)sceneType));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -518,7 +518,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh, SceneMemo
 
 Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh)
 {
-	Mogre::Entity^ result = _native->createEntity(mesh);
+	Mogre::Entity^ result = gcnew Mogre::Entity(_native->createEntity(mesh));
 	result->Name = name;
 	if (!String::IsNullOrEmpty(name))
 	{
@@ -529,7 +529,7 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh)
 
 void SceneManager::DestroyEntity(Mogre::Entity^ ent)
 {
-	_native->destroyEntity(GetPointerOrNull(ent));
+	_native->destroyEntity(ent);
 }
 
 void SceneManager::DestroyEntity(String^ name)
@@ -537,7 +537,7 @@ void SceneManager::DestroyEntity(String^ name)
 	Entity^ entity;
 	if (_entities->TryGetValue(name, entity))
 	{
-		_native->destroyEntity(GetPointerOrNull(entity));
+		_native->destroyEntity(entity);
 	}
 }
 
@@ -762,16 +762,14 @@ Mogre::Animation^ SceneManager::CreateAnimation(String^ name, Mogre::Real length
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((intptr_t)
-		static_cast<Ogre::SceneManager*>(_native)->createAnimation(o_name, length)
-		);
+	return gcnew Mogre::Animation(_native->createAnimation(o_name, length));
 }
 
 Mogre::Animation^ SceneManager::GetAnimation(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((IntPtr)
 		static_cast<const Ogre::SceneManager*>(_native)->getAnimation(o_name)
 		);
 }
@@ -780,35 +778,32 @@ bool SceneManager::HasAnimation(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return static_cast<const Ogre::SceneManager*>(_native)->hasAnimation(o_name);
+	return _native->hasAnimation(o_name);
 }
 
 void SceneManager::DestroyAnimation(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-
-	static_cast<Ogre::SceneManager*>(_native)->destroyAnimation(o_name);
+	_native->destroyAnimation(o_name);
 }
 
 void SceneManager::DestroyAllAnimations()
 {
-	static_cast<Ogre::SceneManager*>(_native)->destroyAllAnimations();
+	_native->destroyAllAnimations();
 }
 
 Mogre::AnimationState^ SceneManager::CreateAnimationState(String^ animName)
 {
 	DECLARE_NATIVE_STRING(o_animName, animName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((intptr_t)
-		static_cast<Ogre::SceneManager*>(_native)->createAnimationState(o_animName)
-		);
+	return gcnew Mogre::AnimationState(_native->createAnimationState(o_animName));
 }
 
 Mogre::AnimationState^ SceneManager::GetAnimationState(String^ animName)
 {
 	DECLARE_NATIVE_STRING(o_animName, animName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((IntPtr)
 		static_cast<const Ogre::SceneManager*>(_native)->getAnimationState(o_animName)
 		);
 }
@@ -817,24 +812,24 @@ bool SceneManager::HasAnimationState(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return static_cast<const Ogre::SceneManager*>(_native)->hasAnimationState(o_name);
+	return _native->hasAnimationState(o_name);
 }
 
 void SceneManager::DestroyAnimationState(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	static_cast<Ogre::SceneManager*>(_native)->destroyAnimationState(o_name);
+	_native->destroyAnimationState(o_name);
 }
 
 void SceneManager::DestroyAllAnimationStates()
 {
-	static_cast<Ogre::SceneManager*>(_native)->destroyAllAnimationStates();
+	_native->destroyAllAnimationStates();
 }
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((intptr_t)_native->getRootSceneNode());
+	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode());
 }
 
 Ogre::Real SceneManager::ShadowFarDistance::get()

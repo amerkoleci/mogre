@@ -61,7 +61,7 @@ namespace Mogre
 		Mogre::VertexBufferBinding^ _vertexBufferBinding;
 		Mogre::VertexDeclaration^ _vertexDeclaration;
 
-		VertexData(Ogre::VertexData* obj) 
+		VertexData(Ogre::VertexData* obj)
 			: _native(obj)
 			, _createdByCLR(false)
 			, _vertexBufferBinding(nullptr)
@@ -69,8 +69,8 @@ namespace Mogre
 		{
 		}
 
-		VertexData(intptr_t ptr) 
-			: _native((Ogre::VertexData*)ptr)
+		VertexData(IntPtr ptr)
+			: _native((Ogre::VertexData*)ptr.ToPointer())
 			, _createdByCLR(false)
 			, _vertexBufferBinding(nullptr)
 			, _vertexDeclaration(nullptr)
@@ -179,7 +179,7 @@ namespace Mogre
 		{
 		}
 
-		IndexData(intptr_t ptr) : _native((Ogre::IndexData*)ptr), _createdByCLR(false)
+		IndexData(IntPtr ptr) : _native((Ogre::IndexData*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 

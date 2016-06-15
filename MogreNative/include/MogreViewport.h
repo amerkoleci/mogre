@@ -25,7 +25,7 @@ namespace Mogre
 		}
 
 	public protected:
-		Viewport(intptr_t ptr) : _native((Ogre::Viewport*)ptr)
+		Viewport(IntPtr ptr) : _native((Ogre::Viewport*)ptr.ToPointer())
 		{
 
 		}

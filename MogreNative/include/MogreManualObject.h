@@ -42,7 +42,7 @@ namespace Mogre
 			{
 			}
 
-			ManualObjectSection(intptr_t ptr) : _native((Ogre::ManualObject::ManualObjectSection*)ptr)
+			ManualObjectSection(IntPtr ptr) : _native((Ogre::ManualObject::ManualObjectSection*)ptr.ToPointer())
 			{
 
 			}
@@ -153,7 +153,7 @@ namespace Mogre
 #undef STLDECL_NATIVETYPE
 
 	public protected:
-		ManualObject(intptr_t ptr) : MovableObject(ptr)
+		ManualObject(IntPtr ptr) : MovableObject(ptr)
 		{
 
 		}
@@ -261,11 +261,5 @@ namespace Mogre
 		Mogre::ManualObject::ManualObjectSection^ GetSection(unsigned int index);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(ManualObject);
-
-	internal:
-		property Ogre::ManualObject* UnmanagedPointer
-		{
-			Ogre::ManualObject* get();
-		}
 	};
 }

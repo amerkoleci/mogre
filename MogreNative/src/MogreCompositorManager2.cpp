@@ -133,7 +133,6 @@ CompositorWorkspaceListener::CompositorWorkspaceListener()
 	//Type^ thisType = this->GetType();
 	CompositorWorkspaceListener_Proxy* proxy = new CompositorWorkspaceListener_Proxy(this);
 	_native = proxy;
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 CompositorWorkspaceListener::~CompositorWorkspaceListener()
@@ -150,7 +149,6 @@ CompositorWorkspaceListener::!CompositorWorkspaceListener()
 
 	if (_createdByCLR && _native != 0)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -256,7 +254,6 @@ CompositorManager2::CompositorManager2(RenderSystem^ renderSystem)
 {
 	_createdByCLR = true;
 	_native = new Ogre::CompositorManager2(renderSystem);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
 }
 
 CompositorManager2::~CompositorManager2()
@@ -273,7 +270,6 @@ CompositorManager2::!CompositorManager2()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -322,11 +318,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		GetPointerOrNull(finalRenderTarget),
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		true);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled)
@@ -335,11 +331,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		GetPointerOrNull(finalRenderTarget),
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		enabled);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled, int position)
@@ -348,12 +344,12 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		GetPointerOrNull(finalRenderTarget),
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		enabled,
 		position);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName)
@@ -367,11 +363,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		nativeChannel,
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		true);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled)
@@ -385,11 +381,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		nativeChannel,
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		enabled);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled, int position)
@@ -403,17 +399,17 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	auto workspace = _native->addWorkspace(
 		GetPointerOrNull(sceneManager),
 		nativeChannel,
-		GetPointerOrNull(defaultCamera),
+		defaultCamera,
 		o_definitionName,
 		enabled,
 		position);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((intptr_t)workspace);
+	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
 }
 
 void CompositorManager2::RemoveWorkspace(CompositorWorkspace^ workspace)
 {
-	_native->removeWorkspace(GetPointerOrNull(workspace));
+	_native->removeWorkspace(workspace);
 }
 
 void CompositorManager2::RemoveAllWorkspaces()

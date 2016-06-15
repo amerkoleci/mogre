@@ -50,7 +50,7 @@ namespace Mogre
 		{
 		}
 
-		WindowEventListener(intptr_t ptr) : _native((Ogre::WindowEventListener*)ptr)
+		WindowEventListener(IntPtr ptr) : _native((Ogre::WindowEventListener*)ptr.ToPointer())
 		{
 		}
 

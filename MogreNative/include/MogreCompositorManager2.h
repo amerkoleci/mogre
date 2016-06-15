@@ -79,7 +79,7 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		TextureDefinitionBase(intptr_t ptr) : _native((Ogre::TextureDefinitionBase*)ptr)
+		TextureDefinitionBase(IntPtr ptr) : _native((Ogre::TextureDefinitionBase*)ptr.ToPointer())
 		{
 
 		}
@@ -115,7 +115,7 @@ namespace Mogre
 	public ref class CompositorWorkspaceDef : public TextureDefinitionBase
 	{
 	public protected:
-		CompositorWorkspaceDef(intptr_t ptr) : TextureDefinitionBase(ptr)
+		CompositorWorkspaceDef(IntPtr ptr) : TextureDefinitionBase(ptr)
 		{
 
 		}
@@ -205,7 +205,7 @@ namespace Mogre
 		Mogre::ICompositorWorkspaceListener^ _listener;
 
 	public protected:
-		CompositorWorkspace(intptr_t ptr) : _native((Ogre::CompositorWorkspace*)ptr), _listener(nullptr)
+		CompositorWorkspace(IntPtr ptr) : _native((Ogre::CompositorWorkspace*)ptr.ToPointer()), _listener(nullptr)
 		{
 
 		}
@@ -275,7 +275,7 @@ namespace Mogre
 		{
 		}
 
-		CompositorManager2(intptr_t ptr) : _native((Ogre::CompositorManager2*)ptr)
+		CompositorManager2(IntPtr ptr) : _native((Ogre::CompositorManager2*)ptr.ToPointer())
 		{
 
 		}

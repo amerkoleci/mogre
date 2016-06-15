@@ -276,14 +276,14 @@ GpuProgramParameters::GpuProgramParameters()
 {
 	_createdByCLR = true;
 	_native = new Ogre::GpuProgramParameters();
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 GpuProgramParameters::GpuProgramParameters(Mogre::GpuProgramParameters^ oth)
 {
 	_createdByCLR = true;
 	_native = new Ogre::GpuProgramParameters(*oth->_native);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 GpuProgramParameters::~GpuProgramParameters()
@@ -902,7 +902,7 @@ void GpuProgram::Type::set(Mogre::GpuProgramType t)
 
 Mogre::GpuProgram^ GpuProgram::GetBindingDelegate()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::GpuProgram^>((intptr_t)static_cast<Ogre::GpuProgram*>(_native)->_getBindingDelegate());
+	return ObjectTable::GetOrCreateObject<Mogre::GpuProgram^>((IntPtr)static_cast<Ogre::GpuProgram*>(_native)->_getBindingDelegate());
 }
 
 Mogre::GpuProgramParametersSharedPtr^ GpuProgram::CreateParameters()

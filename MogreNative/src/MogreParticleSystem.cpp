@@ -476,7 +476,7 @@ void ParticleSystem::ParticleQuota::set(size_t quota)
 
 Mogre::ParticleSystemRenderer^ ParticleSystem::Renderer::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystemRenderer^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleSystemRenderer^>((IntPtr)
 		static_cast<const Ogre::ParticleSystem*>(_native)->getRenderer()
 		);
 }
@@ -531,14 +531,14 @@ Mogre::ParticleEmitter^ ParticleSystem::AddEmitter(String^ emitterType)
 {
 	DECLARE_NATIVE_STRING(o_emitterType, emitterType);
 
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleEmitter^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleEmitter^>((IntPtr)
 		static_cast<Ogre::ParticleSystem*>(_native)->addEmitter(o_emitterType)
 		);
 }
 
 Mogre::ParticleEmitter^ ParticleSystem::GetEmitter(unsigned short index)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::ParticleEmitter^>((intptr_t)
+	return ObjectTable::GetOrCreateObject<Mogre::ParticleEmitter^>((IntPtr)
 		static_cast<Ogre::ParticleSystem*>(_native)->getEmitter(index)
 		);
 }
@@ -611,9 +611,4 @@ String^ ParticleSystem::GetParameter(String^ name)
 	DECLARE_NATIVE_STRING(o_name, name);
 
 	return TO_CLR_STRING(static_cast<const Ogre::ParticleSystem*>(_native)->getParameter(o_name));
-}
-
-Ogre::ParticleSystem* ParticleSystem::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::ParticleSystem*>(_native);
 }

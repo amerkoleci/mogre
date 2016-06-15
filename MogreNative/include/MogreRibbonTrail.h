@@ -8,15 +8,17 @@ namespace Mogre
 	public ref class RibbonTrail : public BillboardChain
 	{
 	public protected:
-		RibbonTrail(intptr_t ptr) : BillboardChain(ptr)
+		RibbonTrail(Ogre::RibbonTrail* obj) : BillboardChain(obj)
 		{
 
 		}
 
-	internal:
-		property Ogre::RibbonTrail* UnmanagedPointer
+		RibbonTrail(IntPtr ptr) : BillboardChain(ptr)
 		{
-			Ogre::RibbonTrail* get();
+
 		}
+
+	public:
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(RibbonTrail);
 	};
 }

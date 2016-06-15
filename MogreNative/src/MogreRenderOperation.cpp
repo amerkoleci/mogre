@@ -12,11 +12,12 @@ RenderOperation::RenderOperation()
 
 Mogre::VertexData^ RenderOperation::vertexData::get()
 {
-	return _native->vertexData;
+	ReturnCachedObjectGcnew(Mogre::VertexData, _vertexData, _native->vertexData);
 }
 
 void RenderOperation::vertexData::set(Mogre::VertexData^ value)
 {
+	_vertexData = value;
 	_native->vertexData = value;
 }
 
@@ -24,6 +25,7 @@ Mogre::RenderOperation::OperationTypes RenderOperation::operationType::get()
 {
 	return (Mogre::RenderOperation::OperationTypes)_native->operationType;
 }
+
 void RenderOperation::operationType::set(Mogre::RenderOperation::OperationTypes value)
 {
 	_native->operationType = (Ogre::RenderOperation::OperationType)value;
@@ -41,10 +43,12 @@ void RenderOperation::useIndexes::set(bool value)
 
 Mogre::IndexData^ RenderOperation::indexData::get()
 {
-	return _native->indexData;
+	ReturnCachedObjectGcnew(Mogre::IndexData, _indexData, _native->indexData);
 }
+
 void RenderOperation::indexData::set(Mogre::IndexData^ value)
 {
+	_indexData = value;
 	_native->indexData = value;
 }
 

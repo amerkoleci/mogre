@@ -233,7 +233,7 @@ namespace Mogre
 		Mogre::EdgeData::EdgeGroupList^ _edgeGroups;
 
 	public protected:
-		EdgeData(intptr_t obj) : _native((Ogre::EdgeData*)obj), _createdByCLR(false)
+		EdgeData(IntPtr obj) : _native((Ogre::EdgeData*)obj.ToPointer()), _createdByCLR(false)
 		{
 		}
 

@@ -508,7 +508,7 @@ Overlay::Overlay(String^ name)
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_name, name);
 	_native = new Ogre::Overlay(o_name);
-	ObjectTable::Add((intptr_t)_native, this, nullptr);
+	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Overlay::~Overlay()
@@ -525,7 +525,7 @@ Overlay::!Overlay()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((intptr_t)_native);
+		ObjectTable::Remove((IntPtr)_native);
 		OGRE_DELETE _native;
 		_native = 0;
 	}

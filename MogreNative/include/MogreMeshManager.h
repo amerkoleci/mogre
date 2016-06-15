@@ -35,7 +35,7 @@ namespace Mogre
 		{
 		}
 
-		SubMesh(intptr_t ptr) : _native((Ogre::SubMesh*)ptr)
+		SubMesh(IntPtr ptr) : _native((Ogre::SubMesh*)ptr.ToPointer())
 		{
 		}
 
@@ -119,7 +119,7 @@ namespace Mogre
 		{
 		}
 
-		Mesh(intptr_t ptr) : Resource((Ogre::Mesh*)ptr)
+		Mesh(IntPtr ptr) : Resource((Ogre::Mesh*)ptr.ToPointer())
 		{
 		}
 

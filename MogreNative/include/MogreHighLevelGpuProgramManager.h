@@ -18,7 +18,7 @@ namespace Mogre
 		{
 		}
 
-		HighLevelGpuProgram(intptr_t ptr) : GpuProgram(ptr)
+		HighLevelGpuProgram(IntPtr ptr) : GpuProgram(ptr)
 		{
 		}
 
