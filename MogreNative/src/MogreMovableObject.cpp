@@ -112,6 +112,7 @@ MovableObject::!MovableObject()
 		}
 
 		delete _native;
+		_native = nullptr;
 	}
 	_isDisposed = true;
 
