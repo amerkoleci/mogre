@@ -323,6 +323,9 @@ namespace Mogre
 		bool HasSceneNode(String^ name);
 		void DestroySceneNode(String^ name);
 
+		void RegisterSceneNodeListener(Mogre::SceneNode^ node);
+		void UnregisterSceneNodeListener(Mogre::SceneNode^ node);
+
 		Mogre::BillboardSet^ CreateBillboardSet(unsigned int poolSize);
 		void DestroyBillboardSet(Mogre::BillboardSet^ set);
 		void DestroyAllBillboardSets();
@@ -484,6 +487,14 @@ namespace Mogre
 		Mogre::Pass^ _setPass(Mogre::Pass^ pass, bool evenIfSuppressed, bool shadowDerivation);
 		Mogre::Pass^ _setPass(Mogre::Pass^ pass, bool evenIfSuppressed);
 		Mogre::Pass^ _setPass(Mogre::Pass^ pass);
+
+		void NotifyStaticAabbDirty(Mogre::MovableObject^ movableObject);
+		void NotifyStaticDirty(Mogre::Node^ node);
+		void UpdateAllAnimations();
+		void UpdateAllTransforms();
+
+		void UpdateAllLods(Mogre::Camera^ lodCamera, Ogre::Real lodBias, Ogre::uint8 firstRq, Ogre::uint8 lastRq);
+		void UpdateSceneGraph();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneManager);
 

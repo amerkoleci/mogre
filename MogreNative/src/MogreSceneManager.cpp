@@ -57,6 +57,18 @@ SceneManager::!SceneManager()
 	if (IsDisposed)
 		return;
 
+	if (_sceneRootDynamic != nullptr)
+	{
+		delete _sceneRootDynamic;
+		_sceneRootDynamic = nullptr;
+	}
+
+	if (_sceneRootStatic != nullptr)
+	{
+		delete _sceneRootStatic;
+		_sceneRootStatic = nullptr;
+	}
+
 	if (_renderQueueListener != 0)
 	{
 		if (_native != 0) static_cast<Ogre::SceneManager*>(_native)->removeRenderQueueListener(_renderQueueListener);
@@ -189,6 +201,17 @@ bool SceneManager::HasSceneNode(String^ name)
 {
 	return _sceneNodes->ContainsKey(name);
 }
+
+void SceneManager::RegisterSceneNodeListener(Mogre::SceneNode^ node)
+{
+	_native->registerSceneNodeListener(node);
+}
+
+void SceneManager::UnregisterSceneNodeListener(Mogre::SceneNode^ node)
+{
+	_native->unregisterSceneNodeListener(node);
+}
+
 
 Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
 {
@@ -1072,11 +1095,40 @@ Mogre::Pass^ SceneManager::_setPass(Mogre::Pass^ pass)
 	return _native->_setPass(pass);
 }
 
+void SceneManager::NotifyStaticAabbDirty(Mogre::MovableObject^ movableObject)
+{
+	_native->notifyStaticAabbDirty(movableObject);
+}
+
+void SceneManager::NotifyStaticDirty(Mogre::Node^ node)
+{
+	_native->notifyStaticDirty(node);
+}
+
+void SceneManager::UpdateAllAnimations()
+{
+	_native->updateAllAnimations();
+}
+
+void SceneManager::UpdateAllTransforms()
+{
+	_native->updateAllTransforms();
+}
+
+void SceneManager::UpdateAllLods(Mogre::Camera^ lodCamera, Ogre::Real lodBias, Ogre::uint8 firstRq, Ogre::uint8 lastRq)
+{
+	_native->updateAllLods(lodCamera, lodBias, firstRq, lastRq);
+}
+
+void SceneManager::UpdateSceneGraph()
+{
+	_native->updateSceneGraph();
+}
+
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()
 {
 	return _native;
 }
-
 
 CPP_DECLARE_STLMAP(SceneManagerEnumerator::, Instances, String^, Mogre::SceneManager^, Ogre::String, Ogre::SceneManager*);
 CPP_DECLARE_MAP_ITERATOR(SceneManagerEnumerator::, SceneManagerIterator, Ogre::SceneManagerEnumerator::SceneManagerIterator, Mogre::SceneManagerEnumerator::Instances, Mogre::SceneManager^, Ogre::SceneManager*, String^, Ogre::String, );
