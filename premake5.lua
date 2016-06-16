@@ -44,20 +44,25 @@ if _OPTIONS["with-ogre"] then
 	group ""
 end
 
--- MogreNative
-include ("MogreNative")
 
--- Mogre
-include ("Mogre.Base")
+group "Mogre"
+	-- Mogre
+	include ("Mogre.Base")
 
--- Mogre.Framework
-include ("Samples/Mogre.Framework")
+	-- Mogre
+	include ("Mogre")
+	
+group "Samples"
+	-- Mogre.Framework
+	include ("Samples/Mogre.Framework")
+	
+	-- Now Samples
+	include ("Samples/Mogre.Sample.SkyBox")
+	include ("Samples/Mogre.Sample.SkyPlane")
+	include ("Samples/Mogre.Sample.CubeMapping")
+	include ("Samples/Mogre.Sample.CameraTrack")
 
--- Now Samples
-include ("Samples/Mogre.Sample.SkyBox")
-include ("Samples/Mogre.Sample.SkyPlane")
-include ("Samples/Mogre.Sample.CubeMapping")
-include ("Samples/Mogre.Sample.CameraTrack")
-
--- Mogre.SampleBrowser
-include ("Mogre.SampleBrowser")
+	-- Mogre.SampleBrowser
+	include ("Mogre.SampleBrowser")
+	
+group ""

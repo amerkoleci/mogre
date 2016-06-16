@@ -102,7 +102,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MogreNative\MogreNative.vcxproj">
+    <ProjectReference Include="..\Mogre\Mogre.vcxproj">
       <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
       <Name>MogreNative</Name>
     </ProjectReference>
