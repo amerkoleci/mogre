@@ -16,6 +16,7 @@ namespace Mogre.Framework
 		SceneNode _pivot;
 		AnimationState _fishSwim;
 		CompositorWorkspace _cubemapWorkspace;
+		private RaySceneQuery _query;
 
 		protected override void TestCapabilities(RenderSystemCapabilities caps)
 		{
@@ -27,15 +28,35 @@ namespace Mogre.Framework
 
 		protected override bool OnFrameStarted(FrameEvent evt)
 		{
-			_pivot.Yaw(new Radian(evt.timeSinceLastFrame));      // spin the fishy around the cube mapped one
-			_fishSwim.AddTime(evt.timeSinceLastFrame * 3);   // make the fishy swim
+			//_pivot.Yaw(new Radian(evt.timeSinceLastFrame));      // spin the fishy around the cube mapped one
+			//_fishSwim.AddTime(evt.timeSinceLastFrame * 3);   // make the fishy swim
 
 			return base.OnFrameStarted(evt);
 		}
 
+		protected override bool OnFrameRenderingQueued(FrameEvent evt)
+		{
+			_sceneManager.UpdateSceneGraph();
+			var ray = _camera.GetCameraToViewportRay(240, 240);
+			_query.Ray = ray;
+			var result = _query.Execute();
+			return base.OnFrameRenderingQueued(evt);
+		}
+
 		protected override void CreateScene()
 		{
-			_previousVisibilityFlags = MovableObject.DefaultVisibilityFlags;
+			_query = _sceneManager.CreateRayQuery(new Ray());
+
+			// create an ogre head, give it the dynamic cube map material, and place it at the origin
+			_head = _sceneManager.CreateEntity("ogrehead.mesh",
+											 ResourceGroupManager.AUTODETECT_RESOURCE_GROUP_NAME,
+											 SceneMemoryMgrTypes.SCENE_STATIC);
+
+			_sceneManager.DestroyEntity(_head);
+			_head.Dispose();
+
+#if TODO
+				_previousVisibilityFlags = MovableObject.DefaultVisibilityFlags;
 			//MovableObject.DefaultVisibilityFlags = RegularSurfaces;
 			_workspace.SetListener(new CubeMapCompositorWorkspaceListener(this));
 
@@ -78,89 +99,23 @@ namespace Mogre.Framework
 				new Plane(Vector3.UNIT_Y, -30), 1000, 1000, 10, 10, true, 1, 8, 8, Vector3.UNIT_Z))
 			{
 				// create a floor entity, give it a material, and place it at the origin
-				Entity floor = _sceneManager.CreateEntity(mesh, SceneMemoryMgrTypes.SCENE_STATIC);
-				floor.Name = "Floor";
+				Entity floor = _sceneManager.CreateEntity("Floor", mesh, SceneMemoryMgrTypes.SCENE_STATIC);
 				floor.SetMaterialName("Examples/BumpyMetal");
 				_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
-			}
-
-			TestRenderOp(256);
-			TestRenderOp(264);
-			TestRenderOp(284);
-
-			if (_renderOp != null)
-			{
-				_renderOp.vertexData.Dispose();
-				_renderOp.Dispose();
-				_renderOp = null;
-
-				_vertexBuffer.Dispose();
-				_vertexBuffer = null;
-			}
-		}
-
-		RenderOperation _renderOp;
-		HardwareVertexBufferSharedPtr _vertexBuffer;
-
-		private void TestRenderOp(int size)
-		{
-			if (_renderOp != null)
-			{
-				_renderOp.vertexData.Dispose();
-				_renderOp.Dispose();
-				_renderOp = null;
-
-				_vertexBuffer.Dispose();
-				_vertexBuffer = null;
-			}
-
-			_renderOp = new RenderOperation
-			{
-				vertexData = new VertexData
-				{
-					vertexStart = 0
-				}
-			};
-
-			VertexDeclaration vd = _renderOp.vertexData.vertexDeclaration;
-			vd.AddElement(
-				0,
-				0,
-				VertexElementType.VET_FLOAT3,
-				VertexElementSemantic.VES_POSITION);
-
-			vd.AddElement(
-				0,
-				VertexElement.GetTypeSize(VertexElementType.VET_FLOAT3),
-				VertexElementType.VET_FLOAT2,
-				VertexElementSemantic.VES_TEXTURE_COORDINATES);
-
-			vd.AddElement(
-				0,
-				VertexElement.GetTypeSize(VertexElementType.VET_FLOAT3) + VertexElement.GetTypeSize(VertexElementType.VET_FLOAT2),
-				VertexElementType.VET_COLOUR,
-				VertexElementSemantic.VES_DIFFUSE);
-
-			_vertexBuffer = HardwareBufferManager.Singleton.CreateVertexBuffer(
-				vd.GetVertexSize(0),
-				(uint)size,
-				HardwareBuffer.Usage.HBU_DYNAMIC_WRITE_ONLY,
-				false);
-
-			_renderOp.vertexData.vertexBufferBinding.SetBinding(0, _vertexBuffer);
-
-			_renderOp.operationType = RenderOperation.OperationTypes.OT_TRIANGLE_LIST;
-			_renderOp.useIndexes = false;
+			}  
+#endif // TODO
 		}
 
 		protected override void DestroyScene()
 		{
-			_sceneManager.DestroyCamera(_cubeCamera);
+#if TODO
+				_sceneManager.DestroyCamera(_cubeCamera);
 			MeshManager.Singleton.Remove("floor");
 			TextureManager.Singleton.Remove("dyncubemap");
 
 			//Restore global settings
-			MovableObject.DefaultVisibilityFlags = _previousVisibilityFlags;
+			MovableObject.DefaultVisibilityFlags = _previousVisibilityFlags;  
+#endif // TODO
 		}
 
 		void CreateCubeMap()

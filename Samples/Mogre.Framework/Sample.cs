@@ -146,7 +146,7 @@ namespace Mogre.Framework
 			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
 #else
             // GetNumLogicalCores() may return 0 if couldn't detect
-            var numThreads = Math.Max( 1, PlatformInformation.NumLogicalCores );
+            var numThreads = System.Math.Max( 1, PlatformInformation.NumLogicalCores );
 
 			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
 

@@ -44,16 +44,13 @@ String^ OgreException::FullDescription::get()
 
 bool OgreException::IsThrown::get()
 {
-	// TODO:
-	//return Ogre::Exception::getIsThrown();
-	return false;
+	return Ogre::Exception::getLastException() != nullptr;
 }
 
 
 Mogre::OgreException^ OgreException::LastException::get()
 {
-	//return Ogre::Exception::getLastException();
-	return nullptr;
+	return Ogre::Exception::getLastException();
 }
 
 long OgreException::Line::get()

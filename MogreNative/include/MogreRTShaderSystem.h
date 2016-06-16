@@ -2,7 +2,7 @@
 
 #ifdef INCLUDE_RTSHADER_SYSTEM
 
-#include "RTShaderSystem/OgreRTShaderSystem.h"
+#include "OgreRTShaderSystem.h"
 #include "MogreCommon.h"
 #include "MogreCamera.h"
 #include "Marshalling.h"

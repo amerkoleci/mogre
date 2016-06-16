@@ -12,6 +12,7 @@ MOGRE_BUILD_DIR   	= MOGRE_HOME .. "/.build/" .. _ACTION .. "/"
 MOGRE_BIN_DIR   	= MOGRE_HOME .. "/bin"
 OGRE_HOME   		= MOGRE_HOME .. "/ogre"
 OGRE_HOME_SRC   	= MOGRE_HOME .. "/ogre_src"
+THIRD_PARTY_DIR   	= MOGRE_HOME .. "/ThirdParty"
 
 printf("Premake home " .. MOGRE_HOME)
 printf("Build directory " .. MOGRE_BUILD_DIR)
@@ -33,7 +34,14 @@ solution "Mogre"
 	startproject "Mogre.SampleBrowser"
 
 if _OPTIONS["with-ogre"] then
-	include ("ogre_src/OgreMain")
+	group "Ogre"
+		include ("ogre_src/OgreMain")
+		include ("ogre_src/Components/Overlay")
+		include ("ogre_src/Components/RTShaderSystem")
+		
+		-- RenderSystems
+		include ("ogre_src/RenderSystems/Direct3D9")
+	group ""
 end
 
 -- MogreNative

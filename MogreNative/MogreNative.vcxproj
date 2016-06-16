@@ -104,7 +104,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\ogre_src\OgreMain\include;..\ogre_src\OgreMain\build_include;..\ogre_src\Components\Overlay\include;..\ogre_src\Components\RTShaderSystem\include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -114,8 +114,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\ogre\lib\x86\Debug\OgreMain_d.lib;..\ogre\lib\x86\Debug\OgreRTShaderSystem_d.lib;..\ogre\lib\x86\Debug\OgreOverlay_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain_d.lib;OgreRTShaderSystem_d.lib;OgreOverlay_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\..\bin\Debug\x86\MogreNative.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\ogre_src\lib\x86\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,7 +124,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\ogre_src\OgreMain\include;..\ogre_src\OgreMain\build_include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -132,8 +133,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\ogre\lib\x64\Debug\OgreMain_d.lib;..\ogre\lib\x64\Debug\OgreRTShaderSystem_d.lib;..\ogre\lib\x64\Debug\OgreOverlay_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain_d.lib;OgreRTShaderSystem_d.lib;OgreOverlay_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\..\bin\Debug\x64\MogreNative.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\ogre_src\lib\x64\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,7 +143,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\ogre_src\OgreMain\include;..\ogre_src\OgreMain\build_include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -156,8 +158,9 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\ogre\lib\x86\Release\OgreMain.lib;..\ogre\lib\x86\Release\OgreRTShaderSystem.lib;..\ogre\lib\x86\Release\OgreOverlay.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreRTShaderSystem.lib;OgreOverlay.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\..\bin\Release\x86\MogreNative.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\ogre_src\lib\x86\Release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,7 +168,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;strdup=_strdup;WIN32_LEAN_AND_MEAN;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\ogre\include\OGRE;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\ogre_src\OgreMain\include;..\ogre_src\OgreMain\build_include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -179,8 +182,9 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\ogre\lib\x64\Release\OgreMain.lib;..\ogre\lib\x64\Release\OgreRTShaderSystem.lib;..\ogre\lib\x64\Release\OgreOverlay.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreRTShaderSystem.lib;OgreOverlay.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\..\bin\Release\x64\MogreNative.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\ogre_src\lib\x64\Release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -317,6 +321,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\.build\vs2013\OgreMain.vcxproj">
+      <Project>{7713ee6d-63e0-4879-8cf9-362178257e07}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\.build\vs2013\OgreOverlay.vcxproj">
+      <Project>{b4ea86a4-20a0-ff99-a994-f9701549f69d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\.build\vs2013\OgreRTShaderSystem.vcxproj">
+      <Project>{346bc12a-204f-8280-89af-7cd375b26c02}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Mogre.Base\Mogre.Base.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
     </ProjectReference>

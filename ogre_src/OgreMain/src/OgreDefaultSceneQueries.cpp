@@ -53,11 +53,11 @@ namespace Ogre {
                      "DefaultIntersectionSceneQuery::execute");
 #ifdef ENABLE_INCOMPATIBLE_OGRE_2_0
         // Iterate over all movable types
-        Root::MovableObjectFactoryIterator factIt = 
+        Root::MovableObjectFactoryIterator factIt =
             Root::getSingleton().getMovableObjectFactoryIterator();
         while(factIt.hasMoreElements())
         {
-            SceneManager::MovableObjectIterator objItA = 
+            SceneManager::MovableObjectIterator objItA =
                 mParentSceneMgr->getMovableObjectIterator(
                     factIt.getNext()->getType());
             while (objItA.hasMoreElements())
@@ -79,7 +79,7 @@ namespace Ogre {
                     MovableObject* b = objItB.getNext();
 
                     // Apply mask to b (both must pass)
-                    if ((b->getQueryFlags() & mQueryMask) && 
+                    if ((b->getQueryFlags() & mQueryMask) &&
                         b->isInScene())
                     {
                         const AxisAlignedBox& box1 = a->getWorldBoundingBox();
@@ -95,7 +95,7 @@ namespace Ogre {
                 Root::MovableObjectFactoryIterator factItLater = factIt;
                 while (factItLater.hasMoreElements())
                 {
-                    SceneManager::MovableObjectIterator objItC = 
+                    SceneManager::MovableObjectIterator objItC =
                         mParentSceneMgr->getMovableObjectIterator(
                             factItLater.getNext()->getType());
                     while (objI7tC.hasMoreElements())
@@ -206,10 +206,10 @@ namespace Ogre {
                 //move the objects between that call and this query.
                 //Ignore out of date Aabbs from objects that have been
                 //explicitly disabled or fail the query mask.
-                assert( (objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) &&
-                        (objData.mQueryFlags[objData.mIndex] & mQueryMask) &&
-                        !objData.mOwner[j]->isCachedAabbOutOfDate() &&
-                        "Perform the queries after MovableObject::updateAllBounds has been called!" );
+                assert((!(objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) ||
+                        !(objData.mQueryFlags[objData.mIndex] & mQueryMask) ||
+                        !objData.mOwner[j]->isCachedAabbOutOfDate()) &&
+                        "Perform the queries after MovableObject::updateAllBounds has been called!");
 #endif
             }
 
@@ -347,10 +347,10 @@ namespace Ogre {
                 //move the objects between that call and this query.
                 //Ignore out of date Aabbs from objects that have been
                 //explicitly disabled or fail the query mask.
-                assert( (objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) &&
-                        (objData.mQueryFlags[objData.mIndex] & mQueryMask) &&
-                        !objData.mOwner[j]->isCachedAabbOutOfDate() &&
-                        "Perform the queries after MovableObject::updateAllBounds has been called!" );
+                assert((!(objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) ||
+                        !(objData.mQueryFlags[objData.mIndex] & mQueryMask) ||
+                        !objData.mOwner[j]->isCachedAabbOutOfDate()) &&
+                        "Perform the queries after MovableObject::updateAllBounds has been called!");
 #endif
             }
 
@@ -440,10 +440,10 @@ namespace Ogre {
                 //move the objects between that call and this query.
                 //Ignore out of date Aabbs from objects that have been
                 //explicitly disabled or fail the query mask.
-                assert( (objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) &&
-                        (objData.mQueryFlags[objData.mIndex] & mQueryMask) &&
-                        !objData.mOwner[j]->isCachedAabbOutOfDate() &&
-                        "Perform the queries after MovableObject::updateAllBounds has been called!" );
+                assert((!(objData.mVisibilityFlags[objData.mIndex] & VisibilityFlags::LAYER_VISIBILITY) ||
+                        !(objData.mQueryFlags[objData.mIndex] & mQueryMask) ||
+                        !objData.mOwner[j]->isCachedAabbOutOfDate()) &&
+                        "Perform the queries after MovableObject::updateAllBounds has been called!");
 #endif
             }
 
@@ -454,7 +454,7 @@ namespace Ogre {
     }
     //---------------------------------------------------------------------
     DefaultPlaneBoundedVolumeListSceneQuery::
-    DefaultPlaneBoundedVolumeListSceneQuery(SceneManager* creator) 
+    DefaultPlaneBoundedVolumeListSceneQuery(SceneManager* creator)
     : PlaneBoundedVolumeListSceneQuery(creator)
     {
         // No world geometry results supported
@@ -536,7 +536,7 @@ namespace Ogre {
                 ArrayMaskR singleVolumeMask = CastIntToReal( Mathlib::SetAll( 0xffffffff ) );
                 ArrayReal dotResult;
                 ArrayVector3 centerPlusFlippedHS;
-    
+
                 for( size_t p=0; p<mVolumes[v].planes.size(); ++p )
                 {
                     centerPlusFlippedHS = objData.mWorldAabb->mCenter +

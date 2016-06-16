@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Overlay/OgreOverlaySystem.h"
-#include "Overlay/OgreOverlayManager.h"
-#include "Overlay/OgreOverlay.h"
-#include "Overlay/OgreOverlayElement.h"
-#include "Overlay/OgreOverlayContainer.h"
+#include "OgreOverlaySystem.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlay.h"
+#include "OgreOverlayElement.h"
+#include "OgreOverlayContainer.h"
 #include "MogreCommon.h"
 #include "MogreStringVector.h"
 #include "STLContainerWrappers.h"
