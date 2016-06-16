@@ -44,6 +44,7 @@ if _OPTIONS["with-ogre"] then
 		
 		-- Plugins
 		include ("ogre_src/Plugins/ParticleFX")
+		include ("ogre_src/Plugins/CgProgramManager")
 	group ""
 end
 
