@@ -172,7 +172,15 @@ Mogre::SceneNode^ SceneManager::CreateSceneNode(String^ name, SceneMemoryMgrType
 
 void SceneManager::DestroySceneNode(Mogre::SceneNode^ node)
 {
+	if (!String::IsNullOrEmpty(node->Name) &&
+		_sceneNodes->ContainsKey(node->Name))
+	{
+		_sceneNodes->Remove(node->Name);
+	}
+
 	_native->destroySceneNode(node);
+	delete node;
+	node = nullptr;
 }
 
 void SceneManager::DestroySceneNode(String^ name)
@@ -181,6 +189,9 @@ void SceneManager::DestroySceneNode(String^ name)
 	if (_sceneNodes->TryGetValue(name, node))
 	{
 		_native->destroySceneNode(node);
+		_sceneNodes->Remove(name);
+		delete node;
+		node = nullptr;
 	}
 }
 
@@ -277,12 +288,21 @@ Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name, SceneMemoryM
 
 void SceneManager::DestroyManualObject(Mogre::ManualObject^ obj)
 {
+	if (!String::IsNullOrEmpty(obj->Name) &&
+		_manualObjects->ContainsKey(obj->Name))
+	{
+		_manualObjects->Remove(obj->Name);
+	}
+
 	_native->destroyManualObject(obj);
+	delete obj;
+	obj = nullptr;
 }
 
 void SceneManager::DestroyAllManualObjects()
 {
 	_native->destroyAllManualObjects();
+	_manualObjects->Clear();
 }
 
 Mogre::ManualObject^ SceneManager::GetManualObject(String^ name)
@@ -304,6 +324,9 @@ void SceneManager::DestroyManualObject(String^ name)
 	if (_manualObjects->TryGetValue(name, manualObject))
 	{
 		_native->destroyManualObject(manualObject);
+		_manualObjects->Remove(name);
+		delete manualObject;
+		manualObject = nullptr;
 	}
 }
 
@@ -315,6 +338,8 @@ Mogre::RibbonTrail^ SceneManager::CreateRibbonTrail()
 void SceneManager::DestroyRibbonTrail(Mogre::RibbonTrail^ obj)
 {
 	_native->destroyRibbonTrail(obj);
+	delete obj;
+	obj = nullptr;
 }
 
 void SceneManager::DestroyAllRibbonTrails()
@@ -344,6 +369,8 @@ Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota)
 void SceneManager::DestroyParticleSystem(Mogre::ParticleSystem^ obj)
 {
 	_native->destroyParticleSystem(obj);
+	delete obj;
+	obj = nullptr;
 }
 
 void SceneManager::DestroyAllParticleSystems()
@@ -358,7 +385,9 @@ Mogre::Light^ SceneManager::CreateLight()
 
 void SceneManager::DestroyLight(Mogre::Light^ light)
 {
-	static_cast<Ogre::SceneManager*>(_native)->destroyLight(light);
+	_native->destroyLight(light);
+	delete light;
+	light = nullptr;
 }
 
 void SceneManager::DestroyAllLights()
@@ -387,21 +416,21 @@ Mogre::Camera^ SceneManager::FindCamera(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCamera(o_name));
+	return _native->findCamera(o_name);
 }
 
 Mogre::Camera^ SceneManager::FindCameraNoThrow(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCameraNoThrow(o_name));
+	return _native->findCameraNoThrow(o_name);
 }
 
 Mogre::Camera^ SceneManager::GetCamera(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Camera^>((IntPtr)_native->findCamera(o_name));
+	return _native->findCamera(o_name);
 }
 
 bool SceneManager::HasCamera(String^ name)
@@ -414,6 +443,8 @@ bool SceneManager::HasCamera(String^ name)
 void SceneManager::DestroyCamera(Mogre::Camera^ camera)
 {
 	_native->destroyCamera(camera);
+	delete camera;
+	camera = nullptr;
 }
 
 void SceneManager::DestroyCamera(String^ name)
@@ -552,7 +583,15 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh)
 
 void SceneManager::DestroyEntity(Mogre::Entity^ entity)
 {
+	if (!String::IsNullOrEmpty(entity->Name) &&
+		_entities->ContainsKey(entity->Name))
+	{
+		_entities->Remove(entity->Name);
+	}
+
 	_native->destroyEntity(entity);
+	delete entity;
+	entity = nullptr;
 }
 
 void SceneManager::DestroyEntity(String^ name)
@@ -561,6 +600,9 @@ void SceneManager::DestroyEntity(String^ name)
 	if (_entities->TryGetValue(name, entity))
 	{
 		_native->destroyEntity(entity);
+		_entities->Remove(name);
+		delete entity;
+		entity = nullptr;
 	}
 }
 
@@ -580,6 +622,7 @@ bool SceneManager::HasEntity(String^ name)
 void SceneManager::DestroyAllEntities()
 {
 	_native->destroyAllEntities();
+	_entities->Clear();
 }
 
 void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName)
