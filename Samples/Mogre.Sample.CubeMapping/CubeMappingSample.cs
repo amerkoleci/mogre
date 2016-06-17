@@ -65,7 +65,6 @@ namespace Mogre.Framework
 			fish.Name = "Fish";
 			_fishSwim = fish.GetAnimationState("swim");
 			_fishSwim.Enabled = true;
-			bool v = fish.Visible;
 
 			// create a child node at an offset and attach a regular ogre head and a nimbus to it
 			SceneNode node = _pivot.CreateChildSceneNode();
