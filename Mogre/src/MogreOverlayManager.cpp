@@ -611,7 +611,7 @@ void Overlay::Remove2D(Mogre::OverlayContainer^ cont)
 
 void Overlay::Add3D(Mogre::SceneNode^ node)
 {
-	static_cast<Ogre::Overlay*>(_native)->add3D(GetPointerOrNull(node));
+	static_cast<Ogre::Overlay*>(_native)->add3D(node);
 }
 
 void Overlay::Remove3D(Mogre::SceneNode^ node)

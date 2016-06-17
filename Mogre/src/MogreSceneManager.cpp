@@ -221,7 +221,6 @@ Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
 void SceneManager::DestroyBillboardSet(Mogre::BillboardSet^ set)
 {
 	_native->destroyBillboardSet(set);
-	set->_preventDelete = true;
 }
 
 void SceneManager::DestroyAllBillboardSets()
@@ -237,7 +236,6 @@ Mogre::BillboardChain^ SceneManager::CreateBillboardChain()
 void SceneManager::DestroyBillboardChain(Mogre::BillboardChain^ obj)
 {
 	_native->destroyBillboardChain(obj);
-	obj->_preventDelete = true;
 }
 
 void SceneManager::DestroyAllBillboardChains()
@@ -280,7 +278,6 @@ Mogre::ManualObject^ SceneManager::CreateManualObject(String^ name, SceneMemoryM
 void SceneManager::DestroyManualObject(Mogre::ManualObject^ obj)
 {
 	_native->destroyManualObject(obj);
-	obj->_preventDelete = true;
 }
 
 void SceneManager::DestroyAllManualObjects()
@@ -556,7 +553,6 @@ Mogre::Entity^ SceneManager::CreateEntity(String^ name, MeshPtr^ mesh)
 void SceneManager::DestroyEntity(Mogre::Entity^ entity)
 {
 	_native->destroyEntity(entity);
-	entity->_preventDelete = true;
 }
 
 void SceneManager::DestroyEntity(String^ name)
@@ -565,7 +561,6 @@ void SceneManager::DestroyEntity(String^ name)
 	if (_entities->TryGetValue(name, entity))
 	{
 		_native->destroyEntity(entity);
-		entity->_preventDelete = true;
 	}
 }
 
@@ -1042,7 +1037,6 @@ void SceneManager::DestroyMovableObject(MovableObject^ movable, String^ typeName
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 
 	_native->destroyMovableObject(movable, o_typeName);
-	movable->_preventDelete = true;
 }
 
 void SceneManager::DestroyMovableObject(MovableObject^ movable)

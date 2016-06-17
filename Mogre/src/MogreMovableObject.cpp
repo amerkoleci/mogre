@@ -102,15 +102,15 @@ MovableObject::!MovableObject()
 	if (IsDisposed)
 		return;
 
+	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (!userObj.isEmpty())
+	{
+		void* obj = userObj.get<void*>();
+		VoidPtrToGCHandle(obj).Free();
+	}
+
 	if (!_preventDelete)
 	{
-		const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-		if (!userObj.isEmpty())
-		{
-			void* obj = userObj.get<void*>();
-			VoidPtrToGCHandle(obj).Free();
-		}
-
 		delete _native;
 		_native = nullptr;
 	}

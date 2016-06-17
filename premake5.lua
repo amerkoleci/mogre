@@ -41,6 +41,7 @@ if _OPTIONS["with-ogre"] then
 		
 		-- RenderSystems
 		include ("ogre_src/RenderSystems/Direct3D9")
+		include ("ogre_src/RenderSystems/GL")
 		
 		-- Plugins
 		include ("ogre_src/Plugins/ParticleFX")

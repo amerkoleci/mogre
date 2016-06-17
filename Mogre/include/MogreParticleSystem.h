@@ -486,6 +486,6 @@ namespace Mogre
 		virtual void SetParameterList(Mogre::Const_NameValuePairList^ paramList);
 		virtual String^ GetParameter(String^ name);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(ParticleSystem);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(ParticleSystem);
 	};
 }

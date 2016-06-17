@@ -33,16 +33,22 @@ namespace Mogre
 
 	internal:
 		Ogre::Node* _native;
-		bool _createdByCLR;
+		bool _preventDelete;
+
+	private:
+		bool _isDisposed;
 
 	public protected:
-		Node(Ogre::Node* obj) : _native(obj)
+		Node(Ogre::Node* obj) 
+			: _preventDelete(true)
 		{
+			UnmanagedPointer = obj;
 		}
 
-		Node(IntPtr ptr) : _native((Ogre::Node*)ptr.ToPointer())
+		Node(IntPtr ptr) 
+			: _preventDelete(true)
 		{
-
+			UnmanagedPointer = (Ogre::Node*)ptr.ToPointer();
 		}
 
 	public:
@@ -50,12 +56,15 @@ namespace Mogre
 	protected:
 		!Node();
 
+	internal:
+		static Node^ GetManaged(Ogre::Node* native);
+
 	public:
 		property bool IsDisposed
 		{
 			virtual bool get()
 			{
-				return _native == nullptr;
+				return _isDisposed;
 			}
 		}
 
@@ -226,7 +235,7 @@ namespace Mogre
 		Mogre::Matrix4 _getFullTransform();
 		Mogre::Matrix4 _getFullTransformUpdated();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Node);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Node);
 
 	public:
 		property Ogre::Node* NativePtr
@@ -237,7 +246,8 @@ namespace Mogre
 	internal:
 		property Ogre::Node* UnmanagedPointer
 		{
-			Ogre::Node* get();
+			virtual Ogre::Node* get();
+			void set(Ogre::Node* value);
 		}
 	};
 }

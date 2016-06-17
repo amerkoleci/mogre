@@ -71,11 +71,13 @@ namespace Mogre
 
 	public protected:
 		MovableObject(IntPtr ptr)
+			: _preventDelete(true)
 		{
 			UnmanagedPointer = (Ogre::MovableObject*)ptr.ToPointer();
 		}
 
 		MovableObject(Ogre::MovableObject* native)
+			: _preventDelete(true)
 		{
 			UnmanagedPointer = native;
 		}

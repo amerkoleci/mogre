@@ -28,35 +28,15 @@ namespace Mogre.Framework
 
 		protected override bool OnFrameStarted(FrameEvent evt)
 		{
-			//_pivot.Yaw(new Radian(evt.timeSinceLastFrame));      // spin the fishy around the cube mapped one
-			//_fishSwim.AddTime(evt.timeSinceLastFrame * 3);   // make the fishy swim
+			_pivot.Yaw(new Radian(evt.timeSinceLastFrame));      // spin the fishy around the cube mapped one
+			_fishSwim.AddTime(evt.timeSinceLastFrame * 3);   // make the fishy swim
 
 			return base.OnFrameStarted(evt);
 		}
 
-		protected override bool OnFrameRenderingQueued(FrameEvent evt)
-		{
-			_sceneManager.UpdateSceneGraph();
-			var ray = _camera.GetCameraToViewportRay(240, 240);
-			_query.Ray = ray;
-			var result = _query.Execute();
-			return base.OnFrameRenderingQueued(evt);
-		}
-
 		protected override void CreateScene()
 		{
-			_query = _sceneManager.CreateRayQuery(new Ray());
-
-			// create an ogre head, give it the dynamic cube map material, and place it at the origin
-			_head = _sceneManager.CreateEntity("ogrehead.mesh",
-											 ResourceGroupManager.AUTODETECT_RESOURCE_GROUP_NAME,
-											 SceneMemoryMgrTypes.SCENE_STATIC);
-
-			_sceneManager.DestroyEntity(_head);
-			_head.Dispose();
-
-#if TODO
-				_previousVisibilityFlags = MovableObject.DefaultVisibilityFlags;
+			_previousVisibilityFlags = MovableObject.DefaultVisibilityFlags;
 			//MovableObject.DefaultVisibilityFlags = RegularSurfaces;
 			_workspace.SetListener(new CubeMapCompositorWorkspaceListener(this));
 
@@ -102,20 +82,18 @@ namespace Mogre.Framework
 				Entity floor = _sceneManager.CreateEntity("Floor", mesh, SceneMemoryMgrTypes.SCENE_STATIC);
 				floor.SetMaterialName("Examples/BumpyMetal");
 				_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(floor);
-			}  
-#endif // TODO
+			}
 		}
 
 		protected override void DestroyScene()
 		{
-#if TODO
-				_sceneManager.DestroyCamera(_cubeCamera);
+			_sceneManager.DestroyEntity(_head);
+			_sceneManager.DestroyCamera(_cubeCamera);
 			MeshManager.Singleton.Remove("floor");
 			TextureManager.Singleton.Remove("dyncubemap");
 
 			//Restore global settings
-			MovableObject.DefaultVisibilityFlags = _previousVisibilityFlags;  
-#endif // TODO
+			MovableObject.DefaultVisibilityFlags = _previousVisibilityFlags;
 		}
 
 		void CreateCubeMap()

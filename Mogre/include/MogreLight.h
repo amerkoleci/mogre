@@ -182,6 +182,6 @@ namespace Mogre
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle, Ogre::Real falloff);
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Light);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Light);
 	};
 }

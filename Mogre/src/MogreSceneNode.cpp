@@ -127,17 +127,17 @@ void SceneNode::LookAt(Mogre::Vector3 targetPoint, Mogre::Node::TransformSpace r
 
 void SceneNode::SetAutoTracking(bool enabled, Mogre::SceneNode^ target, Mogre::Vector3 localDirectionVector, Mogre::Vector3 offset)
 {
-	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, GetPointerOrNull(target), FromVector3(localDirectionVector), FromVector3(offset));
+	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, target, FromVector3(localDirectionVector), FromVector3(offset));
 }
 
 void SceneNode::SetAutoTracking(bool enabled, Mogre::SceneNode^ target, Mogre::Vector3 localDirectionVector)
 {
-	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, GetPointerOrNull(target), FromVector3(localDirectionVector));
+	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, target, FromVector3(localDirectionVector));
 }
 
 void SceneNode::SetAutoTracking(bool enabled, Mogre::SceneNode^ target)
 {
-	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, GetPointerOrNull(target));
+	static_cast<Ogre::SceneNode*>(_native)->setAutoTracking(enabled, target);
 }
 
 void SceneNode::SetAutoTracking(bool enabled)
@@ -178,9 +178,4 @@ void SceneNode::RemoveAndDestroyChild(SceneNode^ node)
 void SceneNode::RemoveAndDestroyAllChildren()
 {
 	static_cast<Ogre::SceneNode*>(_native)->removeAndDestroyAllChildren();
-}
-
-Ogre::SceneNode* SceneNode::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::SceneNode*>(_native);
 }

@@ -255,6 +255,6 @@ namespace Mogre
 
 		void SetPolygonModeOverrideable(bool PolygonModeOverrideable);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Entity);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Entity);
 	};
 }

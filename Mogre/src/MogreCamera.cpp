@@ -278,12 +278,12 @@ void Camera::SetFixedYawAxis(bool useFixed)
 
 void Camera::SetAutoTracking(bool enabled, Mogre::SceneNode^ target, Mogre::Vector3 offset)
 {
-	static_cast<Ogre::Camera*>(_native)->setAutoTracking(enabled, GetPointerOrNull(target), FromVector3(offset));
+	static_cast<Ogre::Camera*>(_native)->setAutoTracking(enabled, target, FromVector3(offset));
 }
 
 void Camera::SetAutoTracking(bool enabled, Mogre::SceneNode^ target)
 {
-	static_cast<Ogre::Camera*>(_native)->setAutoTracking(enabled, GetPointerOrNull(target));
+	static_cast<Ogre::Camera*>(_native)->setAutoTracking(enabled, target);
 }
 
 void Camera::SetAutoTracking(bool enabled)

@@ -19,11 +19,19 @@ Node::!Node()
 	if (IsDisposed)
 		return;
 
-	if (_createdByCLR && _native)
+	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (!userObj.isEmpty())
+	{
+		void* obj = userObj.get<void*>();
+		VoidPtrToGCHandle(obj).Free();
+	}
+
+	if (!_preventDelete)
 	{
 		delete _native;
-		_native = 0;
+		_native = nullptr;
 	}
+	_isDisposed = true;
 
 	OnDisposed(this, nullptr);
 }
@@ -369,7 +377,40 @@ Mogre::Matrix4 Node::_getFullTransformUpdated()
 	return ToMatrix4(_native->_getFullTransformUpdated());
 }
 
+Node^ Node::GetManaged(Ogre::Node* native)
+{
+	if (native == 0)
+		return nullptr;
+
+	const Ogre::Any& userObj = native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (!userObj.isEmpty())
+	{
+		void* obj = userObj.get<void*>();
+		return static_cast<Node^>(VoidPtrToGCHandle(obj).Target);
+	}
+
+	throw gcnew InvalidOperationException("Unknown collision object!");
+}
+
 Ogre::Node* Node::UnmanagedPointer::get()
 {
 	return _native;
+}
+
+void Node::UnmanagedPointer::set(Ogre::Node* value)
+{
+	// Inheriting classes such as SoftBody may pass 0 and then do
+	// additional processing before storing the native pointer.
+	if (value == 0) {
+		return;
+	}
+
+	_native = value;
+	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
+	if (userObj.isEmpty())
+	{
+		GCHandle handle = GCHandle::Alloc(this, GCHandleType::Weak);
+		Ogre::Any anyObj = Ogre::Any(GCHandleToVoidPtr(handle));
+		_native->getUserObjectBindings().setUserAny(MOGRE_HANDLE, anyObj);
+	}
 }

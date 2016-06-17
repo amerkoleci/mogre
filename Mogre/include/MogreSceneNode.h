@@ -88,12 +88,6 @@ namespace Mogre
 		void RemoveAndDestroyChild(SceneNode^ node);
 		void RemoveAndDestroyAllChildren();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneNode);
-
-	internal:
-		property Ogre::SceneNode* UnmanagedPointer
-		{
-			Ogre::SceneNode* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(SceneNode);
 	};
 }
