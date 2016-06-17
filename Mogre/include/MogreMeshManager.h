@@ -313,9 +313,7 @@ namespace Mogre
 		static operator MeshPtr ^ (const Ogre::MeshPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			Ogre::MeshPtr wrapperPtr = Ogre::MeshPtr(ptr);
-			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
-			return gcnew MeshPtr(wrapperPtr);
+			return gcnew MeshPtr(const_cast<Ogre::MeshPtr&>(ptr));
 		}
 
 		static operator Ogre::MeshPtr& (MeshPtr^ t)

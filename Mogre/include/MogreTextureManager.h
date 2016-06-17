@@ -441,10 +441,7 @@ namespace Mogre
 	public:
 		static operator TexturePtr ^ (const Ogre::TexturePtr& ptr)
 		{
-			if (ptr.isNull()) return nullptr;
-			Ogre::TexturePtr wrapperPtr = Ogre::TexturePtr(ptr);
-			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
-			return gcnew TexturePtr(wrapperPtr);
+			return gcnew TexturePtr(const_cast<Ogre::TexturePtr&>(ptr));
 		}
 
 		static operator Ogre::TexturePtr& (TexturePtr^ t)
