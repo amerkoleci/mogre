@@ -53,23 +53,25 @@ Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType,
 		FromQuaternion(rotate)
 	);
 
-	return native;
+	return gcnew Mogre::SceneNode(native);
 }
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType, Mogre::Vector3 translate)
 {
 	auto native = static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType, FromVector3(translate));
-	return native;
+	return gcnew Mogre::SceneNode(native);
 }
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode(SceneMemoryMgrTypes sceneType)
 {
-	return static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+	auto native = static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode((Ogre::SceneMemoryMgrTypes)sceneType);
+	return gcnew Mogre::SceneNode(native);
 }
 
 Mogre::SceneNode^ SceneNode::CreateChildSceneNode()
 {
-	return static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode();
+	auto native = static_cast<Ogre::SceneNode*>(_native)->createChildSceneNode();
+	return gcnew Mogre::SceneNode(native);
 }
 
 void SceneNode::Yaw(Mogre::Radian angle, Mogre::Node::TransformSpace relativeTo)
