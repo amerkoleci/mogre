@@ -75,6 +75,8 @@ namespace Mogre
 	{
 		Mogre::SceneNode^ _sceneRootDynamic;
 		Mogre::SceneNode^ _sceneRootStatic;
+		Mogre::Viewport^ _currentViewport;
+		Mogre::Camera^ _inProgressCamera;
 
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>

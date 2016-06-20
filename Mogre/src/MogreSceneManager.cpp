@@ -115,12 +115,12 @@ void SceneManager::AmbientLight::set(Mogre::ColourValue value)
 
 Mogre::Viewport^ SceneManager::CurrentViewport::get()
 {
-	return _native->getCurrentViewport();
+	ReturnCachedObjectGcnewNullable(Mogre::Viewport, _currentViewport, _native->getCurrentViewport());
 }
 
 Mogre::Camera^ SceneManager::CameraInProgress::get()
 {
-	return _native->getCameraInProgress();
+	ReturnCachedObjectGcnewNullable(Mogre::Camera, _inProgressCamera, _native->getCameraInProgress());
 }
 
 bool SceneManager::DisplaySceneNodes::get()

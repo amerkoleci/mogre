@@ -457,11 +457,6 @@ namespace Mogre
 		{
 		}
 
-		HardwarePixelBuffer(Ogre::HardwareBuffer* obj) : HardwareBuffer(obj)
-		{
-		}
-
-
 	public:
 		property Mogre::PixelBox CurrentLock
 		{
@@ -548,7 +543,9 @@ namespace Mogre
 		static operator HardwarePixelBufferSharedPtr ^ (const Ogre::HardwarePixelBufferSharedPtr& ptr)
 		{
 			if (ptr.isNull()) return nullptr;
-			return gcnew HardwarePixelBufferSharedPtr(*(new Ogre::HardwarePixelBufferSharedPtr(ptr)));
+			Ogre::HardwarePixelBufferSharedPtr wrapperPtr = Ogre::HardwarePixelBufferSharedPtr(ptr);
+			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
+			return gcnew HardwarePixelBufferSharedPtr(wrapperPtr);
 		}
 
 		static operator Ogre::HardwarePixelBufferSharedPtr& (HardwarePixelBufferSharedPtr^ t)
@@ -563,7 +560,7 @@ namespace Mogre
 			return t->_sharedPtr;
 		}
 
-		HardwarePixelBufferSharedPtr(HardwarePixelBuffer^ obj) : HardwarePixelBuffer(obj->_native)
+		HardwarePixelBufferSharedPtr(HardwarePixelBuffer^ obj) : HardwarePixelBuffer(static_cast<Ogre::HardwarePixelBuffer*>(obj->_native))
 		{
 			_sharedPtr = new Ogre::HardwarePixelBufferSharedPtr(static_cast<Ogre::HardwarePixelBuffer*>(obj->_native));
 		}

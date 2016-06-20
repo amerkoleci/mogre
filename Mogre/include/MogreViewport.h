@@ -140,12 +140,37 @@ namespace Mogre
 		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth);
 		void Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real depth, unsigned short stencil);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Viewport);
-
-	internal:
-		property Ogre::Viewport* UnmanagedPointer
+		virtual bool Equals(Object^ obj) override
 		{
-			Ogre::Viewport* get();
+			Viewport^ clr = dynamic_cast<Viewport^>(obj);
+			if (clr == CLR_NULL)
+			{
+				return false;
+			}
+
+			return (_native == clr->_native);
 		}
+
+		bool Equals(Viewport^ obj)
+		{
+			if (obj == CLR_NULL)
+			{
+				return false;
+			}
+
+			return (_native == obj->_native);
+		}
+
+		virtual int GetHashCode() override
+		{
+			return reinterpret_cast<int>(_native);
+		}
+
+		property IntPtr NativePtr
+		{
+			IntPtr get() { return (IntPtr)_native; }
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Viewport);
 	};
 }

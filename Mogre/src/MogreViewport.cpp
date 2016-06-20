@@ -164,8 +164,3 @@ void Viewport::Clear(unsigned int buffers, Mogre::ColourValue colour, Ogre::Real
 {
 	_native->clear(buffers, FromColor4(colour), depth, stencil);
 }
-
-Ogre::Viewport* Viewport::UnmanagedPointer::get()
-{
-	return _native;
-}
