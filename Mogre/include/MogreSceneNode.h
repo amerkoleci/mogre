@@ -26,11 +26,6 @@ namespace Mogre
 
 		}
 
-		SceneNode(IntPtr ptr) : Node(ptr)
-		{
-
-		}
-
 	public:
 
 		property Mogre::SceneNode^ ParentSceneNode

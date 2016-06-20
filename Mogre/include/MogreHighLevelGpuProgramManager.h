@@ -18,10 +18,6 @@ namespace Mogre
 		{
 		}
 
-		HighLevelGpuProgram(IntPtr ptr) : GpuProgram(ptr)
-		{
-		}
-
 	public:
 		property Mogre::GpuNamedConstants_NativePtr ConstantDefinitions
 		{

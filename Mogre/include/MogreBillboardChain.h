@@ -25,11 +25,6 @@ namespace Mogre
 
 		}
 
-		BillboardChain(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 	public:
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(BillboardChain);
 	};

@@ -39,16 +39,10 @@ namespace Mogre
 		bool _isDisposed;
 
 	public protected:
-		Node(Ogre::Node* obj) 
+		Node(Ogre::Node* obj)
 			: _preventDelete(true)
 		{
 			UnmanagedPointer = obj;
-		}
-
-		Node(IntPtr ptr) 
-			: _preventDelete(true)
-		{
-			UnmanagedPointer = (Ogre::Node*)ptr.ToPointer();
 		}
 
 	public:

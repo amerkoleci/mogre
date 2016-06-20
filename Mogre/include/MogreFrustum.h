@@ -34,11 +34,6 @@ namespace Mogre
 
 		}
 
-		Frustum(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 	public:
 		static property Ogre::Real INFINITE_FAR_PLANE_ADJUST
 		{

@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "Marshalling.h"
 #include "MogreRoot.h"
 #include "MogreRenderSystem.h"
 #include "MogreRenderWindow.h"
@@ -87,12 +86,12 @@ Mogre::FrameStats^ Root::GetFrameStats()
 
 Mogre::CompositorManager2^ Root::CompositorManager2::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorManager2^>((IntPtr)_native->getCompositorManager2());
+	ReturnCachedObjectGcnew(Mogre::CompositorManager2, _compositorManager2, _native->getCompositorManager2());
 }
 
 Mogre::RenderWindow^ Root::AutoCreatedWindow::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->getAutoCreatedWindow());
+	return _native->getAutoCreatedWindow();
 }
 
 unsigned int Root::DisplayMonitorCount::get()
@@ -147,12 +146,12 @@ void Root::DefaultMinPixelSize::set(Ogre::Real value)
 
 Mogre::RenderSystem^ Root::RenderSystem::get()
 {
-	return _native->getRenderSystem();
+	ReturnCachedObjectGcnew(Mogre::RenderSystem, _activeRenderSystem, _native->getRenderSystem());
 }
 
 void Root::RenderSystem::set(Mogre::RenderSystem^ system)
 {
-	_native->setRenderSystem(GetPointerOrNull(system));
+	_native->setRenderSystem(system);
 }
 
 void Root::SaveConfig()
@@ -248,19 +247,19 @@ Mogre::RenderSystem^ Root::GetRenderSystemByName(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderSystem^>((IntPtr)_native->getRenderSystemByName(o_name));
+	return _native->getRenderSystemByName(o_name);
 }
 
 Mogre::RenderWindow^ Root::Initialise(bool autoCreateWindow, String^ windowTitle)
 {
 	DECLARE_NATIVE_STRING(o_windowTitle, windowTitle);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->initialise(autoCreateWindow, o_windowTitle));
+	return _native->initialise(autoCreateWindow, o_windowTitle);
 }
 
 Mogre::RenderWindow^ Root::Initialise(bool autoCreateWindow)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderWindow^>((IntPtr)_native->initialise(autoCreateWindow));
+	return _native->initialise(autoCreateWindow);
 }
 
 void Root::Shutdown()
@@ -313,7 +312,7 @@ Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, 
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return _native->createRenderWindow(o_name, width, height, fullScreen, miscParams);
+	return gcnew Mogre::RenderWindow(_native->createRenderWindow(o_name, width, height, fullScreen, miscParams));
 }
 
 Mogre::RenderWindow^ Root::CreateRenderWindow(String^ name, unsigned int width, unsigned int height, bool fullScreen)
@@ -364,7 +363,7 @@ Mogre::RenderTarget^ Root::GetRenderTarget(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::RenderTarget^>((IntPtr)_native->getRenderTarget(o_name));
+	return _native->getRenderTarget(o_name);
 }
 
 void Root::LoadPlugin(String^ pluginName)

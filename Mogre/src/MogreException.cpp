@@ -68,7 +68,7 @@ String^ OgreException::Source::get()
 	return TO_CLR_STRING(static_cast<const Ogre::Exception*>(_native)->getSource());
 }
 
-const char* OgreException::What()
+String^ OgreException::What()
 {
-	return static_cast<const Ogre::Exception*>(_native)->what();
+	return gcnew System::String(static_cast<const Ogre::Exception*>(_native)->what());
 }

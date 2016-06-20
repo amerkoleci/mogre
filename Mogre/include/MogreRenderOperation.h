@@ -63,10 +63,6 @@ namespace Mogre
 		{
 		}
 
-		RenderOperation(IntPtr ptr) : _native((Ogre::RenderOperation*)ptr.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 		~RenderOperation()
 		{
 			if (_createdByCLR &&_native)

@@ -57,13 +57,13 @@ SceneManager::!SceneManager()
 	if (IsDisposed)
 		return;
 
-	if (_sceneRootDynamic != nullptr)
+	if (_sceneRootDynamic != CLR_NULL)
 	{
 		delete _sceneRootDynamic;
 		_sceneRootDynamic = nullptr;
 	}
 
-	if (_sceneRootStatic != nullptr)
+	if (_sceneRootStatic != CLR_NULL)
 	{
 		delete _sceneRootStatic;
 		_sceneRootStatic = nullptr;
@@ -71,8 +71,11 @@ SceneManager::!SceneManager()
 
 	if (_renderQueueListener != 0)
 	{
-		if (_native != 0) static_cast<Ogre::SceneManager*>(_native)->removeRenderQueueListener(_renderQueueListener);
-		delete _renderQueueListener; _renderQueueListener = 0;
+		if (_native != 0)
+			_native->removeRenderQueueListener(_renderQueueListener);
+
+		delete _renderQueueListener;
+		_renderQueueListener = nullptr;
 	}
 	/*if (_shadowListener != 0)
 	{
@@ -835,9 +838,7 @@ Mogre::Animation^ SceneManager::GetAnimation(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Animation^>((IntPtr)
-		static_cast<const Ogre::SceneManager*>(_native)->getAnimation(o_name)
-		);
+	return _native->getAnimation(o_name);
 }
 
 bool SceneManager::HasAnimation(String^ name)
@@ -869,9 +870,7 @@ Mogre::AnimationState^ SceneManager::GetAnimationState(String^ animName)
 {
 	DECLARE_NATIVE_STRING(o_animName, animName);
 
-	return ObjectTable::GetOrCreateObject<Mogre::AnimationState^>((IntPtr)
-		static_cast<const Ogre::SceneManager*>(_native)->getAnimationState(o_animName)
-		);
+	return _native->getAnimationState(o_animName);
 }
 
 bool SceneManager::HasAnimationState(String^ name)

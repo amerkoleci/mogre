@@ -233,32 +233,26 @@ TextureUnitState::TextureUnitState(Mogre::Pass^ parent)
 {
 	_createdByCLR = true;
 	_native = new Ogre::TextureUnitState(parent);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 TextureUnitState::TextureUnitState(Mogre::Pass^ parent, Mogre::TextureUnitState^ oth)
 {
 	_createdByCLR = true;
 	_native = new Ogre::TextureUnitState(parent, oth);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 TextureUnitState::TextureUnitState(Mogre::Pass^ parent, String^ texName, unsigned int texCoordSet)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_texName, texName);
-
 	_native = new Ogre::TextureUnitState(parent, o_texName, texCoordSet);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 TextureUnitState::TextureUnitState(Mogre::Pass^ parent, String^ texName)
 {
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_texName, texName);
-
 	_native = new Ogre::TextureUnitState(parent, o_texName);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 TextureUnitState::~TextureUnitState()
@@ -446,7 +440,7 @@ void TextureUnitState::TextureNameAlias::set(String^ name)
 
 Mogre::Radian TextureUnitState::TextureRotate::get()
 {
-	return Mogre::Radian( static_cast<const Ogre::TextureUnitState*>(_native)->getTextureRotate().valueRadians() );
+	return Mogre::Radian(static_cast<const Ogre::TextureUnitState*>(_native)->getTextureRotate().valueRadians());
 }
 
 void TextureUnitState::TextureRotate::set(Mogre::Radian angle)
@@ -955,14 +949,12 @@ Pass::Pass(Mogre::Technique^ parent, unsigned short index)
 {
 	_createdByCLR = true;
 	_native = new Ogre::Pass(parent, index);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Pass::Pass(Mogre::Technique^ parent, unsigned short index, Mogre::Pass^ oth)
 {
 	_createdByCLR = true;
 	_native = new Ogre::Pass(parent, index, oth);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Pass::~Pass()
@@ -1731,14 +1723,12 @@ Technique::Technique(Mogre::Material^ parent)
 {
 	_createdByCLR = true;
 	_native = new Ogre::Technique(parent);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Technique::Technique(Mogre::Material^ parent, Mogre::Technique^ oth)
 {
 	_createdByCLR = true;
 	_native = new Ogre::Technique(parent, oth);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 Technique::~Technique()
@@ -2078,7 +2068,6 @@ bool Technique::ApplyTextureAliases(Mogre::Const_AliasTextureNamePairList^ alias
 //	DECLARE_NATIVE_STRING(o_group, group);
 //
 //	_native = new Ogre::Material(creator, o_name, handle, o_group, isManual, loader);
-//	ObjectTable::Add((IntPtr)_native, this, nullptr);
 //}
 
 Material::Material(Mogre::ResourceManager^ creator, String^ name, Mogre::ResourceHandle handle, String^ group, bool isManual) : Resource((Ogre::Resource*)0)

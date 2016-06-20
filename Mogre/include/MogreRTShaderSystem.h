@@ -25,15 +25,9 @@ namespace Mogre
 			Ogre::RTShader::ShaderGenerator* _native;
 			static ShaderGenerator^ _singleton;
 
-		private:
+		public protected:
 			ShaderGenerator(Ogre::RTShader::ShaderGenerator* obj) : _native(obj)
 			{
-			}
-
-		public protected:
-			ShaderGenerator(IntPtr ptr) : _native((Ogre::RTShader::ShaderGenerator*)ptr.ToPointer())
-			{
-
 			}
 
 		public:

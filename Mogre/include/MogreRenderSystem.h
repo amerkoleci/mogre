@@ -166,10 +166,6 @@ namespace Mogre
 		{
 		}
 
-		RenderSystemCapabilities(IntPtr ptr) : _native((Ogre::RenderSystemCapabilities*)ptr.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 		~RenderSystemCapabilities()
 		{
 			if (_createdByCLR &&_native)
@@ -323,7 +319,7 @@ namespace Mogre
 		Mogre::RenderSystem::Listener::EventOccurredHandler^ _eventOccurred;
 
 	public protected:
-		RenderSystem(IntPtr ptr) : _native((Ogre::RenderSystem*)ptr.ToPointer())
+		RenderSystem(Ogre::RenderSystem* obj) : _native(obj)
 		{
 
 		}

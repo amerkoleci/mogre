@@ -29,10 +29,6 @@ namespace Mogre
 		{
 		}
 
-		ShadowCameraSetup(IntPtr obj) : _native((Ogre::ShadowCameraSetup*)obj.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 	public:
 		~ShadowCameraSetup();
 	protected:

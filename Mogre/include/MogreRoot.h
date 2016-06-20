@@ -112,6 +112,9 @@ namespace Mogre
 
 	public ref class Root : IMogreDisposable, public IFrameListener_Receiver
 	{
+		Mogre::CompositorManager2^ _compositorManager2;
+		Mogre::RenderSystem^ _activeRenderSystem;
+
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposing;
@@ -411,12 +414,12 @@ namespace Mogre
 			return FrameStarted(evt);
 		}
 
-		virtual bool OnFrameRenderingQueued(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameRenderingQueued
+			virtual bool OnFrameRenderingQueued(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameRenderingQueued
 		{
 			return FrameRenderingQueued(evt);
 		}
 
-		virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
+			virtual bool OnFrameEnded(Mogre::FrameEvent evt) = IFrameListener_Receiver::FrameEnded
 		{
 			return FrameEnded(evt);
 		}

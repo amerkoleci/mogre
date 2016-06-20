@@ -151,6 +151,8 @@ namespace Mogre
 
 		void SetDebugOutputEnabled(bool debugOutput);
 
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(Log);
+
 	internal:
 		property Ogre::Log* UnmanagedPointer
 		{

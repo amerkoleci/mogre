@@ -33,9 +33,7 @@ unsigned short SubEntity::NumWorldTransforms::get()
 
 Mogre::Entity^ SubEntity::Parent::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((IntPtr)
-		static_cast<const Ogre::SubEntity*>(_native)->getParent()
-		);
+	return static_cast<const Ogre::SubEntity*>(_native)->getParent();
 }
 
 Ogre::SubEntity* SubEntity::UnmanagedPointer::get()
@@ -242,7 +240,7 @@ Mogre::MeshPtr^ Entity::GetMesh()
 
 Mogre::Entity^ Entity::Clone()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Entity^>((IntPtr) static_cast<const Ogre::Entity*>(_native)->clone());
+	return gcnew Mogre::Entity(static_cast<const Ogre::Entity*>(_native)->clone());
 }
 
 void Entity::SetMaterialName(String^ name)

@@ -15,11 +15,6 @@ namespace Mogre
 
 		}
 
-		RenderWindow(IntPtr ptr) : RenderTarget(ptr)
-		{
-
-		}
-
 	public:
 		property bool IsActive
 		{

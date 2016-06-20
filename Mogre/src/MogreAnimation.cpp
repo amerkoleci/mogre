@@ -215,8 +215,8 @@ Mogre::Real AnimationTrack::GetKeyFramesAtTime(Mogre::TimeIndex^ timeIndex, [Out
 	pin_ptr<unsigned short> p_firstKeyIndex = &firstKeyIndex;
 
 	Mogre::Real retres = _native->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2, p_firstKeyIndex);
-	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame1);
-	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame2);
+	keyFrame1 = gcnew Mogre::KeyFrame(out_keyFrame1);
+	keyFrame2 = gcnew Mogre::KeyFrame(out_keyFrame2);
 
 	return retres;
 }
@@ -227,8 +227,8 @@ Mogre::Real AnimationTrack::GetKeyFramesAtTime(Mogre::TimeIndex^ timeIndex, [Out
 	Ogre::KeyFrame* out_keyFrame2;
 
 	Mogre::Real retres = _native->getKeyFramesAtTime(*timeIndex->UnmanagedPointer, &out_keyFrame1, &out_keyFrame2);
-	keyFrame1 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame1);
-	keyFrame2 = ObjectTable::GetOrCreateObject<Mogre::KeyFrame^>((IntPtr)out_keyFrame2);
+	keyFrame1 = gcnew Mogre::KeyFrame(out_keyFrame1);
+	keyFrame2 = gcnew Mogre::KeyFrame(out_keyFrame2);
 
 	return retres;
 }
@@ -295,9 +295,7 @@ NodeAnimationTrack::NodeAnimationTrack(Mogre::Animation^ parent, unsigned short 
 
 Mogre::Node^ NodeAnimationTrack::AssociatedNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)
-		static_cast<const Ogre::NodeAnimationTrack*>(_native)->getAssociatedNode()
-		);
+	return Mogre::Node::GetManaged(static_cast<const Ogre::NodeAnimationTrack*>(_native)->getAssociatedNode());
 }
 
 void NodeAnimationTrack::AssociatedNode::set(Mogre::Node^ node)
@@ -455,9 +453,7 @@ void AnimationState::Loop::set(bool loop)
 
 Mogre::AnimationStateSet^ AnimationState::Parent::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::AnimationStateSet^>((IntPtr)
-		static_cast<const Ogre::AnimationState*>(_native)->getParent()
-		);
+	ReturnCachedObjectGcnew(Mogre::AnimationStateSet, _parent, _native->getParent());
 }
 
 Mogre::Real AnimationState::TimePosition::get()

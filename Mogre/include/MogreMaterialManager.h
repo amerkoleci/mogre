@@ -477,10 +477,6 @@ namespace Mogre
 		{
 		}
 
-		TextureUnitState(IntPtr obj) : _native((Ogre::TextureUnitState*)obj.ToPointer())
-		{
-		}
-
 	public:
 		~TextureUnitState();
 	protected:
@@ -859,10 +855,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 		Pass(Ogre::Pass* obj) : _native(obj)
-		{
-		}
-
-		Pass(IntPtr obj) : _native((Ogre::Pass*)obj.ToPointer())
 		{
 		}
 
@@ -1423,10 +1415,6 @@ namespace Mogre
 		{
 		}
 
-		Technique(IntPtr obj) : _native((Ogre::Technique*)obj.ToPointer())
-		{
-		}
-
 	public:
 		~Technique();
 	protected:
@@ -1623,14 +1611,6 @@ namespace Mogre
 
 	public protected:
 		Material(Ogre::Material* obj) : Resource(obj)
-		{
-		}
-
-		Material(IntPtr ptr) : Resource((Ogre::Material*)ptr.ToPointer())
-		{
-		}
-
-		Material(Ogre::Resource* obj) : Resource(obj)
 		{
 		}
 
@@ -1864,7 +1844,7 @@ namespace Mogre
 			return res;
 		}
 
-		MaterialPtr(Material^ obj) : Material(obj->_native)
+		MaterialPtr(Material^ obj) : Material(static_cast<Ogre::Material*>(obj->_native))
 		{
 			_sharedPtr = new Ogre::MaterialPtr(static_cast<Ogre::Material*>(obj->_native));
 		}

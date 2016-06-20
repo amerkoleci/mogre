@@ -322,7 +322,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		o_definitionName,
 		true);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled)
@@ -335,7 +335,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		o_definitionName,
 		enabled);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, RenderTarget^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled, int position)
@@ -349,7 +349,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		enabled,
 		position);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName)
@@ -367,7 +367,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		o_definitionName,
 		true);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled)
@@ -385,7 +385,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		o_definitionName,
 		enabled);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager, CompositorChannel^ finalRenderTarget, Camera^ defaultCamera, String^ definitionName, bool enabled, int position)
@@ -404,7 +404,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 		enabled,
 		position);
 
-	return ObjectTable::GetOrCreateObject<Mogre::CompositorWorkspace^>((IntPtr)workspace);
+	return gcnew Mogre::CompositorWorkspace(workspace);
 }
 
 void CompositorManager2::RemoveWorkspace(CompositorWorkspace^ workspace)

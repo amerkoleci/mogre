@@ -211,11 +211,6 @@ namespace Mogre
 		{
 		}
 
-		RenderTarget(IntPtr ptr) : _native((Ogre::RenderTarget*)ptr.ToPointer())
-		{
-
-		}
-
 	protected:
 		/// <summary>Creates a new instance of the Root class.</summary>
 		RenderTarget();
@@ -548,10 +543,6 @@ namespace Mogre
 		{
 		}
 
-		RenderTexture(IntPtr ptr) : RenderTarget(ptr)
-		{
-		}
-
 	public:
 		void WriteContentsToFile(String^ filename);
 
@@ -566,10 +557,6 @@ namespace Mogre
 	{
 	public protected:
 		MultiRenderTarget(Ogre::MultiRenderTarget* obj) : RenderTarget(obj)
-		{
-		}
-
-		MultiRenderTarget(IntPtr ptr) : RenderTarget(ptr)
 		{
 		}
 

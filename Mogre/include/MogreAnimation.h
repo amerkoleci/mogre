@@ -35,10 +35,6 @@ namespace Mogre
 		virtual event EventHandler^ OnDisposed;
 
 	public protected:
-		TimeIndex(IntPtr obj) : _native((Ogre::TimeIndex*)obj.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 		TimeIndex(Ogre::TimeIndex* obj) : _native(obj), _createdByCLR(false)
 		{
 		}
@@ -105,10 +101,6 @@ namespace Mogre
 		{
 		}
 
-		KeyFrame(IntPtr obj) : _native((Ogre::KeyFrame*)obj.ToPointer())
-		{
-		}
-
 	public:
 		~KeyFrame();
 	protected:
@@ -151,10 +143,6 @@ namespace Mogre
 		{
 		}
 
-		NumericKeyFrame(IntPtr ptr) : KeyFrame(ptr)
-		{
-		}
-
 	public:
 		NumericKeyFrame(Mogre::AnimationTrack^ parent, Mogre::Real time);
 
@@ -180,10 +168,6 @@ namespace Mogre
 	{
 	public protected:
 		TransformKeyFrame(Ogre::TransformKeyFrame* obj) : KeyFrame(obj)
-		{
-		}
-
-		TransformKeyFrame(IntPtr ptr) : KeyFrame(ptr)
 		{
 		}
 
@@ -245,10 +229,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 		AnimationTrack(Ogre::AnimationTrack* obj) : _native(obj)
-		{
-		}
-
-		AnimationTrack(IntPtr ptr) : _native((Ogre::AnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -322,10 +302,6 @@ namespace Mogre
 		{
 		}
 
-		NumericAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::NumericAnimationTrack*)ptr.ToPointer())
-		{
-		}
-
 	public:
 		/*NumericAnimationTrack(Mogre::Animation^ parent, unsigned short handle);
 		NumericAnimationTrack(Mogre::Animation^ parent, unsigned short handle, Mogre::AnimableValuePtr^ target);
@@ -370,10 +346,6 @@ namespace Mogre
 	{
 	public protected:
 		NodeAnimationTrack(Ogre::NodeAnimationTrack* obj) : AnimationTrack(obj)
-		{
-		}
-
-		NodeAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::NodeAnimationTrack*)ptr.ToPointer())
 		{
 		}
 
@@ -446,10 +418,6 @@ namespace Mogre
 		{
 		}
 
-		VertexAnimationTrack(IntPtr ptr) : AnimationTrack((Ogre::VertexAnimationTrack*)ptr.ToPointer())
-		{
-		}
-
 	public:
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(VertexAnimationTrack);
 
@@ -470,6 +438,8 @@ namespace Mogre
 
 	public ref class AnimationState : IMogreDisposable
 	{
+		Mogre::AnimationStateSet^ _parent;
+
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposing;
@@ -483,10 +453,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 		AnimationState(Ogre::AnimationState* obj) : _native(obj)
-		{
-		}
-
-		AnimationState(IntPtr ptr) : _native((Ogre::AnimationState*)ptr.ToPointer())
 		{
 		}
 
@@ -619,10 +585,6 @@ namespace Mogre
 		{
 		}
 
-		AnimationStateSet(IntPtr obj) : _native((Ogre::AnimationStateSet*)obj.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 		Ogre::AnimationStateSet* _native;
 		bool _createdByCLR;
 
@@ -735,10 +697,6 @@ namespace Mogre
 
 
 	public protected:
-		Animation(IntPtr obj) : _native((Ogre::Animation*)obj.ToPointer()), _createdByCLR(false)
-		{
-		}
-
 		Animation(Ogre::Animation* obj) : _native(obj), _createdByCLR(false)
 		{
 		}

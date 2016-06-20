@@ -835,10 +835,6 @@ namespace Mogre
 		{
 		}
 
-		GpuProgram(IntPtr ptr) : Resource(ptr)
-		{
-		}
-
 	public:
 		property bool HasCompileError
 		{
@@ -953,11 +949,13 @@ namespace Mogre
 
 	public ref class GpuProgramPtr : public GpuProgram
 	{
+		Mogre::GpuProgram^ _target;
 	public protected:
 		Ogre::GpuProgramPtr* _sharedPtr;
 
 		GpuProgramPtr(Ogre::GpuProgramPtr& sharedPtr) : GpuProgram(sharedPtr.getPointer())
 		{
+			_target = gcnew Mogre::GpuProgram(sharedPtr.getPointer());
 			_sharedPtr = new Ogre::GpuProgramPtr(sharedPtr);
 		}
 
@@ -1019,6 +1017,7 @@ namespace Mogre
 		GpuProgramPtr(GpuProgram^ obj) : GpuProgram(static_cast<Ogre::GpuProgram*>(obj->_native))
 		{
 			_sharedPtr = new Ogre::GpuProgramPtr(static_cast<Ogre::GpuProgram*>(obj->_native));
+			_target = obj;
 		}
 
 		virtual bool Equals(Object^ obj) override
@@ -1083,7 +1082,7 @@ namespace Mogre
 		{
 			GpuProgram^ get()
 			{
-				return ObjectTable::GetOrCreateObject<GpuProgram^>((IntPtr)static_cast<Ogre::GpuProgram*>(_native));
+				return _target;
 			}
 		}
 	};
@@ -1093,12 +1092,15 @@ namespace Mogre
 
 	public ref class GpuProgramParametersSharedPtr : public GpuProgramParameters
 	{
+		Mogre::GpuProgramParameters^ _target;
+
 	public protected:
 		Ogre::GpuProgramParametersSharedPtr* _sharedPtr;
 
 		GpuProgramParametersSharedPtr(Ogre::GpuProgramParametersSharedPtr& sharedPtr) : GpuProgramParameters(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::GpuProgramParametersSharedPtr(sharedPtr);
+			_target = gcnew Mogre::GpuProgramParameters(sharedPtr.getPointer());
 		}
 
 		!GpuProgramParametersSharedPtr()
@@ -1137,6 +1139,7 @@ namespace Mogre
 		GpuProgramParametersSharedPtr(GpuProgramParameters^ obj) : GpuProgramParameters(obj->_native)
 		{
 			_sharedPtr = new Ogre::GpuProgramParametersSharedPtr(static_cast<Ogre::GpuProgramParameters*>(obj->_native));
+			_target = obj;
 		}
 
 		virtual bool Equals(Object^ obj) override
@@ -1201,7 +1204,7 @@ namespace Mogre
 		{
 			GpuProgramParameters^ get()
 			{
-				return ObjectTable::GetOrCreateObject<GpuProgramParameters^>((IntPtr) static_cast<Ogre::GpuProgramParameters*>(_native));
+				return _target;
 			}
 		}
 	};

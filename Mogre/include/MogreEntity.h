@@ -25,11 +25,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		SubEntity(IntPtr ptr) : _native((Ogre::SubEntity*)ptr.ToPointer())
-		{
-
-		}
-
 		SubEntity(Ogre::SubEntity* ptr) : _native(ptr)
 		{
 
@@ -130,11 +125,6 @@ namespace Mogre
 	public ref class Entity : public MovableObject
 	{
 	public protected:
-		Entity(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 		Entity(Ogre::Entity* obj) : MovableObject(obj)
 		{
 

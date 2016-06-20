@@ -69,14 +69,6 @@ namespace Mogre
 		{
 		}
 
-		VertexData(IntPtr ptr)
-			: _native((Ogre::VertexData*)ptr.ToPointer())
-			, _createdByCLR(false)
-			, _vertexBufferBinding(nullptr)
-			, _vertexDeclaration(nullptr)
-		{
-		}
-
 		Ogre::VertexData* _native;
 		bool _createdByCLR;
 
@@ -176,10 +168,6 @@ namespace Mogre
 
 	public protected:
 		IndexData(Ogre::IndexData* obj) : _native(obj), _createdByCLR(false)
-		{
-		}
-
-		IndexData(IntPtr ptr) : _native((Ogre::IndexData*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 

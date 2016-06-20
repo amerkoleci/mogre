@@ -13,12 +13,7 @@ namespace Mogre
 
 		}
 
-		RibbonTrail(IntPtr ptr) : BillboardChain(ptr)
-		{
-
-		}
-
 	public:
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(RibbonTrail);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(RibbonTrail);
 	};
 }

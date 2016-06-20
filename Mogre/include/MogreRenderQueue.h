@@ -42,10 +42,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		RenderQueue(IntPtr ptr) : _native((Ogre::RenderQueue*)ptr.ToPointer())
-		{
-
-		}
 
 		RenderQueue(Ogre::RenderQueue* obj) : _native(obj)
 		{

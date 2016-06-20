@@ -42,11 +42,6 @@ namespace Mogre
 			{
 			}
 
-			ManualObjectSection(IntPtr ptr) : _native((Ogre::ManualObject::ManualObjectSection*)ptr.ToPointer())
-			{
-
-			}
-
 		public:
 			~ManualObjectSection();
 		protected:
@@ -153,11 +148,6 @@ namespace Mogre
 #undef STLDECL_NATIVETYPE
 
 	public protected:
-		ManualObject(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 		ManualObject(Ogre::ManualObject* obj) : MovableObject(obj)
 		{
 

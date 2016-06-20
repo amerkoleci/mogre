@@ -5,6 +5,9 @@
 #include "OgreOverlay.h"
 #include "OgreOverlayElement.h"
 #include "OgreOverlayContainer.h"
+#include "OgrePanelOverlayElement.h"
+#include "OgreTextAreaOverlayElement.h"
+#include "OgreBorderPanelOverlayElement.h"
 #include "MogreCommon.h"
 #include "MogreStringVector.h"
 #include "STLContainerWrappers.h"
@@ -55,11 +58,6 @@ namespace Mogre
 	public protected:
 		Ogre::OverlayElement* _native;
 		bool _createdByCLR;
-
-		OverlayElement(IntPtr ptr) : _native((Ogre::OverlayElement*)ptr.ToPointer())
-		{
-
-		}
 
 		OverlayElement(Ogre::OverlayElement* obj) : _native(obj)
 		{
@@ -366,17 +364,37 @@ namespace Mogre
 		{
 		}
 
-		OverlayContainer(IntPtr ptr) : OverlayElement(ptr)
-		{
-		}
-
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(OverlayContainer);
+	};
 
-	internal:
-		property Ogre::OverlayContainer* UnmanagedPointer
+	public ref class PanelOverlayElement : OverlayContainer
+	{
+	public protected:
+		PanelOverlayElement(Ogre::PanelOverlayElement* obj) : OverlayContainer(obj)
 		{
-			Ogre::OverlayContainer* get() { return static_cast<Ogre::OverlayContainer*>(_native); }
 		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(PanelOverlayElement);
+	};
+
+	public ref class BorderPanelOverlayElement : PanelOverlayElement
+	{
+	public protected:
+		BorderPanelOverlayElement(Ogre::BorderPanelOverlayElement* obj) : PanelOverlayElement(obj)
+		{
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(BorderPanelOverlayElement);
+	};
+
+	public ref class TextAreaOverlayElement : OverlayElement
+	{
+	public protected:
+		TextAreaOverlayElement(Ogre::TextAreaOverlayElement* obj) : OverlayElement(obj)
+		{
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(TextAreaOverlayElement);
 	};
 
 	public ref class Overlay : IMogreDisposable
@@ -395,11 +413,6 @@ namespace Mogre
 	public protected:
 		Ogre::Overlay* _native;
 		bool _createdByCLR;
-
-		Overlay(IntPtr ptr) : _native((Ogre::Overlay*)ptr.ToPointer())
-		{
-
-		}
 
 		Overlay(Ogre::Overlay* obj) : _native(obj)
 		{
@@ -537,11 +550,6 @@ namespace Mogre
 		Ogre::OverlaySystem* _native;
 		bool _createdByCLR;
 
-		OverlaySystem(IntPtr ptr) : _native((Ogre::OverlaySystem*)ptr.ToPointer())
-		{
-
-		}
-
 		OverlaySystem(Ogre::OverlaySystem* obj) : _native(obj)
 		{
 
@@ -580,6 +588,9 @@ namespace Mogre
 
 	public ref class OverlayManager : IMogreDisposable
 	{
+		System::Collections::Generic::Dictionary<String^, OverlayElement^>^ _templates;
+		System::Collections::Generic::Dictionary<String^, OverlayElement^>^ _instances;
+
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposing;
@@ -591,14 +602,10 @@ namespace Mogre
 		Ogre::OverlayManager* _native;
 		bool _createdByCLR;
 
-		OverlayManager(IntPtr ptr) : _native((Ogre::OverlayManager*)ptr.ToPointer())
-		{
-
-		}
-
 		OverlayManager(Ogre::OverlayManager* obj) : _native(obj)
 		{
-
+			_templates = gcnew System::Collections::Generic::Dictionary<String^, OverlayElement^>();
+			_instances = gcnew System::Collections::Generic::Dictionary<String^, OverlayElement^>();
 		}
 
 	public:

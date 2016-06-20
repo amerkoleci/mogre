@@ -218,12 +218,12 @@ void MovableObject::Name::set(String^ name)
 
 Mogre::Node^ MovableObject::ParentNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Node^>((IntPtr)static_cast<const Ogre::MovableObject*>(_native)->getParentNode());
+	return _native->getParentNode();
 }
 
 Mogre::SceneNode^ MovableObject::ParentSceneNode::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::SceneNode^>((IntPtr)static_cast<const Ogre::MovableObject*>(_native)->getParentSceneNode());
+	return _native->getParentSceneNode();
 }
 
 Ogre::uint32 MovableObject::QueryFlags::get()

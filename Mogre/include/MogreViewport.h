@@ -19,15 +19,9 @@ namespace Mogre
 		Ogre::Viewport* _native;
 		bool _createdByCLR;
 
-	private:
+	public protected:
 		Viewport(Ogre::Viewport* obj) : _native(obj)
 		{
-		}
-
-	public protected:
-		Viewport(IntPtr ptr) : _native((Ogre::Viewport*)ptr.ToPointer())
-		{
-
 		}
 
 	public:

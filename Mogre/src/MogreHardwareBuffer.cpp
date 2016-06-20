@@ -424,7 +424,6 @@ VertexDeclaration::VertexDeclaration()
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexDeclaration();
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 VertexDeclaration::~VertexDeclaration()
@@ -441,7 +440,6 @@ VertexDeclaration::!VertexDeclaration()
 
 	if (_createdByCLR && _native != 0)
 	{
-		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}
@@ -611,7 +609,6 @@ VertexBufferBinding::VertexBufferBinding()
 {
 	_createdByCLR = true;
 	_native = new Ogre::VertexBufferBinding();
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 VertexBufferBinding::~VertexBufferBinding()
@@ -628,7 +625,6 @@ VertexBufferBinding::!VertexBufferBinding()
 
 	if (_createdByCLR && _native != 0)
 	{
-		ObjectTable::Remove((IntPtr)_native);
 		delete _native; _native = 0;
 	}
 

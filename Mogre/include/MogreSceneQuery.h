@@ -114,11 +114,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		SceneQuery(IntPtr ptr) : _native((Ogre::SceneQuery*)ptr.ToPointer())
-		{
-
-		}
-
 		SceneQuery(Ogre::SceneQuery* obj) : _native(obj)
 		{
 
@@ -190,10 +185,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		SceneQueryListener(IntPtr ptr) : _native((Ogre::SceneQueryListener*)ptr.ToPointer())
-		{
-		}
-
 		SceneQueryListener(Ogre::SceneQueryListener* obj) : _native(obj)
 		{
 		}
@@ -234,10 +225,6 @@ namespace Mogre
 
 	public protected:
 		SceneQueryResult(Ogre::SceneQueryResult* obj) : _native(obj), _createdByCLR(false)
-		{
-		}
-
-		SceneQueryResult(IntPtr ptr) : _native((Ogre::SceneQueryResult*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -287,10 +274,6 @@ namespace Mogre
 		{
 		}
 
-		RegionSceneQuery(IntPtr ptr) : SceneQuery(ptr)
-		{
-		}
-
 		virtual Ogre::SceneQueryListener* _ISceneQueryListener_GetNativePtr() = ISceneQueryListener::_GetNativePtr;
 
 
@@ -324,13 +307,8 @@ namespace Mogre
 
 	public ref class AxisAlignedBoxSceneQuery : public RegionSceneQuery
 	{
-		//Internal Declarations
 	public protected:
 		AxisAlignedBoxSceneQuery(Ogre::AxisAlignedBoxSceneQuery* obj) : RegionSceneQuery(obj)
-		{
-		}
-
-		AxisAlignedBoxSceneQuery(IntPtr ptr) : RegionSceneQuery(ptr)
 		{
 		}
 
@@ -357,10 +335,6 @@ namespace Mogre
 		{
 		}
 
-		SphereSceneQuery(IntPtr ptr) : RegionSceneQuery(ptr)
-		{
-		}
-
 	public:
 		property Mogre::Sphere Sphere
 		{
@@ -381,10 +355,6 @@ namespace Mogre
 	{
 	public protected:
 		PlaneBoundedVolumeListSceneQuery(Ogre::PlaneBoundedVolumeListSceneQuery* obj) : RegionSceneQuery(obj)
-		{
-		}
-
-		PlaneBoundedVolumeListSceneQuery(IntPtr ptr) : RegionSceneQuery(ptr)
 		{
 		}
 
@@ -426,10 +396,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		RaySceneQueryListener(IntPtr ptr) : _native((Ogre::RaySceneQueryListener*)ptr.ToPointer())
-		{
-		}
-
 		RaySceneQueryListener(Ogre::RaySceneQueryListener* obj) : _native(obj)
 		{
 		}
@@ -467,11 +433,6 @@ namespace Mogre
 	public protected:
 		RaySceneQueryResultEntry(Ogre::RaySceneQueryResultEntry* obj) : _native(obj), _createdByCLR(false)
 		{
-		}
-
-		RaySceneQueryResultEntry(IntPtr ptr) : _native((Ogre::RaySceneQueryResultEntry*)ptr.ToPointer()), _createdByCLR(false)
-		{
-
 		}
 
 		~RaySceneQueryResultEntry()
@@ -531,11 +492,6 @@ namespace Mogre
 	public protected:
 		RaySceneQuery(Ogre::RaySceneQuery* obj) : SceneQuery(obj)
 		{
-		}
-
-		RaySceneQuery(IntPtr ptr) : SceneQuery(ptr)
-		{
-
 		}
 
 		virtual Ogre::RaySceneQueryListener* _IRaySceneQueryListener_GetNativePtr() = IRaySceneQueryListener::_GetNativePtr;
@@ -614,11 +570,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		IntersectionSceneQueryListener(IntPtr ptr) : _native((Ogre::IntersectionSceneQueryListener*)ptr.ToPointer())
-		{
-
-		}
-
 		IntersectionSceneQueryListener(Ogre::IntersectionSceneQueryListener* obj) : _native(obj)
 		{
 		}
@@ -662,10 +613,6 @@ namespace Mogre
 		//Internal Declarations
 	public protected:
 		IntersectionSceneQueryResult(Ogre::IntersectionSceneQueryResult* obj) : _native(obj), _createdByCLR(false)
-		{
-		}
-
-		IntersectionSceneQueryResult(IntPtr ptr) : _native((Ogre::IntersectionSceneQueryResult*)ptr.ToPointer()), _createdByCLR(false)
 		{
 		}
 
@@ -715,10 +662,6 @@ namespace Mogre
 		//Internal Declarations
 	public protected:
 		IntersectionSceneQuery(Ogre::IntersectionSceneQuery* obj) : SceneQuery(obj)
-		{
-		}
-
-		IntersectionSceneQuery(IntPtr ptr) : SceneQuery(ptr)
 		{
 		}
 

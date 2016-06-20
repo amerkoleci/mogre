@@ -13,7 +13,6 @@ ManualObject::ManualObjectSection::ManualObjectSection(Mogre::ManualObject^ pare
 	_createdByCLR = true;
 	DECLARE_NATIVE_STRING(o_materialName, materialName);
 	_native = new Ogre::ManualObject::ManualObjectSection(parent, o_materialName, (Ogre::RenderOperation::OperationType)opType);
-	ObjectTable::Add((IntPtr)_native, this, nullptr);
 }
 
 ManualObject::ManualObjectSection::~ManualObjectSection()
@@ -30,7 +29,6 @@ ManualObject::ManualObjectSection::!ManualObjectSection()
 
 	if (_createdByCLR && _native)
 	{
-		ObjectTable::Remove((IntPtr)_native);
 		delete _native;
 		_native = 0;
 	}

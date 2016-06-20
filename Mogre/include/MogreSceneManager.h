@@ -110,16 +110,8 @@ namespace Mogre
 		System::Collections::Generic::Dictionary<String^, Entity^>^ _entities;
 		System::Collections::Generic::Dictionary<String^, ManualObject^>^ _manualObjects;
 
-	private:
-		SceneManager(Ogre::SceneManager* obj) : _native(obj)
-		{
-			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
-			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();
-			_manualObjects = gcnew System::Collections::Generic::Dictionary<String^, ManualObject^>();
-		}
-
 	public protected:
-		SceneManager(IntPtr ptr) : _native((Ogre::SceneManager*)ptr.ToPointer())
+		SceneManager(Ogre::SceneManager* obj) : _native(obj)
 		{
 			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
 			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();

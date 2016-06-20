@@ -24,11 +24,6 @@ namespace Mogre
 
 		}
 
-		Light(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 	public:
 
 		property Ogre::Real tempSquareDist

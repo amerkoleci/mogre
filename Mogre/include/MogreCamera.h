@@ -12,13 +12,10 @@ namespace Mogre
 
 	public ref class Camera : public Frustum
 	{
+		Mogre::Viewport^ _lastViewport;
+
 	public protected:
 		Camera(Ogre::Camera* obj) : Frustum(obj)
-		{
-
-		}
-
-		Camera(IntPtr ptr) : Frustum(ptr)
 		{
 
 		}

@@ -35,10 +35,6 @@ namespace Mogre
 		{
 		}
 
-		SubMesh(IntPtr ptr) : _native((Ogre::SubMesh*)ptr.ToPointer())
-		{
-		}
-
 	public:
 		~SubMesh();
 	protected:
@@ -116,10 +112,6 @@ namespace Mogre
 
 	public protected:
 		Mesh(Ogre::Mesh* obj) : Resource(obj)
-		{
-		}
-
-		Mesh(IntPtr ptr) : Resource((Ogre::Mesh*)ptr.ToPointer())
 		{
 		}
 

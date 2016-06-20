@@ -38,6 +38,7 @@ namespace Mogre
 
 	public ref class Resource : /*IMogreDisposable, /*public IStringInterface,*/ public IResource_Listener_Receiver
 	{
+		Mogre::ResourceManager^ _creator;
 	public:
 		ref class Listener;
 
@@ -72,10 +73,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		Resource(IntPtr ptr) : _native((Ogre::Resource*)ptr.ToPointer())
-		{
-		}
-
 		Resource(Ogre::Resource* ptr) : _native(ptr)
 		{
 		}
@@ -295,6 +292,8 @@ namespace Mogre
 
 	public ref class ResourcePtr : public Resource
 	{
+		Mogre::Resource^ _target;
+
 	public protected:
 		Ogre::ResourcePtr* _sharedPtr;
 
@@ -302,6 +301,7 @@ namespace Mogre
 			: ResourcePtr(sharedPtr.getPointer())
 		{
 			_sharedPtr = new Ogre::ResourcePtr(sharedPtr);
+			_target = gcnew Mogre::Resource(sharedPtr.getPointer());
 		}
 
 		!ResourcePtr()
@@ -345,7 +345,8 @@ namespace Mogre
 
 		ResourcePtr(Resource^ obj) : Resource(obj->_native)
 		{
-			_sharedPtr = new Ogre::ResourcePtr(static_cast<Ogre::Resource*>(obj->_native));
+			_sharedPtr = new Ogre::ResourcePtr(obj->_native);
+			_target = obj;
 		}
 
 		virtual bool Equals(Object^ obj) override
@@ -410,7 +411,7 @@ namespace Mogre
 		{
 			Resource^ get()
 			{
-				return ObjectTable::GetOrCreateObject<Mogre::Resource^>((IntPtr)static_cast<Ogre::Resource*>(_native));
+				return _target;
 			}
 		}
 	};

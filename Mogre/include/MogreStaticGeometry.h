@@ -24,11 +24,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		StaticGeometry(IntPtr ptr) : _native((Ogre::StaticGeometry*)ptr.ToPointer())
-		{
-
-		}
-
 		StaticGeometry(Ogre::StaticGeometry* obj) : _native(obj)
 		{
 

@@ -6,12 +6,12 @@ using namespace Mogre;
 
 Mogre::Viewport^ RenderTargetViewportEvent_NativePtr::source::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)_native->source);
+	return _native->source;
 }
 
 Mogre::RenderTarget^ RenderTargetEvent_NativePtr::source::get()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::RenderTarget^>((IntPtr)_native->source);
+	return _native->source;
 }
 
 void RenderTargetListener_Director::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
@@ -160,54 +160,50 @@ void RenderTarget::GetMetrics([Out] unsigned int% width, [Out] unsigned int% hei
 
 Mogre::Viewport^ RenderTarget::AddViewport(float left, float top, float width, float height)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->addViewport(left, top, width, height)
-		);
+	return gcnew Mogre::Viewport(_native->addViewport(left, top, width, height));
 }
 
 Mogre::Viewport^ RenderTarget::AddViewport(float left, float top, float width)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->addViewport(left, top, width)
-		);
+	return gcnew Mogre::Viewport(
+		_native->addViewport(left, top, width)
+	);
 }
 
 Mogre::Viewport^ RenderTarget::AddViewport(float left, float top)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->addViewport(left, top)
-		);
+	return gcnew Mogre::Viewport(
+		_native->addViewport(left, top)
+	);
 }
 
 Mogre::Viewport^ RenderTarget::AddViewport(float left)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->addViewport(left)
-		);
+	return gcnew Mogre::Viewport(
+		_native->addViewport(left)
+	);
 }
 
 Mogre::Viewport^ RenderTarget::AddViewport()
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->addViewport()
-		);
+	return gcnew Mogre::Viewport(
+		_native->addViewport()
+	);
 }
 
 Mogre::Viewport^ RenderTarget::GetViewport(unsigned short index)
 {
-	return ObjectTable::GetOrCreateObject<Mogre::Viewport^>((IntPtr)
-		static_cast<Ogre::RenderTarget*>(_native)->getViewport(index)
-		);
+	return _native->getViewport(index);
 }
 
 void RenderTarget::RemoveViewport(Mogre::Viewport^ viewport)
 {
-	static_cast<Ogre::RenderTarget*>(_native)->removeViewport(GetPointerOrNull(viewport));
+	_native->removeViewport(viewport);
 }
 
 void RenderTarget::RemoveAllViewports()
 {
-	static_cast<Ogre::RenderTarget*>(_native)->removeAllViewports();
+	_native->removeAllViewports();
 }
 
 

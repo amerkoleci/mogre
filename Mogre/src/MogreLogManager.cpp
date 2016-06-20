@@ -47,7 +47,7 @@ Mogre::Log^ LogManager::GetLog(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return ObjectTable::GetOrCreateObject<Mogre::Log^>((IntPtr)_native->getLog(o_name));
+	return _native->getLog(o_name);
 }
 
 void LogManager::DestroyLog(String^ name)

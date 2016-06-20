@@ -111,9 +111,8 @@ namespace Mogre
 			*(dest->_native) = *_native;
 		}
 
-		const char* What();
+		String^ What();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_FOR_PLAINWRAPPER_EXPLICIT(OgreException, Exception);
-
 	};
 }

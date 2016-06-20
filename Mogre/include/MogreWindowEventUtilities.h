@@ -50,10 +50,6 @@ namespace Mogre
 		{
 		}
 
-		WindowEventListener(IntPtr ptr) : _native((Ogre::WindowEventListener*)ptr.ToPointer())
-		{
-		}
-
 		virtual Ogre::WindowEventListener* _IWindowEventListener_GetNativePtr() = IWindowEventListener::_GetNativePtr;
 
 	public:

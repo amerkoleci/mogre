@@ -5,6 +5,7 @@
 #include "OgreParticleSystemRenderer.h"
 #include "MogreMovableObject.h"
 #include "MogreCommon.h"
+#include "Marshalling.h"
 
 namespace Mogre
 {
@@ -15,11 +16,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		ParticleEmitter(IntPtr ptr) : _native((Ogre::ParticleEmitter*)ptr.ToPointer())
-		{
-
-		}
-
 		ParticleEmitter(Ogre::ParticleEmitter* ptr) : _native(ptr)
 		{
 
@@ -241,11 +237,7 @@ namespace Mogre
 		virtual void SetParameterList(Mogre::Const_NameValuePairList^ paramList);
 		virtual String^ GetParameter(String^ name);
 
-	internal:
-		property Ogre::ParticleEmitter* UnmanagedPointer
-		{
-			Ogre::ParticleEmitter* get();
-		}
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(ParticleEmitter);
 	};
 
 	public ref class ParticleSystemRenderer // : public IStringInterface
@@ -255,10 +247,6 @@ namespace Mogre
 		bool _createdByCLR;
 
 	public protected:
-		ParticleSystemRenderer(IntPtr ptr) : _native((Ogre::ParticleSystemRenderer*)ptr.ToPointer())
-		{
-
-		}
 
 		ParticleSystemRenderer(Ogre::ParticleSystemRenderer* ptr) : _native(ptr)
 		{
@@ -290,12 +278,9 @@ namespace Mogre
 
 	public ref class ParticleSystem : public MovableObject
 	{
+		Mogre::ParticleSystemRenderer^ _renderer;
+
 	public protected:
-		ParticleSystem(IntPtr ptr) : MovableObject(ptr)
-		{
-
-		}
-
 		ParticleSystem(Ogre::ParticleSystem* ptr) : MovableObject(ptr)
 		{
 
