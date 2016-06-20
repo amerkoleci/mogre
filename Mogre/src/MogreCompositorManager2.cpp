@@ -10,6 +10,33 @@ using namespace Mogre;
 
 CPP_DECLARE_STLVECTOR(CompositorChannel::, TextureVec, Mogre::TexturePtr^, Ogre::TexturePtr);
 
+// CompositorPass
+CompositorPass::~CompositorPass()
+{
+	this->!CompositorPass();
+}
+
+CompositorPass::!CompositorPass()
+{
+	OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
+	OnDisposed(this, nullptr);
+}
+
+void CompositorPass::Execute(Camera^ lodCamera)
+{
+	_native->execute(lodCamera);
+}
+
 // TextureDefinitionBase
 TextureDefinitionBase::~TextureDefinitionBase()
 {
@@ -30,11 +57,6 @@ TextureDefinitionBase::!TextureDefinitionBase()
 	}
 
 	OnDisposed(this, nullptr);
-}
-
-Ogre::TextureDefinitionBase* TextureDefinitionBase::UnmanagedPointer::get()
-{
-	return _native;
 }
 
 // CompositorWorkspaceDef
@@ -90,11 +112,6 @@ void CompositorWorkspaceDef::RemoveNodeAlias(String^ alias)
 	static_cast<Ogre::CompositorWorkspaceDef*>(_native)->removeNodeAlias(o_alias);
 }
 
-Ogre::CompositorWorkspaceDef* CompositorWorkspaceDef::UnmanagedPointer::get()
-{
-	return static_cast<Ogre::CompositorWorkspaceDef*>(_native);
-}
-
 // CompositorWorkspaceListener
 class CompositorWorkspaceListener_Proxy : public Ogre::CompositorWorkspaceListener
 {
@@ -124,7 +141,7 @@ void CompositorWorkspaceListener_Proxy::workspacePreUpdate(Ogre::CompositorWorks
 
 void CompositorWorkspaceListener_Proxy::passPreExecute(Ogre::CompositorPass *pass)
 {
-
+	_managed->PassPreExecute(pass);
 }
 
 CompositorWorkspaceListener::CompositorWorkspaceListener()
@@ -158,13 +175,11 @@ CompositorWorkspaceListener::!CompositorWorkspaceListener()
 
 void CompositorWorkspaceListener::WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace)
 {
-	static_cast<CompositorWorkspaceListener_Proxy*>(_native)->workspacePreUpdate(workspace);
 }
 
-/*void CompositorWorkspaceListener::PassPreExecute(Mogre::CompositorPass^ pass)
+void CompositorWorkspaceListener::PassPreExecute(Mogre::CompositorPass^ pass)
 {
-	static_cast<CompositorWorkspaceListener_Proxy*>(_native)->passPreExecute(pass);
-}*/
+}
 
 // CompositorWorkspace
 CompositorWorkspace::~CompositorWorkspace()

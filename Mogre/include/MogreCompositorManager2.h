@@ -5,6 +5,7 @@
 #include "Compositor/OgreCompositorManager2.h"
 #include "Compositor/OgreCompositorWorkspace.h"
 #include "Compositor/OgreCompositorWorkspaceListener.h"
+#include "Compositor/Pass/OgreCompositorPass.h"
 #include "MogreRenderTarget.h"
 #include "MogreTextureManager.h"
 #include "MogreCommon.h"
@@ -18,7 +19,43 @@ namespace Mogre
 	ref class Camera;
 	ref class RenderSystem;
 	ref class CompositorWorkspace;
-	ref class CompositorPass;
+
+	public ref class CompositorPass : IMogreDisposable
+	{
+	public:
+		/// <summary>Raised before any disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposing;
+		/// <summary>Raised once all disposing is performed.</summary>
+		virtual event EventHandler^ OnDisposed;
+
+	internal:
+		Ogre::CompositorPass* _native;
+		bool _createdByCLR;
+
+	public protected:
+		CompositorPass(Ogre::CompositorPass* obj) : _native(obj)
+		{
+
+		}
+
+	public:
+		~CompositorPass();
+	protected:
+		!CompositorPass();
+
+	public:
+		property bool IsDisposed
+		{
+			virtual bool get()
+			{
+				return _native == nullptr;
+			}
+		}
+
+		void Execute(Camera^ lodCamera);
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(CompositorPass);
+	};
 
 	public ref class CompositorChannel
 	{
@@ -99,12 +136,6 @@ namespace Mogre
 		}
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(TextureDefinitionBase);
-
-	internal:
-		property Ogre::TextureDefinitionBase* UnmanagedPointer
-		{
-			Ogre::TextureDefinitionBase* get();
-		}
 	};
 
 	public ref class CompositorWorkspaceDef : public TextureDefinitionBase
@@ -126,12 +157,6 @@ namespace Mogre
 		void RemoveNodeAlias(String^ alias);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(CompositorWorkspaceDef);
-
-	internal:
-		property Ogre::CompositorWorkspaceDef* UnmanagedPointer
-		{
-			Ogre::CompositorWorkspaceDef* get();
-		}
 	};
 
 	public interface class ICompositorWorkspaceListener
@@ -139,7 +164,7 @@ namespace Mogre
 		virtual Ogre::CompositorWorkspaceListener* _GetNativePtr();
 	public:
 		virtual void WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace);
-		//virtual void PassPreExecute(Mogre::CompositorPass^ pass);
+		virtual void PassPreExecute(Mogre::CompositorPass^ pass);
 	};
 
 	public ref class CompositorWorkspaceListener : public IMogreDisposable, public Mogre::ICompositorWorkspaceListener
@@ -170,7 +195,7 @@ namespace Mogre
 
 	public:
 		virtual void WorkspacePreUpdate(Mogre::CompositorWorkspace^ workspace);
-		//virtual void PassPreExecute(Mogre::CompositorPass^ pass);
+		virtual void PassPreExecute(Mogre::CompositorPass^ pass);
 
 		property bool IsDisposed
 		{
