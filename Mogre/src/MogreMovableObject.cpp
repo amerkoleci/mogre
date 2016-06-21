@@ -2,6 +2,7 @@
 #include "MogreMovableObject.h"
 #include "MogreNode.h"
 #include "MogreSceneNode.h"
+#include "MogreSceneManager.h"
 #include "Marshalling.h"
 
 using namespace Mogre;
@@ -102,18 +103,19 @@ MovableObject::!MovableObject()
 	if (IsDisposed)
 		return;
 
-	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (!userObj.isEmpty())
-	{
-		void* obj = userObj.get<void*>();
-		VoidPtrToGCHandle(obj).Free();
-	}
-
 	if (!_preventDelete)
 	{
-		delete _native;
-		_native = nullptr;
+		void* userObj = _native->getUserPointer();
+		if (userObj)
+			VoidPtrToGCHandle(userObj).Free();
 	}
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
 	_isDisposed = true;
 
 	OnDisposed(this, nullptr);
@@ -181,7 +183,7 @@ void MovableObject::DefaultVisibilityFlags::set(Ogre::uint32 flags)
 
 bool MovableObject::IsAttached::get()
 {
-	return static_cast<const Ogre::MovableObject*>(_native)->isAttached();
+	return _native->isAttached();
 }
 
 bool MovableObject::IsStatic::get()
@@ -218,22 +220,22 @@ void MovableObject::Name::set(String^ name)
 
 Mogre::Node^ MovableObject::ParentNode::get()
 {
-	return _native->getParentNode();
+	return Node::GetManaged(_native->getParentNode());
 }
 
 Mogre::SceneNode^ MovableObject::ParentSceneNode::get()
 {
-	return _native->getParentSceneNode();
+	return (Mogre::SceneNode^)SceneNode::GetManaged(_native->getParentSceneNode());
 }
 
 Ogre::uint32 MovableObject::QueryFlags::get()
 {
-	return static_cast<const Ogre::MovableObject*>(_native)->getQueryFlags();
+	return _native->getQueryFlags();
 }
 
 void MovableObject::QueryFlags::set(Ogre::uint32 flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->setQueryFlags(flags);
+	_native->setQueryFlags(flags);
 }
 
 Ogre::Real MovableObject::RenderingDistance::get()
@@ -268,47 +270,47 @@ void MovableObject::RenderQueueGroup::set(Ogre::uint8 queueID)
 
 Ogre::uint32 MovableObject::VisibilityFlags::get()
 {
-	return static_cast<const Ogre::MovableObject*>(_native)->getVisibilityFlags();
+	return _native->getVisibilityFlags();
 }
 
 void MovableObject::VisibilityFlags::set(Ogre::uint32 flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->setVisibilityFlags(flags);
+	_native->setVisibilityFlags(flags);
 }
 
 bool MovableObject::Visible::get()
 {
-	return static_cast<const Ogre::MovableObject*>(_native)->getVisible();
+	return _native->getVisible();
 }
 
 void MovableObject::Visible::set(bool visible)
 {
-	static_cast<Ogre::MovableObject*>(_native)->setVisible(visible);
+	_native->setVisible(visible);
 }
 
 void MovableObject::AddQueryFlags(Ogre::uint32 flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->addQueryFlags(flags);
+	_native->addQueryFlags(flags);
 }
 
 void MovableObject::RemoveQueryFlags(unsigned long flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->removeQueryFlags(flags);
+	_native->removeQueryFlags(flags);
 }
 
 void MovableObject::AddVisibilityFlags(Ogre::uint32 flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->addVisibilityFlags(flags);
+	_native->addVisibilityFlags(flags);
 }
 
 void MovableObject::RemoveVisibilityFlags(Ogre::uint32 flags)
 {
-	static_cast<Ogre::MovableObject*>(_native)->removeVisibilityFlags(flags);
+	_native->removeVisibilityFlags(flags);
 }
 
 void MovableObject::SetListener(Mogre::MovableObject::IListener^ listener)
 {
-	static_cast<Ogre::MovableObject*>(_native)->setListener(listener->_GetNativePtr());
+	_native->setListener(listener->_GetNativePtr());
 }
 
 /*Mogre::MovableObject::IListener^ MovableObject::GetListener()
@@ -326,19 +328,23 @@ bool MovableObject::IsVisible()
 	return _native->isVisible();
 }
 
+Mogre::SceneManager^ MovableObject::GetCreator()
+{
+	return Mogre::SceneManager::GetManaged(_native->_getManager());
+}
+
 MovableObject^ MovableObject::GetManaged(Ogre::MovableObject* native)
 {
 	if (native == 0)
 		return nullptr;
 
-	const Ogre::Any& userObj = native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (!userObj.isEmpty())
+	void* userObj = native->getUserPointer();
+	if (userObj)
 	{
-		void* obj = userObj.get<void*>();
-		return static_cast<MovableObject^>(VoidPtrToGCHandle(obj).Target);
+		return static_cast<MovableObject^>(VoidPtrToGCHandle(userObj).Target);
 	}
 
-	throw gcnew InvalidOperationException("Unknown collision object!");
+	throw gcnew InvalidOperationException("Unknown MovableObject object!");
 }
 
 Ogre::MovableObject* MovableObject::UnmanagedPointer::get()
@@ -348,18 +354,18 @@ Ogre::MovableObject* MovableObject::UnmanagedPointer::get()
 
 void MovableObject::UnmanagedPointer::set(Ogre::MovableObject* value)
 {
-	// Inheriting classes such as SoftBody may pass 0 and then do
-	// additional processing before storing the native pointer.
 	if (value == 0) {
 		return;
 	}
 
 	_native = value;
-	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (userObj.isEmpty())
+	if (_native->getUserPointer() == 0)
 	{
-		GCHandle handle = GCHandle::Alloc(this, GCHandleType::Weak);
-		Ogre::Any anyObj = Ogre::Any(GCHandleToVoidPtr(handle));
-		_native->getUserObjectBindings().setUserAny(MOGRE_HANDLE, anyObj);
+		void* handle = GCHandleToVoidPtr(GCHandle::Alloc(this, GCHandleType::Normal));
+		_native->setUserPointer(handle);
+	}
+	else
+	{
+		VoidPtrToGCHandle(_native->getUserPointer()).Target = this;
 	}
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MogreEntity.h"
+#include "MogreSceneManager.h"
 #include "MogreVertexIndexData.h"
 #include "MogreMeshManager.h"
 #include "MogreMaterialManager.h"
@@ -43,14 +44,17 @@ Ogre::SubEntity* SubEntity::UnmanagedPointer::get()
 
 Mogre::SubEntity^ Entity::GetSubEntity(size_t index)
 {
-	return static_cast<const Ogre::Entity*>(_native)->getSubEntity(index);
+	if (index >= (size_t)_subEntities->Count)
+		throw gcnew ArgumentException("Index out of bounds.");
+
+	return _subEntities[index];
 }
 
 Mogre::SubEntity^ Entity::GetSubEntity(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-
-	return static_cast<const Ogre::Entity*>(_native)->getSubEntity(o_name);
+	size_t index = static_cast<const Ogre::Entity*>(_native)->getMesh()->_getSubMeshIndex(o_name);
+	return GetSubEntity(index);
 }
 
 Mogre::SubMesh^ SubEntity::SubMesh::get()
@@ -143,6 +147,16 @@ Mogre::Vector4 SubEntity::GetCustomParameter(size_t index)
 }
 
 // -------------- Entity --------------
+Entity::Entity(Ogre::Entity* obj) : MovableObject(obj)
+{
+	_subEntities = gcnew System::Collections::Generic::List<SubEntity^>();
+	size_t count = obj->getNumSubEntities();
+	for (size_t i = 0; i < count; i++)
+	{
+		_subEntities->Add(gcnew SubEntity(obj->getSubEntity(i)));
+	}
+}
+
 Mogre::AnimationStateSet^ Entity::AllAnimationStates::get()
 {
 	return static_cast<const Ogre::Entity*>(_native)->getAllAnimationStates();
@@ -241,6 +255,17 @@ Mogre::MeshPtr^ Entity::GetMesh()
 Mogre::Entity^ Entity::Clone()
 {
 	return gcnew Mogre::Entity(static_cast<const Ogre::Entity*>(_native)->clone());
+}
+
+Mogre::Entity^ Entity::Clone(String^ name)
+{
+	Mogre::Entity^ result = gcnew Mogre::Entity(static_cast<const Ogre::Entity*>(_native)->clone());
+	result->Name = name;
+	if (!String::IsNullOrEmpty(name))
+	{
+		GetCreator()->AddEntity(name, result);
+	}
+	return result;
 }
 
 void Entity::SetMaterialName(String^ name)

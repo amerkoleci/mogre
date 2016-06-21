@@ -10,7 +10,7 @@ CPP_DECLARE_ITERATOR(SceneNode::, ObjectIterator, Ogre::SceneNode::ObjectIterato
 
 Mogre::SceneNode^ SceneNode::ParentSceneNode::get()
 {
-	return static_cast<const Ogre::SceneNode*>(_native)->getParentSceneNode();
+	return (Mogre::SceneNode^)Node::GetManaged(static_cast<const Ogre::SceneNode*>(_native)->getParentSceneNode());
 }
 
 void SceneNode::AttachObject(Mogre::MovableObject^ obj)
@@ -18,21 +18,21 @@ void SceneNode::AttachObject(Mogre::MovableObject^ obj)
 	static_cast<Ogre::SceneNode*>(_native)->attachObject(obj);
 }
 
-unsigned short SceneNode::NumAttachedObjects()
+size_t SceneNode::NumAttachedObjects()
 {
 	return static_cast<const Ogre::SceneNode*>(_native)->numAttachedObjects();
 }
 
-Mogre::MovableObject^ SceneNode::GetAttachedObject(unsigned short index)
+Mogre::MovableObject^ SceneNode::GetAttachedObject(size_t index)
 {
-	return static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(index);
+	return MovableObject::GetManaged(static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(index));
 }
 
 Mogre::MovableObject^ SceneNode::GetAttachedObject(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(o_name);
+	return MovableObject::GetManaged(static_cast<Ogre::SceneNode*>(_native)->getAttachedObject(o_name));
 }
 
 void SceneNode::DetachObject(Mogre::MovableObject^ obj)

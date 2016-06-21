@@ -29,11 +29,7 @@ namespace Mogre
 
 		Mogre::GpuProgram^ _getBindingDelegate();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(HighLevelGpuProgram)
-
-			//Protected Declarations
-	protected public:
-
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(HighLevelGpuProgram);
 	};
 
 	public ref class HighLevelGpuProgramPtr : public HighLevelGpuProgram

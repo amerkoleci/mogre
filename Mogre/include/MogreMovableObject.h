@@ -7,6 +7,7 @@ namespace Mogre
 {
 	ref class Node;
 	ref class SceneNode;
+	ref class SceneManager;
 
 	public ref class MovableObject : IMogreDisposable// : public ShadowCaster, public IAnimableObject
 	{
@@ -65,24 +66,22 @@ namespace Mogre
 	internal:
 		Ogre::MovableObject* _native;
 		bool _preventDelete;
+		bool _createdByCLR;
 
 	private:
 		bool _isDisposed;
 
 	public protected:
-		MovableObject(IntPtr ptr)
-			: _preventDelete(true)
-		{
-			UnmanagedPointer = (Ogre::MovableObject*)ptr.ToPointer();
-		}
-
 		MovableObject(Ogre::MovableObject* native)
 			: _preventDelete(true)
+			, _createdByCLR(false)
 		{
 			UnmanagedPointer = native;
 		}
 
+	public:
 		~MovableObject();
+	protected:
 		!MovableObject();
 
 	internal:
@@ -267,18 +266,19 @@ namespace Mogre
 		//Mogre::MovableObject::IListener^ GetListener();
 
 		void DetachFromParent();
-
 		bool IsVisible();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(MovableObject);
 
 	public:
-		property Ogre::MovableObject* NativePtr
+		property IntPtr NativePtr
 		{
-			Ogre::MovableObject* get() { return UnmanagedPointer; }
+			IntPtr get() { return (IntPtr)UnmanagedPointer; }
 		}
 
 	internal:
+		Mogre::SceneManager^ GetCreator();
+
 		property Ogre::MovableObject* UnmanagedPointer
 		{
 			virtual Ogre::MovableObject* get();

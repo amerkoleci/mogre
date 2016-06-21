@@ -179,31 +179,33 @@ Mogre::SceneManager^ Root::CreateSceneManager(String^ typeName, size_t numWorker
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return _native->createSceneManager(o_typeName, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod, o_instanceName);
+	return gcnew Mogre::SceneManager(_native->createSceneManager(o_typeName, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod, o_instanceName));
 }
 
 Mogre::SceneManager^ Root::CreateSceneManager(String^ typeName, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod)
 {
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 
-	return _native->createSceneManager(o_typeName, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod);
+	return gcnew Mogre::SceneManager(_native->createSceneManager(o_typeName, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod));
 }
 
 Mogre::SceneManager^ Root::CreateSceneManager(SceneType typeMask, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod, String^ instanceName)
 {
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return _native->createSceneManager((Ogre::SceneTypeMask)typeMask, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod, o_instanceName);
+	return gcnew Mogre::SceneManager(_native->createSceneManager((Ogre::SceneTypeMask)typeMask, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod, o_instanceName));
 }
 
 Mogre::SceneManager^ Root::CreateSceneManager(SceneType typeMask, size_t numWorkerThreads, InstancingThreadedCullingMethod threadedCullingMethod)
 {
-	return _native->createSceneManager((Ogre::SceneTypeMask)typeMask, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod);
+	return gcnew Mogre::SceneManager(_native->createSceneManager((Ogre::SceneTypeMask)typeMask, numWorkerThreads, (Ogre::InstancingThreadedCullingMethod)threadedCullingMethod));
 }
 
 void Root::DestroySceneManager(Mogre::SceneManager^ sceneManager)
 {
-	_native->destroySceneManager(GetPointerOrNull(sceneManager));
+	_native->destroySceneManager(sceneManager);
+	delete sceneManager;
+	sceneManager = 0;
 }
 
 Mogre::SceneManager^ Root::GetSceneManager(String^ instanceName)

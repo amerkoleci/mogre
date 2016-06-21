@@ -135,14 +135,12 @@ namespace Mogre
 				return *static_cast<Ogre::T*>(t->_native);				\
 			}
 
-#define RETURN_CLR_OBJECT_GET_MANAGED(type, unmanagedPtr) return (type^) type::GetManaged( unmanagedPtr );
-
 #define DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(T)						\
 			static operator T^ (const Ogre::T* t) {						\
-				RETURN_CLR_OBJECT_GET_MANAGED(T, (const_cast<Ogre::T*>(t)) )		\
+				return (T^) T::GetManaged(const_cast<Ogre::T*>(t));		\
 			}															\
 			static operator T^ (const Ogre::T& t) {						\
-				RETURN_CLR_OBJECT_GET_MANAGED(T, (&const_cast<Ogre::T&>(t)) )		\
+				return (T^) T::GetManaged(&const_cast<Ogre::T&>(t));	\
 			}															\
 			inline static operator Ogre::T* (T^ t) {					\
 				return (t == CLR_NULL) ? 0 : static_cast<Ogre::T*>(t->_native);		\

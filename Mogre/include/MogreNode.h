@@ -34,6 +34,7 @@ namespace Mogre
 	internal:
 		Ogre::Node* _native;
 		bool _preventDelete;
+		bool _createdByCLR;
 
 	private:
 		bool _isDisposed;
@@ -41,6 +42,7 @@ namespace Mogre
 	public protected:
 		Node(Ogre::Node* obj)
 			: _preventDelete(true)
+			, _createdByCLR(false)
 		{
 			UnmanagedPointer = obj;
 		}

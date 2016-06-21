@@ -73,10 +73,7 @@ namespace Mogre
 
 	public ref class SceneManager : IMogreDisposable, public IRenderQueueListener_Receiver
 	{
-		Mogre::SceneNode^ _sceneRootDynamic;
-		Mogre::SceneNode^ _sceneRootStatic;
 		Mogre::Viewport^ _currentViewport;
-		Mogre::Camera^ _inProgressCamera;
 
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -99,10 +96,11 @@ namespace Mogre
 			PT_SPHERE = Ogre::SceneManager::PT_SPHERE
 		};
 
-	private:
+	internal:
 		Ogre::SceneManager* _native;
-		bool _createdByCLR;
+		bool _preventDelete;
 
+	private:
 		//Event and Listener fields
 		RenderQueueListener_Director* _renderQueueListener;
 		Mogre::RenderQueueListener::RenderQueueStartedHandler^ _renderQueueStarted;
@@ -113,17 +111,22 @@ namespace Mogre
 		System::Collections::Generic::Dictionary<String^, ManualObject^>^ _manualObjects;
 
 	public protected:
-		SceneManager(Ogre::SceneManager* obj) : _native(obj)
+		SceneManager(Ogre::SceneManager* obj)
+			: _preventDelete(true)
 		{
 			_sceneNodes = gcnew System::Collections::Generic::Dictionary<String^, SceneNode^>();
 			_entities = gcnew System::Collections::Generic::Dictionary<String^, Entity^>();
 			_manualObjects = gcnew System::Collections::Generic::Dictionary<String^, ManualObject^>();
+			UnmanagedPointer = obj;
 		}
 
 	public:
 		~SceneManager();
 	protected:
 		!SceneManager();
+
+	internal:
+		static SceneManager^ GetManaged(Ogre::SceneManager* native);
 
 	public:
 		event Mogre::RenderQueueListener::RenderQueueStartedHandler^ RenderQueueStarted
@@ -490,12 +493,15 @@ namespace Mogre
 		void UpdateAllLods(Mogre::Camera^ lodCamera, Ogre::Real lodBias, Ogre::uint8 firstRq, Ogre::uint8 lastRq);
 		void UpdateSceneGraph();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(SceneManager);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(SceneManager);
 
 	internal:
+		void AddEntity(String^ name, Mogre::Entity^ entity);
+
 		property Ogre::SceneManager* UnmanagedPointer
 		{
-			Ogre::SceneManager* get();
+			virtual Ogre::SceneManager* get();
+			void set(Ogre::SceneManager* value);
 		}
 
 	protected public:

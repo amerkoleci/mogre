@@ -697,7 +697,8 @@ OverlaySystem::!OverlaySystem()
 
 	if (_native)
 	{
-		GetPointerOrNull(_sceneManager)->removeRenderQueueListener(_native);
+		Ogre::SceneManager* ogreSceneMgr = _sceneManager;
+		ogreSceneMgr->removeRenderQueueListener(_native);
 	}
 
 	if (_createdByCLR && _native)
@@ -718,14 +719,16 @@ void OverlaySystem::SceneManager::set(Mogre::SceneManager^ value)
 {
 	if (value != nullptr)
 	{
-		GetPointerOrNull(value)->addRenderQueueListener(_native);
+		Ogre::SceneManager* ogreSceneMgr = value;
+		ogreSceneMgr->addRenderQueueListener(_native);
 		_sceneManager = value;
 	}
 	else
 	{
 		if (_sceneManager)
 		{
-			GetPointerOrNull(_sceneManager)->removeRenderQueueListener(_native);
+			Ogre::SceneManager* ogreSceneMgr = _sceneManager;
+			ogreSceneMgr->removeRenderQueueListener(_native);
 		}
 
 		_sceneManager = nullptr;
@@ -797,7 +800,7 @@ Mogre::Overlay^ OverlayManager::Create(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return gcnew Mogre::Overlay( _native->create(o_name) );
+	return gcnew Mogre::Overlay(_native->create(o_name));
 }
 
 Mogre::Overlay^ OverlayManager::GetByName(String^ name)
@@ -861,7 +864,7 @@ Mogre::OverlayElement^ OverlayManager::CreateOverlayElement(String^ typeName, St
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
 	auto instance = ResolveFromNativeInstance(_native->createOverlayElement(o_typeName, o_instanceName, isTemplate));
-	if(isTemplate)
+	if (isTemplate)
 		_templates->Add(instanceName, instance);
 	else
 		_instances->Add(instanceName, instance);

@@ -19,18 +19,19 @@ Node::!Node()
 	if (IsDisposed)
 		return;
 
-	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (!userObj.isEmpty())
-	{
-		void* obj = userObj.get<void*>();
-		VoidPtrToGCHandle(obj).Free();
-	}
-
 	if (!_preventDelete)
 	{
-		delete _native;
-		_native = nullptr;
+		void* userObj = _native->getUserPointer();
+		if (userObj)
+			VoidPtrToGCHandle(userObj).Free();
 	}
+
+	if (_createdByCLR && _native)
+	{
+		delete _native;
+		_native = 0;
+	}
+
 	_isDisposed = true;
 
 	OnDisposed(this, nullptr);
@@ -94,7 +95,7 @@ void Node::Orientation::set(Mogre::Quaternion q)
 
 Mogre::Node^ Node::Parent::get()
 {
-	return _native->getParent();
+	return Node::GetManaged(_native->getParent());
 }
 
 Ogre::uint16 Node::DepthLevel::get()
@@ -384,14 +385,11 @@ Node^ Node::GetManaged(Ogre::Node* native)
 	if (native == 0)
 		return nullptr;
 
-	const Ogre::Any& userObj = native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (!userObj.isEmpty())
-	{
-		void* obj = userObj.get<void*>();
-		return static_cast<Node^>(VoidPtrToGCHandle(obj).Target);
-	}
+	void* userObj = native->getUserPointer();
+	if (userObj)
+		return static_cast<Node^>(VoidPtrToGCHandle(userObj).Target);
 
-	throw gcnew InvalidOperationException("Unknown collision object!");
+	throw gcnew InvalidOperationException("Unknown Node object!");
 }
 
 Ogre::Node* Node::UnmanagedPointer::get()
@@ -401,18 +399,18 @@ Ogre::Node* Node::UnmanagedPointer::get()
 
 void Node::UnmanagedPointer::set(Ogre::Node* value)
 {
-	// Inheriting classes such as SoftBody may pass 0 and then do
-	// additional processing before storing the native pointer.
 	if (value == 0) {
 		return;
 	}
 
 	_native = value;
-	const Ogre::Any& userObj = _native->getUserObjectBindings().getUserAny(MOGRE_HANDLE);
-	if (userObj.isEmpty())
+	if (_native->getUserPointer() == 0)
 	{
-		GCHandle handle = GCHandle::Alloc(this, GCHandleType::Weak);
-		Ogre::Any anyObj = Ogre::Any(GCHandleToVoidPtr(handle));
-		_native->getUserObjectBindings().setUserAny(MOGRE_HANDLE, anyObj);
+		void* handle = GCHandleToVoidPtr(GCHandle::Alloc(this, GCHandleType::Normal));
+		_native->setUserPointer(handle);
+	}
+	else
+	{
+		VoidPtrToGCHandle(_native->getUserPointer()).Target = this;
 	}
 }

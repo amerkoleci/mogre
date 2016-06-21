@@ -140,7 +140,7 @@ bool ShaderGenerator::Initialize()
 
 void ShaderGenerator::AddSceneManager(Mogre::SceneManager^ manager)
 {
-	_native->addSceneManager(GetPointerOrNull(manager));
+	_native->addSceneManager(manager);
 
 #if OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_NACL && OGRE_PLATFORM != OGRE_PLATFORM_WINRT
 	// Setup core libraries and shader cache path.

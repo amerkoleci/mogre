@@ -44,6 +44,15 @@ CPP_DECLARE_ITERATOR(SceneManager::, MovableObjectIterator, Ogre::SceneManager::
 CPP_DECLARE_STLVECTOR(SceneManager::, CameraList, Mogre::Camera^, Ogre::Camera*);
 CPP_DECLARE_ITERATOR_NOCONSTRUCTOR(SceneManager::, CameraIterator, Ogre::SceneManager::CameraIterator, Mogre::SceneManager::CameraList, Mogre::Camera^, Ogre::Camera*);
 
+Mogre::SceneNode^ GetOrCreate(Ogre::SceneNode* native)
+{
+	void* userObj = native->getUserPointer();
+	if (userObj)
+		return static_cast<Mogre::SceneNode^>(VoidPtrToGCHandle(userObj).Target);
+
+	return gcnew Mogre::SceneNode(native);
+}
+
 
 SceneManager::~SceneManager()
 {
@@ -56,18 +65,6 @@ SceneManager::!SceneManager()
 
 	if (IsDisposed)
 		return;
-
-	if (_sceneRootDynamic != CLR_NULL)
-	{
-		delete _sceneRootDynamic;
-		_sceneRootDynamic = nullptr;
-	}
-
-	if (_sceneRootStatic != CLR_NULL)
-	{
-		delete _sceneRootStatic;
-		_sceneRootStatic = nullptr;
-	}
 
 	if (_renderQueueListener != 0)
 	{
@@ -83,7 +80,17 @@ SceneManager::!SceneManager()
 		delete _shadowListener; _shadowListener = 0;
 	}*/
 
-	if (_createdByCLR && _native) { delete _native; _native = 0; }
+	if (!_preventDelete)
+	{
+		void* userObj = _native->getUserPointer();
+		if (userObj)
+			VoidPtrToGCHandle(userObj).Free();
+		if (_native)
+		{
+			delete _native;
+			_native = 0;
+		}
+	}
 
 	OnDisposed(this, nullptr);
 }
@@ -120,7 +127,7 @@ Mogre::Viewport^ SceneManager::CurrentViewport::get()
 
 Mogre::Camera^ SceneManager::CameraInProgress::get()
 {
-	ReturnCachedObjectGcnewNullable(Mogre::Camera, _inProgressCamera, _native->getCameraInProgress());
+	return (Mogre::Camera^)Camera::GetManaged(_native->getCameraInProgress());
 }
 
 bool SceneManager::DisplaySceneNodes::get()
@@ -135,15 +142,17 @@ void SceneManager::DisplaySceneNodes::set(bool value)
 
 Mogre::SceneNode^ SceneManager::GetRootSceneNode()
 {
-	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode());
+	return GetOrCreate(_native->getRootSceneNode());
 }
 
 Mogre::SceneNode^ SceneManager::GetRootSceneNode(SceneMemoryMgrTypes sceneType)
 {
 	if (sceneType == SceneMemoryMgrTypes::Dynamic)
-		ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode(Ogre::SCENE_DYNAMIC));
+	{
+		return GetOrCreate(_native->getRootSceneNode(Ogre::SCENE_DYNAMIC));
+	}
 
-	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootStatic, _native->getRootSceneNode(Ogre::SCENE_STATIC));
+	return GetOrCreate(_native->getRootSceneNode(Ogre::SCENE_STATIC));
 }
 
 
@@ -182,6 +191,7 @@ void SceneManager::DestroySceneNode(Mogre::SceneNode^ node)
 	}
 
 	_native->destroySceneNode(node);
+	node->_preventDelete = false;
 	delete node;
 	node = nullptr;
 }
@@ -193,6 +203,7 @@ void SceneManager::DestroySceneNode(String^ name)
 	{
 		_native->destroySceneNode(node);
 		_sceneNodes->Remove(name);
+		node->_preventDelete = false;
 		delete node;
 		node = nullptr;
 	}
@@ -226,7 +237,6 @@ void SceneManager::UnregisterSceneNodeListener(Mogre::SceneNode^ node)
 	_native->unregisterSceneNodeListener(node);
 }
 
-
 Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
 {
 	return gcnew Mogre::BillboardSet(_native->createBillboardSet(poolSize));
@@ -235,6 +245,9 @@ Mogre::BillboardSet^ SceneManager::CreateBillboardSet(unsigned int poolSize)
 void SceneManager::DestroyBillboardSet(Mogre::BillboardSet^ set)
 {
 	_native->destroyBillboardSet(set);
+	set->_preventDelete = false;
+	delete set;
+	set = nullptr;
 }
 
 void SceneManager::DestroyAllBillboardSets()
@@ -250,6 +263,9 @@ Mogre::BillboardChain^ SceneManager::CreateBillboardChain()
 void SceneManager::DestroyBillboardChain(Mogre::BillboardChain^ obj)
 {
 	_native->destroyBillboardChain(obj);
+	obj->_preventDelete = false;
+	delete obj;
+	obj = nullptr;
 }
 
 void SceneManager::DestroyAllBillboardChains()
@@ -298,6 +314,7 @@ void SceneManager::DestroyManualObject(Mogre::ManualObject^ obj)
 	}
 
 	_native->destroyManualObject(obj);
+	obj->_preventDelete = false;
 	delete obj;
 	obj = nullptr;
 }
@@ -328,6 +345,7 @@ void SceneManager::DestroyManualObject(String^ name)
 	{
 		_native->destroyManualObject(manualObject);
 		_manualObjects->Remove(name);
+		manualObject->_preventDelete = false;
 		delete manualObject;
 		manualObject = nullptr;
 	}
@@ -341,6 +359,7 @@ Mogre::RibbonTrail^ SceneManager::CreateRibbonTrail()
 void SceneManager::DestroyRibbonTrail(Mogre::RibbonTrail^ obj)
 {
 	_native->destroyRibbonTrail(obj);
+	obj->_preventDelete = false;
 	delete obj;
 	obj = nullptr;
 }
@@ -372,13 +391,14 @@ Mogre::ParticleSystem^ SceneManager::CreateParticleSystem(size_t quota)
 void SceneManager::DestroyParticleSystem(Mogre::ParticleSystem^ obj)
 {
 	_native->destroyParticleSystem(obj);
+	obj->_preventDelete = false;
 	delete obj;
 	obj = nullptr;
 }
 
 void SceneManager::DestroyAllParticleSystems()
 {
-	static_cast<Ogre::SceneManager*>(_native)->destroyAllParticleSystems();
+	_native->destroyAllParticleSystems();
 }
 
 Mogre::Light^ SceneManager::CreateLight()
@@ -389,6 +409,7 @@ Mogre::Light^ SceneManager::CreateLight()
 void SceneManager::DestroyLight(Mogre::Light^ light)
 {
 	_native->destroyLight(light);
+	light->_preventDelete = false;
 	delete light;
 	light = nullptr;
 }
@@ -448,6 +469,7 @@ void SceneManager::DestroyCamera(Mogre::Camera^ camera)
 	_native->destroyCamera(camera);
 	delete camera;
 	camera = nullptr;
+	camera->_preventDelete = false;
 }
 
 void SceneManager::DestroyCamera(String^ name)
@@ -593,6 +615,7 @@ void SceneManager::DestroyEntity(Mogre::Entity^ entity)
 	}
 
 	_native->destroyEntity(entity);
+	entity->_preventDelete = false;
 	delete entity;
 	entity = nullptr;
 }
@@ -604,6 +627,7 @@ void SceneManager::DestroyEntity(String^ name)
 	{
 		_native->destroyEntity(entity);
 		_entities->Remove(name);
+		entity->_preventDelete = false;
 		delete entity;
 		entity = nullptr;
 	}
@@ -626,6 +650,11 @@ void SceneManager::DestroyAllEntities()
 {
 	_native->destroyAllEntities();
 	_entities->Clear();
+}
+
+void SceneManager::AddEntity(String^ name, Mogre::Entity^ entity)
+{
+	_entities->Add(name, entity);
 }
 
 void SceneManager::SetSkyPlane(bool enable, Mogre::Plane plane, String^ materialName, Ogre::Real scale, Ogre::Real tiling, bool drawFirst, Ogre::Real bow, int xsegments, int ysegments, String^ groupName)
@@ -894,7 +923,7 @@ void SceneManager::DestroyAllAnimationStates()
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()
 {
-	ReturnCachedObjectGcnew(Mogre::SceneNode, _sceneRootDynamic, _native->getRootSceneNode());
+	return GetOrCreate(_native->getRootSceneNode());
 }
 
 Ogre::Real SceneManager::ShadowFarDistance::get()
@@ -961,7 +990,6 @@ Mogre::Real SceneManager::FogStart::get()
 	return _native->getFogStart();
 }
 
-
 Ogre::uint32 SceneManager::VisibilityMask::get()
 {
 	return _native->getVisibilityMask();
@@ -989,7 +1017,6 @@ Mogre::StaticGeometry^ SceneManager::GetStaticGeometry(String^ name)
 bool SceneManager::HasStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-
 	return _native->hasStaticGeometry(o_name);
 }
 
@@ -1001,7 +1028,6 @@ void SceneManager::DestroyStaticGeometry(Mogre::StaticGeometry^ geom)
 void SceneManager::DestroyStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-
 	_native->destroyStaticGeometry(o_name);
 }
 
@@ -1077,20 +1103,23 @@ bool SceneManager::HasMovableObject(MovableObject^ movable)
 void SceneManager::DestroyMovableObject(MovableObject^ movable, String^ typeName)
 {
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
-
 	_native->destroyMovableObject(movable, o_typeName);
+	movable->_preventDelete = false;
+	delete movable;
+	movable = nullptr;
 }
 
 void SceneManager::DestroyMovableObject(MovableObject^ movable)
 {
 	_native->destroyMovableObject(movable);
-
+	movable->_preventDelete = false;
+	delete movable;
+	movable = nullptr;
 }
 
 void SceneManager::DestroyAllMovableObjectsByType(String^ typeName)
 {
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
-
 	_native->destroyAllMovableObjectsByType(o_typeName);
 }
 
@@ -1119,7 +1148,6 @@ void SceneManager::ExtractMovableObject(Mogre::MovableObject^ m)
 void SceneManager::ExtractAllMovableObjectsByType(String^ typeName)
 {
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
-
 	_native->extractAllMovableObjectsByType(o_typeName);
 }
 
@@ -1168,9 +1196,42 @@ void SceneManager::UpdateSceneGraph()
 	_native->updateSceneGraph();
 }
 
+
+SceneManager^ SceneManager::GetManaged(Ogre::SceneManager* native)
+{
+	if (native == 0)
+		return nullptr;
+
+	void* userObj = native->getUserPointer();
+	if (userObj)
+	{
+		return static_cast<Mogre::SceneManager^>(VoidPtrToGCHandle(userObj).Target);
+	}
+
+	throw gcnew InvalidOperationException("Unknown SceneManager object!");
+}
+
 Ogre::SceneManager* SceneManager::UnmanagedPointer::get()
 {
 	return _native;
+}
+
+void SceneManager::UnmanagedPointer::set(Ogre::SceneManager* value)
+{
+	if (value == 0) {
+		return;
+	}
+
+	_native = value;
+	if (_native->getUserPointer() == 0)
+	{
+		void* handle = GCHandleToVoidPtr(GCHandle::Alloc(this, GCHandleType::Normal));
+		_native->setUserPointer(handle);
+	}
+	else
+	{
+		VoidPtrToGCHandle(_native->getUserPointer()).Target = this;
+	}
 }
 
 CPP_DECLARE_STLMAP(SceneManagerEnumerator::, Instances, String^, Mogre::SceneManager^, Ogre::String, Ogre::SceneManager*);

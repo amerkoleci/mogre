@@ -331,8 +331,8 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 {
 	DECLARE_NATIVE_STRING(o_definitionName, definitionName);
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
-		GetPointerOrNull(finalRenderTarget),
+		sceneManager,
+		finalRenderTarget,
 		defaultCamera,
 		o_definitionName,
 		true);
@@ -344,8 +344,8 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 {
 	DECLARE_NATIVE_STRING(o_definitionName, definitionName);
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
-		GetPointerOrNull(finalRenderTarget),
+		sceneManager,
+		finalRenderTarget,
 		defaultCamera,
 		o_definitionName,
 		enabled);
@@ -357,8 +357,8 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 {
 	DECLARE_NATIVE_STRING(o_definitionName, definitionName);
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
-		GetPointerOrNull(finalRenderTarget),
+		sceneManager,
+		finalRenderTarget,
 		defaultCamera,
 		o_definitionName,
 		enabled,
@@ -376,7 +376,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	nativeChannel.textures = finalRenderTarget->textures;
 
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
+		sceneManager,
 		nativeChannel,
 		defaultCamera,
 		o_definitionName,
@@ -394,7 +394,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	nativeChannel.textures = finalRenderTarget->textures;
 
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
+		sceneManager,
 		nativeChannel,
 		defaultCamera,
 		o_definitionName,
@@ -412,7 +412,7 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 	nativeChannel.textures = finalRenderTarget->textures;
 
 	auto workspace = _native->addWorkspace(
-		GetPointerOrNull(sceneManager),
+		sceneManager,
 		nativeChannel,
 		defaultCamera,
 		o_definitionName,

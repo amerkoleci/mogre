@@ -124,11 +124,10 @@ namespace Mogre
 
 	public ref class Entity : public MovableObject
 	{
-	public protected:
-		Entity(Ogre::Entity* obj) : MovableObject(obj)
-		{
+		System::Collections::Generic::List<SubEntity^>^ _subEntities;
 
-		}
+	public protected:
+		Entity(Ogre::Entity* obj);
 
 	public:
 		property Mogre::AnimationStateSet^ AllAnimationStates
@@ -237,6 +236,7 @@ namespace Mogre
 		Mogre::SubEntity^ GetSubEntity(String^ name);
 
 		Mogre::Entity^ Clone();
+		Mogre::Entity^ Clone(String^ name);
 
 		void SetMaterialName(String^ name);
 

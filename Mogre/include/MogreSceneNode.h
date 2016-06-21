@@ -36,9 +36,9 @@ namespace Mogre
 
 		void AttachObject(Mogre::MovableObject^ obj);
 
-		unsigned short NumAttachedObjects();
+		size_t NumAttachedObjects();
 
-		Mogre::MovableObject^ GetAttachedObject(unsigned short index);
+		Mogre::MovableObject^ GetAttachedObject(size_t index);
 
 		Mogre::MovableObject^ GetAttachedObject(String^ name);
 
