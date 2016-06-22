@@ -66,7 +66,9 @@ group "Samples"
 	include ("Samples/Mogre.Sample.SkyPlane")
 	include ("Samples/Mogre.Sample.CubeMapping")
 	include ("Samples/Mogre.Sample.CameraTrack")
-
+	include ("Samples/Mogre.Sample.StaticGeometry")
+	include ("Samples/Mogre.Sample.RenderToTexture")
+	
 	-- Mogre.SampleBrowser
 	include ("Mogre.SampleBrowser")
 	

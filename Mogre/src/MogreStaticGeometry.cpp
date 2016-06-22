@@ -17,11 +17,20 @@ StaticGeometry::!StaticGeometry()
 	if (IsDisposed)
 		return;
 
+	if (!_preventDelete)
+	{
+		void* userObj = _native->getUserPointer();
+		if (userObj)
+			VoidPtrToGCHandle(userObj).Free();
+	}
+
 	if (_createdByCLR && _native)
 	{
 		delete _native;
 		_native = 0;
 	}
+
+	_isDisposed = true;
 
 	OnDisposed(this, nullptr);
 }
@@ -148,4 +157,41 @@ void StaticGeometry::Dump(String^ filename)
 	DECLARE_NATIVE_STRING(o_filename, filename);
 
 	static_cast<const Ogre::StaticGeometry*>(_native)->dump(o_filename);
+}
+
+StaticGeometry^ StaticGeometry::GetManaged(Ogre::StaticGeometry* native)
+{
+	if (native == 0)
+		return nullptr;
+
+	void* userObj = native->getUserPointer();
+	if (userObj)
+	{
+		return static_cast<StaticGeometry^>(VoidPtrToGCHandle(userObj).Target);
+	}
+
+	throw gcnew InvalidOperationException("Unknown StaticGeometry object!");
+}
+
+Ogre::StaticGeometry* StaticGeometry::UnmanagedPointer::get()
+{
+	return _native;
+}
+
+void StaticGeometry::UnmanagedPointer::set(Ogre::StaticGeometry* value)
+{
+	if (value == 0) {
+		return;
+	}
+
+	_native = value;
+	if (_native->getUserPointer() == 0)
+	{
+		void* handle = GCHandleToVoidPtr(GCHandle::Alloc(this, GCHandleType::Normal));
+		_native->setUserPointer(handle);
+	}
+	else
+	{
+		VoidPtrToGCHandle(_native->getUserPointer()).Target = this;
+	}
 }

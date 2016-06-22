@@ -21,12 +21,18 @@ namespace Mogre
 
 	internal:
 		Ogre::StaticGeometry* _native;
+		bool _preventDelete;
 		bool _createdByCLR;
 
-	public protected:
-		StaticGeometry(Ogre::StaticGeometry* obj) : _native(obj)
-		{
+	private:
+		bool _isDisposed;
 
+	public protected:
+		StaticGeometry(Ogre::StaticGeometry* native)
+			: _preventDelete(true)
+			, _createdByCLR(false)
+		{
+			UnmanagedPointer = native;
 		}
 
 	public:
@@ -34,12 +40,15 @@ namespace Mogre
 	protected:
 		!StaticGeometry();
 
+	internal:
+		static StaticGeometry^ GetManaged(Ogre::StaticGeometry* native);
+
 	public:
 		property bool IsDisposed
 		{
 			virtual bool get()
 			{
-				return _native == nullptr;
+				return _isDisposed;
 			}
 		}
 
@@ -127,12 +136,19 @@ namespace Mogre
 
 		void Dump(String^ filename);
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(StaticGeometry);
+		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(StaticGeometry);
+
+	public:
+		property IntPtr NativePtr
+		{
+			IntPtr get() { return (IntPtr)UnmanagedPointer; }
+		}
 
 	internal:
 		property Ogre::StaticGeometry* UnmanagedPointer
 		{
-			Ogre::StaticGeometry* get() { return _native; }
+			virtual Ogre::StaticGeometry* get();
+			void set(Ogre::StaticGeometry* value);
 		}
 	};
 }

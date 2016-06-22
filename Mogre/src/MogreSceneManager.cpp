@@ -211,7 +211,7 @@ void SceneManager::DestroySceneNode(String^ name)
 
 Mogre::SceneNode^ SceneManager::GetSceneNode(Ogre::IdType id)
 {
-	return _native->getSceneNode(id);
+	return (Mogre::SceneNode^) Mogre::SceneNode::GetManaged(_native->getSceneNode(id));
 }
 
 Mogre::SceneNode^ SceneManager::GetSceneNode(String^ name)
@@ -1004,14 +1004,14 @@ Mogre::StaticGeometry^ SceneManager::CreateStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return _native->createStaticGeometry(o_name);
+	return gcnew Mogre::StaticGeometry(_native->createStaticGeometry(o_name));
 }
 
 Mogre::StaticGeometry^ SceneManager::GetStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
 
-	return _native->getStaticGeometry(o_name);
+	return Mogre::StaticGeometry::GetManaged(_native->getStaticGeometry(o_name));
 }
 
 bool SceneManager::HasStaticGeometry(String^ name)
@@ -1022,13 +1022,24 @@ bool SceneManager::HasStaticGeometry(String^ name)
 
 void SceneManager::DestroyStaticGeometry(Mogre::StaticGeometry^ geom)
 {
-	_native->destroyStaticGeometry(geom);
+	_native->destroyStaticGeometry(geom->UnmanagedPointer);
+	geom->_preventDelete = false;
+	delete geom;
+	geom = nullptr;
 }
 
 void SceneManager::DestroyStaticGeometry(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
+	auto nativeStaticGeometry = _native->getStaticGeometry(o_name);
+	if (!nativeStaticGeometry)
+		return;
+
 	_native->destroyStaticGeometry(o_name);
+	auto managedStaticGeometry = Mogre::StaticGeometry::GetManaged(nativeStaticGeometry);
+	managedStaticGeometry->_preventDelete = false;
+	delete managedStaticGeometry;
+	managedStaticGeometry = nullptr;
 }
 
 void SceneManager::DestroyAllStaticGeometry()

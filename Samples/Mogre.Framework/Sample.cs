@@ -72,7 +72,11 @@ namespace Mogre.Framework
 			ResourceGroupManager.Singleton.AddBuiltinLocations();
 
 			CreateSceneManager();
-			//InitializeRTShaderSystem(_sceneManager);
+			if (!_root.RenderSystem.Capabilities.HasCapability(Capabilities.RSC_FIXED_FUNCTION))
+			{
+				InitializeRTShaderSystem(_sceneManager);
+			}
+
 			_overlaySystem.SceneManager = _sceneManager;
 			CreateCamera();
 			_workspace = SetupCompositor();
@@ -91,7 +95,6 @@ namespace Mogre.Framework
 			//this.CreateInput();
 			return true;
 		}
-
 
 		protected virtual bool OnFrameStarted(FrameEvent evt)
 		{
@@ -256,6 +259,7 @@ namespace Mogre.Framework
 
 		protected virtual void DestroyScene()
 		{
+			_root.DestroySceneManager(_sceneManager);
 		}
 
 		public void TakeScreenshot()

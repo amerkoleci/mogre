@@ -68,7 +68,7 @@ namespace Ogre {
 		{
 			(*i)->_notifyParent(0, 0);
 		}
-}
+	}
 	//---------------------------------------------------------------------
 	const String& Overlay::getName(void) const
 	{
@@ -326,8 +326,8 @@ namespace Ogre {
 
 				(*i)->_updateRenderQueue(queue, cam, cam);
 			}
-			}
 		}
+	}
 	//---------------------------------------------------------------------
 	void Overlay::updateTransform(void) const
 	{
@@ -378,5 +378,5 @@ namespace Ogre {
 		return ret;
 	}
 
-	}
+}
 

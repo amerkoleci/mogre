@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System.Collections.Generic;
+
 namespace Mogre.Framework
 {
 	[SampleInfo("Skybox Sample", "thumb_skybox.png", "Shows how to use skyboxes (fixed-distance cubes used for backgrounds).")]
@@ -18,7 +20,10 @@ namespace Mogre.Framework
 			_sceneManager.SetSkyBox(true, "Examples/SpaceSkyBox", 5000);
 
 			// create a spaceship model, and place it at the origin
-			_sceneManager.RootSceneNode.AttachObject(_sceneManager.CreateEntity("razor.mesh"));
+			var ent = _sceneManager.CreateEntity("crane.mesh");
+			var child = _sceneManager.RootSceneNode.CreateChildSceneNode();
+			child.SetScale(30, 30, 30);
+			child.AttachObject(ent);
 
 			// create a particle system with 200 quota, then set its material and dimensions
 			var thrusters = _sceneManager.CreateParticleSystem(25);
