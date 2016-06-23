@@ -10,13 +10,17 @@ namespace Mogre.Framework
 	[SampleInfo("Cube Mapping Sample", "thumb_cubemap.png", "Demonstrates how to setup cube mapping with the compositor.")]
 	public class CubeMappingSample : Sample
 	{
+		const uint NonRefractiveSurfaces = 0x00000001;
+		const uint RefractiveSurfaces = 0x00000002;
+		const uint ReflectedSurfaces = 0x00000004;
+		const uint RegularSurfaces = NonRefractiveSurfaces | ReflectedSurfaces;
+
 		uint _previousVisibilityFlags;
 		Camera _cubeCamera;
 		Entity _head;
 		SceneNode _pivot;
 		AnimationState _fishSwim;
 		CompositorWorkspace _cubemapWorkspace;
-		private RaySceneQuery _query;
 
 		protected override void TestCapabilities(RenderSystemCapabilities caps)
 		{
@@ -37,7 +41,7 @@ namespace Mogre.Framework
 		protected override void CreateScene()
 		{
 			_previousVisibilityFlags = MovableObject.DefaultVisibilityFlags;
-			//MovableObject.DefaultVisibilityFlags = RegularSurfaces;
+			MovableObject.DefaultVisibilityFlags = RegularSurfaces;
 			_workspace.SetListener(new CubeMapCompositorWorkspaceListener(this));
 
 			_sceneManager.SetSkyDome(true, "Examples/CloudySky");
@@ -56,7 +60,7 @@ namespace Mogre.Framework
 											 SceneMemoryMgrTypes.SCENE_STATIC);
 			_head.Name = "CubeMappedHead";
 			_head.SetMaterialName("Examples/DynamicCubeMap");
-			//_head.VisibilityFlags = NonRefractiveSurfaces;
+			_head.VisibilityFlags = NonRefractiveSurfaces;
 			_sceneManager.GetRootSceneNode(SceneMemoryMgrTypes.SCENE_STATIC).AttachObject(_head);
 
 			_pivot = _sceneManager.RootSceneNode.CreateChildSceneNode();  // create a pivot node
@@ -87,6 +91,8 @@ namespace Mogre.Framework
 
 		protected override void DestroyScene()
 		{
+			//Restore global settings
+			MovableObject.DefaultVisibilityFlags = _previousVisibilityFlags;
 			_sceneManager.DestroyEntity(_head);
 			_sceneManager.DestroyCamera(_cubeCamera);
 			MeshManager.Singleton.Remove("floor");

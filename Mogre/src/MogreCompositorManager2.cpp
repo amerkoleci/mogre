@@ -37,6 +37,15 @@ void CompositorPass::Execute(Camera^ lodCamera)
 	_native->execute(lodCamera);
 }
 
+Mogre::CompositorPassDef^ CompositorPass::Definition::get()
+{
+	auto nativeDef = _native->getDefinition();
+	if (_definition != nullptr && _definition->_native == nativeDef)
+		return _definition;
+	_definition = gcnew Mogre::CompositorPassDef(nativeDef);
+	return _definition;
+}
+
 // TextureDefinitionBase
 TextureDefinitionBase::~TextureDefinitionBase()
 {

@@ -79,10 +79,9 @@ namespace Mogre.Framework
 
 			_overlaySystem.SceneManager = _sceneManager;
 			CreateCamera();
-			_workspace = SetupCompositor();
 			TextureManager.Singleton.DefaultNumMipmaps = 5;
-			CreateResourceListener();
 			LoadResources();
+			_workspace = SetupCompositor();
 			CreateInputHandler();
 			Disposed += OgreWindow_Disposed;
 			CreateScene();
@@ -193,9 +192,6 @@ namespace Mogre.Framework
 			return true;
 		}
 
-		protected virtual void CreateResourceListener()
-		{
-		}
 
 		protected virtual void LoadResources()
 		{
@@ -220,10 +216,12 @@ namespace Mogre.Framework
 		{
 			DestroyScene();
 
+			Utilities.Dispose(ref _workspace);
+			_root.CompositorManager2.RemoveAllWorkspaces();
 			Utilities.Dispose(ref _overlaySystem);
 			Utilities.Dispose(ref _window);
 			Utilities.Dispose(ref _camera);
-			Utilities.Dispose(ref _workspace);
+			_root.DestroySceneManager(_sceneManager);
 			Utilities.Dispose(ref _sceneManager);
 
 			_root.FrameStarted -= OnFrameStarted;
@@ -259,7 +257,7 @@ namespace Mogre.Framework
 
 		protected virtual void DestroyScene()
 		{
-			_root.DestroySceneManager(_sceneManager);
+			
 		}
 
 		public void TakeScreenshot()

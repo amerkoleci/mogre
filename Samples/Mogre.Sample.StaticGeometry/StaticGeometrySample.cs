@@ -15,7 +15,7 @@ namespace Mogre.Framework
 		protected override void CreateScene()
 		{
 			// setup some basic lighting for our scene
-			_sceneManager.AmbientLight = new ColourValue(1.3f, 0.3f, 0.3f);
+			_sceneManager.AmbientLight = new ColourValue(0.3f, 0.3f, 0.3f);
 			CreateGrassMesh();
 
 			_camera.SetPosition(150, 50, 150);

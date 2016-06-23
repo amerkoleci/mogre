@@ -20,8 +20,35 @@ namespace Mogre
 	ref class RenderSystem;
 	ref class CompositorWorkspace;
 
+	public ref class CompositorPassDef
+	{
+	internal:
+		const Ogre::CompositorPassDef* _native;
+		bool _createdByCLR;
+
+	public protected:
+		CompositorPassDef(const Ogre::CompositorPassDef* obj) : _native(obj)
+		{
+
+		}
+
+		~CompositorPassDef()
+		{
+		}
+
+	public:
+		property Ogre::uint32 Identifier
+		{
+			virtual Ogre::uint32 get()
+			{
+				return _native->mIdentifier;
+			}
+		}
+	};
+
 	public ref class CompositorPass : IMogreDisposable
 	{
+		CompositorPassDef^ _definition;
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
 		virtual event EventHandler^ OnDisposing;
@@ -50,6 +77,11 @@ namespace Mogre
 			{
 				return _native == nullptr;
 			}
+		}
+
+		property CompositorPassDef^ Definition
+		{
+			CompositorPassDef^ get();
 		}
 
 		void Execute(Camera^ lodCamera);

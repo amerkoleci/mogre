@@ -1,0 +1,43 @@
+compositor_node RttSampleLastPass
+{
+	//Make the reflection texture available so they can be used by materials
+	in 0 reflection
+	in 1 rt_renderwindow
+
+	target rt_renderwindow
+	{
+		pass clear { colour_value 0 1 1 1 }
+		pass render_scene { lod_update_list off }
+	}
+}
+
+compositor_node RttSampleRef
+{
+	texture reflection 512 512 PF_R8G8B8
+
+	target reflection
+	{
+		pass clear { colour_value 0 1 1 1 }
+
+		pass render_scene
+		{
+			visibility_mask		0x00000004
+			
+			identifier			59645
+
+			overlays			off
+			rq_last				94
+
+			lod_update_list		on
+		}
+	}
+	
+	out 0 reflection
+}
+
+workspace RttSampleWorkspace
+{
+	//This shows how to setup a workspace with Reflection from scripts.
+	connect RttSampleRef RttSampleLastPass
+	connect_output RttSampleLastPass 1
+}
