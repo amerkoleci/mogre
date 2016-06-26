@@ -252,6 +252,14 @@ namespace Mogre
 			void set(bool bf);
 		}
 
+		property Ogre::Real ShadowDirectionalLightExtrusionDistance
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real distance);
+		}
+
 		property Mogre::ColourValue ShadowColour
 		{
 		public:

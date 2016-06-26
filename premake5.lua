@@ -68,6 +68,7 @@ group "Samples"
 	include ("Samples/Mogre.Sample.CameraTrack")
 	include ("Samples/Mogre.Sample.StaticGeometry")
 	include ("Samples/Mogre.Sample.RenderToTexture")
+	include ("Samples/Mogre.Sample.Shadows")
 	
 	-- Mogre.SampleBrowser
 	include ("Mogre.SampleBrowser")

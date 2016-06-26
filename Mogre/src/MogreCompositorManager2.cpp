@@ -10,6 +10,90 @@ using namespace Mogre;
 
 CPP_DECLARE_STLVECTOR(CompositorChannel::, TextureVec, Mogre::TexturePtr^, Ogre::TexturePtr);
 
+// CompositorTargetDef
+CompositorTargetDef::CompositorTargetDef(Ogre::CompositorTargetDef* obj) : _native(obj)
+{
+	_compositorPasses = gcnew System::Collections::Generic::List<CompositorPassDef^>();
+	Ogre::CompositorPassDefVec &passes = _native->getCompositorPassesNonConst();
+	for (size_t i = 0; i < passes.size(); ++i)
+	{
+		auto passSceneDef = dynamic_cast<Ogre::CompositorPassSceneDef*>(passes[i]);
+		if (passSceneDef)
+		{
+			_compositorPasses->Add(gcnew CompositorPassSceneDef(passSceneDef));
+		}
+		else
+		{
+			auto managed = gcnew Mogre::CompositorPassDef(passes[i]);
+			_compositorPasses->Add(managed);
+		}
+	}
+}
+
+CompositorPassDef^ CompositorTargetDef::GetCompositorPass(int index)
+{
+	return _compositorPasses[index];
+}
+
+System::Collections::Generic::IEnumerable<CompositorPassDef^>^ CompositorTargetDef::CompositorPasses::get()
+{
+	return _compositorPasses;
+}
+
+
+Ogre::uint32 CompositorTargetDef::RenderTargetName::get()
+{
+	return _native->getRenderTargetName().mHash;
+}
+
+// CompositorPassSceneDef
+Ogre::uint32 CompositorPassSceneDef::VisibilityMask::get()
+{
+	return static_cast<Ogre::CompositorPassSceneDef*>(_native)->mVisibilityMask;
+}
+
+void CompositorPassSceneDef::VisibilityMask::set(Ogre::uint32 value)
+{
+	static_cast<Ogre::CompositorPassSceneDef*>(_native)->setVisibilityMask(value);
+}
+
+Ogre::uint32 CompositorPassSceneDef::ShadowNode::get()
+{
+	return static_cast<Ogre::CompositorPassSceneDef*>(_native)->mShadowNode.mHash;
+}
+
+void CompositorPassSceneDef::ShadowNodeName::set(String^ value)
+{
+	DECLARE_NATIVE_STRING(o_value, value);
+	static_cast<Ogre::CompositorPassSceneDef*>(_native)->mShadowNode = o_value;
+}
+
+// CompositorNodeDef
+CompositorNodeDef::CompositorNodeDef(Ogre::CompositorNodeDef* obj) : TextureDefinitionBase(obj)
+{
+	_targetPasses = gcnew System::Collections::Generic::List<CompositorTargetDef^>();
+	for (size_t i = 0; i < obj->getNumTargetPasses(); ++i)
+	{
+		auto managed = gcnew Mogre::CompositorTargetDef(obj->getTargetPass(i));
+		_targetPasses->Add(managed);
+	}
+}
+
+CompositorTargetDef^ CompositorNodeDef::GetTargetPass(int index)
+{
+	return _targetPasses[index];
+}
+
+int CompositorNodeDef::TargetPassesCount::get()
+{
+	return _targetPasses->Count;
+}
+
+System::Collections::Generic::IEnumerable<CompositorTargetDef^>^ CompositorNodeDef::TargetPasses::get()
+{
+	return _targetPasses;
+}
+
 // CompositorPass
 CompositorPass::~CompositorPass()
 {
@@ -39,11 +123,8 @@ void CompositorPass::Execute(Camera^ lodCamera)
 
 Mogre::CompositorPassDef^ CompositorPass::Definition::get()
 {
-	auto nativeDef = _native->getDefinition();
-	if (_definition != nullptr && _definition->_native == nativeDef)
-		return _definition;
-	_definition = gcnew Mogre::CompositorPassDef(nativeDef);
-	return _definition;
+	auto nativeDef = const_cast<Ogre::CompositorPassDef*>(_native->getDefinition());
+	ReturnCachedObjectGcnew(Mogre::CompositorPassDef, _definition, nativeDef);
 }
 
 // TextureDefinitionBase
@@ -308,6 +389,31 @@ bool CompositorManager2::HasNodeDefinition(String^ nodeDefName)
 	return _native->hasNodeDefinition(o_nodeDefName);
 }
 
+CompositorNodeDef^ CompositorManager2::AddNodeDefinition(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	auto result = gcnew CompositorNodeDef(_native->addNodeDefinition(o_name));
+	_nodeDefinitions->Add(name, result);
+	return result;
+}
+
+CompositorNodeDef^ CompositorManager2::GetNodeDefinition(String^ name)
+{
+	CompositorNodeDef^ result;
+	if (!_nodeDefinitions->TryGetValue(name, result))
+	{
+		DECLARE_NATIVE_STRING(o_name, name);
+		auto nativeDefinition = _native->getNodeDefinitionNonConst(o_name);
+		if (!nativeDefinition)
+			return nullptr;
+
+		result = gcnew CompositorNodeDef(nativeDefinition);
+		_nodeDefinitions->Add(name, result);
+	}
+
+	return result;
+}
+
 bool CompositorManager2::HasWorkspaceDefinition(String^ name)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
@@ -444,6 +550,17 @@ void CompositorManager2::RemoveAllWorkspaces()
 void CompositorManager2::RemoveAllWorkspaceDefinitions()
 {
 	_native->removeAllWorkspaceDefinitions();
+}
+
+void CompositorManager2::RemoveAllShadowNodeDefinitions()
+{
+	_native->removeAllShadowNodeDefinitions();
+}
+
+void CompositorManager2::RemoveAllNodeDefinitions()
+{
+	_native->removeAllNodeDefinitions();
+	_nodeDefinitions->Clear();
 }
 
 Ogre::CompositorManager2* CompositorManager2::UnmanagedPointer::get()

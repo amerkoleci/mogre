@@ -21,7 +21,9 @@ namespace Mogre.Framework
 		protected Camera _camera;
 		protected CompositorWorkspace _workspace;
 		protected ColourValue _backgroundColor = ColourValue.Black;
-
+		protected DebugOverlay _debugOverlay;
+		protected int _textureMode = 0;
+		protected int _renderMode = 0;
 
 		public Camera Camera
 		{
@@ -31,7 +33,7 @@ namespace Mogre.Framework
 		protected Sample()
 		{
 			_fileSystemLayer = new FileSystemLayer();
-			base.SuspendLayout();
+			SuspendLayout();
 			ClientSize = new System.Drawing.Size(800, 600);
 			FormBorderStyle = FormBorderStyle.Fixed3D;
 			MaximizeBox = false;
@@ -91,7 +93,8 @@ namespace Mogre.Framework
 			_root.FrameRenderingQueued += OnFrameRenderingQueued;
 			_root.FrameEnded += OnFrameEnded;
 
-			//this.CreateInput();
+			_debugOverlay = new DebugOverlay(_window);
+			_debugOverlay.AdditionalInfo = "Bilinear";
 			return true;
 		}
 
@@ -102,14 +105,17 @@ namespace Mogre.Framework
 
 		protected virtual bool OnFrameRenderingQueued(FrameEvent evt)
 		{
+			// quit if window was closed
+			if (_window.IsDisposed || _window.IsClosed)
+				return false;
+
+			_debugOverlay.Update(evt.timeSinceLastFrame);
+
 			return true;
 		}
 
 		protected virtual bool OnFrameEnded(FrameEvent evt)
 		{
-			// quit if window was closed
-			if (_window.IsDisposed || _window.IsClosed) return false;
-
 			return true;
 		}
 
@@ -230,12 +236,12 @@ namespace Mogre.Framework
 			Utilities.Dispose(ref _root);
 		}
 
-		private void OgreWindow_Disposed(object sender, EventArgs e)
+		void OgreWindow_Disposed(object sender, EventArgs e)
 		{
 			Shutdown();
 		}
 
-		private void SetupDirectX()
+		void SetupDirectX()
 		{
 			RenderSystem renderSystemByName = _root.GetRenderSystemByName("Direct3D9 Rendering Subsystem");
 			_root.RenderSystem = renderSystemByName;
@@ -257,10 +263,10 @@ namespace Mogre.Framework
 
 		protected virtual void DestroyScene()
 		{
-			
+
 		}
 
-		public void TakeScreenshot()
+		protected internal void TakeScreenshot()
 		{
 			string[] temp = System.IO.Directory.GetFiles(Environment.CurrentDirectory, "screenshot*.jpg");
 			string fileName = string.Format("screenshot{0}.jpg", temp.Length + 1);
@@ -268,9 +274,58 @@ namespace Mogre.Framework
 			TakeScreenshot(fileName);
 		}
 
-		public void TakeScreenshot(string fileName)
+		protected internal void TakeScreenshot(string fileName)
 		{
 			_window.WriteContentsToFile(fileName);
 		}
+
+		protected internal void CycleTextureFilteringMode()
+		{
+			_textureMode = (_textureMode + 1) % 4;
+			switch (_textureMode)
+			{
+				case 0:
+					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_BILINEAR);
+					_debugOverlay.AdditionalInfo = "BiLinear";
+					break;
+
+				case 1:
+					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_TRILINEAR);
+					_debugOverlay.AdditionalInfo = "TriLinear";
+					break;
+
+				case 2:
+					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_ANISOTROPIC);
+					MaterialManager.Singleton.DefaultAnisotropy = 8;
+					//_debugOverlay.AdditionalInfo = "Anisotropic";
+					break;
+
+				case 3:
+					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_NONE);
+					MaterialManager.Singleton.DefaultAnisotropy = 1;
+					_debugOverlay.AdditionalInfo = "None";
+					break;
+			}
+		}
+
+		protected internal void CyclePolygonMode()
+		{
+			_renderMode = (_renderMode + 1) % 3;
+			switch (_renderMode)
+			{
+				case 0:
+					_camera.PolygonMode = PolygonMode.PM_SOLID;
+					break;
+
+				case 1:
+					_camera.PolygonMode = PolygonMode.PM_WIREFRAME;
+					break;
+
+				case 2:
+					_camera.PolygonMode = PolygonMode.PM_POINTS;
+					break;
+			}
+		}
+
 	}
 }

@@ -76,6 +76,14 @@ namespace Mogre.Framework
 				case Keys.Space:
 					_sample.TakeScreenshot();
 					break;
+
+				case Keys.T:
+					_sample.CycleTextureFilteringMode();
+					break;
+
+				case Keys.R:
+					_sample.CyclePolygonMode();
+					break;
 			}
 		}
 

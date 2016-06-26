@@ -10,8 +10,6 @@ namespace Mogre.Framework
 	[SampleInfo("StaticGeometrySample", "thumb_skybox.png", "Shows how to use StaticGeometry.")]
 	public class StaticGeometrySample : Sample
 	{
-		StaticGeometry sg;
-
 		protected override void CreateScene()
 		{
 			// setup some basic lighting for our scene
@@ -22,7 +20,6 @@ namespace Mogre.Framework
 			_camera.LookAt(0, 0, 0);
 
 			Entity robot = _sceneManager.CreateEntity("robot", "robot.mesh");
-			robot.RenderQueueGroup = (byte)RenderQueueGroupID.RENDER_QUEUE_OVERLAY;
 			var robotNode = _sceneManager.RootSceneNode.CreateChildSceneNode();
 			robotNode.AttachObject(robot);
 
@@ -44,30 +41,22 @@ namespace Mogre.Framework
 			planeEntity.CastShadows = false;
 			_sceneManager.RootSceneNode.CreateChildSceneNode().AttachObject(planeEntity);
 
-			Entity grass = _sceneManager.CreateEntity("GrassBladesMesh");
-			sg = _sceneManager.CreateStaticGeometry("GrassArea");
+			Entity grass = _sceneManager.CreateEntity("grass");
+			var sg = _sceneManager.CreateStaticGeometry("Field");
 
-			const int size = 375;
-			const int amount = 3;
+			const int size = 140;
 
 			sg.RegionDimensions = new Vector3(size, size, size);
-			sg.Origin = new Vector3(-size / 2, 0, -size / 2);
+			sg.Origin = new Vector3(70, 70, 70);
 
-			for (int x = -size / 2; x < size / 2; x += (size / amount))
+			for (int x = -280; x < 280; x += 20)
 			{
-				for (int z = -size / 2; z < size / 2; z += (size / amount))
+				for (int z = -280; z < 280; z += 20)
 				{
-					float r = size / (float)amount / 2;
-					Vector3 pos = new Vector3(
-						x + RangeRandom(-r, r),
-						0,
-						z + RangeRandom(-r, r));
-
-					Vector3 scale = new Vector3(1, RangeRandom(0.9f, 1.1f), 1);
-
-					Quaternion orientation = new Quaternion(new Degree(RangeRandom(0, 359)), Vector3.UNIT_Y);
-
-					sg.AddEntity(grass, pos, orientation, scale);
+					Vector3 pos = new Vector3(x + Math.RangeRandom(-7, 7), 0, z + Math.RangeRandom(-7, 7));
+					Quaternion ori = new Quaternion(new Degree(Math.RangeRandom(0, 359)), Vector3.UNIT_Y);
+					Vector3 scale = new Vector3(1, Math.RangeRandom(0.85f, 1.15f), 1);
+					sg.AddEntity(grass, pos, ori, scale);
 				}
 			}
 
@@ -76,7 +65,7 @@ namespace Mogre.Framework
 
 		protected override void DestroyScene()
 		{
-			MeshManager.Singleton.Remove("GrassBladesMesh");
+			MeshManager.Singleton.Remove("grass");
 			//_sceneManager.DestroyStaticGeometry(sg);
 
 			base.DestroyScene();
@@ -112,19 +101,11 @@ namespace Mogre.Framework
 			}
 
 			obj.End();
-			obj.ConvertToMesh("GrassBladesMesh");
+			obj.ConvertToMesh("grass");
 			_sceneManager.DestroyManualObject(obj);
 		}
 
-		static readonly Random _randomizer = new Random();
-		static float UnitRandom()
-		{
-			return (float)_randomizer.NextDouble();
-		}
-
-		static float RangeRandom(float fLow, float fHigh)
-		{
-			return (fHigh - fLow) * UnitRandom() + fLow;
-		}
+		
+		
 	}
 }

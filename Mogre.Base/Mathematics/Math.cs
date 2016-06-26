@@ -61,8 +61,9 @@ namespace Mogre
         public const float fRad2Deg = 57.2957764f;
 
         public static AngleUnit CurrentAngleUnit = AngleUnit.Degree;
+		static readonly Random _randomizer = new Random();
 
-        public static int IAbs(int iValue)
+		public static int IAbs(int iValue)
         {
             return (iValue >= 0 ? iValue : -iValue);
         }
@@ -196,8 +197,18 @@ namespace Mogre
             return IsZero(a - 1.0f);
         }
 
-        /// <summary>Calculate a face normal, no w-information. </summary>
-        public static Vector3 CalculateBasicFaceNormal(Vector3 v1, Vector3 v2, Vector3 v3)
+		public static float UnitRandom()
+		{
+			return (float)_randomizer.NextDouble();
+		}
+
+		public static float RangeRandom(float fLow, float fHigh)
+		{
+			return (fHigh - fLow) * UnitRandom() + fLow;
+		}
+
+		/// <summary>Calculate a face normal, no w-information. </summary>
+		public static Vector3 CalculateBasicFaceNormal(Vector3 v1, Vector3 v2, Vector3 v3)
         {
             Vector3 rkVector = v3 - v1;
             Vector3 result = (v2 - v1).CrossProduct(rkVector);

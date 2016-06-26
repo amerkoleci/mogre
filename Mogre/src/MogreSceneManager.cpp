@@ -936,6 +936,16 @@ void SceneManager::ShadowFarDistance::set(Ogre::Real distance)
 	_native->setShadowFarDistance(distance);
 }
 
+Ogre::Real SceneManager::ShadowDirectionalLightExtrusionDistance::get()
+{
+	return _native->getShadowDirectionalLightExtrusionDistance();
+}
+
+void SceneManager::ShadowDirectionalLightExtrusionDistance::set(Ogre::Real distance)
+{
+	_native->setShadowDirectionalLightExtrusionDistance(distance);
+}
+
 bool SceneManager::ShadowCasterRenderBackFaces::get()
 {
 	return _native->getShadowCasterRenderBackFaces();

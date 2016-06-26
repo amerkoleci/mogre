@@ -5,7 +5,10 @@
 #include "Compositor/OgreCompositorManager2.h"
 #include "Compositor/OgreCompositorWorkspace.h"
 #include "Compositor/OgreCompositorWorkspaceListener.h"
+#include "Compositor/OgreCompositorNodeDef.h"
 #include "Compositor/Pass/OgreCompositorPass.h"
+#include "Compositor/Pass/PassScene/OgreCompositorPassSceneDef.h"
+#include "Compositor/OgreCompositorShadowNode.h"
 #include "MogreRenderTarget.h"
 #include "MogreTextureManager.h"
 #include "MogreCommon.h"
@@ -20,14 +23,24 @@ namespace Mogre
 	ref class RenderSystem;
 	ref class CompositorWorkspace;
 
+	public value class IdString
+	{
+	public:
+		static Ogre::uint32 FromString(String^ str)
+		{
+			DECLARE_NATIVE_STRING(o_str, str);
+			return Ogre::IdString(o_str).mHash;
+		}
+	};
+
 	public ref class CompositorPassDef
 	{
 	internal:
-		const Ogre::CompositorPassDef* _native;
+		Ogre::CompositorPassDef* _native;
 		bool _createdByCLR;
 
 	public protected:
-		CompositorPassDef(const Ogre::CompositorPassDef* obj) : _native(obj)
+		CompositorPassDef(Ogre::CompositorPassDef* obj) : _native(obj)
 		{
 
 		}
@@ -43,6 +56,62 @@ namespace Mogre
 			{
 				return _native->mIdentifier;
 			}
+		}
+	};
+
+	public ref class CompositorPassSceneDef : public CompositorPassDef
+	{
+	public protected:
+		CompositorPassSceneDef(Ogre::CompositorPassSceneDef* obj) : CompositorPassDef(obj)
+		{
+
+		}
+
+	public:
+		property Ogre::uint32 VisibilityMask
+		{
+			Ogre::uint32 get();
+			void set(Ogre::uint32 value);
+		}
+
+		property Ogre::uint32 ShadowNode
+		{
+			Ogre::uint32 get();
+		}
+
+		property String^ ShadowNodeName
+		{
+			void set(String^ value);
+		}
+	};
+
+	public ref class CompositorTargetDef
+	{
+	internal:
+		Ogre::CompositorTargetDef* _native;
+		bool _createdByCLR;
+
+	private:
+		System::Collections::Generic::List<CompositorPassDef^>^ _compositorPasses;
+
+	public protected:
+		CompositorTargetDef(Ogre::CompositorTargetDef* obj);
+
+		~CompositorTargetDef()
+		{
+		}
+
+	public:
+		property Ogre::uint32 RenderTargetName
+		{
+			Ogre::uint32 get();
+		}
+
+		CompositorPassDef^ GetCompositorPass(int index);
+
+		property System::Collections::Generic::IEnumerable<CompositorPassDef^>^ CompositorPasses
+		{
+			System::Collections::Generic::IEnumerable<CompositorPassDef^>^ get();
 		}
 	};
 
@@ -168,6 +237,30 @@ namespace Mogre
 		}
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(TextureDefinitionBase);
+	};
+
+	public ref class CompositorNodeDef : public TextureDefinitionBase
+	{
+	private:
+		System::Collections::Generic::List<CompositorTargetDef^>^ _targetPasses;
+
+	public protected:
+		CompositorNodeDef(Ogre::CompositorNodeDef* obj);
+
+	public:
+		CompositorTargetDef^ GetTargetPass(int index);
+
+		property int TargetPassesCount
+		{
+			int get();
+		}
+
+		property System::Collections::Generic::IEnumerable<CompositorTargetDef^>^ TargetPasses
+		{
+			System::Collections::Generic::IEnumerable<CompositorTargetDef^>^ get();
+		}
+
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(CompositorNodeDef);
 	};
 
 	public ref class CompositorWorkspaceDef : public TextureDefinitionBase
@@ -312,9 +405,13 @@ namespace Mogre
 		Ogre::CompositorManager2* _native;
 		bool _createdByCLR;
 
+	private:
+		System::Collections::Generic::Dictionary<String^, CompositorNodeDef^>^ _nodeDefinitions;
+
 	public protected:
 		CompositorManager2(Ogre::CompositorManager2* obj) : _native(obj)
 		{
+			_nodeDefinitions = gcnew System::Collections::Generic::Dictionary<String^, CompositorNodeDef^>();
 		}
 
 	public:
@@ -326,6 +423,8 @@ namespace Mogre
 		CompositorManager2(RenderSystem^ renderSystem);
 
 		bool HasNodeDefinition(String^ nodeDefName);
+		CompositorNodeDef^ AddNodeDefinition(String^ name);
+		CompositorNodeDef^ GetNodeDefinition(String^ name);
 
 		bool HasWorkspaceDefinition(String^ name);
 		CompositorWorkspaceDef^ GetWorkspaceDefinition(String^ name);
@@ -344,6 +443,8 @@ namespace Mogre
 		void RemoveWorkspace(CompositorWorkspace^ workspace);
 		void RemoveAllWorkspaces();
 		void RemoveAllWorkspaceDefinitions();
+		void RemoveAllShadowNodeDefinitions();
+		void RemoveAllNodeDefinitions();
 
 		property bool IsDisposed
 		{
