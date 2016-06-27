@@ -70,6 +70,12 @@ namespace Mogre
 			Mogre::Vector3 get();
 		}
 
+		property Mogre::Vector3 DerivedDirectionUpdated
+		{
+		public:
+			Mogre::Vector3 get();
+		}
+
 		property Mogre::ColourValue DiffuseColour
 		{
 		public:

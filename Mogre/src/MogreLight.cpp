@@ -16,6 +16,9 @@ void Light::tempSquareDist::set(Ogre::Real value)
 
 Mogre::Vector4 Light::As4DVector::get()
 {
+	if (!ParentNode)
+		throw gcnew NotSupportedException("Light need to be attached to Node before accessing As4DVector.");
+
 	return ToVector4(static_cast<const Ogre::Light*>(_native)->getAs4DVector());
 }
 
@@ -39,14 +42,20 @@ Ogre::Real Light::AttenuationRange::get()
 	return static_cast<const Ogre::Light*>(_native)->getAttenuationRange();
 }
 
-//Mogre::AxisAlignedBox^ Light::BoundingBox::get()
-//{
-//	return static_cast<const Ogre::Light*>(_native)->getBoundingBox();
-//}
-
 Mogre::Vector3 Light::DerivedDirection::get()
 {
+	if(!ParentNode)
+		throw gcnew NotSupportedException("Light need to be attached to Node before accessing DerivedDirection.");
+
 	return ToVector3(static_cast<const Ogre::Light*>(_native)->getDerivedDirection());
+}
+
+Mogre::Vector3 Light::DerivedDirectionUpdated::get()
+{
+	if (!ParentNode)
+		throw gcnew NotSupportedException("Light need to be attached to Node before accessing DerivedDirectionUpdated.");
+
+	return ToVector3(static_cast<const Ogre::Light*>(_native)->getDerivedDirectionUpdated());
 }
 
 Mogre::ColourValue Light::DiffuseColour::get()
@@ -61,11 +70,17 @@ void Light::DiffuseColour::set(Mogre::ColourValue colour)
 
 Mogre::Vector3 Light::Direction::get()
 {
+	if (!ParentNode)
+		throw gcnew NotSupportedException("Light need to be attached to Node before accessing Direction.");
+
 	return ToVector3(static_cast<const Ogre::Light*>(_native)->getDirection());
 }
 
 void Light::Direction::set(Mogre::Vector3 vec)
 {
+	if (!ParentNode)
+		throw gcnew NotSupportedException("Light need to be attached to Node before accessing Direction.");
+
 	static_cast<Ogre::Light*>(_native)->setDirection(FromVector3(vec));
 }
 
