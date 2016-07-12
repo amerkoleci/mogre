@@ -1508,6 +1508,14 @@ namespace Mogre
 			void set(String^ schemeName);
 		}
 
+		property Mogre::MaterialPtr^ ShadowCasterMaterial
+		{
+		public:
+			Mogre::MaterialPtr^ get();
+		public:
+			void set(Mogre::MaterialPtr^ material);
+		}
+
 		String^ _compile(bool autoManageTextureUnits);
 
 		void _compileIlluminationPasses();
@@ -1599,6 +1607,8 @@ namespace Mogre
 
 		bool ApplyTextureAliases(Mogre::Const_AliasTextureNamePairList^ aliasList, bool apply);
 		bool ApplyTextureAliases(Mogre::Const_AliasTextureNamePairList^ aliasList);
+
+		void SetShadowCasterMaterial(String^ name);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(Technique);
 	};

@@ -8,6 +8,7 @@
 #include "MogreMovableObject.h"
 #include "MogreMaterialManager.h"
 #include "MogreViewport.h"
+#include "MogreRenderQueue.h"
 
 using namespace Mogre;
 
@@ -919,6 +920,11 @@ void SceneManager::DestroyAnimationState(String^ name)
 void SceneManager::DestroyAllAnimationStates()
 {
 	_native->destroyAllAnimationStates();
+}
+
+Mogre::RenderQueue^ SceneManager::RenderQueue::get()
+{
+	return (CLR_NULL == _renderQueue) ? (_renderQueue = _native->getRenderQueue()) : _renderQueue;
 }
 
 Mogre::SceneNode^ SceneManager::RootSceneNode::get()

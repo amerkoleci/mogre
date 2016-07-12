@@ -2,6 +2,7 @@
 
 #include "OgreRenderQueue.h"
 #include "OgreRenderQueueInvocation.h"
+#include "OgreRenderQueueSortingGrouping.h"
 #include "MogreCommon.h"
 #include "Marshalling.h"
 
@@ -27,22 +28,34 @@ namespace Mogre
 		RENDER_QUEUE_MAX = Ogre::RENDER_QUEUE_MAX
 	};
 
-	public ref class RenderQueue : IMogreDisposable
+	public ref class RenderQueueGroup
 	{
-	public:
-		/// <summary>Raised before any disposing is performed.</summary>
-		virtual event EventHandler^ OnDisposing;
-		/// <summary>Raised once all disposing is performed.</summary>
-		virtual event EventHandler^ OnDisposed;
+	internal:
+		Ogre::RenderQueueGroup* _native;
+		bool _createdByCLR;
+
+	public protected:
+		RenderQueueGroup(Ogre::RenderQueueGroup* obj) : _native(obj)
+		{
+
+		}
 
 	public:
+		~RenderQueueGroup();
+	protected:
+		!RenderQueueGroup();
 
+	public:
+		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderQueueGroup);
+	};
+
+	public ref class RenderQueue
+	{
 	internal:
 		Ogre::RenderQueue* _native;
 		bool _createdByCLR;
 
 	public protected:
-
 		RenderQueue(Ogre::RenderQueue* obj) : _native(obj)
 		{
 
@@ -54,20 +67,24 @@ namespace Mogre
 		!RenderQueue();
 
 	public:
-		property bool IsDisposed
+		property Ogre::uint8 DefaultQueueGroup
 		{
-			virtual bool get()
-			{
-				return _native == nullptr;
-			}
+		public:
+			Ogre::uint8 get();
+		public:
+			void set(Ogre::uint8 grp);
 		}
+
+		property Ogre::ushort DefaultRenderablePriority
+		{
+		public:
+			Ogre::ushort get();
+		public:
+			void set(Ogre::ushort priority);
+		}
+
+		Mogre::RenderQueueGroup^ GetQueueGroup(Ogre::uint8 qid);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(RenderQueue);
-
-	internal:
-		property Ogre::RenderQueue* UnmanagedPointer
-		{
-			Ogre::RenderQueue* get() { return _native; }
-		}
 	};
 }

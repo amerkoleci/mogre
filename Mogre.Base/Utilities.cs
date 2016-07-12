@@ -276,7 +276,7 @@ namespace Mogre
 			int mask = align - 1;
 			if ((align & mask) != 0)
 			{
-				throw new ArgumentException("Alignment is not power of 2", nameof(align));
+				throw new ArgumentException("Alignment is not power of 2", "align");
 			}
 			var memPtr = Marshal.AllocHGlobal(sizeInBytes + mask + sizeof(void*));
 			byte* ptr = (byte*)((ulong)(memPtr + sizeof(void*) + mask) & ~(ulong)mask);

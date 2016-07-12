@@ -33,6 +33,7 @@ namespace Mogre
 	ref class IntersectionSceneQuery;
 	ref class Pass;
 	ref class Viewport;
+	ref class RenderQueue;
 
 	interface class IRenderQueueListener_Receiver
 	{
@@ -100,7 +101,9 @@ namespace Mogre
 		Ogre::SceneManager* _native;
 		bool _preventDelete;
 
-	private:
+	private protected:
+		Mogre::RenderQueue^ _renderQueue;
+
 		//Event and Listener fields
 		RenderQueueListener_Director* _renderQueueListener;
 		Mogre::RenderQueueListener::RenderQueueStartedHandler^ _renderQueueStarted;
@@ -228,6 +231,12 @@ namespace Mogre
 			bool get();
 		public:
 			void set(bool value);
+		}
+
+		property Mogre::RenderQueue^ RenderQueue
+		{
+		public:
+			Mogre::RenderQueue^ get();
 		}
 
 		property Mogre::SceneNode^ RootSceneNode

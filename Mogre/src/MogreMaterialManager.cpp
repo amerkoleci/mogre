@@ -1830,6 +1830,16 @@ void Technique::SchemeName::set(String^ schemeName)
 	static_cast<Ogre::Technique*>(_native)->setSchemeName(o_schemeName);
 }
 
+Mogre::MaterialPtr^ Technique::ShadowCasterMaterial::get()
+{
+	return static_cast<const Ogre::Technique*>(_native)->getShadowCasterMaterial();
+}
+
+void Technique::ShadowCasterMaterial::set(Mogre::MaterialPtr^ material)
+{
+	static_cast<Ogre::Technique*>(_native)->setShadowCasterMaterial(material);
+}
+
 String^ Technique::_compile(bool autoManageTextureUnits)
 {
 	return TO_CLR_STRING(static_cast<Ogre::Technique*>(_native)->_compile(autoManageTextureUnits));
@@ -2056,6 +2066,13 @@ bool Technique::ApplyTextureAliases(Mogre::Const_AliasTextureNamePairList^ alias
 bool Technique::ApplyTextureAliases(Mogre::Const_AliasTextureNamePairList^ aliasList)
 {
 	return static_cast<const Ogre::Technique*>(_native)->applyTextureAliases(aliasList);
+}
+
+void Technique::SetShadowCasterMaterial(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+
+	static_cast<Ogre::Technique*>(_native)->setShadowCasterMaterial(o_name);
 }
 
 // --------------- Material ---------------
