@@ -22,7 +22,7 @@ namespace Mogre.Framework
 					throw;
 				}
 
-				//Example.ShowOgreException();
+				Sample.ShowOgreException();
 			}
         }
     }

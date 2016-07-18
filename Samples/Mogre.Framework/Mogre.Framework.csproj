@@ -55,7 +55,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Mogre\Mogre.vcxproj">
       <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
-      <Name>MogreNative</Name>
+      <Name>Mogre</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -141,9 +141,9 @@ namespace Mogre.Framework
 			}
 		}
 
-		protected virtual void CreateInputHandler()
+		protected virtual DefaultInputHandler CreateInputHandler()
 		{
-			new DefaultInputHandler(this);
+			return new DefaultInputHandler(this);
 		}
 
 		protected virtual void CreateSceneManager()
@@ -327,5 +327,9 @@ namespace Mogre.Framework
 			}
 		}
 
+		public static void ShowOgreException()
+		{
+			// TODO
+		}
 	}
 }

@@ -10,7 +10,7 @@ namespace Mogre.Framework
 {
 	public class DefaultInputHandler
 	{
-		readonly Sample _sample;
+		protected readonly Sample _sample;
 		readonly Timer _timer;
 		Vector3 _translate = Vector3.ZERO;
 		bool _rotating;

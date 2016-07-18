@@ -2,6 +2,9 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System;
+using System.Windows.Forms;
+
 namespace Mogre.Framework
 {
     [SampleInfo("Camera Tracking Sample", "thumb_camtrack.png", "An example of using AnimationTracks to make a node smoothly follow a predefined path.")]
@@ -47,6 +50,32 @@ namespace Mogre.Framework
 			// create a new animation state to track this
 			_animState = _sceneManager.CreateAnimationState("CameraTrack");
 			_animState.Enabled = true;
+
+			var rttCamera = _sceneManager.CreateCamera("RttCamera");
+			rttCamera.Position = new Vector3(0f, 0f, 500f);
+			rttCamera.LookAt(new Vector3(0f, 0f, -300f));
+			rttCamera.AutoAspectRatio = true;
+			rttCamera.NearClipDistance = 5.0f;
+
+			screenTexture0 = TextureManager.Singleton.CreateManual(
+				"screenTexture0",
+				ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME,
+				TextureType.TEX_TYPE_2D,
+				640,
+				480,
+				0,
+				PixelFormat.PF_R8G8B8,
+				(int)TextureUsage.TU_RENDERTARGET
+			);
+
+			CompositorManager2 compositorManager = _root.CompositorManager2;
+			string workspaceName = GetType().Name + "RttWorkspace";
+			if (!compositorManager.HasWorkspaceDefinition(workspaceName))
+			{
+				compositorManager.CreateBasicWorkspaceDef(workspaceName, new ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
+			}
+
+			_root.CompositorManager2.AddWorkspace(_sceneManager, screenTexture0.GetBuffer().GetRenderTarget(), rttCamera, workspaceName, true);
 		}
 
 		protected override bool OnFrameStarted(FrameEvent evt)
@@ -54,5 +83,39 @@ namespace Mogre.Framework
 			_animState.AddTime(evt.timeSinceLastFrame);   // increment animation time
 			return base.OnFrameStarted(evt);
 		}
+
+		protected override DefaultInputHandler CreateInputHandler()
+		{
+			return new MyTestInputHandler(this);
+		}
+
+		class MyTestInputHandler : DefaultInputHandler
+		{
+			public MyTestInputHandler(CameraTrackSample sample) : base(sample)
+			{
+
+			}
+
+			protected override void HandleKeyDown(object sender, KeyEventArgs e)
+			{
+				switch(e.KeyCode)
+				{
+					case Keys.Space:
+						((CameraTrackSample)_sample).TakeRttScreen();
+						break;
+				}
+				base.HandleKeyDown(sender, e);
+			}
+		}
+
+		TexturePtr screenTexture0;
+
+		void TakeRttScreen()
+		{
+			string[] temp = System.IO.Directory.GetFiles(Environment.CurrentDirectory, "Rttscreenshot*.jpg");
+			string fileName = string.Format("Rttscreenshot{0}.jpg", temp.Length + 1);
+			screenTexture0.GetBuffer().GetRenderTarget().WriteContentsToFile(fileName);
+		}
+
 	}
 }

@@ -78,7 +78,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Mogre\Mogre.vcxproj">
       <Project>{a6890cf8-123f-85ed-9b33-7fc407e87bf1}</Project>
-      <Name>MogreNative</Name>
+      <Name>Mogre</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mogre.Framework\Mogre.Framework.csproj">
       <Project>{f5076fc9-2bb9-4588-b217-bc2b070ffbc2}</Project>
