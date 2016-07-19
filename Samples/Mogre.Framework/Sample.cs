@@ -29,6 +29,10 @@ namespace Mogre.Framework
 		{
 			get { return _camera; }
 		}
+		public SceneManager SceneManager
+		{
+			get { return _sceneManager; }
+		}
 
 		protected Sample()
 		{
@@ -73,7 +77,7 @@ namespace Mogre.Framework
 			// Now we have GPU stuff setup
 			ResourceGroupManager.Singleton.AddBuiltinLocations();
 
-			CreateSceneManager();
+			_sceneManager = CreateSceneManager();
 			if (!_root.RenderSystem.Capabilities.HasCapability(Capabilities.RSC_FIXED_FUNCTION))
 			{
 				InitializeRTShaderSystem(_sceneManager);
@@ -146,7 +150,7 @@ namespace Mogre.Framework
 			return new DefaultInputHandler(this);
 		}
 
-		protected virtual void CreateSceneManager()
+		protected virtual SceneManager CreateSceneManager()
 		{
 #if DEBUG
 			//Debugging multithreaded code is a PITA, disable it.
@@ -164,7 +168,7 @@ namespace Mogre.Framework
                 threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
 #endif
 
-			_sceneManager = _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
+			return _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
 		}
 
 		protected virtual void CreateCamera()

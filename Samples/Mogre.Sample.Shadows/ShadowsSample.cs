@@ -49,7 +49,6 @@ namespace Mogre.Framework
 		{
 			_sceneManager.AmbientLight = new ColourValue(0.1f, 0.1f, 0.1f);
 
-
 			SceneNode lightNode = _sceneManager.RootSceneNode.CreateChildSceneNode();
 			_mainLight = _sceneManager.CreateLight();
 			_mainLight.Name = "Sun";
