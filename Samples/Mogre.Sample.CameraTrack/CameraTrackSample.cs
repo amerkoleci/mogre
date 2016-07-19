@@ -15,7 +15,8 @@ namespace Mogre.Framework
 		SceneManager _rttSceneManager;
 		Camera _rttCamera;
 		CompositorWorkspace _rttWorkspace;
-		
+		SceneNode _penguinNode;
+
 		protected override void CreateScene()
 		{
 			// setup some basic lighting for our scene
@@ -68,8 +69,8 @@ namespace Mogre.Framework
 
 			// Penguin
 			Entity penguin = _rttSceneManager.CreateEntity("penguin.mesh");
-			var penguinNode = _rttSceneManager.RootSceneNode.CreateChildSceneNode();
-			penguinNode.AttachObject(penguin);
+			_penguinNode = _rttSceneManager.RootSceneNode.CreateChildSceneNode();
+			_penguinNode.AttachObject(penguin);
 			penguin.Name = "Penguin";
 
 			MaterialPtr penguinMaterial = MaterialManager.Singleton.Create("PenguinMaterial", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME);
@@ -135,6 +136,7 @@ namespace Mogre.Framework
 		protected override bool OnFrameStarted(FrameEvent evt)
 		{
 			_animState.AddTime(evt.timeSinceLastFrame);   // increment animation time
+			_penguinNode.Yaw(evt.timeSinceLastFrame * 30);
 			return base.OnFrameStarted(evt);
 		}
 	}
