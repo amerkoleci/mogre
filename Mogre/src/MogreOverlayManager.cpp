@@ -8,6 +8,27 @@
 
 using namespace Mogre;
 
+Mogre::OverlayElement^ ResolveFromNativeInstance(Ogre::OverlayElement* native)
+{
+	Ogre::BorderPanelOverlayElement* borderPanel = dynamic_cast<Ogre::BorderPanelOverlayElement*>(native);
+	if (borderPanel)
+		return gcnew Mogre::BorderPanelOverlayElement(borderPanel);
+
+	Ogre::PanelOverlayElement* panel = dynamic_cast<Ogre::PanelOverlayElement*>(native);
+	if (panel)
+		return gcnew Mogre::PanelOverlayElement(panel);
+
+	Ogre::TextAreaOverlayElement* textAreaOverlayElement = dynamic_cast<Ogre::TextAreaOverlayElement*>(native);
+	if (textAreaOverlayElement)
+		return gcnew Mogre::TextAreaOverlayElement(textAreaOverlayElement);
+
+	Ogre::OverlayContainer* overlayContainer = dynamic_cast<Ogre::OverlayContainer*>(native);
+	if (overlayContainer)
+		return gcnew Mogre::OverlayContainer(overlayContainer);
+
+	return gcnew Mogre::OverlayElement(native);
+}
+
 // ---------------- OverlayElement ---------------------
 
 OverlayElement::~OverlayElement()
@@ -494,6 +515,19 @@ Mogre::Vector4 OverlayElement::GetCustomParameter(size_t index)
 	return ToVector4(static_cast<const Ogre::OverlayElement*>(_native)->getCustomParameter(index));
 }
 
+// ---------------- OverlayContainer ---------------------
+Mogre::OverlayElement^ OverlayContainer::GetChild(String^ name)
+{
+	Mogre::OverlayElement^ element;
+	if (_children->TryGetValue(name, element))
+		return element;
+
+	DECLARE_NATIVE_STRING(o_name, name);
+	auto instance = ResolveFromNativeInstance(static_cast<Ogre::OverlayContainer*>(_native)->getChild(o_name));
+	_children->Add(name, instance);
+	return instance;
+}
+
 // ---------------- Overlay ---------------------
 CPP_DECLARE_STLLIST(Overlay::, OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*);
 CPP_DECLARE_ITERATOR(Overlay::, Overlay2DElementsIterator, Ogre::Overlay::Overlay2DElementsIterator, Mogre::Overlay::OverlayContainerList, Mogre::OverlayContainer^, Ogre::OverlayContainer*, );
@@ -836,27 +870,6 @@ void OverlayManager::DestroyAll()
 //{
 //	static_cast<Ogre::OverlayManager*>(_native)->_queueOverlaysForRendering(cam, pQueue, vp);
 //}
-
-Mogre::OverlayElement^ ResolveFromNativeInstance(Ogre::OverlayElement* native)
-{
-	Ogre::BorderPanelOverlayElement* borderPanel = dynamic_cast<Ogre::BorderPanelOverlayElement*>(native);
-	if (borderPanel)
-		return gcnew Mogre::BorderPanelOverlayElement(borderPanel);
-
-	Ogre::PanelOverlayElement* panel = dynamic_cast<Ogre::PanelOverlayElement*>(native);
-	if (panel)
-		return gcnew Mogre::PanelOverlayElement(panel);
-
-	Ogre::TextAreaOverlayElement* textAreaOverlayElement = dynamic_cast<Ogre::TextAreaOverlayElement*>(native);
-	if (textAreaOverlayElement)
-		return gcnew Mogre::TextAreaOverlayElement(textAreaOverlayElement);
-
-	Ogre::OverlayContainer* overlayContainer = dynamic_cast<Ogre::OverlayContainer*>(native);
-	if (overlayContainer)
-		return gcnew Mogre::OverlayContainer(overlayContainer);
-
-	return gcnew Mogre::OverlayElement(native);
-}
 
 Mogre::OverlayElement^ OverlayManager::CreateOverlayElement(String^ typeName, String^ instanceName, bool isTemplate)
 {

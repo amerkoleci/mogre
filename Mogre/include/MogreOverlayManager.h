@@ -359,10 +359,17 @@ namespace Mogre
 
 	public ref class OverlayContainer : public OverlayElement
 	{
+	private:
+		System::Collections::Generic::Dictionary<String^, OverlayElement^>^ _children;
+
 	public protected:
 		OverlayContainer(Ogre::OverlayContainer* obj) : OverlayElement(obj)
 		{
+			_children = gcnew System::Collections::Generic::Dictionary<String^, OverlayElement^>();
 		}
+
+	public:
+		Mogre::OverlayElement^ GetChild(String^ name);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(OverlayContainer);
 	};
