@@ -21,6 +21,7 @@ namespace Mogre.Framework
 		protected Camera _camera;
 		protected CompositorWorkspace _workspace;
 		protected ColourValue _backgroundColor = ColourValue.Black;
+		protected SdkTrayManager _trayManager;
 		protected DebugOverlay _debugOverlay;
 		protected int _textureMode = 0;
 		protected int _renderMode = 0;
@@ -29,6 +30,7 @@ namespace Mogre.Framework
 		{
 			get { return _camera; }
 		}
+
 		public SceneManager SceneManager
 		{
 			get { return _sceneManager; }
@@ -96,6 +98,11 @@ namespace Mogre.Framework
 			_root.FrameStarted += OnFrameStarted;
 			_root.FrameRenderingQueued += OnFrameRenderingQueued;
 			_root.FrameEnded += OnFrameEnded;
+
+			_trayManager = new SdkTrayManager("SampleControls");
+			_trayManager.ShowFrameStats(TrayLocation.BottomLeft);
+			_trayManager.ShowLogo(TrayLocation.BottomRight);
+			_trayManager.HideCursor();
 
 			_debugOverlay = new DebugOverlay(_window);
 			_debugOverlay.AdditionalInfo = "Bilinear";

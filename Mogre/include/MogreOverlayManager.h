@@ -369,6 +369,8 @@ namespace Mogre
 		}
 
 	public:
+		void AddChild(Mogre::OverlayElement^ elem);
+		void RemoveChild(String^ name);
 		Mogre::OverlayElement^ GetChild(String^ name);
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(OverlayContainer);
@@ -400,7 +402,81 @@ namespace Mogre
 		TextAreaOverlayElement(Ogre::TextAreaOverlayElement* obj) : OverlayElement(obj)
 		{
 		}
+		
+	public:
+		property String^ Caption
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ text);
+		}
 
+		property Ogre::Real CharHeight
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Mogre::Real height);
+		}
+
+		property Mogre::ColourValue Colour
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue col);
+		}
+
+		property Mogre::ColourValue ColourBottom
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue col);
+		}
+
+		property Mogre::ColourValue ColourTop
+		{
+		public:
+			Mogre::ColourValue get();
+		public:
+			void set(Mogre::ColourValue col);
+		}
+
+		property String^ FontName
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ font);
+		}
+
+		property String^ MaterialName
+		{
+		public:
+			String^ get();
+		public:
+			void set(String^ matName);
+		}
+
+		property Mogre::GuiMetricsMode MetricsMode
+		{
+		public:
+			Mogre::GuiMetricsMode get();
+		public:
+			void set(Mogre::GuiMetricsMode gmm);
+		}
+
+		property Ogre::Real SpaceWidth
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Mogre::Real width);
+		}
+
+	public:
 		DEFINE_MANAGED_NATIVE_CONVERSIONS(TextAreaOverlayElement);
 	};
 

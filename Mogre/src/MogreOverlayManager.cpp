@@ -516,6 +516,17 @@ Mogre::Vector4 OverlayElement::GetCustomParameter(size_t index)
 }
 
 // ---------------- OverlayContainer ---------------------
+void OverlayContainer::AddChild(Mogre::OverlayElement^ elem)
+{
+	static_cast<Ogre::OverlayContainer*>(_native)->addChild(elem);
+}
+
+void OverlayContainer::RemoveChild(String^ name)
+{
+	DECLARE_NATIVE_STRING(o_name, name);
+	static_cast<Ogre::OverlayContainer*>(_native)->removeChild(o_name);
+}
+
 Mogre::OverlayElement^ OverlayContainer::GetChild(String^ name)
 {
 	Mogre::OverlayElement^ element;
@@ -526,6 +537,106 @@ Mogre::OverlayElement^ OverlayContainer::GetChild(String^ name)
 	auto instance = ResolveFromNativeInstance(static_cast<Ogre::OverlayContainer*>(_native)->getChild(o_name));
 	_children->Add(name, instance);
 	return instance;
+}
+
+// ------------  TextAreaOverlayElement --------
+String^ TextAreaOverlayElement::Caption::get()
+{
+#ifdef OGRE_UNICODE_SUPPORT
+	return UTF_TO_CLR_STRING(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getCaption());
+#else
+	return TO_CLR_STRING(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getCaption());
+#endif
+}
+
+void TextAreaOverlayElement::Caption::set(String^ text)
+{
+#ifdef OGRE_UNICODE_SUPPORT
+	DECLARE_NATIVE_UTFSTRING(o_text, text)
+#else
+	DECLARE_NATIVE_STRING(o_text, text)
+#endif				
+
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setCaption(o_text);
+}
+
+Mogre::Real TextAreaOverlayElement::CharHeight::get()
+{
+	return static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getCharHeight();
+}
+void TextAreaOverlayElement::CharHeight::set(Mogre::Real height)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setCharHeight(height);
+}
+
+Mogre::ColourValue TextAreaOverlayElement::Colour::get()
+{
+	return ToColor4(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getColour());
+}
+void TextAreaOverlayElement::Colour::set(Mogre::ColourValue col)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setColour(FromColor4(col));
+}
+
+Mogre::ColourValue TextAreaOverlayElement::ColourBottom::get()
+{
+	return ToColor4(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getColourBottom());
+}
+
+void TextAreaOverlayElement::ColourBottom::set(Mogre::ColourValue col)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setColourBottom(FromColor4(col));
+}
+
+Mogre::ColourValue TextAreaOverlayElement::ColourTop::get()
+{
+	return ToColor4(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getColourTop());
+}
+void TextAreaOverlayElement::ColourTop::set(Mogre::ColourValue col)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setColourTop(FromColor4(col));
+}
+
+String^ TextAreaOverlayElement::FontName::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getFontName());
+}
+void TextAreaOverlayElement::FontName::set(String^ font)
+{
+	DECLARE_NATIVE_STRING(o_font, font);
+
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setFontName(o_font);
+}
+
+String^ TextAreaOverlayElement::MaterialName::get()
+{
+	return TO_CLR_STRING(static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getMaterialName());
+}
+
+void TextAreaOverlayElement::MaterialName::set(String^ matName)
+{
+	DECLARE_NATIVE_STRING(o_matName, matName);
+
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setMaterialName(o_matName);
+}
+
+Mogre::GuiMetricsMode TextAreaOverlayElement::MetricsMode::get()
+{
+	return (Mogre::GuiMetricsMode)static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getMetricsMode();
+}
+void TextAreaOverlayElement::MetricsMode::set(Mogre::GuiMetricsMode gmm)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setMetricsMode((Ogre::GuiMetricsMode)gmm);
+}
+
+Mogre::Real TextAreaOverlayElement::SpaceWidth::get()
+{
+	return static_cast<const Ogre::TextAreaOverlayElement*>(_native)->getSpaceWidth();
+}
+
+void TextAreaOverlayElement::SpaceWidth::set(Mogre::Real width)
+{
+	static_cast<Ogre::TextAreaOverlayElement*>(_native)->setSpaceWidth(width);
 }
 
 // ---------------- Overlay ---------------------
@@ -992,15 +1103,23 @@ Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromTemplate(String^ 
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName, isTemplate);
+	auto result = ResolveFromNativeInstance(_native->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName, isTemplate));
+	if (isTemplate)
+		_templates->Add(instanceName, result);
+	else
+		_instances->Add(instanceName, result);
+	return result;
 }
+
 Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromTemplate(String^ templateName, String^ typeName, String^ instanceName)
 {
 	DECLARE_NATIVE_STRING(o_templateName, templateName);
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName);
+	auto result = ResolveFromNativeInstance(_native->createOverlayElementFromTemplate(o_templateName, o_typeName, o_instanceName));
+	_instances->Add(instanceName, result);
+	return result;
 }
 
 Mogre::OverlayElement^ OverlayManager::CloneOverlayElementFromTemplate(String^ templateName, String^ instanceName)
@@ -1008,7 +1127,9 @@ Mogre::OverlayElement^ OverlayManager::CloneOverlayElementFromTemplate(String^ t
 	DECLARE_NATIVE_STRING(o_templateName, templateName);
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return static_cast<Ogre::OverlayManager*>(_native)->cloneOverlayElementFromTemplate(o_templateName, o_instanceName);
+	auto result = ResolveFromNativeInstance(_native->cloneOverlayElementFromTemplate(o_templateName, o_instanceName));
+	_templates->Add(instanceName, result);
+	return result;
 }
 
 Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromFactory(String^ typeName, String^ instanceName)
@@ -1016,7 +1137,9 @@ Mogre::OverlayElement^ OverlayManager::CreateOverlayElementFromFactory(String^ t
 	DECLARE_NATIVE_STRING(o_typeName, typeName);
 	DECLARE_NATIVE_STRING(o_instanceName, instanceName);
 
-	return static_cast<Ogre::OverlayManager*>(_native)->createOverlayElementFromFactory(o_typeName, o_instanceName);
+	return ResolveFromNativeInstance(
+		_native->createOverlayElementFromFactory(o_typeName, o_instanceName)
+	);
 }
 
 //Mogre::OverlayManager::TemplateIterator^ OverlayManager::GetTemplateIterator()
@@ -1028,5 +1151,5 @@ bool OverlayManager::IsTemplate(String^ strName)
 {
 	DECLARE_NATIVE_STRING(o_strName, strName);
 
-	return static_cast<const Ogre::OverlayManager*>(_native)->isTemplate(o_strName);
+	return _native->isTemplate(o_strName);
 }

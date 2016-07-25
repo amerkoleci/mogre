@@ -24,8 +24,6 @@ namespace Mogre.Framework
 			AdditionalInfo = string.Empty;
 
 			var name = "DebugOverlay/FpsLabel";
-			var element = (OverlayContainer)OverlayManager.Singleton.CreateOverlayElementFromTemplate("SdkTrays/Label", "BorderPanel", name);
-			//mTextArea = (Ogre::TextAreaOverlayElement*)(element.GetChild(getName() + "/LabelCaption");
 
 			//var debugOverlay = OverlayManager.Singleton.GetByName("Core/DebugOverlay");
 			//debugOverlay.Show();
