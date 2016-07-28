@@ -60,6 +60,12 @@ project "OgreMain"
             	path.join(THIRD_PARTY_DIR, "lib/x86/Release"),
             }
             
+            links {
+	              "zlib",
+	              "zziplib",
+	              "FreeImageLib",
+            }
+            
         configuration { "windows", "x32", "Debug" }
             targetdir (MOGRE_HOME .. "/bin/Debug/x86")
             implibdir (OGRE_HOME_SRC .. "/lib/x86/Debug")
@@ -81,11 +87,23 @@ project "OgreMain"
 	    libdirs {
 	            path.join(THIRD_PARTY_DIR, "lib/x64/Release"),
             }
+            
+            links {
+		      "zlib",
+		      "zziplib",
+		      "FreeImageLib",
+            }
 	    
 	configuration { "windows", "x64", "Debug" }
             targetdir (MOGRE_HOME .. "/bin/Debug/x64")
             implibdir (OGRE_HOME_SRC .. "/lib/x64/Debug")
             
-             libdirs {
+            libdirs {
              	path.join(THIRD_PARTY_DIR, "lib/x64/Debug"),
+            }
+            
+            links {
+		"zlibd",
+		"zziplibd",
+		"FreeImageLibd",
             }
