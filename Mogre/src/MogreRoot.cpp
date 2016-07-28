@@ -203,9 +203,10 @@ Mogre::SceneManager^ Root::CreateSceneManager(SceneType typeMask, size_t numWork
 
 void Root::DestroySceneManager(Mogre::SceneManager^ sceneManager)
 {
-	_native->destroySceneManager(sceneManager);
+	Ogre::SceneManager* nativeSceneManager = sceneManager;
 	delete sceneManager;
-	sceneManager = 0;
+	sceneManager = nullptr;
+	_native->destroySceneManager(nativeSceneManager);
 }
 
 Mogre::SceneManager^ Root::GetSceneManager(String^ instanceName)

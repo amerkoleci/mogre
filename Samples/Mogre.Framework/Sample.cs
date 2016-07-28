@@ -98,7 +98,7 @@ namespace Mogre.Framework
 			_root.FrameStarted += OnFrameStarted;
 			_root.FrameRenderingQueued += OnFrameRenderingQueued;
 			_root.FrameEnded += OnFrameEnded;
-
+			_sceneManager.RenderQueueStarted += _sceneManager_RenderQueueStarted;
 			_trayManager = new SdkTrayManager("SampleControls");
 			_trayManager.ShowFrameStats(TrayLocation.BottomLeft);
 			_trayManager.ShowLogo(TrayLocation.BottomRight);
@@ -107,6 +107,11 @@ namespace Mogre.Framework
 			_debugOverlay = new DebugOverlay(_window);
 			_debugOverlay.AdditionalInfo = "Bilinear";
 			return true;
+		}
+
+		private void _sceneManager_RenderQueueStarted(byte queueGroupId, string invocation, out bool skipThisInvocation)
+		{
+			skipThisInvocation = false;
 		}
 
 		protected virtual bool OnFrameStarted(FrameEvent evt)
