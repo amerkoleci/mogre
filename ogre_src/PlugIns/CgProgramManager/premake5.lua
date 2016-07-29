@@ -21,7 +21,10 @@ project "Plugin_CgProgramManager"
 	configuration "Debug"
 		flags       { "Symbols" }
 		targetsuffix "_d"
-		
+	
+	configuration "Release"
+		defines { "NDEBUG" }
+	
 	configuration "vs*"
 	        defines         { "_CRT_SECURE_NO_WARNINGS" }
             	buildoptions    { "/wd4100", "/wd4800" }

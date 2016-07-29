@@ -33,12 +33,15 @@ project "OgreMain"
 		flags       { "Symbols" }
 		targetsuffix "_d"
 		
+	configuration "Release"
+		defines { "NDEBUG" }
+		
 	configuration "vs*"
 	        defines         { "_CRT_SECURE_NO_WARNINGS" }
             	buildoptions    { "/wd4100", "/wd4800" }
             	characterset "MBCS"
           
-         configuration { "windows" }
+    configuration { "windows" }
        		files {
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreConfigDialog.cpp"),
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreErrorDialog.cpp"),
@@ -46,13 +49,13 @@ project "OgreMain"
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreTimer.cpp"),
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreOptimisedUtilDirectXMath.cpp"),
        			path.join(OGRE_HOME_SRC, "OgreMain/src/Threading/OgreBarrierWin.cpp"),
-			path.join(OGRE_HOME_SRC, "OgreMain/src/Threading/OgreLightweightMutexWin.cpp"),
+				path.join(OGRE_HOME_SRC, "OgreMain/src/Threading/OgreLightweightMutexWin.cpp"),
       			path.join(OGRE_HOME_SRC, "OgreMain/src/Threading/OgreThreadsWin.cpp"),
       			path.join(OGRE_HOME_SRC, "OgreMain/src/Math/Array/SSE2/Single/*.cpp"),
        		}  
           
           
-        configuration { "windows", "x32", "Release" }
+    configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")
             implibdir (OGRE_HOME_SRC .. "/lib/x86/Release")
             
@@ -66,7 +69,7 @@ project "OgreMain"
 	              "FreeImageLib",
             }
             
-        configuration { "windows", "x32", "Debug" }
+     configuration { "windows", "x32", "Debug" }
             targetdir (MOGRE_HOME .. "/bin/Debug/x86")
             implibdir (OGRE_HOME_SRC .. "/lib/x86/Debug")
             
@@ -80,11 +83,11 @@ project "OgreMain"
             	"FreeImageLibd",
             }
             
-        configuration { "windows", "x64", "Release" }
-	    targetdir (MOGRE_HOME .. "/bin/Release/x64")
-	    implibdir (OGRE_HOME_SRC .. "/lib/x64/Release")
+     configuration { "windows", "x64", "Release" }
+			targetdir (MOGRE_HOME .. "/bin/Release/x64")
+			implibdir (OGRE_HOME_SRC .. "/lib/x64/Release")
 	    
-	    libdirs {
+			libdirs {
 	            path.join(THIRD_PARTY_DIR, "lib/x64/Release"),
             }
             
@@ -103,7 +106,7 @@ project "OgreMain"
             }
             
             links {
-		"zlibd",
-		"zziplibd",
-		"FreeImageLibd",
+				"zlibd",
+				"zziplibd",
+				"FreeImageLibd",
             }
