@@ -17,6 +17,9 @@ THIRD_PARTY_DIR   	= MOGRE_HOME .. "/ThirdParty"
 printf("Premake home " .. MOGRE_HOME)
 printf("Build directory " .. MOGRE_BUILD_DIR)
 
+-- Setup toolchain	
+dofile('sdk.lua')
+
 solution "Mogre"
 	location (MOGRE_BUILD_DIR)
 	language "C++"

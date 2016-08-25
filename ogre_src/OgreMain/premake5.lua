@@ -1,6 +1,4 @@
-project "OgreMain"
-	targetname "OgreMain"
-        language "C++"
+mogre.project.library "OgreMain"
 	kind "SharedLib"
 	
 	includedirs {
@@ -28,20 +26,8 @@ project "OgreMain"
 	files {
 		path.join(OGRE_HOME_SRC, "OgreMain/src/Threading/OgreDefaultWorkQueueStandard.cpp"),
 	}
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-		
-	configuration "Release"
-		defines { "NDEBUG" }
-		
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
           
-    configuration { "windows" }
+    	configuration { "windows" }
        		files {
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreConfigDialog.cpp"),
        			path.join(OGRE_HOME_SRC, "OgreMain/src/WIN32/OgreErrorDialog.cpp"),
@@ -55,7 +41,7 @@ project "OgreMain"
        		}  
           
           
-    configuration { "windows", "x32", "Release" }
+    	configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")
             implibdir (OGRE_HOME_SRC .. "/lib/x86/Release")
             
