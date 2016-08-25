@@ -1,6 +1,4 @@
-project "Plugin_CgProgramManager"
-	targetname "Plugin_CgProgramManager"
-        language "C++"
+mogre.project.library "Plugin_CgProgramManager"
 	kind "SharedLib"
 	
 	includedirs {
@@ -17,18 +15,6 @@ project "Plugin_CgProgramManager"
 	
 	defines { "OGRE_CGPLUGIN_EXPORTS", "_USRDLL" }
 	links { "OgreMain", "cg" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
             	
         configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")

@@ -35,4 +35,8 @@ mogre.project.application = function(name)
 
 	kind "ConsoleApp"
 	
+	configuration { "vs*" }
+		kind "WindowedApp" 
+		flags { "WinMain" }
+	
 end

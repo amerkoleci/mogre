@@ -1,6 +1,4 @@
-project "RenderSystem_Direct3D9"
-	targetname "RenderSystem_Direct3D9"
-        language "C++"
+mogre.project.library "RenderSystem_Direct3D9"
 	kind "SharedLib"
 	
 	includedirs {
@@ -22,18 +20,6 @@ project "RenderSystem_Direct3D9"
 	}
 	
 	links { "OgreMain", "d3d9", "d3dx9" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
             	
         configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")

@@ -1,6 +1,4 @@
-project "OgreOverlay"
-	targetname "OgreOverlay"
-        language "C++"
+mogre.project.library "OgreOverlay"
 	kind "SharedLib"
 	
 	includedirs {
@@ -16,20 +14,8 @@ project "OgreOverlay"
 	}
 	
 	defines { "OGRE_OVERLAY_EXPORTS", "_MT", "_USRDLL" }
-	links { "OgreMain" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
-            	
+        links { "OgreMain" }
+        
         configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")
             implibdir (OGRE_HOME_SRC .. "/lib/x86/Release")

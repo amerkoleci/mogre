@@ -1,6 +1,4 @@
-project "Plugin_ParticleFX"
-	targetname "Plugin_ParticleFX"
-        language "C++"
+mogre.project.library "Plugin_ParticleFX"
 	kind "SharedLib"
 	
 	includedirs {
@@ -16,18 +14,6 @@ project "Plugin_ParticleFX"
 	
 	defines { "OGRE_PARTICLEFXPLUGIN_EXPORTS", "_USRDLL" }
 	links { "OgreMain" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
             	
         configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")

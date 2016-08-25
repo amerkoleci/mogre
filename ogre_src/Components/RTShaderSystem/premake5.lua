@@ -1,6 +1,4 @@
-project "OgreRTShaderSystem"
-	targetname "OgreRTShaderSystem"
-        language "C++"
+mogre.project.library "OgreRTShaderSystem"
 	kind "SharedLib"
 	
 	includedirs {
@@ -16,18 +14,6 @@ project "OgreRTShaderSystem"
 	
 	defines { "OgreRTShaderSystem_EXPORTS" }
 	links { "OgreMain" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
             	
         configuration { "windows", "x32", "Release" }
             targetdir (MOGRE_HOME .. "/bin/Release/x86")

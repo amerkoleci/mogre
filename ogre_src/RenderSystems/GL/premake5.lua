@@ -1,6 +1,4 @@
-project "RenderSystem_GL"
-	targetname "RenderSystem_GL"
-        language "C++"
+mogre.project.library "RenderSystem_GL"
 	kind "SharedLib"
 	
 	includedirs {
@@ -32,18 +30,6 @@ project "RenderSystem_GL"
 	defines { "OGRE_GLPLUGIN_EXPORTS" }
 	
 	links { "OgreMain" }
-	
-	configuration "Debug"
-		flags       { "Symbols" }
-		targetsuffix "_d"
-	
-	configuration "Release"
-		defines { "NDEBUG" }
-	
-	configuration "vs*"
-	        defines         { "_CRT_SECURE_NO_WARNINGS" }
-            	buildoptions    { "/wd4100", "/wd4800" }
-            	characterset "MBCS"
             	
         configuration { "windows" }
             	includedirs {
