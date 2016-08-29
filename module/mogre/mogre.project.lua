@@ -18,15 +18,20 @@ mogre.project.library = function(name)
 		floatingpoint "Fast"
 		
 	configuration "vs*"
-		defines         { "_CRT_SECURE_NO_WARNINGS" }
-	        buildoptions    { "/wd4100", "/wd4800" }
+		defines         { "WIN32", "_WINDOWS" }
+	        buildoptions {
+			"/wd4201", -- warning C4201: nonstandard extension used: nameless struct/union
+			"/wd4324", -- warning C4324: '': structure was padded due to alignment specifier
+			"/Ob2",    -- The Inline Function Expansion
+		}
             	characterset "MBCS"
+		disablewarnings { "4786" , "4503" , "4251" , "4275" , "4290" , "4661" , "4996" , "4127" , "4100" }
 
 	
 	configuration { "windows", "x32" }
 		-- Enable SSE2 vector processing
 		vectorextensions "SSE2"
-
+		
 	configuration { }
 end
 

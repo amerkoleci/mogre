@@ -2,7 +2,9 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+#if INCLUDE_RTSHADER_SYSTEM
 using Mogre.RTShader;
+#endif
 using System;
 using System.Windows.Forms;
 
@@ -80,10 +82,12 @@ namespace Mogre.Framework
 			ResourceGroupManager.Singleton.AddBuiltinLocations();
 
 			_sceneManager = CreateSceneManager();
+#if INCLUDE_RTSHADER_SYSTEM
 			if (!_root.RenderSystem.Capabilities.HasCapability(Capabilities.RSC_FIXED_FUNCTION))
 			{
 				InitializeRTShaderSystem(_sceneManager);
 			}
+#endif
 
 			_overlaySystem.SceneManager = _sceneManager;
 			CreateCamera();
@@ -169,15 +173,15 @@ namespace Mogre.Framework
 			const int numThreads = 1;
 			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
 #else
-            // GetNumLogicalCores() may return 0 if couldn't detect
-            var numThreads = System.Math.Max( 1, PlatformInformation.NumLogicalCores );
+			// GetNumLogicalCores() may return 0 if couldn't detect
+			var numThreads = System.Math.Max(1, PlatformInformation.NumLogicalCores);
 
 			InstancingThreadedCullingMethod threadedCullingMethod = InstancingThreadedCullingMethod.SingleThread;
 
-            //See doxygen documentation regarding culling methods.
-            //In some cases you may still want to use single thread.
-            if( numThreads > 1 )
-                threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
+			//See doxygen documentation regarding culling methods.
+			//In some cases you may still want to use single thread.
+			if (numThreads > 1)
+				threadedCullingMethod = InstancingThreadedCullingMethod.Threaded;
 #endif
 
 			return _root.CreateSceneManager(SceneType.Generic, numThreads, threadedCullingMethod);
@@ -204,6 +208,7 @@ namespace Mogre.Framework
 			return compositorManager.AddWorkspace(_sceneManager, _window, _camera, workspaceName);
 		}
 
+#if INCLUDE_RTSHADER_SYSTEM
 		protected virtual bool InitializeRTShaderSystem(SceneManager sceneMgr)
 		{
 			if (ShaderGenerator.Initialize())
@@ -213,6 +218,7 @@ namespace Mogre.Framework
 
 			return true;
 		}
+#endif
 
 
 		protected virtual void LoadResources()
