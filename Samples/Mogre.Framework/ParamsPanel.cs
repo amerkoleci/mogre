@@ -33,6 +33,14 @@ namespace Mogre.Framework
 			UpdateText();
 		}
 
+		public void SetAllParamValues(StringVector paramValues)
+		{
+			_values = paramValues;
+			_values.Resize(_names.Count, "");
+
+			UpdateText();
+		}
+
 		protected void UpdateText()
 		{
 			string namesDS = string.Empty;

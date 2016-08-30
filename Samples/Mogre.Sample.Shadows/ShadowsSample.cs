@@ -55,6 +55,7 @@ namespace Mogre.Framework
 			lightNode.AttachObject(_mainLight);
 			_mainLight.Type = Light.LightTypes.LT_DIRECTIONAL;
 			_mainLight.Direction = Vector3.Normalise(new Vector3(-0.1f, -1.0f, -1.25f));
+			//_mainLight.ShadowFarDistance = 500;
 			//_mainLight.Direction = Vector3.NEGATIVE_UNIT_Y;
 
 			// Floor
@@ -88,13 +89,16 @@ namespace Mogre.Framework
 			_camera.NearClipDistance = 0.1f;
 			_camera.FarClipDistance = 5000.0f;
 
-			CreateExtraLights();
+			//CreateExtraLights();
 			CreateDebugOverlay();
 		}
 
 		protected override bool OnFrameRenderingQueued(FrameEvent evt)
 		{
-			_lightRootNode.Yaw(new Radian(evt.timeSinceLastFrame));
+			if (_lightRootNode != null)
+			{
+				_lightRootNode.Yaw(new Radian(evt.timeSinceLastFrame));
+			}
 
 			Node mainLightNode = _mainLight.ParentNode;
 			mainLightNode.Yaw(new Radian(-evt.timeSinceLastFrame * 0.1f), Node.TransformSpace.TS_PARENT);

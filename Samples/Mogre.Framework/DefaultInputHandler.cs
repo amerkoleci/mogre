@@ -11,7 +11,7 @@ namespace Mogre.Framework
 	public class DefaultInputHandler
 	{
 		protected readonly Sample _sample;
-		readonly Timer _timer;
+		readonly System.Windows.Forms.Timer _timer;
 		Vector3 _translate = Vector3.ZERO;
 		bool _rotating;
 		bool _lastFocus;
@@ -26,11 +26,12 @@ namespace Mogre.Framework
 			sample.KeyUp += HandleKeyUp;
 			sample.MouseDown += HandleMouseDown;
 			sample.MouseUp += HandleMouseUp;
+			sample.MouseMove += HandleMouseMove;
 			sample.Disposed += Window_Disposed;
 			sample.LostFocus += Window_LostFocus;
 			sample.GotFocus += Window_GotFocus;
 
-			_timer = new Timer
+			_timer = new System.Windows.Forms.Timer
 			{
 				Interval = 17,
 				Enabled = true
@@ -130,6 +131,11 @@ namespace Mogre.Framework
 				Cursor.Show();
 				_rotating = false;
 			}
+		}
+
+		void HandleMouseMove(object sender, MouseEventArgs e)
+		{
+			_sample.TrayManager.InjectMouseMove(e.X, e.Y);
 		}
 
 		void HandleMouseMove(Point delta)

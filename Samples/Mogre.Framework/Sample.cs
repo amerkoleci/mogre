@@ -24,7 +24,6 @@ namespace Mogre.Framework
 		protected CompositorWorkspace _workspace;
 		protected ColourValue _backgroundColor = ColourValue.Black;
 		protected SdkTrayManager _trayManager;
-		protected DebugOverlay _debugOverlay;
 		protected int _textureMode = 0;
 		protected int _renderMode = 0;
 
@@ -36,6 +35,11 @@ namespace Mogre.Framework
 		public SceneManager SceneManager
 		{
 			get { return _sceneManager; }
+		}
+
+		public SdkTrayManager TrayManager
+		{
+			get { return _trayManager; }
 		}
 
 		protected Sample()
@@ -103,13 +107,11 @@ namespace Mogre.Framework
 			_root.FrameRenderingQueued += OnFrameRenderingQueued;
 			_root.FrameEnded += OnFrameEnded;
 			_sceneManager.RenderQueueStarted += _sceneManager_RenderQueueStarted;
-			_trayManager = new SdkTrayManager("SampleControls");
+			_trayManager = new SdkTrayManager("SampleControls", _window);
 			_trayManager.ShowFrameStats(TrayLocation.BottomLeft);
 			_trayManager.ShowLogo(TrayLocation.BottomRight);
-			_trayManager.HideCursor();
-
-			_debugOverlay = new DebugOverlay(_window);
-			_debugOverlay.AdditionalInfo = "Bilinear";
+			_trayManager.ShowCursor();
+			
 			return true;
 		}
 
@@ -129,7 +131,7 @@ namespace Mogre.Framework
 			if (_window.IsDisposed || _window.IsClosed)
 				return false;
 
-			_debugOverlay.Update(evt.timeSinceLastFrame);
+			_trayManager.Update(evt.timeSinceLastFrame);
 
 			return true;
 		}
@@ -308,12 +310,10 @@ namespace Mogre.Framework
 			{
 				case 0:
 					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_BILINEAR);
-					_debugOverlay.AdditionalInfo = "BiLinear";
 					break;
 
 				case 1:
 					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_TRILINEAR);
-					_debugOverlay.AdditionalInfo = "TriLinear";
 					break;
 
 				case 2:
@@ -325,7 +325,6 @@ namespace Mogre.Framework
 				case 3:
 					MaterialManager.Singleton.SetDefaultTextureFiltering(TextureFilterOptions.TFO_NONE);
 					MaterialManager.Singleton.DefaultAnisotropy = 1;
-					_debugOverlay.AdditionalInfo = "None";
 					break;
 			}
 		}

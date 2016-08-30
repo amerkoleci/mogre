@@ -29,6 +29,9 @@ namespace Mogre.Framework
 
 	public class SdkTrayManager
 	{
+		readonly Timer _timer;
+		uint _lastStatUpdateTime;
+
 		Overlay _backdropLayer;        // backdrop layer
 		Overlay _traysLayer;           // widget layer
 		Overlay _priorityLayer;        // top priority layer
@@ -48,7 +51,9 @@ namespace Mogre.Framework
 
 		public string Name { get; private set; }
 
-		public SdkTrayManager(string name)
+		public RenderWindow Window { get; private set; }
+
+		public SdkTrayManager(string name, RenderWindow window)
 		{
 			Name = name;
 			string nameBase = Name + "/";
@@ -59,6 +64,8 @@ namespace Mogre.Framework
 				_widgets[i] = new List<Widget>();
 			}
 
+			Window = window;
+			_timer = Root.Singleton.Timer;
 			OverlayManager om = OverlayManager.Singleton;
 
 			_backdropLayer = om.Create(nameBase + "BackdropLayer");
@@ -148,6 +155,7 @@ namespace Mogre.Framework
 				_cursorLayer.Show();
 
 				RefreshCursor();
+				System.Windows.Forms.Cursor.Hide();
 			}
 		}
 
@@ -165,13 +173,13 @@ namespace Mogre.Framework
 			}
 
 			//SetExpandedMenu(0);
+			System.Windows.Forms.Cursor.Show();
 		}
 
 		public void RefreshCursor()
 		{
-			//Ogre::Real x, y;
-			//if (mInputContext.getCursorPosition(x, y))
-			//	_cursor.SetPosition(x, y);
+			var position = System.Windows.Forms.Cursor.Position;
+			_cursor.SetPosition(position.X, position.Y);
 		}
 
 		public void ShowFrameStats(TrayLocation trayLoc, int place = -1)
@@ -388,6 +396,46 @@ namespace Mogre.Framework
 				AdjustTrays();
 
 			widget.TrayLocation = trayLoc;
+		}
+
+		public void Update(float elapsedTime)
+		{
+			//for (unsigned int i = 0; i < mWidgetDeathRow.size(); i++)
+			//{
+			//	delete mWidgetDeathRow[i];
+			//}
+			//mWidgetDeathRow.clear();
+
+			uint currentTime = _timer.Milliseconds;
+			if (AreFrameStatsVisible() && currentTime - _lastStatUpdateTime > 250)
+			{
+				var stats = Window.GetStatistics();
+				var frameStats = Root.Singleton.GetFrameStats();
+				_lastStatUpdateTime = currentTime;
+				float avgTime = frameStats.AvgTime;
+
+				var s = "FPS: " + string.Format("{0} ms - {1} fps", avgTime, 1000.0f / avgTime);
+				_fpsLabel.Caption = s;
+
+				if (_statsPanel.OverlayElement.IsVisible)
+				{
+					var values = new StringVector();
+					values.Add(frameStats.BestTime.ToString());
+					values.Add(frameStats.WorstTime.ToString());
+					values.Add(stats.TriangleCount.ToString());
+					values.Add(stats.BatchCount.ToString());
+
+					_statsPanel.SetAllParamValues(values);
+				}
+			}
+		}
+
+		public void InjectMouseMove(int mouseX, int mouseY)
+		{
+			if (!_cursorLayer.IsVisible)
+				return;   // don't process if cursor layer is invisible
+
+			_cursor.SetPosition(mouseX, mouseY);
 		}
 	}
 }

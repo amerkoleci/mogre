@@ -34,7 +34,6 @@
     <DocumentationFile>bin\Release\Mogre.Framework.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DebugOverlay.cs" />
     <Compile Include="DecorWidget.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="ParamsPanel.cs" />

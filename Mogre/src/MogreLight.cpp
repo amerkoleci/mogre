@@ -213,3 +213,23 @@ void Light::ShadowFarClipDistance::set(Ogre::Real power)
 {
 	static_cast<Ogre::Light*>(_native)->setShadowFarClipDistance(power);
 }
+
+Ogre::Real Light::ShadowFarDistance::get()
+{
+	return static_cast<const Ogre::Light*>(_native)->getShadowFarDistance();
+}
+
+void Light::ShadowFarDistance::set(Ogre::Real power)
+{
+	static_cast<Ogre::Light*>(_native)->setShadowFarDistance(power);
+}
+
+Ogre::Real Light::ShadowFarDistanceSquared::get()
+{
+	return static_cast<const Ogre::Light*>(_native)->getShadowFarDistanceSquared();
+}
+
+void Light::ResetShadowFarDistance()
+{
+	static_cast<Ogre::Light*>(_native)->resetShadowFarDistance();
+}

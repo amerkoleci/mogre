@@ -78,6 +78,11 @@ bool Root::IsDisposed::get()
 	return (_native == nullptr);
 }
 
+Mogre::Timer^ Root::Timer::get()
+{
+	ReturnCachedObjectGcnew(Mogre::Timer, _timer, _native->getTimer());
+}
+
 Mogre::FrameStats^ Root::GetFrameStats()
 {
 	return _native->getFrameStats();

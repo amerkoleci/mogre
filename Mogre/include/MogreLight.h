@@ -170,6 +170,20 @@ namespace Mogre
 			void set(Ogre::Real visible);
 		}
 
+		property Ogre::Real ShadowFarDistance
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real visible);
+		}
+
+		property Ogre::Real ShadowFarDistanceSquared
+		{
+		public:
+			Ogre::Real get();
+		}
+
 		void _calcTempSquareDist(Mogre::Vector3 worldPos);
 
 		void SetDiffuseColour(Ogre::Real red, Ogre::Real green, Ogre::Real blue);
@@ -182,6 +196,7 @@ namespace Mogre
 
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle, Ogre::Real falloff);
 		void SetSpotlightRange(Mogre::Radian innerAngle, Mogre::Radian outerAngle);
+		void ResetShadowFarDistance();
 
 		DEFINE_MANAGED_NATIVE_CONVERSIONS_GET_MANAGED(Light);
 	};

@@ -2,6 +2,7 @@
 
 #include "OgreRoot.h"
 #include "OgreFrameStats.h"
+#include "OgreTimer.h"
 #include "MogreFrameListener.h"
 #include "MogreSceneManager.h"
 #include "MogreCommon.h"
@@ -110,10 +111,59 @@ namespace Mogre
 		}
 	};
 
+	public ref class Timer
+	{
+	internal:
+		Ogre::Timer* _native;
+
+		Timer(Ogre::Timer* obj) : _native(obj)
+		{
+		}
+
+	public: 
+		void Reset()
+		{
+			_native->reset();
+		}
+
+		property unsigned long Milliseconds
+		{
+			unsigned long get()
+			{
+				return _native->getMilliseconds();
+			}
+		}
+
+		property unsigned long Microseconds
+		{
+			unsigned long get()
+			{
+				return _native->getMicroseconds();
+			}
+		}
+
+		property unsigned long MillisecondsCPU
+		{
+			unsigned long get()
+			{
+				return _native->getMillisecondsCPU();
+			}
+		}
+
+		property unsigned long MicrosecondsCPU
+		{
+			unsigned long get()
+			{
+				return _native->getMicrosecondsCPU();
+			}
+		}
+	};
+
 	public ref class Root : IMogreDisposable, public IFrameListener_Receiver
 	{
 		Mogre::CompositorManager2^ _compositorManager2;
 		Mogre::RenderSystem^ _activeRenderSystem;
+		Mogre::Timer^ _timer;
 
 	public:
 		/// <summary>Raised before any disposing is performed.</summary>
@@ -174,6 +224,11 @@ namespace Mogre
 		property bool IsDisposed
 		{
 			virtual bool get();
+		}
+		
+		property Mogre::Timer^ Timer
+		{
+			Mogre::Timer^ get();
 		}
 
 		event Mogre::FrameListener::FrameStartedHandler^ FrameStarted
