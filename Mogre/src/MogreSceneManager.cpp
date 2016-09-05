@@ -946,10 +946,28 @@ Ogre::Real SceneManager::ShadowDirectionalLightExtrusionDistance::get()
 {
 	return _native->getShadowDirectionalLightExtrusionDistance();
 }
-
 void SceneManager::ShadowDirectionalLightExtrusionDistance::set(Ogre::Real distance)
 {
 	_native->setShadowDirectionalLightExtrusionDistance(distance);
+}
+
+Ogre::Real SceneManager::ShadowDirLightTextureOffset::get()
+{
+	return _native->getShadowDirLightTextureOffset();
+}
+void SceneManager::ShadowDirLightTextureOffset::set(Ogre::Real distance)
+{
+	_native->setShadowDirLightTextureOffset(distance);
+}
+
+void SceneManager::ShadowTextureFadeStart::set(Ogre::Real value)
+{
+	_native->setShadowTextureFadeStart(value);
+}
+
+void SceneManager::ShadowTextureFadeEnd::set(Ogre::Real value)
+{
+	_native->setShadowTextureFadeEnd(value);
 }
 
 bool SceneManager::ShadowCasterRenderBackFaces::get()

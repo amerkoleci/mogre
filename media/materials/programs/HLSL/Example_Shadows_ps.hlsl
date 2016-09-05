@@ -57,7 +57,7 @@ float calcPSSMDepthShadow( sampler2D shadowMap0, sampler2D shadowMap1, sampler2D
 	return shadow;
 }
 
-#define NUM_LIGHTS 8
+#define NUM_LIGHTS 1
 
 void main_ps(	in float2 uv : TEXCOORD0,
 				in float3 objPos : TEXCOORD1,
@@ -102,20 +102,13 @@ void main_ps(	in float2 uv : TEXCOORD0,
 	normal		= normalize( normal );
 	outColour = max( 0, dot( negLightDir, normal ) ) * lightDiffuse[0] * fShadow + lightAmbient;
 	
-	int i=1;
+	/*int i=1;
 	for( i=1; i<NUM_LIGHTS; ++i )
 	{
 		float3 negLightDir = lightPosition[i].xyz - (objPos * lightPosition[i].w);
 		negLightDir	= normalize( negLightDir );
 		outColour += max( 0, dot( negLightDir, normal ) ) * lightDiffuse[i];
-	}
+	}*/
 
 	outColour *= tex2D( diffuseMap, uv );
-
-	/*if( inDepth <= pssmSplits.x)
-		outColour.xyz = lerp( outColour.xyz, float3( 0, 0, 1.0f ), 0.25f );
-	else if( inDepth <= pssmSplits.y)
-		outColour.xyz = lerp( outColour.xyz, float3( 0, 1.0f, 0 ), 0.25f );
-	else
-		outColour.xyz = lerp( outColour.xyz, float3( 1.0f, 0, 0 ), 0.25f );*/
 }

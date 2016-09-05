@@ -14,7 +14,7 @@ namespace Mogre.Framework
 		Entity _floorPlane;
 		Light _mainLight;
 		readonly List<Entity> _casters = new List<Entity>();
-		bool _pssm = false;
+		bool _pssm = true;
 		SceneNode _lightRootNode;
 		static readonly Random _randomizer = new Random();
 
@@ -84,8 +84,10 @@ namespace Mogre.Framework
 			_camera.SetPosition(0, 20, 50);
 			_camera.LookAt(0, 20, 0);
 
-			_sceneManager.ShadowDirectionalLightExtrusionDistance = 200.0f;
-			_sceneManager.ShadowFarDistance = 200.0f;
+			//_sceneManager.ShadowDirectionalLightExtrusionDistance = 200.0f;
+			_sceneManager.ShadowFarDistance = 1000;
+			//_sceneManager.ShadowCasterRenderBackFaces = false;
+			//_sceneManager.ShadowDirLightTextureOffset = 0.3f;
 			_camera.NearClipDistance = 0.1f;
 			_camera.FarClipDistance = 5000.0f;
 
@@ -135,7 +137,14 @@ namespace Mogre.Framework
 
 		void CreateDebugOverlay()
 		{
+			//uint shadowNodeName = _pssm ? IdString.FromString("ExampleShadows_PssmShadowNode") : IdString.FromString("ExampleShadows_FocusedShadowNode");
+			//var baseWhite = MaterialManager.Singleton.GetByName("Example_Shadows_DebugView");
 
+			//var DepthShadowTexture = baseWhite.Clone("DepthShadowTexture0");
+			//var textureUnit = DepthShadowTexture.GetTechnique(0).GetPass(0).GetTextureUnitState(0);
+			//CompositorShadowNode* shadowNode = _workspace.FindShadowNode(shadowNodeName);
+			//Ogre::TexturePtr tex = shadowNode->getLocalTextures()[0].textures[0];
+			//textureUnit->setTextureName(tex->getName());
 		}
 	}
 }

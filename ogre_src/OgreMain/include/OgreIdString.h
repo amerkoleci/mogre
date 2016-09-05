@@ -225,8 +225,7 @@ namespace Ogre
 		{
 #ifndef NDEBUG
 			//On highly debug builds, check for collisions
-			assert(!(mHash == idString.mHash &&
-				strcmp(mDebugString, idString.mDebugString) != 0) &&
+			assert(!(mHash == idString.mHash &&strcmp(mDebugString, idString.mDebugString) != 0) &&
 				"Collision detected!");
 #endif
 			return mHash < idString.mHash;

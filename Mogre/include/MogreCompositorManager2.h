@@ -378,6 +378,8 @@ namespace Mogre
 		void RecreateAllNodes();
 		void ReconnectAllNodes();
 
+		//CompositorNode^ FindNode(IdString aliasName, bool includeShadowNodes = false);
+
 		void _beginUpdate(bool forceBeginFrame);
 		void _update();
 		void _endUpdate(bool forceEndFrame);

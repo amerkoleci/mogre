@@ -269,6 +269,26 @@ namespace Mogre
 			void set(Ogre::Real distance);
 		}
 
+		property Ogre::Real ShadowDirLightTextureOffset
+		{
+		public:
+			Ogre::Real get();
+		public:
+			void set(Ogre::Real distance);
+		}
+
+		property Ogre::Real ShadowTextureFadeStart
+		{
+		public:
+			void set(Ogre::Real value);
+		}
+
+		property Ogre::Real ShadowTextureFadeEnd
+		{
+		public:
+			void set(Ogre::Real value);
+		}
+
 		property Mogre::ColourValue ShadowColour
 		{
 		public:

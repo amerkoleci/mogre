@@ -22,7 +22,6 @@ mogre.project.library = function(name)
 	        buildoptions {
 			"/wd4201", -- warning C4201: nonstandard extension used: nameless struct/union
 			"/wd4324", -- warning C4324: '': structure was padded due to alignment specifier
-			"/Ob2",    -- The Inline Function Expansion
 		}
             	characterset "MBCS"
 		disablewarnings { "4786" , "4503" , "4251" , "4275" , "4290" , "4661" , "4996" , "4127" , "4100" }

@@ -39,15 +39,15 @@ material Example_Shadows
 {
 	technique
 	{
-        shadow_caster_material Example_ShadowsCaster
+        	shadow_caster_material Example_ShadowsCaster
 
 		pass
 		{
-            vertex_program_ref Example_Shadows_vs
+            		vertex_program_ref Example_Shadows_vs
 			{
 			}
 
-            fragment_program_ref Example_Shadows_ps
+            		fragment_program_ref Example_Shadows_ps
 			{
 			}
 
