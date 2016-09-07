@@ -65,13 +65,24 @@
     <Compile Include="CameraTrackSample.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TrueTypeFontSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Miyagi\Backends\Miyagi.Backend.Mogre\Miyagi.Backend.Mogre.csproj">
+      <Project>{60b1cace-8b81-426c-9978-a58262dce461}</Project>
+      <Name>Miyagi.Backend.Mogre</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Miyagi\Miyagi\Miyagi.csproj">
+      <Project>{e57299cc-e298-4413-9756-ef3870033ef4}</Project>
+      <Name>Miyagi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Mogre.Base\Mogre.Base.csproj">
       <Project>{6f7dd672-bbdd-4eed-b207-1bcbea6d68b4}</Project>
       <Name>Mogre.Base</Name>

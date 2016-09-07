@@ -18,6 +18,7 @@ mogre.project.library "OgreMain"
 		path.join(OGRE_HOME_SRC, "OgreMain/src/Hash/*.cpp"),
 		path.join(OGRE_HOME_SRC, "OgreMain/src/Math/Array/*.cpp"),
 		path.join(OGRE_HOME_SRC, "OgreMain/src/Math/Simple/C/*.cpp"),
+		path.join(OGRE_HOME_SRC, "OgreMain/src/Exports/*.cpp"),
 	}
 	
 	defines { "OGRE_NONCLIENT_BUILD", "FREEIMAGE_LIB", "_MT", "_USRDLL" }

@@ -2,7 +2,14 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Miyagi.Common;
+using Miyagi.Common.Data;
+using Miyagi.Common.Resources;
+using Miyagi.UI;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Mogre.Framework
@@ -16,6 +23,7 @@ namespace Mogre.Framework
 		Camera _rttCamera;
 		CompositorWorkspace _rttWorkspace;
 		SceneNode _penguinNode;
+		MiyagiSystem _miyagiSystem;
 
 		protected override void CreateScene()
 		{
@@ -97,9 +105,9 @@ namespace Mogre.Framework
 			}
 
 			_rttWorkspace = _root.CompositorManager2.AddWorkspace(
-				_rttSceneManager, 
+				_rttSceneManager,
 				screenTexture0.GetBuffer().GetRenderTarget(),
-				_rttCamera, 
+				_rttCamera,
 				workspaceName,
 				true);
 
@@ -125,19 +133,182 @@ namespace Mogre.Framework
 			planeEntity.SetMaterialName("RttMat");
 			planeEntity.CastShadows = false;
 			_sceneManager.RootSceneNode.CreateChildSceneNode().AttachObject(planeEntity);
+
+			// Test Miyagi
+			// Init MiyagiSystem
+			_miyagiSystem = new MiyagiSystem("Mogre", (int)_window.Width, (int)_window.Height);
+			//const string PluginPath = @"..\..\..\debug\Plugins";
+			//this.miyagiSystem.PluginManager.LoadPlugin(Path.Combine(PluginPath, "Miyagi.Plugin.Input.Mois.dll"), this.inputKeyboard, this.inputMouse);
+
+			Resources.Create(_miyagiSystem);
+			//Utilities.CreateCursor(system.GUIManager);
+
+			// create a default GUI
+			var gui = new GUI();
+
+			// A Button is a simple skinned control capable of changing its current texture automatically on certain mouse events
+			// (MouseDown/MouseEnter/MouseLeave/MouseUp). Those subskins are optinal, if a subskin is not defined, Miyagi will fall
+			// back to an appropriate alternative.
+			// Since Button inherits from Label it provides the same TextStyle options.
+			var button1 = new Miyagi.UI.Controls.Button
+			{
+				Text = "HELLO WORLD",
+				Location = new Point(140, 140),
+				Size = new Size(200, 50),
+				Skin = Resources.Skins["ButtonSkin"],
+				TextStyle =
+				{
+					Alignment = Alignment.MiddleCenter,
+					ForegroundColour = Colours.White
+				}
+			};
+
+			// add the Buttons to the GUI
+			gui.Controls.Add(button1);
+			//gui.Controls.Add(button2);
+
+			// add the GUI to the GUIManager
+			_miyagiSystem.GUIManager.GUIs.Add(gui);
 		}
 
 		protected override void DestroyScene()
 		{
+			Utilities.Dispose(ref _miyagiSystem);
 			_root.DestroySceneManager(_rttSceneManager);
 			Utilities.Dispose(ref _rttSceneManager);
+		}
+
+		protected override void LoadResources()
+		{
+			// Load resources
+			//ResourceGroupManager.Singleton.AddResourceLocation(@"../../Media/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/Cursor/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/GUI/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/GUI/Extra/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/Shader/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/Fonts/", "FileSystem");
+			ResourceGroupManager.Singleton.AddResourceLocation(@"../../../Media/Gfx/TileMap/", "FileSystem");
+
+			base.LoadResources();
 		}
 
 		protected override bool OnFrameStarted(FrameEvent evt)
 		{
 			_animState.AddTime(evt.timeSinceLastFrame);   // increment animation time
 			_penguinNode.Yaw(evt.timeSinceLastFrame * 30);
+
+			if (_miyagiSystem != null)
+			{
+				var mgr = this._miyagiSystem.TwoDManager;
+				if (mgr.GetElement("FPS") != null)
+				{
+					//mgr.GetElement<TextOverlay>("FPS").Text = "FPS: " + this.window.LastFPS;
+				}
+				if (mgr.GetElement("Batch") != null)
+				{
+					//mgr.GetElement<TextOverlay>("Batch").Text = "Batch: " + this.window.BatchCount;
+				}
+				if (mgr.GetElement("Vertex") != null)
+				{
+					//mgr.GetElement<TextOverlay>("Vertex").Text = "Vertex: " + this.window.TriangleCount * 3;
+				}
+
+				this._miyagiSystem.Update();
+			}
+
+
 			return base.OnFrameStarted(evt);
 		}
+	}
+
+	public class Resources
+	{
+		#region Properties
+
+		#region Public Static Properties
+
+		public static Dictionary<string, Font> Fonts
+		{
+			get;
+			private set;
+		}
+
+		public static Dictionary<string, Skin> Skins
+		{
+			get;
+			private set;
+		}
+
+		#endregion Public Static Properties
+
+		#endregion Properties
+
+		#region Methods
+
+		#region Public Static Methods
+
+		public static void Create(MiyagiSystem system)
+		{
+			CreateFonts(system);
+			CreateSkins();
+		}
+
+		#endregion Public Static Methods
+
+		#region Private Static Methods
+
+		private static void CreateFonts(MiyagiSystem system)
+		{
+			const string FontPath = @"../../../Media/Gfx/Fonts/";
+			var fonts = new[]
+						{
+                            // load ttf definitions from xml file
+                            TrueTypeFont.CreateFromXml(Path.Combine(FontPath, "TrueTypeFonts.xml"), system)
+								.Cast<Font>().ToDictionary(f => f.Name),
+                            // load image font definitions from xml file
+                            ImageFont.CreateFromXml(Path.Combine(FontPath, "ImageFonts.xml"), system)
+								.Cast<Font>().ToDictionary(f => f.Name)
+						};
+
+			Fonts = fonts.SelectMany(dict => dict)
+				.ToDictionary(pair => pair.Key, pair => pair.Value);
+
+			var font = TrueTypeFont.Create(system, "DejaVuSans", Path.Combine(FontPath, "DejaVuSans.ttf"), 12, 96, System.Drawing.FontStyle.Regular);
+			Fonts.Add(font.Name, font);
+
+			// set BlueHighway as default font
+			Font.Default = Fonts["BlueHighway"];
+		}
+
+		private static void CreateSkins()
+		{
+			// auto create Skins
+			var skins = new List<Skin>();
+
+			skins.AddRange(Skin.CreateFromXml(@"../../../Media/Gfx/GUI/skins.xml", null));
+			skins.AddRange(Skin.CreateFromXml(@"../../../Media/Gfx/Cursor/CursorSkin.xml", null));
+
+			// manual create Skins
+			var logo = new Skin("Logo");
+			var rect = RectangleF.FromLTRB(0, 0, 1, 1);
+			var frame1 = new TextureFrame("Logo1.png", rect, 1000);
+			var frame2 = new TextureFrame("Logo2.png", rect, 800);
+			var frame3 = new TextureFrame("Logo3.png", rect, 600);
+			var frame4 = new TextureFrame("Logo4.png", rect, 400);
+			var frame5 = new TextureFrame("Logo5.png", rect, 200);
+
+			logo.SubSkins["Logo"] = new Miyagi.Common.Resources.Texture(frame1, frame2, frame3, frame4, frame5)
+			{
+				FrameAnimationMode = FrameAnimationMode.ForwardBackwardLoop
+			};
+
+			skins.Add(logo);
+
+			Skins = skins.ToDictionary(s => s.Name);
+		}
+
+		#endregion Private Static Methods
+
+		#endregion Methods
 	}
 }

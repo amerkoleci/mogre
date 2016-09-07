@@ -1,0 +1,1399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Skins>
+  <Skin Name="ButtonSkin">
+    <SubSkins>
+      <SubSkin Name="ButtonSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.500976563</X>
+              <Y>0.06347656</Y>
+              <Width>0.25</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>ForwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ButtonSkin.Disabled">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.500976563</X>
+              <Y>0</Y>
+              <Width>0.25</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>ForwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ButtonSkin.MouseDown">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.127</Y>
+              <Width>0.25</Width>
+              <Height>0.06254688</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>ForwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ButtonSkin.MouseEnter">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.500976563</X>
+              <Y>0.1904297</Y>
+              <Width>0.25</Width>
+              <Height>0.06345312</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>ForwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="CheckBoxSkin">
+    <SubSkins>
+      <SubSkin Name="CheckBoxSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5644531</X>
+              <Y>0.3818359</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="CheckBoxSkin.Checked">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.3818359</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="CheckBoxSkin.Indeterminate">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5644531</X>
+              <Y>0.3183594</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="RadioButtonSkin">
+    <SubSkins>
+      <SubSkin Name="RadioButtonSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.3183594</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="RadioButtonSkin.Checked">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="PanelSkin">
+    <SubSkins>
+      <SubSkin Name="PanelSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0</Y>
+              <Width>0.5</Width>
+              <Height>0.5</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.9414062</X>
+              <Y>0.1269531</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.HScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2539062</Y>
+              <Width>0.25</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.HScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3183594</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.HScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3818359</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.HScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8154297</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.ScrollBarCorner">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.9414062</X>
+              <Y>0</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.VScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.VScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0.06347656</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.VScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="PanelSkin.VScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8789062</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+	  <SubSkin Name="PanelSkin.VScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+	  <SubSkin Name="PanelSkin.HScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="TextBoxSkin">
+    <SubSkins>
+      <SubSkin Name="TextBoxSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2861328</Y>
+              <Width>0.125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TextBoxSkin.Focused">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0</Y>
+              <Width>0.125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="ListBoxSkin">
+    <SubSkins>
+      <SubSkin Name="ListBoxSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.75</X>
+              <Y>0.375</Y>
+              <Width>0.25</Width>
+              <Height>0.625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ListBoxSkin.VScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ListBoxSkin.VScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0.06347656</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ListBoxSkin.VScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ListBoxSkin.VScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8789062</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+  	  <SubSkin Name="ListBoxSkin.VScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+  </SubSkins>
+  </Skin>
+  <Skin Name="DropDownListSkin">
+    <SubSkins>
+      <SubSkin Name="DropDownListSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.06347656</Y>
+              <Width>0.25</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.Button">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0.1269531</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.List">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.75</X>
+              <Y>0.375</Y>
+              <Width>0.25</Width>
+              <Height>0.625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.VScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+	  <SubSkin Name="DropDownListSkin.VScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.VScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0.06347656</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.VScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="DropDownListSkin.VScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8789062</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="ProgressBarVSkin">
+    <SubSkins>
+      <SubSkin Name="ProgressBarVSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ProgressBarVSkin.Bar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6914062</X>
+              <Y>0.3818359</Y>
+              <Width>0.01953125</Width>
+              <Height>0.08789063</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="ProgressBarHSkin">
+    <SubSkins>
+      <SubSkin Name="ProgressBarHSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2539062</Y>
+              <Width>0.25</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ProgressBarHSkin.Bar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.9414062</X>
+              <Y>0.06347656</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="SliderHSkin">
+    <SubSkins>
+      <SubSkin Name="SliderHSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2539062</Y>
+              <Width>0.25</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="SliderHSkin.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.25390625</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="SliderVSkin">
+    <SubSkins>
+      <SubSkin Name="SliderVSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="SliderVSkin.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.25390625</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="TabControlSkin">
+    <SubSkins>
+      <SubSkin Name="TabControlSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0</Y>
+              <Width>0.5</Width>
+              <Height>0.5</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabControlSkin.TabBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2539062</Y>
+              <Width>0.25</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabControlSkin.TabBar.LeftButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3183594</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabControlSkin.TabBar.RightButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3818359</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="ExpanderSkin">
+    <SubSkins>
+      <SubSkin Name="ExpanderSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0</Y>
+              <Width>0.5</Width>
+              <Height>0.5</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ExpanderSkin.Collapsed">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0</Y>
+              <Width>0.25</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="ExpanderSkin.Expanded">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.500977</X>
+              <Y>0.06347656</Y>
+              <Width>0.25</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+  <Skin Name="TabPageSkin">
+    <SubSkins>
+      <SubSkin Name="TabPageSkin">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0</Y>
+              <Width>0.5</Width>
+              <Height>0.5</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.HScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.5009766</X>
+              <Y>0.2539062</Y>
+              <Width>0.25</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.HScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3183594</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.HScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.6279297</X>
+              <Y>0.3818359</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.HScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8154297</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+	  <SubSkin Name="TabPageSkin.HScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.ScrollBarCorner">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.9414062</X>
+              <Y>0</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.Tab">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.06347656</Y>
+              <Width>0.125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.Tab.MouseEnter">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.1269531</Y>
+              <Width>0.125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.VScrollBar">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0</X>
+              <Y>0.5009766</Y>
+              <Width>0.03125</Width>
+              <Height>0.25</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.VScrollBar.DecreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8779297</X>
+              <Y>0.06347656</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.VScrollBar.IncreaseButton">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.7519531</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+      <SubSkin Name="TabPageSkin.VScrollBar.Thumb">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.8789062</X>
+              <Y>0.1904297</Y>
+              <Width>0.0625</Width>
+              <Height>0.0625</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+	  <SubSkin Name="TabPageSkin.VScrollBar.Thumb.Border">
+        <Frames>
+          <Frame>
+            <FileName>texture.png</FileName>
+            <Duration>0</Duration>
+            <UV>
+              <X>0.94140625</X>
+              <Y>0.159179688</Y>
+              <Width>0.03125</Width>
+              <Height>0.03125</Height>
+            </UV>
+          </Frame>
+        </Frames>
+        <GpuPrograms />
+        <FrameAnimationMode>BackwardOnce</FrameAnimationMode>
+        <ScrollVector>
+          <X>0</X>
+          <Y>0</Y>
+        </ScrollVector>
+      </SubSkin>
+    </SubSkins>
+  </Skin>
+</Skins>

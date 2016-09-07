@@ -193,7 +193,7 @@ namespace Mogre.Framework
 				stats.Add("Triangles");
 				stats.Add("Batches");
 
-				_fpsLabel = CreateLabel(TrayLocation.None, Name + "/FpsLabel", "FPS:", 180);
+				_fpsLabel = CreateLabel(TrayLocation.BottomLeft, Name + "/FpsLabel", "FPS:", 180);
 				//_fpsLabel._AssignListener(this);
 				_statsPanel = CreateParamsPanel(TrayLocation.None, Name + "/StatsPanel", 180, stats);
 			}

@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{E57299CC-E298-4413-9756-EF3870033EF4}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Miyagi</RootNamespace>
+    <AssemblyName>Miyagi</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>.\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Design#CA1024;-Microsoft.Design#CA1059;-Microsoft.Globalization#CA1300;-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1307;-Microsoft.Globalization#CA1308;-Microsoft.Globalization#CA1309;-Microsoft.Globalization#CA2101;-Microsoft.Performance#CA1822;-Microsoft.Usage#CA2214;-Microsoft.Usage#CA2225</CodeAnalysisRules>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <DocumentationFile>..\..\bin\Debug\Miyagi.xml</DocumentationFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>x86</PlatformTarget>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;DEBUG;USE_SYSTEM_DRAWING</DefineConstants>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile />
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;USE_SYSTEM_DRAWING</DefineConstants>
+    <DocumentationFile />
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="Common\Binding.cs" />
+    <Compile Include="Common\Events\CollectionEventArgs.cs" />
+    <Compile Include="Common\Events\MiyagiEventArgs.cs" />
+    <Compile Include="Common\MiyagiCollection.cs" />
+    <Compile Include="Common\Data\Vector3.cs" />
+    <Compile Include="Common\Data\Quaternion.cs" />
+    <Compile Include="Common\Data\Range.cs" />
+    <Compile Include="Common\Data\Colour.cs" />
+    <Compile Include="Common\Data\Colours.cs" />
+    <Compile Include="Common\Rendering\IRenderable3D.cs" />
+    <Compile Include="Common\Rendering\ISpriteRenderer.cs" />
+    <Compile Include="Common\Rendering\ISpriteRenderer3D.cs" />
+    <Compile Include="Common\Rendering\Primitive.cs" />
+    <Compile Include="Common\Rendering\Quad.cs" />
+    <Compile Include="Common\Rendering\Triangle.cs" />
+    <Compile Include="Common\Rendering\Vertex.cs" />
+    <Compile Include="Common\TextFormatterSettings.cs" />
+    <Compile Include="Internals\ExtendedStack.cs" />
+    <Compile Include="Internals\ThirdParty\Matrix.cs" />
+    <Compile Include="Common\Data\Point.cs" />
+    <Compile Include="Common\Data\PointF.cs" />
+    <Compile Include="Common\Data\Rectangle.cs" />
+    <Compile Include="Common\Data\RectangleF.cs" />
+    <Compile Include="Common\Data\Size.cs" />
+    <Compile Include="Common\Data\SizeF.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\IDeepCopiable.cs" />
+    <Compile Include="Common\IManager.cs" />
+    <Compile Include="Common\INamable.cs" />
+    <Compile Include="Common\IXmlWritable.cs" />
+    <Compile Include="Common\Keyboard.cs" />
+    <Compile Include="Common\Rendering\IViewport.cs" />
+    <Compile Include="Common\Resources\GpuProgram.cs" />
+    <Compile Include="Common\Serialization\SerializationData.cs" />
+    <Compile Include="Internals\InvokeHelper.cs" />
+    <Compile Include="Internals\LiangBarskyClipping.cs" />
+    <Compile Include="Internals\ResizeHelper.cs" />
+    <Compile Include="Internals\Resources\Gfx\DialogBoxSkin1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DialogBoxSkin.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Internals\ThirdParty\FastSmartWeakEvent.cs" />
+    <Compile Include="Internals\ThirdParty\FastSmartWeakEventForwarderProvider.cs" />
+    <Compile Include="Internals\ThirdParty\ZipStorer.cs" />
+    <Compile Include="Internals\MiyagiTypeConverter.cs" />
+    <Compile Include="Internals\XmlValidator.cs" />
+    <Compile Include="Common\Scripting\CodeProviderScriptingPlugin.cs" />
+    <Compile Include="Common\Scripting\ScriptingPlugin.cs" />
+    <Compile Include="Common\Rendering\Backend.cs" />
+    <Compile Include="Common\Data\ColourDefinition.cs" />
+    <Compile Include="Common\Resources\ImageFont.cs" />
+    <Compile Include="Common\Resources\Texture.cs" />
+    <Compile Include="Common\Resources\TextureCollection.cs" />
+    <Compile Include="Common\Resources\TextureFrame.cs" />
+    <Compile Include="Common\Resources\Skin.cs" />
+    <Compile Include="Common\Resources\Font.cs" />
+    <Compile Include="Common\Resources\TrueTypeFont.cs" />
+    <Compile Include="Common\Serialization\SerializableTypeAttribute.cs" />
+    <Compile Include="Common\Serialization\SerializationManager.cs" />
+    <Compile Include="Common\Serialization\SerializerOptionsAttribute.cs" />
+    <Compile Include="Common\Serialization\Serializer.cs" />
+    <Compile Include="Common\Serialization\XmlSerializer.cs" />
+    <Compile Include="Common\TextFormatter.cs" />
+    <Compile Include="Common\ILocalizable.cs" />
+    <Compile Include="Common\Scripting\BindEventsEventArgs.cs" />
+    <Compile Include="Common\Scripting\ScriptingManager.cs" />
+    <Compile Include="Common\Scripting\ScriptingScheme.cs" />
+    <Compile Include="Common\Scripting\ScriptMap.cs" />
+    <Compile Include="Common\Events\ChangedValueEventArgs.cs" />
+    <Compile Include="Common\Events\MouseButtonEventArgs.cs" />
+    <Compile Include="Common\Events\TextEventArgs.cs" />
+    <Compile Include="Common\LocaleManager.cs" />
+    <Compile Include="Common\Data\Thickness.cs" />
+    <Compile Include="Common\Events\MouseGestureEventArgs.cs" />
+    <Compile Include="Common\Events\KeyEvent.cs">
+    </Compile>
+    <Compile Include="Common\Events\ScrollEventArgs.cs" />
+    <Compile Include="Common\Events\KeyboardEventArgs.cs" />
+    <Compile Include="Common\Events\MouseEventArgs.cs" />
+    <Compile Include="Common\Events\ValueEventArgs.cs" />
+    <Compile Include="Internals\ExtensionMethods.cs" />
+    <Compile Include="Internals\NameGenerator.cs" />
+    <Compile Include="Common\MiyagiSystem.cs" />
+    <Compile Include="Common\Plugins\Plugin.cs" />
+    <Compile Include="Common\Plugins\RequiredVersionAttribute.cs" />
+    <Compile Include="Common\Plugins\InputPlugin.cs" />
+    <Compile Include="Common\Plugins\PluginManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\Rendering\Sprite.cs" />
+    <Compile Include="Common\Rendering\RenderManager.cs" />
+    <Compile Include="Common\Rendering\SpriteRenderer.cs" />
+    <Compile Include="Common\InputManager.cs" />
+    <Compile Include="Common\Animation\PowerFunctionValueController.cs" />
+    <Compile Include="Common\Animation\ValueControllerChain.cs" />
+    <Compile Include="Common\Animation\WaypointController.cs" />
+    <Compile Include="Common\Animation\TriangleWaveValueController.cs" />
+    <Compile Include="Common\Animation\SquareWaveValueController.cs" />
+    <Compile Include="Common\Animation\SawtoothWaveValueController.cs" />
+    <Compile Include="Common\Animation\WaveValueController.cs" />
+    <Compile Include="Common\Animation\LinearFunctionValueController.cs" />
+    <Compile Include="Common\Animation\SineWaveValueController.cs" />
+    <Compile Include="Common\Animation\ValueController.cs" />
+    <Compile Include="TwoD\Layers\Layer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Layers\LayerElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Layers\Overlay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Layers\TextOverlay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Layers\TextureOverlay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Layers\TileMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\GradientBrush.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\IBrush.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\Painter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\Pen.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\SolidBrush.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\Painting\TexturedBrush.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\TwoDManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TwoD\TwoDSprite.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Clipboard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\BitmapControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Button.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\CheckBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ITextBoxElementOwner.cs" />
+    <Compile Include="UI\Controls\ComboBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Control.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ControlCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DialogBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DialogBoxSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DropDownList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\BorderElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ButtonElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\CaretElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\EditBoxElement.cs" />
+    <Compile Include="UI\Controls\Elements\Element.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IBorderElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ICaretElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IInteractiveElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IListElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\InteractiveElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IProgressBarElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IScrollBarElementController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ISkinElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ITabBarElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ITabElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IEditBoxElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ITextElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IThumbElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\IToolTipElementOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ListElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ListItemElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ProgressBarElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ScrollBarElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\SkinElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\TabBarElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\TabElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\TextBoxElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\TextElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\TextureElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ThumbElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Elements\ToolTipElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Expander.cs" />
+    <Compile Include="UI\Controls\FlowLayoutPanel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\IControlCollectionOwner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Label.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\DefaultLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\FlowLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\FlowLayoutSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\LayoutEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\LayoutEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\TableLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\TableLayoutSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Layout\TableLayoutStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ListBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ListControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ListItemCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\MagneticDockingHelper.cs" />
+    <Compile Include="UI\Controls\Panel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\PictureBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ProgressBar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\RadioButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\RenderBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ScrollableControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\SkinnedControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Slider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\StateButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\BorderStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\CaretStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\EditBoxStyle.cs" />
+    <Compile Include="UI\Controls\Styles\ListItemStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\ListStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\ProgressBarStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\ScrollBarStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\Style.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\TabBarStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\TabStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\TextBoxStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\TextStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\ThumbStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Styles\ToolTipStyle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\TabControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\TableLayoutPanel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\TabPage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\TextBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Cursor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\DragDropEffect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\DragEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GUI3D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GUIManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\IMagneticDockable.cs" />
+    <Compile Include="UI\IModalDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\InputInjector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ModalGUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\PopupGUI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\UISprite.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Internals\Resources\Gfx\DialogBoxSkin.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DialogBoxSkin1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\Resources\Locale\af.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\bg.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\cs.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\da.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\Resources\Locale\de.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\el.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\en.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\es.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\fr.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\hr.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\hu.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\id.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\it.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\lt.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\lv.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\mk.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\nl.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\no.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\pl.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\pt.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\ro.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\ru.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\sk.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\sl.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\sr.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\sv.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\tr.xml" />
+    <EmbeddedResource Include="Internals\Resources\Locale\ukr.xml" />
+    <EmbeddedResource Include="Internals\Resources\KeyboardLayouts\1033.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Internals\Resources\SchemaFiles\ImageFont.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\Resources\SchemaFiles\Skin.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\Resources\SchemaFiles\TrueTypeFont.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Internals\Resources\Gfx\DialogBox.png" />
+    <EmbeddedResource Include="Internals\Resources\Gfx\ToolTip.png" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>

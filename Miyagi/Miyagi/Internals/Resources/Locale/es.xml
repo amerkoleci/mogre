@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<root>
+  <data name="{DialogBox.Yes}" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="{DialogBox.OK}" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="{DialogBox.Cancel}" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="{DialogBox.No}" xml:space="preserve">
+    <value>No</value>
+  </data>
+</root>

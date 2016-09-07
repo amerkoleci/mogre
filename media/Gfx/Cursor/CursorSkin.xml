@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Skin Name="CursorSkin">
+  <SubSkins>
+    <SubSkin Name="CursorSkin">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+    <SubSkin Name="CursorSkin.ResizeBottomLeft">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.125</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+    <SubSkin Name="CursorSkin.ResizeBottomRight">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.250</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+    <SubSkin Name="CursorSkin.ResizeLeft">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.375</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+    <SubSkin Name="CursorSkin.ResizeTop">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.5</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+    <SubSkin Name="CursorSkin.TextInput">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.625</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+	<SubSkin Name="CursorSkin.Drag">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.75</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+	<SubSkin Name="CursorSkin.BlockDrop">
+      <Frames>
+        <Frame>
+          <FileName>Cursor.png</FileName>
+          <Duration>0</Duration>
+          <UV>
+            <X>0.875</X>
+            <Y>0</Y>
+            <Width>0.125</Width>
+            <Height>1</Height>
+          </UV>
+        </Frame>
+      </Frames>
+    </SubSkin>
+  </SubSkins>
+</Skin>

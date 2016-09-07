@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="Skin" type="Skin" />
+
+  <xs:complexType name="Skin">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="SubSkins">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="SubSkin" type="Texture" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Texture">
+    <xs:all minOccurs="1" maxOccurs="1">
+      <xs:element name="Frames">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Frame" type="Frame" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GpuPrograms" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="GpuProgram" type="GpuProgram" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FrameAnimationMode" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ScrollVector" type="PointF" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Frame">
+    <xs:all minOccurs="1" maxOccurs="1">
+      <xs:element name="FileName" type="xs:string" />
+      <xs:element name="Duration" type="xs:unsignedLong" />
+      <xs:element name="UV" type="RectangleF" />
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="GpuProgram">
+    <xs:all minOccurs="1" maxOccurs="1">
+      <xs:element name="Language" type="xs:string" />
+      <xs:element name="Parameters" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Parameter" type="KeyValuePair" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SourceFile" type="xs:string" minOccurs="1" maxOccurs="1" />
+    </xs:all>
+    <xs:attribute name="Type" type="xs:string" use="required" />
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="PointF">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="X" type="xs:float" />
+      <xs:element name="Y" type="xs:float" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RectangleF">
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <xs:sequence>
+        <xs:element name="X" type="xs:float" />
+        <xs:element name="Y" type="xs:float" />
+        <xs:element name="Width" type="xs:float" />
+        <xs:element name="Height" type="xs:float" />
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="Left" type="xs:float" />
+        <xs:element name="Top" type="xs:float" />
+        <xs:element name="Right" type="xs:float" />
+        <xs:element name="Bottom" type="xs:float" />
+      </xs:sequence>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="KeyValuePair">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="Key" type="xs:string"></xs:element>
+      <xs:element name="Value" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

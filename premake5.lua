@@ -60,6 +60,10 @@ group "Mogre"
 	-- Mogre
 	include ("Mogre")
 	
+group "Miyagi"
+	include ("Miyagi/Miyagi")
+	include ("Miyagi/Backends/Miyagi.Backend.Mogre")
+	
 group "Samples"
 	-- Mogre.Framework
 	include ("Samples/Mogre.Framework")
