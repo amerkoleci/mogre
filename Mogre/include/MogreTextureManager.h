@@ -13,42 +13,6 @@
 
 namespace Mogre
 {
-	public enum class TextureMipmap
-	{
-		MIP_UNLIMITED = Ogre::MIP_UNLIMITED,
-		MIP_DEFAULT = Ogre::MIP_DEFAULT
-	};
-
-	public enum class TextureType
-	{
-		TEX_TYPE_1D = Ogre::TEX_TYPE_1D,
-		TEX_TYPE_2D = Ogre::TEX_TYPE_2D,
-		TEX_TYPE_3D = Ogre::TEX_TYPE_3D,
-		TEX_TYPE_CUBE_MAP = Ogre::TEX_TYPE_CUBE_MAP,
-		TEX_TYPE_2D_ARRAY = Ogre::TEX_TYPE_2D_ARRAY,
-		TEX_TYPE_2D_RECT = Ogre::TEX_TYPE_2D_RECT
-	};
-
-	public enum class TextureUsage
-	{
-		TU_STATIC = Ogre::TU_STATIC,
-		TU_DYNAMIC = Ogre::TU_DYNAMIC,
-		TU_WRITE_ONLY = Ogre::TU_WRITE_ONLY,
-		TU_STATIC_WRITE_ONLY = Ogre::TU_STATIC_WRITE_ONLY,
-		TU_DYNAMIC_WRITE_ONLY = Ogre::TU_DYNAMIC_WRITE_ONLY,
-		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE = Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
-		TU_AUTOMIPMAP = Ogre::TU_AUTOMIPMAP,
-		TU_RENDERTARGET = Ogre::TU_RENDERTARGET,
-		TU_DEFAULT = Ogre::TU_DEFAULT
-	};
-
-	public enum class ImageFlags
-	{
-		IF_COMPRESSED = Ogre::IF_COMPRESSED,
-		IF_CUBEMAP = Ogre::IF_CUBEMAP,
-		IF_3D_TEXTURE = Ogre::IF_3D_TEXTURE
-	};
-
 	ref class TexturePtr;
 	ref class DataStreamPtr;
 	ref class HardwarePixelBufferSharedPtr;

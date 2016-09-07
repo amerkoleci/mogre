@@ -1,17 +1,17 @@
-﻿// Alimer - Copyright (C) Amer Koleci
+﻿// Copyright (C) Amer Koleci
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
 namespace Mogre
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.InteropServices;
 	public static class Utilities
 	{
 		/// <summary>

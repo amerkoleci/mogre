@@ -1,20 +1,20 @@
-﻿// Alimer - Copyright (C) Amer Koleci
+﻿// Copyright (C) Amer Koleci
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
 namespace Mogre
 {
-    using System;
+	using System;
 
-    public interface IMogreDisposable : System.IDisposable
-    {
-        event EventHandler OnDisposed;
+	public interface IMogreDisposable : System.IDisposable
+	{
+		event EventHandler OnDisposed;
 
-        event EventHandler OnDisposing;
+		event EventHandler OnDisposing;
 
-        bool IsDisposed
-        {
-            get;
-        }
-    }
+		bool IsDisposed
+		{
+			get;
+		}
+	}
 }

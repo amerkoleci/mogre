@@ -34,11 +34,8 @@ namespace Miyagi.Backend.Mogre
 
 	public class MogreBackend : Backend
 	{
-		#region Fields
-
-		private MogreRenderManager renderManager;
-
-		#endregion Fields
+		MogreRenderManager _renderManager;
+		readonly Dictionary<string, TexturePtr> _textures = new Dictionary<string, TexturePtr>();
 
 		#region Constructors
 
@@ -59,7 +56,7 @@ namespace Miyagi.Backend.Mogre
 		{
 			get
 			{
-				return this.renderManager ?? (this.renderManager = new MogreRenderManager(this.MiyagiSystem));
+				return _renderManager ?? (_renderManager = new MogreRenderManager(this.MiyagiSystem));
 			}
 		}
 
@@ -130,30 +127,30 @@ namespace Miyagi.Backend.Mogre
 		{
 			TexturePtr texture = TextureManager.Singleton.GetByName(name);
 			if (texture != null)
-				return texture;
-
 			{
-				var width = (uint)System.Math.Max(size.Width, 0);
-				var height = (uint)System.Math.Max(size.Height, 0);
-
-				texture = TextureManager.Singleton.CreateManual(
-					name,
-					this.ResourceGroupName,
-					TextureType.TEX_TYPE_2D,
-					width,
-					height,
-					0,
-					PixelFormat.PF_A8R8G8B8);
-				{
-					ClearTexture(texture, Colours.Transparent);
-					return texture;
-				}
+				_textures[name] = texture;
+				return texture;
 			}
+
+			var width = (uint)System.Math.Max(size.Width, 0);
+			var height = (uint)System.Math.Max(size.Height, 0);
+
+			texture = TextureManager.Singleton.CreateManual(
+				name,
+				ResourceGroupName,
+				TextureType.TEX_TYPE_2D,
+				width,
+				height,
+				0,
+				PixelFormat.PF_A8R8G8B8);
+			ClearTexture(texture, Colours.Transparent);
+			_textures[name] = texture;
+			return texture;
 		}
 
-		public override float GetTextureAlpha(object handle, Point p)
+		public override float GetTextureAlpha(object textureHandle, Point p)
 		{
-			TexturePtr texture = (TexturePtr)handle;
+			TexturePtr texture = SafeResolveTexture(textureHandle);
 			if (p.X > texture.Width || p.Y > texture.Height)
 			{
 				return 0;
@@ -174,38 +171,27 @@ namespace Miyagi.Backend.Mogre
 			}
 		}
 
-		public override Size GetTextureSize(object handle)
+		public override Size GetTextureSize(object textureHandle)
 		{
-			var textureName = handle as string;
-			if (textureName != null)
-			{
-				using (TexturePtr byNameTexture = (TexturePtr)LoadTexture(textureName))
-				{
-					return new Size((int)byNameTexture.Width, (int)byNameTexture.Height);
-				}
-			}
-
-			TexturePtr texture = (TexturePtr)handle;
+			TexturePtr texture = SafeResolveTexture(textureHandle);
 			return new Size((int)texture.Width, (int)texture.Height);
 		}
 
 		public override object LoadTexture(string name)
 		{
-			//using (TexturePtr rp = TextureManager.Singleton.GetByName(name))
-			TexturePtr rp = TextureManager.Singleton.GetByName(name);
+			var texture = TextureManager.Singleton.GetByName(name);
+			if (texture == null)
 			{
-				if (rp == null)
-				{
-					return TextureManager.Singleton.Load(name, this.ResourceGroupName);
-				}
-
-				return rp;
+				texture = TextureManager.Singleton.Load(name, this.ResourceGroupName);
 			}
+
+			_textures[name] = texture;
+			return texture;
 		}
 
 		public override bool MessagePump()
 		{
-			var rt = ((Viewport)this.renderManager.MainViewport.Native).Target as RenderWindow;
+			var rt = ((Viewport)_renderManager.MainViewport.Native).Target as RenderWindow;
 
 			// check if primary window has been closed
 			if (rt == null || rt.IsClosed)
@@ -240,6 +226,7 @@ namespace Miyagi.Backend.Mogre
 					texturePtr.Unload();
 					TextureManager.Singleton.Remove(name);
 					texturePtr.Dispose();
+					_textures.Remove(name);
 				}
 			}
 		}
@@ -256,7 +243,7 @@ namespace Miyagi.Backend.Mogre
 		public override unsafe void WriteToTexture(byte[] bytes, object textureHandle)
 		{
 			// draw bitmap to texture
-			TexturePtr texture = (TexturePtr)textureHandle;
+			TexturePtr texture = SafeResolveTexture(textureHandle);
 			using (HardwarePixelBufferSharedPtr texBuffer = texture.GetBuffer())
 			{
 				texBuffer.Lock(HardwareBuffer.LockOptions.HBL_DISCARD);
@@ -271,8 +258,16 @@ namespace Miyagi.Backend.Mogre
 
 		#endregion Public Methods
 
-		#region Internal Static Methods
+		internal TexturePtr SafeResolveTexture(object textureHandle)
+		{
+			var textureName = textureHandle as string;
+			if (textureName != null)
+			{
+				return (TexturePtr)LoadTexture(textureName);
+			}
 
+			return (TexturePtr)textureHandle;
+		}
 
 		internal static unsafe void ClearTexture(TexturePtr texture, Colour colour)
 		{
@@ -298,8 +293,6 @@ namespace Miyagi.Backend.Mogre
 				hbuf.Unlock();
 			}
 		}
-
-		#endregion Internal Static Methods
 
 		#endregion Methods
 	}

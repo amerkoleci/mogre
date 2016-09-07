@@ -158,17 +158,17 @@ namespace Miyagi.Common.Rendering
 		/// <summary>
 		/// Gets the alpha value of the specified texture at the specified point.
 		/// </summary>
-		/// <param name="handle">The handle.</param>
+		/// <param name="textureHandle">The handle.</param>
 		/// <param name="p">The point.</param>
 		/// <returns>The alpha value</returns>
-		public abstract float GetTextureAlpha(object handle, Point p);
+		public abstract float GetTextureAlpha(object textureHandle, Point p);
 
 		/// <summary>
 		/// Gets the size of a texture.
 		/// </summary>
 		/// <param name="handle">The handle of the texture.</param>
 		/// <returns>A Size representing the size of a texture.</returns>
-		public abstract Size GetTextureSize(object handle);
+		public abstract Size GetTextureSize(object textureHandle);
 
 		/// <summary>
 		/// Loads the texture.
