@@ -8,8 +8,6 @@
 
 using namespace Mogre;
 
-CPP_DECLARE_STLVECTOR(CompositorChannel::, TextureVec, Mogre::TexturePtr^, Ogre::TexturePtr);
-
 // CompositorTargetDef
 CompositorTargetDef::CompositorTargetDef(Ogre::CompositorTargetDef* obj) : _native(obj)
 {
@@ -488,7 +486,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 
 	Ogre::CompositorChannel nativeChannel;
 	nativeChannel.target = finalRenderTarget->target;
-	nativeChannel.textures = finalRenderTarget->textures;
+	nativeChannel.textures.resize(finalRenderTarget->textures->Count);
+	for (auto i = 0; i < finalRenderTarget->textures->Count; ++i)
+	{
+		nativeChannel.textures.push_back(*finalRenderTarget->textures[i]->UnmanagedPointer);
+	}
 
 	auto workspace = _native->addWorkspace(
 		sceneManager,
@@ -506,7 +508,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 
 	Ogre::CompositorChannel nativeChannel;
 	nativeChannel.target = finalRenderTarget->target;
-	nativeChannel.textures = finalRenderTarget->textures;
+	nativeChannel.textures.resize(finalRenderTarget->textures->Count);
+	for (auto i = 0; i < finalRenderTarget->textures->Count; ++i)
+	{
+		nativeChannel.textures.push_back(*finalRenderTarget->textures[i]->UnmanagedPointer);
+	}
 
 	auto workspace = _native->addWorkspace(
 		sceneManager,
@@ -524,7 +530,11 @@ CompositorWorkspace^ CompositorManager2::AddWorkspace(SceneManager^ sceneManager
 
 	Ogre::CompositorChannel nativeChannel;
 	nativeChannel.target = finalRenderTarget->target;
-	nativeChannel.textures = finalRenderTarget->textures;
+	nativeChannel.textures.resize(finalRenderTarget->textures->Count);
+	for (auto i = 0; i < finalRenderTarget->textures->Count; ++i)
+	{
+		nativeChannel.textures.push_back(*finalRenderTarget->textures[i]->UnmanagedPointer);
+	}
 
 	auto workspace = _native->addWorkspace(
 		sceneManager,

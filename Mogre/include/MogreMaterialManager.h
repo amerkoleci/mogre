@@ -105,7 +105,6 @@ namespace Mogre
 	ref class GpuProgramPtr;
 	ref class GpuProgramParametersSharedPtr;
 	ref class Frustum;
-	ref class TexturePtr;
 
 	public value class IlluminationPass_NativePtr
 	{
@@ -469,6 +468,9 @@ namespace Mogre
 
 		INC_DECLARE_STLMULTIMAP(EffectMap, Mogre::TextureUnitState::TextureEffectType, Mogre::TextureUnitState::TextureEffect_NativePtr, Ogre::TextureUnitState::TextureEffectType, Ogre::TextureUnitState::TextureEffect, public:, private:);
 
+	private:
+		Mogre::Texture^ _texture;
+
 	public protected:
 		Ogre::TextureUnitState* _native;
 		bool _createdByCLR;
@@ -820,10 +822,10 @@ namespace Mogre
 
 		void _notifyParent(Mogre::Pass^ parent);
 
-		Mogre::TexturePtr^ _getTexturePtr();
-		Mogre::TexturePtr^ _getTexturePtr(size_t frame);
-		void _setTexturePtr(Mogre::TexturePtr^ texptr);
-		void _setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame);
+		//Mogre::Texture^ _getTexturePtr();
+		//Mogre::Texture^ _getTexturePtr(size_t frame);
+		//void _setTexturePtr(Mogre::Texture^ texptr);
+		//void _setTexturePtr(Mogre::Texture^ texptr, size_t frame);
 
 		property bool IsDisposed
 		{

@@ -39,9 +39,9 @@ namespace Miyagi.Backend.Mogre
 
 		private readonly MaterialPtr materialPtr;
 
-		private static TexturePtr opaqueTexture;
+		private static Texture opaqueTexture;
 		private static uint renderManagerCount;
-		private static TexturePtr transparentTexture;
+		private static Texture transparentTexture;
 
 		private RenderSystem rs = Root.Singleton.RenderSystem;
 		private SceneManager sceneManager;
@@ -291,12 +291,12 @@ namespace Miyagi.Backend.Mogre
 			renderManagerCount--;
 			if (renderManagerCount == 0)
 			{
-				transparentTexture.Unload();
-				TextureManager.Singleton.Remove(transparentTexture.Handle);
+				//transparentTexture.Unload();
+				//TextureManager.Singleton.Remove(transparentTexture.Handle);
 				transparentTexture.Dispose();
 
-				opaqueTexture.Unload();
-				TextureManager.Singleton.Remove(opaqueTexture.Handle);
+				//opaqueTexture.Unload();
+				//TextureManager.Singleton.Remove(opaqueTexture.Handle);
 				opaqueTexture.Dispose();
 			}
 		}

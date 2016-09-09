@@ -161,15 +161,12 @@ namespace Mogre
 	public ref class CompositorChannel
 	{
 	public:
-		INC_DECLARE_STLVECTOR(TextureVec, Mogre::TexturePtr^, Ogre::TexturePtr, public:, private:);
-
-	public:
 		Mogre::RenderTarget^ target;
-		TextureVec^ textures;
+		System::Collections::Generic::List < Mogre::Texture^>^ textures;
 
 		CompositorChannel()
 		{
-			textures = gcnew TextureVec();
+			textures = gcnew System::Collections::Generic::List<Texture^>();
 		}
 
 		property bool IsMrt
@@ -186,21 +183,6 @@ namespace Mogre
 			{
 				return target != nullptr;
 			}
-		}
-
-	public protected:
-		static operator CompositorChannel ^ (const Ogre::CompositorChannel& obj)
-		{
-			CompositorChannel^ clr = gcnew CompositorChannel;
-			clr->target = obj.target;
-			clr->textures = gcnew CompositorChannel::TextureVec();
-			*clr->textures->_native = obj.textures;
-			return clr;
-		}
-
-		static operator CompositorChannel ^ (const Ogre::CompositorChannel* pObj)
-		{
-			return *pObj;
 		}
 	};
 

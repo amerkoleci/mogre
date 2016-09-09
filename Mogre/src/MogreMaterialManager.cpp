@@ -873,9 +873,16 @@ void TextureUnitState::_notifyParent(Mogre::Pass^ parent)
 	static_cast<Ogre::TextureUnitState*>(_native)->_notifyParent(parent);
 }
 
-Mogre::TexturePtr^ TextureUnitState::_getTexturePtr()
+/*Mogre::Texture^ TextureUnitState::_getTexturePtr()
 {
-	return _native->_getTexturePtr();
+	auto nativeTexturePtr = _native->_getTexturePtr();
+	if (nativeTexturePtr.isNull()) return nullptr;
+
+	if (_texture != nullptr && _texture->UnmanagedPointer->get() == nativeTexturePtr.get())
+		return _texture;
+
+	_texture = gcnew Mogre::Texture(new Ogre::TexturePtr(nativeTexturePtr));
+	return _texture;
 }
 
 Mogre::TexturePtr^ TextureUnitState::_getTexturePtr(size_t frame)
@@ -891,7 +898,7 @@ void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr)
 void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame)
 {
 	_native->_setTexturePtr((const Ogre::TexturePtr&)texptr, frame);
-}
+}*/
 
 // --------------- IlluminationPass_NativePtr ---------------
 

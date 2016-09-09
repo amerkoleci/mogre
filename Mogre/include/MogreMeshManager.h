@@ -12,7 +12,6 @@
 
 namespace Mogre
 {
-	ref class TexturePtr;
 	ref class DataStreamPtr;
 	ref class VertexData;
 	ref class IndexData;

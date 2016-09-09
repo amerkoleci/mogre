@@ -51,6 +51,8 @@ Root::!Root()
 
 	_native = Ogre::Root::getSingletonPtr();
 
+	Mogre::TextureManager::Singleton->Shutdown();
+
 	// Collect all SharedPtr objects that are waiting for finalization
 	System::GC::Collect();
 	System::GC::WaitForPendingFinalizers();

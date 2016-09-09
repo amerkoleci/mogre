@@ -519,10 +519,11 @@ void RenderSystem::_disableTextureUnitsFrom(size_t texUnit)
 	_native->_disableTextureUnitsFrom(texUnit);
 }
 
-void RenderSystem::_setTexture(size_t unit, bool enabled, TexturePtr^ texPtr)
+void RenderSystem::_setTexture(size_t unit, bool enabled, TexturePtr^ texture)
 {
-	_native->_setTexture(unit, enabled, texPtr);
+	_native->_setTexture(unit, enabled, *texture->UnmanagedPointer);
 }
+
 void RenderSystem::_setTexture(size_t unit, bool enabled, String^ texName)
 {
 	DECLARE_NATIVE_STRING(o_texName, texName);
@@ -531,25 +532,27 @@ void RenderSystem::_setTexture(size_t unit, bool enabled, String^ texName)
 
 void RenderSystem::_setVertexTexture(size_t unit, TexturePtr^ tex)
 {
-	_native->_setVertexTexture(unit, tex);
+	_native->_setVertexTexture(unit, *tex->UnmanagedPointer);
 }
+
 void RenderSystem::_setGeometryTexture(size_t unit, TexturePtr^ tex)
 {
-	_native->_setGeometryTexture(unit, tex);
+	_native->_setGeometryTexture(unit, *tex->UnmanagedPointer);
 }
+
 void RenderSystem::_setComputeTexture(size_t unit, TexturePtr^ tex)
 {
-	_native->_setComputeTexture(unit, tex);
+	_native->_setComputeTexture(unit, *tex->UnmanagedPointer);
 }
 
 void RenderSystem::_setTessellationHullTexture(size_t unit, TexturePtr^ tex)
 {
-	_native->_setTessellationHullTexture(unit, tex);
+	_native->_setTessellationHullTexture(unit, *tex->UnmanagedPointer);
 }
 
 void RenderSystem::_setTessellationDomainTexture(size_t unit, TexturePtr^ tex)
 {
-	_native->_setTessellationDomainTexture(unit, tex);
+	_native->_setTessellationDomainTexture(unit, *tex->UnmanagedPointer);
 }
 
 void RenderSystem::_setTextureCoordSet(size_t unit, size_t index)

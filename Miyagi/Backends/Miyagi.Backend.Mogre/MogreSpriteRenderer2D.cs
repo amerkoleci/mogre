@@ -407,7 +407,7 @@ namespace Miyagi.Backend.Mogre
 					height = NextPowerOfTwo(height);
 				}
 
-				TexturePtr tex = TextureManager.Singleton.CreateManual(
+				Texture tex = TextureManager.Singleton.CreateManual(
 					texName,
 					this.RenderManager.MiyagiSystem.Backend.ResourceGroupName,
 					TextureType.TEX_TYPE_2D,
@@ -557,7 +557,7 @@ namespace Miyagi.Backend.Mogre
 					{
 						chunk.Opacity = currentSprite.Opacity;
 						chunk.TexFilter = currentSprite.TexFilter;
-						chunk.TexHandle = (TexturePtr)currentSprite.TextureHandle;
+						chunk.TexHandle = (Texture)currentSprite.TextureHandle;
 						chunk.GpuPrograms = currentSprite.GpuPrograms;
 
 						int count = currentSprite.PrimitiveCount;
@@ -656,18 +656,10 @@ namespace Miyagi.Backend.Mogre
 
 		private void SetTexture(uint index, string name, TextureFiltering texFilter, float alpha)
 		{
-			this.SetTexture(index, (uint)this.RenderManager.MiyagiSystem.Backend.LoadTexture(name), texFilter, alpha);
+			this.SetTexture(index, (Texture)this.RenderManager.MiyagiSystem.Backend.LoadTexture(name), texFilter, alpha);
 		}
 
-		private void SetTexture(uint index, uint handle, TextureFiltering texFilter, float alpha)
-		{
-			using (TexturePtr tp = TextureManager.Singleton.GetByHandle(handle))
-			{
-				this.SetTexture(index, tp, texFilter, alpha);
-			}
-		}
-
-		private void SetTexture(uint index, TexturePtr tp, TextureFiltering texFilter, float alpha)
+		private void SetTexture(uint index, Texture tp, TextureFiltering texFilter, float alpha)
 		{
 			this.renderSystem._setTexture(index, true, tp);
 			this.SetTextureFiltering(index, texFilter);

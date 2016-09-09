@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MogreTextureManager.h"
 #include "MogreHardwareBuffer.h"
+#include "OgreResourceGroupManager.h"
 
 using namespace Mogre;
 
@@ -247,191 +248,220 @@ size_t Image::CalculateSize(size_t mipmaps, size_t faces, size_t width, size_t h
 }
 
 // Texture
+Texture::~Texture()
+{
+	this->!Texture();
+}
+Texture::!Texture()
+{
+	//OnDisposing(this, nullptr);
+
+	if (IsDisposed)
+		return;
+
+	if (_texturePtr)
+	{
+		TextureManager::Singleton->RemoveTextureInternal(this);
+		delete _texturePtr;
+		_texturePtr = nullptr;
+		_isDisposed = true;
+	}
+
+	GC::SuppressFinalize(this);
+	//OnDisposed(this, nullptr);
+}
+
+
+bool Texture::IsDisposed::get()
+{
+	return _isDisposed;
+}
 
 size_t Texture::Depth::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getDepth();
+	return (*_texturePtr)->getDepth();
 }
 
 void Texture::Depth::set(size_t d)
 {
-	static_cast<Ogre::Texture*>(_native)->setDepth(d);
+	(*_texturePtr)->setDepth(d);
 }
 
 Mogre::ushort Texture::DesiredFloatBitDepth::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getDesiredFloatBitDepth();
+	return (*_texturePtr)->getDesiredFloatBitDepth();
 }
+
 void Texture::DesiredFloatBitDepth::set(Mogre::ushort bits)
 {
-	static_cast<Ogre::Texture*>(_native)->setDesiredFloatBitDepth(bits);
+	(*_texturePtr)->setDesiredFloatBitDepth(bits);
 }
 
 Mogre::PixelFormat Texture::DesiredFormat::get()
 {
-	return (Mogre::PixelFormat)static_cast<const Ogre::Texture*>(_native)->getDesiredFormat();
+	return (Mogre::PixelFormat)(*_texturePtr)->getDesiredFormat();
 }
 
 Mogre::ushort Texture::DesiredIntegerBitDepth::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getDesiredIntegerBitDepth();
+	return (*_texturePtr)->getDesiredIntegerBitDepth();
 }
 void Texture::DesiredIntegerBitDepth::set(Mogre::ushort bits)
 {
-	static_cast<Ogre::Texture*>(_native)->setDesiredIntegerBitDepth(bits);
+	(*_texturePtr)->setDesiredIntegerBitDepth(bits);
 }
 
 Mogre::PixelFormat Texture::Format::get()
 {
-	return (Mogre::PixelFormat)static_cast<const Ogre::Texture*>(_native)->getFormat();
+	return (Mogre::PixelFormat)(*_texturePtr)->getFormat();
 }
 void Texture::Format::set(Mogre::PixelFormat pf)
 {
-	static_cast<Ogre::Texture*>(_native)->setFormat((Ogre::PixelFormat)pf);
+	(*_texturePtr)->setFormat((Ogre::PixelFormat)pf);
 }
 
 float Texture::Gamma::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getGamma();
+	return (*_texturePtr)->getGamma();
 }
 void Texture::Gamma::set(float g)
 {
-	static_cast<Ogre::Texture*>(_native)->setGamma(g);
+	(*_texturePtr)->setGamma(g);
 }
 
 bool Texture::HasAlpha::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->hasAlpha();
+	return (*_texturePtr)->hasAlpha();
 }
 
 size_t Texture::Height::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getHeight();
+	return (*_texturePtr)->getHeight();
 }
 void Texture::Height::set(size_t h)
 {
-	static_cast<Ogre::Texture*>(_native)->setHeight(h);
+	(*_texturePtr)->setHeight(h);
 }
 
 bool Texture::MipmapsHardwareGenerated::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getMipmapsHardwareGenerated();
+	return (*_texturePtr)->getMipmapsHardwareGenerated();
 }
 
 size_t Texture::NumFaces::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getNumFaces();
+	return (*_texturePtr)->getNumFaces();
 }
 
 size_t Texture::NumMipmaps::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getNumMipmaps();
+	return (*_texturePtr)->getNumMipmaps();
 }
 void Texture::NumMipmaps::set(size_t num)
 {
-	static_cast<Ogre::Texture*>(_native)->setNumMipmaps(num);
+	(*_texturePtr)->setNumMipmaps(num);
 }
 
 size_t Texture::SrcDepth::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getSrcDepth();
+	return (*_texturePtr)->getSrcDepth();
 }
 
 Mogre::PixelFormat Texture::SrcFormat::get()
 {
-	return (Mogre::PixelFormat)static_cast<const Ogre::Texture*>(_native)->getSrcFormat();
+	return (Mogre::PixelFormat)(*_texturePtr)->getSrcFormat();
 }
 
 size_t Texture::SrcHeight::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getSrcHeight();
+	return (*_texturePtr)->getSrcHeight();
 }
 
 size_t Texture::SrcWidth::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getSrcWidth();
+	return (*_texturePtr)->getSrcWidth();
 }
 
 Mogre::TextureType Texture::TextureType::get()
 {
-	return (Mogre::TextureType)static_cast<const Ogre::Texture*>(_native)->getTextureType();
+	return (Mogre::TextureType)(*_texturePtr)->getTextureType();
 }
 void Texture::TextureType::set(Mogre::TextureType ttype)
 {
-	static_cast<Ogre::Texture*>(_native)->setTextureType((Ogre::TextureType)ttype);
+	(*_texturePtr)->setTextureType((Ogre::TextureType)ttype);
 }
 
 bool Texture::TreatLuminanceAsAlpha::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getTreatLuminanceAsAlpha();
+	return (*_texturePtr)->getTreatLuminanceAsAlpha();
 }
 void Texture::TreatLuminanceAsAlpha::set(bool asAlpha)
 {
-	static_cast<Ogre::Texture*>(_native)->setTreatLuminanceAsAlpha(asAlpha);
+	(*_texturePtr)->setTreatLuminanceAsAlpha(asAlpha);
 }
 
 int Texture::Usage::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getUsage();
+	return (*_texturePtr)->getUsage();
 }
 void Texture::Usage::set(int u)
 {
-	static_cast<Ogre::Texture*>(_native)->setUsage(u);
+	(*_texturePtr)->setUsage(u);
 }
 
 size_t Texture::Width::get()
 {
-	return static_cast<const Ogre::Texture*>(_native)->getWidth();
+	return (*_texturePtr)->getWidth();
 }
 void Texture::Width::set(size_t w)
 {
-	static_cast<Ogre::Texture*>(_native)->setWidth(w);
+	(*_texturePtr)->setWidth(w);
 }
 
 void Texture::CreateInternalResources()
 {
-	static_cast<Ogre::Texture*>(_native)->createInternalResources();
+	(*_texturePtr)->createInternalResources();
 }
 
 void Texture::FreeInternalResources()
 {
-	static_cast<Ogre::Texture*>(_native)->freeInternalResources();
+	(*_texturePtr)->freeInternalResources();
 }
 
 void Texture::CopyToTexture(Mogre::TexturePtr^ target)
 {
-	static_cast<Ogre::Texture*>(_native)->copyToTexture((Ogre::TexturePtr&)target);
+	(*_texturePtr)->copyToTexture(*target->UnmanagedPointer);
 }
 
 void Texture::LoadImage(Mogre::Image^ img)
 {
 	auto imagePtr = GetPointerOrNull(img);
-	static_cast<Ogre::Texture*>(_native)->loadImage(*imagePtr);
+	(*_texturePtr)->loadImage(*imagePtr);
 }
 
 void Texture::LoadRawData(Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat eFormat)
 {
-	static_cast<Ogre::Texture*>(_native)->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)eFormat);
+	(*_texturePtr)->loadRawData((Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)eFormat);
 }
 
 void Texture::SetDesiredBitDepths(Mogre::ushort integerBits, Mogre::ushort floatBits)
 {
-	static_cast<Ogre::Texture*>(_native)->setDesiredBitDepths(integerBits, floatBits);
+	(*_texturePtr)->setDesiredBitDepths(integerBits, floatBits);
 }
 
 Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer(size_t face, size_t mipmap)
 {
-	return static_cast<Ogre::Texture*>(_native)->getBuffer(face, mipmap);
+	return (*_texturePtr)->getBuffer(face, mipmap);
 }
 
 Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer(size_t face)
 {
-	return static_cast<Ogre::Texture*>(_native)->getBuffer(face);
+	return (*_texturePtr)->getBuffer(face);
 }
 
 Mogre::HardwarePixelBufferSharedPtr^ Texture::GetBuffer()
 {
-	return static_cast<Ogre::Texture*>(_native)->getBuffer();
+	return (*_texturePtr)->getBuffer();
 }
 
 // TextureManager
@@ -456,19 +486,29 @@ Ogre::ushort TextureManager::PreferredIntegerBitDepth::get()
 	return static_cast<const Ogre::TextureManager*>(_native)->getPreferredIntegerBitDepth();
 }
 
-Mogre::TexturePtr^ TextureManager::GetByName(String^ name)
+Mogre::Texture^ TextureManager::GetByName(String^ name)
 {
-	DECLARE_NATIVE_STRING(o_name, name);
-
-	return static_cast<Ogre::TextureManager*>(_native)->getByName(o_name);
+	return GetByName(name, TO_CLR_STRING(Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME));
 }
 
-Mogre::TexturePtr^ TextureManager::GetByName(String^ name, String^ groupName)
+Mogre::Texture^ TextureManager::GetByName(String^ name, String^ groupName)
 {
 	DECLARE_NATIVE_STRING(o_name, name);
-	DECLARE_NATIVE_STRING(o_groupName, groupName);
 
-	return static_cast<Ogre::TextureManager*>(_native)->getByName(o_name, o_groupName);
+	auto textureCache = GetTextureCache(groupName);
+	Texture^ texture;
+	if (textureCache->TryGetValue(name, texture))
+	{
+		return texture;
+	}
+
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->getByName(o_name);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha, Mogre::PixelFormat desiredFormat)
@@ -476,7 +516,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::Text
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma, isAlpha, (Ogre::PixelFormat)desiredFormat);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma, isAlpha, (Ogre::PixelFormat)desiredFormat);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha)
@@ -484,7 +531,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::Text
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma, isAlpha);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma, isAlpha);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma)
@@ -492,7 +546,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::Text
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps, gamma);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps)
@@ -500,7 +561,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::Text
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType, numMipmaps);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::TextureType texType)
@@ -508,7 +576,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group, Mogre::Text
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group, (Ogre::TextureType)texType);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group)
@@ -516,7 +591,14 @@ Mogre::TexturePtr^ TextureManager::Load(String^ name, String^ group)
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->load(o_name, o_group);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img, Mogre::TextureType texType, int iNumMipmaps, Mogre::Real gamma, bool isAlpha, Mogre::PixelFormat desiredFormat)
@@ -525,7 +607,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma, isAlpha, (Ogre::PixelFormat)desiredFormat);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma, isAlpha, (Ogre::PixelFormat)desiredFormat);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img, Mogre::TextureType texType, int iNumMipmaps, Mogre::Real gamma, bool isAlpha)
@@ -534,7 +623,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma, isAlpha);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma, isAlpha);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img, Mogre::TextureType texType, int iNumMipmaps, Mogre::Real gamma)
@@ -543,7 +639,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps, gamma);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img, Mogre::TextureType texType, int iNumMipmaps)
@@ -552,7 +655,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType, iNumMipmaps);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img, Mogre::TextureType texType)
@@ -561,7 +671,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image(), (Ogre::TextureType)texType);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre::Image^ img)
@@ -570,7 +687,14 @@ Mogre::TexturePtr^ TextureManager::LoadImage(String^ name, String^ group, Mogre:
 	DECLARE_NATIVE_STRING(o_group, group);
 	auto imagePtr = GetPointerOrNull(img);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image());
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadImage(o_name, o_group, imagePtr ? *imagePtr : Ogre::Image());
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat format, Mogre::TextureType texType, int iNumMipmaps, Mogre::Real gamma)
@@ -578,7 +702,14 @@ Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogr
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType, iNumMipmaps, gamma);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType, iNumMipmaps, gamma);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat format, Mogre::TextureType texType, int iNumMipmaps)
@@ -586,7 +717,14 @@ Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogr
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType, iNumMipmaps);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType, iNumMipmaps);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat format, Mogre::TextureType texType)
@@ -594,7 +732,14 @@ Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogr
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format, (Ogre::TextureType)texType);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat format)
@@ -602,7 +747,14 @@ Mogre::TexturePtr^ TextureManager::LoadRawData(String^ name, String^ group, Mogr
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->loadRawData(o_name, o_group, (Ogre::DataStreamPtr&)stream, uWidth, uHeight, (Ogre::PixelFormat)format);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 //Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, Mogre::uint depth, int num_mips, Mogre::PixelFormat format, int usage, Mogre::IManualResourceLoader^ loader)
@@ -618,7 +770,14 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, depth, num_mips, (Ogre::PixelFormat)format, usage);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, depth, num_mips, (Ogre::PixelFormat)format, usage);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, Mogre::uint depth, int num_mips, Mogre::PixelFormat format)
@@ -626,7 +785,14 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, depth, num_mips, (Ogre::PixelFormat)format);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, depth, num_mips, (Ogre::PixelFormat)format);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 //Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, int num_mips, Mogre::PixelFormat format, int usage, Mogre::IManualResourceLoader^ loader)
@@ -642,7 +808,7 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->createManual(
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->createManual(
 		o_name,
 		o_group,
 		(Ogre::TextureType)texType,
@@ -651,6 +817,13 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 		num_mips,
 		(Ogre::PixelFormat)format,
 		usage);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mogre::TextureType texType, Mogre::uint width, Mogre::uint height, int num_mips, Mogre::PixelFormat format)
@@ -658,7 +831,14 @@ Mogre::TexturePtr^ TextureManager::CreateManual(String^ name, String^ group, Mog
 	DECLARE_NATIVE_STRING(o_name, name);
 	DECLARE_NATIVE_STRING(o_group, group);
 
-	return static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, num_mips, (Ogre::PixelFormat)format);
+	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->createManual(o_name, o_group, (Ogre::TextureType)texType, width, height, num_mips, (Ogre::PixelFormat)format);
+	if (texturePtr.isNull())
+		return nullptr;
+
+	auto texture = gcnew Texture(new Ogre::TexturePtr(texturePtr));
+	auto textureCache = GetTextureCache(group);
+	textureCache->Add(name, texture);
+	return texture;
 }
 
 void TextureManager::SetPreferredIntegerBitDepth(Ogre::ushort bits, bool reloadTextures)
@@ -674,6 +854,7 @@ void TextureManager::SetPreferredFloatBitDepth(Ogre::ushort bits, bool reloadTex
 {
 	static_cast<Ogre::TextureManager*>(_native)->setPreferredFloatBitDepth(bits, reloadTextures);
 }
+
 void TextureManager::SetPreferredFloatBitDepth(Ogre::ushort bits)
 {
 	static_cast<Ogre::TextureManager*>(_native)->setPreferredFloatBitDepth(bits);
@@ -711,4 +892,41 @@ bool TextureManager::IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogr
 bool TextureManager::IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogre::PixelFormat format, int usage)
 {
 	return static_cast<Ogre::TextureManager*>(_native)->isHardwareFilteringSupported((Ogre::TextureType)ttype, (Ogre::PixelFormat)format, usage);
+}
+
+void TextureManager::Shutdown()
+{
+restart:
+	for each (auto textureCache in _textures)
+	{
+		auto copy = gcnew System::Collections::Generic::Dictionary<String^, Texture^>(textureCache.Value);
+		for each(auto texture in copy->Values)
+		{
+			delete texture;
+		}
+		_textures->Remove(textureCache.Key);
+		goto restart;
+	}
+
+	_textures->Clear();
+}
+
+void TextureManager::RemoveTextureInternal(Mogre::Texture^ texture)
+{
+	auto textureCache = GetTextureCache(texture->Group);
+	textureCache->Remove(texture->Name);
+	Unload(texture->Handle);
+	Remove(texture->Handle);
+}
+
+System::Collections::Generic::Dictionary<String^, Texture^>^ TextureManager::GetTextureCache(String^ groupName)
+{
+	System::Collections::Generic::Dictionary<String^, Texture^>^ result;
+	if (!_textures->TryGetValue(groupName, result))
+	{
+		result = gcnew System::Collections::Generic::Dictionary<String^, Texture^>();
+		_textures->Add(groupName, result);
+	}
+
+	return result;
 }

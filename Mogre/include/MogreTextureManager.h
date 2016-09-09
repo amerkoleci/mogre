@@ -13,7 +13,6 @@
 
 namespace Mogre
 {
-	ref class TexturePtr;
 	ref class DataStreamPtr;
 	ref class HardwarePixelBufferSharedPtr;
 
@@ -196,9 +195,24 @@ namespace Mogre
 
 	public ref class Texture : public Resource
 	{
+	private:
+		Ogre::TexturePtr* _texturePtr;
+		bool _isDisposed;
+
 	public protected:
-		Texture(Ogre::Texture* obj) : Resource(obj)
+		Texture(Ogre::TexturePtr* ptr) : Resource(ptr->get()), _texturePtr(ptr)
 		{
+		}
+
+	public:
+		~Texture();
+	protected:
+		!Texture();
+
+	public:
+		property bool IsDisposed
+		{
+			virtual bool get();
 		}
 
 	public:
@@ -342,7 +356,7 @@ namespace Mogre
 
 		void FreeInternalResources();
 
-		void CopyToTexture(Mogre::TexturePtr^ target);
+		void CopyToTexture(Mogre::Texture^ target);
 
 		void LoadImage(Mogre::Image^ img);
 		void LoadRawData(Mogre::DataStreamPtr^ stream, Mogre::ushort uWidth, Mogre::ushort uHeight, Mogre::PixelFormat eFormat);
@@ -353,169 +367,31 @@ namespace Mogre
 		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer(size_t face);
 		Mogre::HardwarePixelBufferSharedPtr^ GetBuffer();
 
-		DEFINE_MANAGED_NATIVE_CONVERSIONS(Texture);
-
 	internal:
-		property Ogre::Texture* UnmanagedPointer
+		property Ogre::TexturePtr* UnmanagedPointer
 		{
-			Ogre::Texture* get()
+			Ogre::TexturePtr* get()
 			{
-				return static_cast<Ogre::Texture*>(_native);
+				return _texturePtr;
 			}
 		}
 	};
 
-	public ref class TexturePtr : public Texture
-	{
-	public protected:
-		Ogre::TexturePtr* _sharedPtr;
-
-		TexturePtr(Ogre::TexturePtr& sharedPtr)
-			: Texture(sharedPtr.getPointer())
-		{
-			_sharedPtr = new Ogre::TexturePtr(sharedPtr);
-		}
-
-		!TexturePtr()
-		{
-			if (_sharedPtr != 0)
-			{
-				if (_sharedPtr->useCount() > 1)
-				{
-					delete _sharedPtr;
-				}
-
-				_sharedPtr = 0;
-			}
-		}
-
-		~TexturePtr()
-		{
-			this->!TexturePtr();
-		}
-
-	public:
-		static operator TexturePtr ^ (const Ogre::TexturePtr& ptr)
-		{
-			if (ptr.isNull()) return nullptr;
-			Ogre::TexturePtr wrapperPtr = Ogre::TexturePtr(ptr);
-			wrapperPtr.setUseCount(wrapperPtr.useCount() + 1);
-			return gcnew TexturePtr(wrapperPtr);
-		}
-
-		static operator Ogre::TexturePtr& (TexturePtr^ t)
-		{
-			if (CLR_NULL == t) return Ogre::TexturePtr();
-			return *(t->_sharedPtr);
-		}
-
-		static operator Ogre::TexturePtr* (TexturePtr^ t)
-		{
-			if (CLR_NULL == t) return nullptr;
-			return t->_sharedPtr;
-		}
-
-		static TexturePtr^ FromResourcePtr(ResourcePtr^ ptr)
-		{
-			if (CLR_NULL == ptr) return nullptr;
-			void* castptr = dynamic_cast<Ogre::Texture*>(ptr->_native);
-			if (castptr == 0) throw gcnew InvalidCastException("The underlying type of the ResourcePtr object is not of type Texture.");
-			Ogre::TexturePtr texturePtr = ptr->_sharedPtr->staticCast<Ogre::Texture>();
-			return gcnew TexturePtr(texturePtr);
-		}
-
-		static operator TexturePtr ^ (ResourcePtr^ ptr)
-		{
-			TexturePtr^ res = FromResourcePtr(ptr);
-			// invalidate previous pointer and return converted pointer
-			delete ptr;
-			return res;
-		}
-
-		TexturePtr(Texture^ obj) : Texture(obj->UnmanagedPointer)
-		{
-			_sharedPtr = new Ogre::TexturePtr(static_cast<Ogre::Texture*>(obj->_native));
-		}
-
-		virtual bool Equals(Object^ obj) override
-		{
-			TexturePtr^ clr = dynamic_cast<TexturePtr^>(obj);
-			if (clr == CLR_NULL)
-			{
-				return false;
-			}
-
-			return (_native == clr->_native);
-		}
-		bool Equals(TexturePtr^ obj)
-		{
-			if (obj == CLR_NULL)
-			{
-				return false;
-			}
-
-			return (_native == obj->_native);
-		}
-
-		static bool operator == (TexturePtr^ val1, TexturePtr^ val2)
-		{
-			if ((Object^)val1 == (Object^)val2) return true;
-			if ((Object^)val1 == nullptr || (Object^)val2 == nullptr) return false;
-			return (val1->_native == val2->_native);
-		}
-
-		static bool operator != (TexturePtr^ val1, TexturePtr^ val2)
-		{
-			return !(val1 == val2);
-		}
-
-		virtual int GetHashCode() override
-		{
-			return reinterpret_cast<int>(_native);
-		}
-
-		property IntPtr NativePtr
-		{
-			IntPtr get() { return (IntPtr)_sharedPtr; }
-		}
-
-		property bool Unique
-		{
-			bool get()
-			{
-				return (*_sharedPtr).unique();
-			}
-		}
-
-		property int UseCount
-		{
-			int get()
-			{
-				return (*_sharedPtr).useCount();
-			}
-		}
-
-		property Texture^ Target
-		{
-			Texture^ get()
-			{
-				return static_cast<Ogre::Texture*>(_native);
-			}
-		}
-	};
+	typedef Mogre::Texture TexturePtr;
 
 	public ref class TextureManager : public ResourceManager
 	{
 	private protected:
 		static TextureManager^ _singleton;
+		System::Collections::Generic::Dictionary<String^, System::Collections::Generic::Dictionary<String^, Texture^>^ >^ _textures;
 
 	public protected:
 		TextureManager(Ogre::TextureManager* obj) : ResourceManager(obj)
 		{
+			_textures = gcnew System::Collections::Generic::Dictionary<String^, System::Collections::Generic::Dictionary<String^, Texture^>^>();
 		}
 
 	public:
-
 		static property TextureManager^ Singleton
 		{
 			TextureManager^ get()
@@ -549,8 +425,8 @@ namespace Mogre
 			Ogre::ushort get();
 		}
 
-		Mogre::TexturePtr^ GetByName(String^ name);
-		Mogre::TexturePtr^ GetByName(String^ name, String^ groupName);
+		Mogre::Texture^ GetByName(String^ name);
+		Mogre::Texture^ GetByName(String^ name, String^ groupName);
 
 		Mogre::TexturePtr^ Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha, Mogre::PixelFormat desiredFormat);
 		Mogre::TexturePtr^ Load(String^ name, String^ group, Mogre::TextureType texType, int numMipmaps, Mogre::Real gamma, bool isAlpha);
@@ -596,5 +472,12 @@ namespace Mogre
 
 		bool IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogre::PixelFormat format, int usage, bool preciseFormatOnly);
 		bool IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogre::PixelFormat format, int usage);
+
+	internal:
+		void Shutdown();
+		void RemoveTextureInternal(Mogre::Texture^ texture);
+
+	private:
+		System::Collections::Generic::Dictionary<String^, Texture^>^ GetTextureCache(String^ groupName);
 	};
 }

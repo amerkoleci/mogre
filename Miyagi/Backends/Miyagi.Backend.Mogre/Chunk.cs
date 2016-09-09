@@ -32,7 +32,7 @@ namespace Miyagi.Backend.Mogre
 		public IList<Miyagi.Common.Resources.GpuProgram> GpuPrograms;
 		public float Opacity;
 		public TextureFiltering TexFilter;
-		public TexturePtr TexHandle;
+		public Texture TexHandle;
 		public uint VertexCount;
 
 		#endregion Fields

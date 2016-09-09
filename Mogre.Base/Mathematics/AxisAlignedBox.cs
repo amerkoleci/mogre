@@ -8,7 +8,7 @@ namespace Mogre
 {
 	public sealed class AxisAlignedBox
 	{
-		protected enum Extent
+		private enum Extent
 		{
 			Null = 0,
 			Finite = 1,
@@ -38,14 +38,14 @@ namespace Mogre
 			NEAR_RIGHT_TOP = NearRightTop
 		}
 
-		protected Vector3 _minimum;
+		private Vector3 _minimum;
 
-		protected Vector3 _maximum;
+		private Vector3 _maximum;
 
-		protected Extent _extent;
+		private Extent _extent;
 
 		[NonSerialized]
-		protected Vector3[] _corners;
+		private Vector3[] _corners;
 
 		/// <summary>
 		/// Gets the half-size of the box.

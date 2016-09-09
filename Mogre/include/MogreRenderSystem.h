@@ -11,7 +11,7 @@
 namespace Mogre
 {
 	ref class ConfigOptionMap;
-	ref class TexturePtr;
+	ref class Texture;
 	ref class RenderTarget;
 	ref class MultiRenderTarget;
 	ref class Frustum;

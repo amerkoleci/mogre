@@ -35,7 +35,6 @@ namespace Miyagi.Backend.Mogre
 	public class MogreBackend : Backend
 	{
 		MogreRenderManager _renderManager;
-		readonly Dictionary<string, TexturePtr> _textures = new Dictionary<string, TexturePtr>();
 
 		#region Constructors
 
@@ -98,7 +97,7 @@ namespace Miyagi.Backend.Mogre
 				uint width = (uint)System.Math.Max(size.Width, 0);
 				uint height = (uint)System.Math.Max(size.Height, 0);
 
-				TexturePtr tex = TextureManager.Singleton.CreateManual(
+				Texture tex = TextureManager.Singleton.CreateManual(
 					name,
 					this.ResourceGroupName,
 					TextureType.TEX_TYPE_2D,
@@ -118,17 +117,14 @@ namespace Miyagi.Backend.Mogre
 				//        renderTexture.GetViewport(0).BackgroundColour = new ColourValue(backgroundColour.Red / 255f, backgroundColour.Green / 255f, backgroundColour.Blue / 255f, backgroundColour.Alpha / 255f);
 				//    }
 				//}
-
-				tex.Dispose();
 			}
 		}
 
 		public override object CreateTexture(string name, Size size)
 		{
-			TexturePtr texture = TextureManager.Singleton.GetByName(name);
+			Texture texture = TextureManager.Singleton.GetByName(name);
 			if (texture != null)
 			{
-				_textures[name] = texture;
 				return texture;
 			}
 
@@ -144,13 +140,12 @@ namespace Miyagi.Backend.Mogre
 				0,
 				PixelFormat.PF_A8R8G8B8);
 			ClearTexture(texture, Colours.Transparent);
-			_textures[name] = texture;
 			return texture;
 		}
 
 		public override float GetTextureAlpha(object textureHandle, Point p)
 		{
-			TexturePtr texture = SafeResolveTexture(textureHandle);
+			Texture texture = SafeResolveTexture(textureHandle);
 			if (p.X > texture.Width || p.Y > texture.Height)
 			{
 				return 0;
@@ -173,7 +168,7 @@ namespace Miyagi.Backend.Mogre
 
 		public override Size GetTextureSize(object textureHandle)
 		{
-			TexturePtr texture = SafeResolveTexture(textureHandle);
+			Texture texture = SafeResolveTexture(textureHandle);
 			return new Size((int)texture.Width, (int)texture.Height);
 		}
 
@@ -185,7 +180,6 @@ namespace Miyagi.Backend.Mogre
 				texture = TextureManager.Singleton.Load(name, this.ResourceGroupName);
 			}
 
-			_textures[name] = texture;
 			return texture;
 		}
 
@@ -209,7 +203,7 @@ namespace Miyagi.Backend.Mogre
 		{
 			if (TextureManager.Singleton.ResourceExists(name))
 			{
-				using (TexturePtr texturePtr = TextureManager.Singleton.GetByName(name))
+				using (Texture texturePtr = TextureManager.Singleton.GetByName(name))
 				{
 					// handle render textures
 					if (texturePtr.Usage == (int)TextureUsage.TU_RENDERTARGET)
@@ -225,8 +219,6 @@ namespace Miyagi.Backend.Mogre
 
 					texturePtr.Unload();
 					TextureManager.Singleton.Remove(name);
-					texturePtr.Dispose();
-					_textures.Remove(name);
 				}
 			}
 		}
@@ -243,7 +235,7 @@ namespace Miyagi.Backend.Mogre
 		public override unsafe void WriteToTexture(byte[] bytes, object textureHandle)
 		{
 			// draw bitmap to texture
-			TexturePtr texture = SafeResolveTexture(textureHandle);
+			Texture texture = SafeResolveTexture(textureHandle);
 			using (HardwarePixelBufferSharedPtr texBuffer = texture.GetBuffer())
 			{
 				texBuffer.Lock(HardwareBuffer.LockOptions.HBL_DISCARD);
@@ -258,18 +250,18 @@ namespace Miyagi.Backend.Mogre
 
 		#endregion Public Methods
 
-		internal TexturePtr SafeResolveTexture(object textureHandle)
+		internal Texture SafeResolveTexture(object textureHandle)
 		{
 			var textureName = textureHandle as string;
 			if (textureName != null)
 			{
-				return (TexturePtr)LoadTexture(textureName);
+				return (Texture)LoadTexture(textureName);
 			}
 
-			return (TexturePtr)textureHandle;
+			return (Texture)textureHandle;
 		}
 
-		internal static unsafe void ClearTexture(TexturePtr texture, Colour colour)
+		internal static unsafe void ClearTexture(Texture texture, Colour colour)
 		{
 			using (HardwarePixelBufferSharedPtr hbuf = texture.GetBuffer())
 			{
