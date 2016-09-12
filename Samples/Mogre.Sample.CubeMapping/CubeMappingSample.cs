@@ -112,25 +112,23 @@ namespace Mogre.Framework
 			_cubeCamera.NearClipDistance = 5.0f;
 			_cubeCamera.FarClipDistance = /*100*/10000;
 
-			using (TexturePtr tex = TextureManager.Singleton.CreateManual("dyncubemap", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME, TextureType.TEX_TYPE_CUBE_MAP, 512, 512, 0, PixelFormat.PF_R8G8B8, (int)TextureUsage.TU_RENDERTARGET))
+			var tex = TextureManager.Singleton.CreateManual("dyncubemap", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME, TextureType.TEX_TYPE_CUBE_MAP, 512, 512, 0, PixelFormat.PF_R8G8B8, (int)TextureUsage.TU_RENDERTARGET);
+			CompositorManager2 compositorManager = _root.CompositorManager2;
+			const string workspaceName = "CompositorSampleCubemap_cubemap";
+			if (!compositorManager.HasWorkspaceDefinition(workspaceName))
 			{
-				CompositorManager2 compositorManager = _root.CompositorManager2;
-				const string workspaceName = "CompositorSampleCubemap_cubemap";
-				if (!compositorManager.HasWorkspaceDefinition(workspaceName))
-				{
-					CompositorWorkspaceDef workspaceDef = compositorManager.AddWorkspaceDefinition(workspaceName);
-					//"CubemapRendererNode" has been defined in scripts.
-					//Very handy (as it 99% the same for everything)
-					workspaceDef.ConnectOutput("CubemapRendererNode", 0);
-				}
-
-				CompositorChannel channel = new CompositorChannel
-				{
-					target = tex.GetBuffer(0).GetRenderTarget()
-				};
-				channel.textures.Add(tex);
-				_cubemapWorkspace = compositorManager.AddWorkspace(_sceneManager, channel, _cubeCamera, workspaceName, false);
+				CompositorWorkspaceDef workspaceDef = compositorManager.AddWorkspaceDefinition(workspaceName);
+				//"CubemapRendererNode" has been defined in scripts.
+				//Very handy (as it 99% the same for everything)
+				workspaceDef.ConnectOutput("CubemapRendererNode", 0);
 			}
+
+			CompositorChannel channel = new CompositorChannel
+			{
+				target = tex.GetBuffer(0).GetRenderTarget()
+			};
+			channel.textures.Add(tex);
+			_cubemapWorkspace = compositorManager.AddWorkspace(_sceneManager, channel, _cubeCamera, workspaceName, false);
 		}
 
 		class CubeMapCompositorWorkspaceListener : CompositorWorkspaceListener

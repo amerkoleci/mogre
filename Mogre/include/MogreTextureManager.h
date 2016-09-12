@@ -476,6 +476,7 @@ namespace Mogre
 	internal:
 		void Shutdown();
 		void RemoveTextureInternal(Mogre::Texture^ texture);
+		Mogre::Texture^ GetOrCreateTexture(Ogre::TexturePtr* nativePtr);
 
 	private:
 		System::Collections::Generic::Dictionary<String^, Texture^>^ GetTextureCache(String^ groupName);

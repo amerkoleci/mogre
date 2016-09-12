@@ -873,32 +873,65 @@ void TextureUnitState::_notifyParent(Mogre::Pass^ parent)
 	static_cast<Ogre::TextureUnitState*>(_native)->_notifyParent(parent);
 }
 
-/*Mogre::Texture^ TextureUnitState::_getTexturePtr()
+Mogre::Texture^ TextureUnitState::_getTexturePtr()
 {
 	auto nativeTexturePtr = _native->_getTexturePtr();
-	if (nativeTexturePtr.isNull()) return nullptr;
+	if (nativeTexturePtr.isNull())
+		return nullptr;
 
-	if (_texture != nullptr && _texture->UnmanagedPointer->get() == nativeTexturePtr.get())
-		return _texture;
-
-	_texture = gcnew Mogre::Texture(new Ogre::TexturePtr(nativeTexturePtr));
-	return _texture;
+	return TextureManager::Singleton->GetOrCreateTexture(new Ogre::TexturePtr(nativeTexturePtr));
 }
 
-Mogre::TexturePtr^ TextureUnitState::_getTexturePtr(size_t frame)
+Mogre::Texture^ TextureUnitState::_getTexturePtr(size_t frame)
 {
-	return _native->_getTexturePtr(frame);
+	auto nativeTexturePtr = _native->_getTexturePtr(frame);
+	if (nativeTexturePtr.isNull())
+		return nullptr;
+
+	return TextureManager::Singleton->GetOrCreateTexture(new Ogre::TexturePtr(nativeTexturePtr));
 }
 
-void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr)
+void TextureUnitState::_setTexturePtr(Mogre::Texture^ texture)
 {
-	_native->_setTexturePtr((const Ogre::TexturePtr&)texptr);
+	if (!texture)
+		return;
+
+	_native->_setTexturePtr(*texture->UnmanagedPointer);
 }
 
-void TextureUnitState::_setTexturePtr(Mogre::TexturePtr^ texptr, size_t frame)
+void TextureUnitState::_setTexturePtr(Mogre::Texture^ texture, size_t frame)
 {
-	_native->_setTexturePtr((const Ogre::TexturePtr&)texptr, frame);
-}*/
+	if (!texture)
+		return;
+
+	_native->_setTexturePtr(*texture->UnmanagedPointer, frame);
+}
+
+Mogre::Texture^ TextureUnitState::GetTexture()
+{
+	return _getTexturePtr();
+}
+
+Mogre::TexturePtr^ TextureUnitState::GetTexture(size_t frame)
+{
+	return _getTexturePtr(frame);
+}
+
+void TextureUnitState::SetTexture(Mogre::Texture^ texture)
+{
+	if (!texture)
+		return;
+
+	_native->_setTexturePtr(*texture->UnmanagedPointer);
+}
+
+void TextureUnitState::SetTexture(Mogre::Texture^ texture, size_t frame)
+{
+	if (!texture)
+		return;
+
+	_native->_setTexturePtr(*texture->UnmanagedPointer, frame);
+}
 
 // --------------- IlluminationPass_NativePtr ---------------
 

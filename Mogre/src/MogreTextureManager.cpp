@@ -919,6 +919,21 @@ void TextureManager::RemoveTextureInternal(Mogre::Texture^ texture)
 	Remove(texture->Handle);
 }
 
+Mogre::Texture^ TextureManager::GetOrCreateTexture(Ogre::TexturePtr* nativePtr)
+{
+	auto clrName = TO_CLR_STRING((*nativePtr)->getName());
+	auto textureCache = GetTextureCache(TO_CLR_STRING((*nativePtr)->getGroup()));
+	Texture^ texture;
+	if (textureCache->TryGetValue(clrName, texture))
+	{
+		return texture;
+	}
+
+	texture = gcnew Texture(nativePtr);
+	textureCache->Add(clrName, texture);
+	return texture;
+}
+
 System::Collections::Generic::Dictionary<String^, Texture^>^ TextureManager::GetTextureCache(String^ groupName)
 {
 	System::Collections::Generic::Dictionary<String^, Texture^>^ result;

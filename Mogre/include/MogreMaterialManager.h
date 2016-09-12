@@ -468,9 +468,6 @@ namespace Mogre
 
 		INC_DECLARE_STLMULTIMAP(EffectMap, Mogre::TextureUnitState::TextureEffectType, Mogre::TextureUnitState::TextureEffect_NativePtr, Ogre::TextureUnitState::TextureEffectType, Ogre::TextureUnitState::TextureEffect, public:, private:);
 
-	private:
-		Mogre::Texture^ _texture;
-
 	public protected:
 		Ogre::TextureUnitState* _native;
 		bool _createdByCLR;
@@ -822,10 +819,14 @@ namespace Mogre
 
 		void _notifyParent(Mogre::Pass^ parent);
 
-		//Mogre::Texture^ _getTexturePtr();
-		//Mogre::Texture^ _getTexturePtr(size_t frame);
-		//void _setTexturePtr(Mogre::Texture^ texptr);
-		//void _setTexturePtr(Mogre::Texture^ texptr, size_t frame);
+		Mogre::Texture^ _getTexturePtr();
+		Mogre::Texture^ _getTexturePtr(size_t frame);
+		void _setTexturePtr(Mogre::Texture^ texture);
+		void _setTexturePtr(Mogre::Texture^ texture, size_t frame);
+		Mogre::Texture^ GetTexture();
+		Mogre::Texture^ GetTexture(size_t frame);
+		void SetTexture(Mogre::Texture^ texture);
+		void SetTexture(Mogre::Texture^ texture, size_t frame);
 
 		property bool IsDisposed
 		{
