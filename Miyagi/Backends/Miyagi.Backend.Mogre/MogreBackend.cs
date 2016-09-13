@@ -203,23 +203,22 @@ namespace Miyagi.Backend.Mogre
 		{
 			if (TextureManager.Singleton.ResourceExists(name))
 			{
-				using (Texture texturePtr = TextureManager.Singleton.GetByName(name))
+				Texture texturePtr = TextureManager.Singleton.GetByName(name);
+				// handle render textures
+				if (texturePtr.Usage == (int)TextureUsage.TU_RENDERTARGET)
 				{
-					// handle render textures
-					if (texturePtr.Usage == (int)TextureUsage.TU_RENDERTARGET)
+					using (HardwarePixelBufferSharedPtr buf = texturePtr.GetBuffer())
 					{
-						using (HardwarePixelBufferSharedPtr buf = texturePtr.GetBuffer())
+						using (RenderTexture renderTexture = buf.GetRenderTarget())
 						{
-							using (RenderTexture renderTexture = buf.GetRenderTarget())
-							{
-								renderTexture.RemoveAllViewports();
-							}
+							renderTexture.RemoveAllViewports();
 						}
 					}
-
-					texturePtr.Unload();
-					TextureManager.Singleton.Remove(name);
 				}
+
+				// When we dispose we release and unload/remove Texture
+				texturePtr.Dispose();
+				//TextureManager.Singleton.Remove(name);
 			}
 		}
 

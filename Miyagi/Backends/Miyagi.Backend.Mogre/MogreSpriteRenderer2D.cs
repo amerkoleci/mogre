@@ -337,17 +337,16 @@ namespace Miyagi.Backend.Mogre
 
 		private void CacheSpritesToTexture(string texName)
 		{
-			using (var tex = TextureManager.Singleton.GetByName(texName))
+			var tex = TextureManager.Singleton.GetByName(texName);
+			using (var buf = tex.GetBuffer())
 			{
-				using (var buf = tex.GetBuffer())
+				using (var renderTexture = buf.GetRenderTarget())
 				{
-					using (var renderTexture = buf.GetRenderTarget())
-					{
-						this.renderSystem._setRenderTarget(renderTexture);
-						this.renderSystem.ClearFrameBuffer((uint)FrameBufferType.FBT_COLOUR, new ColourValue(0, 0, 0, 0));
-						this.DoRender();
+					this.renderSystem._setRenderTarget(renderTexture);
+					this.renderSystem.ClearFrameBuffer((uint)FrameBufferType.FBT_COLOUR, new ColourValue(0, 0, 0, 0));
+					this.DoRender();
 
-						this.renderChunks = new List<Chunk>
+					this.renderChunks = new List<Chunk>
 							{
 								new Chunk
 								{
@@ -358,19 +357,18 @@ namespace Miyagi.Backend.Mogre
 								}
 							};
 
-						unsafe
-						{
-							var buffer = (MogreVertex*)this.hardwareBuffer.Lock(HardwareBuffer.LockOptions.HBL_DISCARD);
-							var quad = new Quad(
-								Colours.White,
-								GetScreenRect(this.Viewport.Size, renderTexture.RequiresTextureFlipping()),
-								new RectangleF(0, 0, 1, 1));
-							this.DrawQuad(quad, ref buffer);
-							this.hardwareBuffer.Unlock();
-						}
-
-						this.renderSystem._setRenderTarget(((Viewport)this.Viewport.Native).Target);
+					unsafe
+					{
+						var buffer = (MogreVertex*)this.hardwareBuffer.Lock(HardwareBuffer.LockOptions.HBL_DISCARD);
+						var quad = new Quad(
+							Colours.White,
+							GetScreenRect(this.Viewport.Size, renderTexture.RequiresTextureFlipping()),
+							new RectangleF(0, 0, 1, 1));
+						this.DrawQuad(quad, ref buffer);
+						this.hardwareBuffer.Unlock();
 					}
+
+					this.renderSystem._setRenderTarget(((Viewport)this.Viewport.Native).Target);
 				}
 			}
 		}
@@ -425,7 +423,7 @@ namespace Miyagi.Backend.Mogre
 					}
 				}
 
-				tex.Dispose();
+				//tex.Dispose();
 			}
 		}
 

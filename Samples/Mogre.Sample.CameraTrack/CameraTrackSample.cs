@@ -146,6 +146,7 @@ namespace Mogre.Framework
 			// create a default GUI
 			var gui = new GUI();
 
+
 			// A Button is a simple skinned control capable of changing its current texture automatically on certain mouse events
 			// (MouseDown/MouseEnter/MouseLeave/MouseUp). Those subskins are optinal, if a subskin is not defined, Miyagi will fall
 			// back to an appropriate alternative.
@@ -169,6 +170,7 @@ namespace Mogre.Framework
 
 			// add the GUI to the GUIManager
 			_miyagiSystem.GUIManager.GUIs.Add(gui);
+			gui.SpriteRenderer.CacheToTexture = true;
 		}
 
 		protected override void DestroyScene()
