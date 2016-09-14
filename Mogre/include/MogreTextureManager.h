@@ -473,6 +473,11 @@ namespace Mogre
 		bool IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogre::PixelFormat format, int usage, bool preciseFormatOnly);
 		bool IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogre::PixelFormat format, int usage);
 
+		void Remove(Mogre::Texture^ texture);
+		void Remove(String^ name);
+		void Remove(Mogre::ResourceHandle handle);
+		void RemoveAll();
+
 	internal:
 		void Shutdown();
 		void RemoveTextureInternal(Mogre::Texture^ texture);

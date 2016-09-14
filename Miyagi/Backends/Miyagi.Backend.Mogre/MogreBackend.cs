@@ -201,25 +201,25 @@ namespace Miyagi.Backend.Mogre
 
 		public override void RemoveTexture(string name)
 		{
-			if (TextureManager.Singleton.ResourceExists(name))
+			if (TextureManager.Singleton.ResourceExists(name) == false)
+				return;
+
+			Texture texturePtr = TextureManager.Singleton.GetByName(name);
+			// handle render textures
+			if (texturePtr.Usage == (int)TextureUsage.TU_RENDERTARGET)
 			{
-				Texture texturePtr = TextureManager.Singleton.GetByName(name);
-				// handle render textures
-				if (texturePtr.Usage == (int)TextureUsage.TU_RENDERTARGET)
+				using (HardwarePixelBufferSharedPtr buf = texturePtr.GetBuffer())
 				{
-					using (HardwarePixelBufferSharedPtr buf = texturePtr.GetBuffer())
+					using (RenderTexture renderTexture = buf.GetRenderTarget())
 					{
-						using (RenderTexture renderTexture = buf.GetRenderTarget())
-						{
-							renderTexture.RemoveAllViewports();
-						}
+						renderTexture.RemoveAllViewports();
 					}
 				}
-
-				// When we dispose we release and unload/remove Texture
-				texturePtr.Dispose();
-				//TextureManager.Singleton.Remove(name);
 			}
+
+			// When we dispose we release and unload/remove Texture
+			texturePtr.Dispose();
+			//TextureManager.Singleton.Remove(name);
 		}
 
 		public override void SetContext(object args)

@@ -896,6 +896,51 @@ bool TextureManager::IsHardwareFilteringSupported(Mogre::TextureType ttype, Mogr
 
 void TextureManager::Shutdown()
 {
+	RemoveAll();
+}
+
+void TextureManager::Remove(Mogre::Texture^ texture)
+{
+	RemoveTextureInternal(texture);
+}
+
+void TextureManager::Remove(String^ name)
+{
+	for each (auto textureCache in _textures)
+	{
+		auto copy = gcnew System::Collections::Generic::Dictionary<String^, Texture^>(textureCache.Value);
+		for each(auto texture in copy->Values)
+		{
+			if (texture->Name == name)
+			{
+				_native->remove(texture->Handle);
+				delete texture;
+				break;
+			}
+		}
+	}
+}
+
+void TextureManager::Remove(Mogre::ResourceHandle handle)
+{
+	for each (auto textureCache in _textures)
+	{
+		auto copy = gcnew System::Collections::Generic::Dictionary<String^, Texture^>(textureCache.Value);
+		for each(auto texture in copy->Values)
+		{
+			if (texture->Handle == handle)
+			{
+				delete texture;
+				break;
+			}
+		}
+	}
+
+	_native->remove(handle);
+}
+
+void TextureManager::RemoveAll()
+{
 restart:
 	for each (auto textureCache in _textures)
 	{
@@ -915,8 +960,8 @@ void TextureManager::RemoveTextureInternal(Mogre::Texture^ texture)
 {
 	auto textureCache = GetTextureCache(texture->Group);
 	textureCache->Remove(texture->Name);
-	Unload(texture->Handle);
-	Remove(texture->Handle);
+	_native->unload(texture->Handle);
+	_native->remove(texture->Handle);
 }
 
 Mogre::Texture^ TextureManager::GetOrCreateTexture(Ogre::TexturePtr* nativePtr)
@@ -933,7 +978,6 @@ Mogre::Texture^ TextureManager::GetOrCreateTexture(Ogre::TexturePtr* nativePtr)
 	textureCache->Add(clrName, texture);
 	return texture;
 }
-
 System::Collections::Generic::Dictionary<String^, Texture^>^ TextureManager::GetTextureCache(String^ groupName)
 {
 	System::Collections::Generic::Dictionary<String^, Texture^>^ result;

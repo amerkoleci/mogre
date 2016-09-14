@@ -11,7 +11,7 @@ namespace Mogre
 
 	public ref class ResourceManager
 	{
-	public: 
+	public:
 		ref class ResourceCreateOrRetrieveResult;
 		ref class ResourceMap;
 		ref class ResourceHandleMap;
@@ -80,9 +80,7 @@ namespace Mogre
 		Pair<Mogre::ResourcePtr^, bool> CreateOrRetrieve(String^ name, String^ group);
 
 		void Unload(String^ name);
-
 		void Unload(Mogre::ResourceHandle handle);
-
 		void UnloadAll(bool reloadableOnly);
 		void UnloadAll();
 
@@ -108,7 +106,6 @@ namespace Mogre
 		Mogre::ResourcePtr^ GetByHandle(Mogre::ResourceHandle handle);
 
 		bool ResourceExists(String^ name);
-
 		bool ResourceExists(Mogre::ResourceHandle handle);
 
 		void _notifyResourceTouched(Mogre::Resource^ res);
