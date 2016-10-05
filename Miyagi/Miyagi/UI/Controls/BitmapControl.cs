@@ -290,8 +290,8 @@ namespace Miyagi.UI.Controls
             if (this.Bitmap != null)
             {
                 Backend backend = this.MiyagiSystem.Backend;
-                backend.CreateTexture(this.TextureName, new Size(this.Bitmap.Size.Width, this.Bitmap.Size.Height));
-                backend.WriteToTexture(this.Bitmap.ToByteArray(), this.TextureName);
+                var nativeTextureHandle = backend.CreateTexture(this.TextureName, new Size(this.Bitmap.Size.Width, this.Bitmap.Size.Height));
+                backend.WriteToTexture(this.Bitmap.ToByteArray(), nativeTextureHandle);
             }
         }
 

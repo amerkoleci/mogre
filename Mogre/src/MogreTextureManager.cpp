@@ -959,7 +959,7 @@ restart:
 void TextureManager::RemoveTextureInternal(Mogre::Texture^ texture)
 {
 	auto textureCache = GetTextureCache(texture->Group);
-	textureCache->Remove(texture->Name);
+	bool removed = textureCache->Remove(texture->Name);
 	_native->unload(texture->Handle);
 	_native->remove(texture->Handle);
 }

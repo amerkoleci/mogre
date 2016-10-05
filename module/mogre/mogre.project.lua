@@ -31,6 +31,11 @@ mogre.project.library = function(name)
 		-- Enable SSE2 vector processing
 		vectorextensions "SSE2"
 		
+	configuration { "windows", "x64", "Debug" }
+		buildoptions {
+			"/bigobj"
+		}
+		
 	configuration { }
 end
 

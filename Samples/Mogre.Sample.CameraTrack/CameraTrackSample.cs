@@ -168,9 +168,32 @@ namespace Mogre.Framework
 			gui.Controls.Add(button1);
 			//gui.Controls.Add(button2);
 
+			var pictureBox = new Miyagi.UI.Controls.PictureBox
+			{
+				Name = "testingPictureBox",
+				Location = new Point(380, 140),
+				Size = new Size(400, 100),
+			};
+
+			pictureBox.Bitmap = new System.Drawing.Bitmap(new System.Drawing.Bitmap(400, 100));
+
+			// add the Buttons to the GUI
+			gui.Controls.Add(pictureBox);
+
 			// add the GUI to the GUIManager
 			_miyagiSystem.GUIManager.GUIs.Add(gui);
 			gui.SpriteRenderer.CacheToTexture = true;
+
+			System.Windows.Forms.Timer dummyTimer = new System.Windows.Forms.Timer();
+			dummyTimer.Interval = 2000;
+			dummyTimer.Tick += dummyTimer_Tick;
+			dummyTimer.Start();
+		}
+
+		void dummyTimer_Tick(object sender, EventArgs e)
+		{
+			Miyagi.UI.Controls.PictureBox testingPictureBox = _miyagiSystem.GUIManager.GetControl<Miyagi.UI.Controls.PictureBox>("testingPictureBox");
+			testingPictureBox.Size = new Miyagi.Common.Data.Size(399, 99);
 		}
 
 		protected override void DestroyScene()
