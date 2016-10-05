@@ -499,7 +499,14 @@ Mogre::Texture^ TextureManager::GetByName(String^ name, String^ groupName)
 	Texture^ texture;
 	if (textureCache->TryGetValue(name, texture))
 	{
-		return texture;
+		if (texture->IsDisposed)
+		{
+			textureCache->Remove(name);
+		}
+		else
+		{
+			return texture;
+		}
 	}
 
 	auto texturePtr = static_cast<Ogre::TextureManager*>(_native)->getByName(o_name);
@@ -959,9 +966,11 @@ restart:
 void TextureManager::RemoveTextureInternal(Mogre::Texture^ texture)
 {
 	auto textureCache = GetTextureCache(texture->Group);
-	bool removed = textureCache->Remove(texture->Name);
-	_native->unload(texture->Handle);
-	_native->remove(texture->Handle);
+	if (textureCache->Remove(texture->Name))
+	{
+		_native->unload(texture->Handle);
+		_native->remove(texture->Handle);
+	}
 }
 
 Mogre::Texture^ TextureManager::GetOrCreateTexture(Ogre::TexturePtr* nativePtr)
